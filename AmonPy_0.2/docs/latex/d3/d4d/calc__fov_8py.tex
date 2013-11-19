@@ -1,0 +1,58 @@
+\hypertarget{calc__fov_8py}{\section{amonpy/tools/calc\-\_\-fov.py File Reference}
+\label{calc__fov_8py}\index{amonpy/tools/calc\-\_\-fov.\-py@{amonpy/tools/calc\-\_\-fov.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov}{amonpy.\-tools.\-calc\-\_\-fov}
+\item 
+\hyperlink{namespacecalc__fov}{calc\-\_\-fov}
+\begin{DoxyCompactList}\small\item\em \begin{DoxyVerb} This is a top level script to run basic
+ simulations for triggering observatories.\end{DoxyVerb}
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov}{amonpy.\-tools.\-calc\-\_\-fov}
+\item 
+\hyperlink{namespacecalc__fov}{calc\-\_\-fov}
+\begin{DoxyCompactList}\small\item\em \begin{DoxyVerb} This is a top level script to run basic
+ simulations for triggering observatories.\end{DoxyVerb}
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_affa2b5e823ee36cb35cd6ff636ea9779}{amonpy.\-tools.\-calc\-\_\-fov.\-filename} = sys.\-argv\mbox{[}1\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a15d9d06da5b6c8cfcf67268b8dac0a9e}{amonpy.\-tools.\-calc\-\_\-fov.\-file} = open(filename)
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_abd58f153114f0c0bbde7d57f8fa6355b}{amonpy.\-tools.\-calc\-\_\-fov.\-line} = file.\-readline()
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{amonpy.\-tools.\-calc\-\_\-fov.\-db} = ast.\-literal\-\_\-eval(line)
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a08d7bd374fdd9e63ae99ef1bfb9e491e}{amonpy.\-tools.\-calc\-\_\-fov.\-Host\-Fancy\-Name} = db\mbox{[}'host'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ad6d8c3b48b201711ced879a1deb01343}{amonpy.\-tools.\-calc\-\_\-fov.\-User\-Fancy\-Name} = db\mbox{[}'user'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_afc1cd72f7d87836af535f28839548514}{amonpy.\-tools.\-calc\-\_\-fov.\-Password\-Fancy} = db\mbox{[}'password'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_aaea6d1eb2555bb480ec49524534e7d7d}{amonpy.\-tools.\-calc\-\_\-fov.\-D\-B\-Fancy\-Name} = db\mbox{[}'database'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a1bc07dd3b189b89d03cd6bfb2ff9378f}{amonpy.\-tools.\-calc\-\_\-fov.\-choices}
+\item 
+string \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af2bbe22561fc8fb6837ea58b5d8a0cd4}{amonpy.\-tools.\-calc\-\_\-fov.\-result\-\_\-dialog} = ''
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{amonpy.\-tools.\-calc\-\_\-fov.\-streams} = \mbox{[}0,1,7\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ab98f07a49951b24807130f86a97aa904}{amonpy.\-tools.\-calc\-\_\-fov.\-num\-\_\-streams} = len(streams)
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ad4753f6c1a088c4b50d3ba93205b751a}{amonpy.\-tools.\-calc\-\_\-fov.\-revisions} = \mbox{[}0,0,0\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af4b4c00c118d28fce747695a24f9893a}{amonpy.\-tools.\-calc\-\_\-fov.\-conf} = \mbox{[}simstream(streams\mbox{[}0\mbox{]}), simstream(streams\mbox{[}1\mbox{]}), simstream(streams\mbox{[}2\mbox{]})\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a3bf1158446321df85f814bae76c9c168}{amonpy.\-tools.\-calc\-\_\-fov.\-streams\-\_\-alert} = \mbox{[}1\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a4bc31903fbe30c866faaa99229b67d5b}{amonpy.\-tools.\-calc\-\_\-fov.\-results} = basic\-\_\-sim\-\_\-fov.\-signal\-\_\-inject(conf,revisions)
+\begin{DoxyCompactList}\small\item\em E\-X\-E\-C\-U\-T\-I\-O\-N O\-F M\-A\-I\-N S\-I\-M C\-O\-D\-E results=basic\-\_\-sim.\-basic\-\_\-sim(conf) \end{DoxyCompactList}\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a4c3759f624220d1b1baf047a412a779b}{amonpy.\-tools.\-calc\-\_\-fov.\-k} = streams\mbox{[}i\mbox{]}
+\end{DoxyCompactItemize}

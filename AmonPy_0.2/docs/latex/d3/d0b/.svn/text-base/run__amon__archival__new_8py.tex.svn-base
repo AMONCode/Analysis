@@ -1,0 +1,18 @@
+\hypertarget{run__amon__archival__new_8py}{\section{amonpy/dev/run\-\_\-amon\-\_\-archival\-\_\-new.py File Reference}
+\label{run__amon__archival__new_8py}\index{amonpy/dev/run\-\_\-amon\-\_\-archival\-\_\-new.\-py@{amonpy/dev/run\-\_\-amon\-\_\-archival\-\_\-new.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacerun__amon__archival__new}{run\-\_\-amon\-\_\-archival\-\_\-new}
+\begin{DoxyCompactList}\small\item\em Old module for running archival clustering analysis, second version. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacerun__amon__archival__new}{run\-\_\-amon\-\_\-archival\-\_\-new}
+\begin{DoxyCompactList}\small\item\em Old module for running archival clustering analysis, second version. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacerun__amon__archival__new_aeb803793975bc6dbe7b6b1b9b1e832ae}{run\-\_\-amon\-\_\-archival\-\_\-new.\-amon\-\_\-archival}
+\end{DoxyCompactItemize}

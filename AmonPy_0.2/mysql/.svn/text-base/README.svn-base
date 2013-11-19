@@ -1,0 +1,10 @@
+1) db_build.sql is a script that creates AMON_test1 database for archival data
+
+2) db_mc_build.sql is a script that creates AMON_test2 database for MC data
+
+To run, use:
+
+mysql -u username -h hostname -p dbname < scriptname
+
+Attention: by running these two scripts on db.hpc.rcc.psu.edu you will erase current AMON 
+databases. Use these scripts to create databases on your own machine (i.e. localhost).

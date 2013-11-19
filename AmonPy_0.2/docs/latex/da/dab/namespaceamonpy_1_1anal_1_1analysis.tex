@@ -1,0 +1,123 @@
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis}{\section{amonpy.\-anal.\-analysis Namespace Reference}
+\label{namespaceamonpy_1_1anal_1_1analysis}\index{amonpy.\-anal.\-analysis@{amonpy.\-anal.\-analysis}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_aed5b550ff7cbb888d019157b065e2055}{bufdur}
+\begin{DoxyCompactList}\small\item\em Calculator for measuring the duration of the event buffer, being held by the analysis server. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_ac3eb2116d918592df6e34c1519604e35}{build\-\_\-alert}
+\begin{DoxyCompactList}\small\item\em Alert builder. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_a8953e77d01e9caa5ca5e8e98307e400a}{far\-\_\-density}
+\begin{DoxyCompactList}\small\item\em False alarm density calculator (per sr per second) \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_a8fc861e2886ffe84d31493cd2acc42a9}{pvalue\-\_\-calc}
+\begin{DoxyCompactList}\small\item\em Combined p-\/value calculator (dummy for now). \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_a0c73147a4fe2f1a9d854d225e4d6a8f4}{sum\-\_\-poisson}
+\begin{DoxyCompactList}\small\item\em Poisson sum from 0 to obs-\/1. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1anal_1_1analysis_ac5ddeedffb329f60b3860addbba83776}{anal}
+\begin{DoxyCompactList}\small\item\em Main analysis process, which is run as a server, accepting events from the parent code and returning alerts when requested. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_ac5ddeedffb329f60b3860addbba83776}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!anal@{anal}}
+\index{anal@{anal}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{anal}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-anal (
+\begin{DoxyParamCaption}
+\item[{}]{pipe, }
+\item[{}]{config}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_ac5ddeedffb329f60b3860addbba83776}
+
+
+Main analysis process, which is run as a server, accepting events from the parent code and returning alerts when requested. 
+
+
+
+Definition at line 173 of file analysis.\-py.
+
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_aed5b550ff7cbb888d019157b065e2055}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!bufdur@{bufdur}}
+\index{bufdur@{bufdur}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{bufdur}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-bufdur (
+\begin{DoxyParamCaption}
+\item[{}]{events}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_aed5b550ff7cbb888d019157b065e2055}
+
+
+Calculator for measuring the duration of the event buffer, being held by the analysis server. 
+
+
+
+Definition at line 27 of file analysis.\-py.
+
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_ac3eb2116d918592df6e34c1519604e35}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!build\-\_\-alert@{build\-\_\-alert}}
+\index{build\-\_\-alert@{build\-\_\-alert}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{build\-\_\-alert}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-build\-\_\-alert (
+\begin{DoxyParamCaption}
+\item[{}]{config, }
+\item[{}]{id, }
+\item[{}]{rev, }
+\item[{}]{fcluster, }
+\item[{}]{evlist, }
+\item[{}]{far, }
+\item[{}]{pvalue}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_ac3eb2116d918592df6e34c1519604e35}
+
+
+Alert builder. 
+
+Accepts the event list (ev1,ev2,...), as well as the results of the cluster analysis that tigered the alert building. 
+
+Definition at line 47 of file analysis.\-py.
+
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_a8953e77d01e9caa5ca5e8e98307e400a}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!far\-\_\-density@{far\-\_\-density}}
+\index{far\-\_\-density@{far\-\_\-density}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{far\-\_\-density}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-far\-\_\-density (
+\begin{DoxyParamCaption}
+\item[{}]{evlist, }
+\item[{}]{conf, }
+\item[{}]{fcluster}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_a8953e77d01e9caa5ca5e8e98307e400a}
+
+
+False alarm density calculator (per sr per second) 
+
+
+
+Definition at line 101 of file analysis.\-py.
+
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_a8fc861e2886ffe84d31493cd2acc42a9}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!pvalue\-\_\-calc@{pvalue\-\_\-calc}}
+\index{pvalue\-\_\-calc@{pvalue\-\_\-calc}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{pvalue\-\_\-calc}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-pvalue\-\_\-calc (
+\begin{DoxyParamCaption}
+\item[{}]{evlist, }
+\item[{}]{conf, }
+\item[{}]{fcluster}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_a8fc861e2886ffe84d31493cd2acc42a9}
+
+
+Combined p-\/value calculator (dummy for now). 
+
+Calculate p-\/value for time-\/clustering analysis only. 
+
+Definition at line 120 of file analysis.\-py.
+
+\hypertarget{namespaceamonpy_1_1anal_1_1analysis_a0c73147a4fe2f1a9d854d225e4d6a8f4}{\index{amonpy\-::anal\-::analysis@{amonpy\-::anal\-::analysis}!sum\-\_\-poisson@{sum\-\_\-poisson}}
+\index{sum\-\_\-poisson@{sum\-\_\-poisson}!amonpy::anal::analysis@{amonpy\-::anal\-::analysis}}
+\subsubsection[{sum\-\_\-poisson}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-analysis.\-sum\-\_\-poisson (
+\begin{DoxyParamCaption}
+\item[{}]{expect, }
+\item[{}]{obs}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1anal_1_1analysis_a0c73147a4fe2f1a9d854d225e4d6a8f4}
+
+
+Poisson sum from 0 to obs-\/1. 
+
+
+
+Definition at line 159 of file analysis.\-py.
+

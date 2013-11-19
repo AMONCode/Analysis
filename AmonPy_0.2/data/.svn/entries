@@ -1,0 +1,89 @@
+10
+
+dir
+817
+https://isis.rcc.psu.edu/repos/amon/trunk/AmonPy/data
+https://isis.rcc.psu.edu/repos/amon
+
+
+
+2013-10-28T22:26:54.688859Z
+816
+gut10@dce.psu.edu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+c0a39f82-3a61-4bb0-90bc-d50594330c11
+
+icecube
+dir
+
+lat
+dir
+
+fov_overlap.txt
+file
+
+
+
+
+2013-10-28T22:53:35.000000Z
+44073c165ee2da0e3caba173a674bfcb
+2013-10-28T22:26:54.688859Z
+816
+gut10@dce.psu.edu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+284
+
+hawc
+dir
+
+auger
+dir
+
+gbm
+dir
+
+bat
+dir
+
+ligo
+dir
+
+antares
+dir
+
+veritas
+dir
+

@@ -1,0 +1,32 @@
+\hypertarget{setup_8py}{\section{setup.\-py File Reference}
+\label{setup_8py}\index{setup.\-py@{setup.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacesetup}{setup}
+\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacesetup}{setup}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{namespacesetup_ab177531e7a80674a3db3de2d79eb8be7}{setup.\-version} = \char`\"{}0.\-2\char`\"{}
+\item 
+string \hyperlink{namespacesetup_ade8aa54df2083113a10326ea2fe7934b}{setup.\-description} = 'A\-M\-O\-N Analysis Code'
+\item 
+string \hyperlink{namespacesetup_ac83393287a89728d636e4ae9f4ac914f}{setup.\-author} = 'Miles Smith, Gordana Tesic'
+\item 
+string \hyperlink{namespacesetup_aa144ac52ed417d5c65d7377e0e75673e}{setup.\-author\-\_\-email} = 'mus44@psu.\-edu, gut10@psu.\-edu'
+\item 
+list \hyperlink{namespacesetup_a2f17d3b44c4dab5ffba788f40bf1397a}{setup.\-py\-\_\-modules} = \mbox{[}$\,$\mbox{]}
+\item 
+dictionary \hyperlink{namespacesetup_abf4f1022dcd783f10f7bd23ec931f32b}{setup.\-package\-\_\-dir} = \{''\-: 'amonpy'\}
+\item 
+list \hyperlink{namespacesetup_aada4406eeab94f62c5f72fee617f0b82}{setup.\-packages} = \mbox{[}'anal', 'dbase', 'ops', 'sim', 'tools'\mbox{]}
+\item 
+list \hyperlink{namespacesetup_ac1f45f8d37050b278bf63c812b1130dd}{setup.\-scripts} = \mbox{[}'amonpy/ops/run\-\_\-archival.\-py', 'amonpy/ops/run\-\_\-basic\-\_\-sim.\-py'\mbox{]}
+\end{DoxyCompactItemize}

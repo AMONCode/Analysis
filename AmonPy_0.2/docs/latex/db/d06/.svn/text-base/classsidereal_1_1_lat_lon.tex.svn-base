@@ -1,0 +1,20 @@
+\hypertarget{classsidereal_1_1_lat_lon}{\section{sidereal.\-Lat\-Lon Class Reference}
+\label{classsidereal_1_1_lat_lon}\index{sidereal.\-Lat\-Lon@{sidereal.\-Lat\-Lon}}
+}
+
+
+Represents a latitude+longitude.  
+
+
+
+
+\subsection{Detailed Description}
+Represents a latitude+longitude. 
+
+Definition at line 962 of file sidereal.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal_8py}{sidereal.\-py}\end{DoxyCompactItemize}

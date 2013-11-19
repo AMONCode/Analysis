@@ -1,0 +1,37 @@
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__time}{\section{amonpy.\-tools.\-convert\-\_\-time Namespace Reference}
+\label{namespaceamonpy_1_1tools_1_1convert__time}\index{amonpy.\-tools.\-convert\-\_\-time@{amonpy.\-tools.\-convert\-\_\-time}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1tools_1_1convert__time_a760231f4b1da690c442d6674ba84a2b8}{gettimestamp}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespaceamonpy_1_1tools_1_1convert__time_a9e2e26fe437ea66787b4fef91879dc38}{mjd} = 50448
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__time_a760231f4b1da690c442d6674ba84a2b8}{\index{amonpy\-::tools\-::convert\-\_\-time@{amonpy\-::tools\-::convert\-\_\-time}!gettimestamp@{gettimestamp}}
+\index{gettimestamp@{gettimestamp}!amonpy::tools::convert_time@{amonpy\-::tools\-::convert\-\_\-time}}
+\subsubsection[{gettimestamp}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-convert\-\_\-time.\-gettimestamp (
+\begin{DoxyParamCaption}
+\item[{}]{jd}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1tools_1_1convert__time_a760231f4b1da690c442d6674ba84a2b8}
+
+
+Definition at line 14 of file convert\-\_\-time.\-py.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__time_a9e2e26fe437ea66787b4fef91879dc38}{\index{amonpy\-::tools\-::convert\-\_\-time@{amonpy\-::tools\-::convert\-\_\-time}!mjd@{mjd}}
+\index{mjd@{mjd}!amonpy::tools::convert_time@{amonpy\-::tools\-::convert\-\_\-time}}
+\subsubsection[{mjd}]{\setlength{\rightskip}{0pt plus 5cm}int amonpy.\-tools.\-convert\-\_\-time.\-mjd = 50448}}\label{namespaceamonpy_1_1tools_1_1convert__time_a9e2e26fe437ea66787b4fef91879dc38}
+
+
+Definition at line 77 of file convert\-\_\-time.\-py.
+

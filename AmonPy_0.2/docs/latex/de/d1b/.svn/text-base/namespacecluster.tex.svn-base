@@ -1,0 +1,12 @@
+\hypertarget{namespacecluster}{\section{cluster Namespace Reference}
+\label{namespacecluster}\index{cluster@{cluster}}
+}
+
+
+Module defining analysis class objects for clustering.  
+
+
+
+
+\subsection{Detailed Description}
+Module defining analysis class objects for clustering. Clustring requires specific assumptions about time cuts and the point spread function (P\-S\-F). 

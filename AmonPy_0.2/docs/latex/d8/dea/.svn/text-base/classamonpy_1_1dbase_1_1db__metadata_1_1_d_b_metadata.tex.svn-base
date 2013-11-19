@@ -1,0 +1,114 @@
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata}{\section{amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata Class Reference}
+\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata}\index{amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata@{amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_ab4efcff7fa63e142f967fc7f1e4a19cb}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em A class for D\-B metadata. \end{DoxyCompactList}\item 
+def \hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a05958075f50fd3ca587a6100f8577df8}{general\-\_\-query}
+\item 
+def \hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a5ef6b3a8eec1312c4548e333bcca5810}{tables}
+\item 
+def \hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a97b166af235aa1ce243ebc75fa7a3b06}{table\-\_\-describe}
+\item 
+def \hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a32c4cd6bab19d0282cc77ffde68b541a}{table\-\_\-status}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a83f51394bdc748df21c490b8ceef0dea}{database}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 32 of file db\-\_\-metadata.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_ab4efcff7fa63e142f967fc7f1e4a19cb}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_ab4efcff7fa63e142f967fc7f1e4a19cb}
+
+
+A class for D\-B metadata. 
+
+
+
+Definition at line 35 of file db\-\_\-metadata.\-py.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a05958075f50fd3ca587a6100f8577df8}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!general\-\_\-query@{general\-\_\-query}}
+\index{general\-\_\-query@{general\-\_\-query}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{general\-\_\-query}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-general\-\_\-query (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{cur, }
+\item[{}]{statement}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a05958075f50fd3ca587a6100f8577df8}
+
+
+Definition at line 38 of file db\-\_\-metadata.\-py.
+
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a97b166af235aa1ce243ebc75fa7a3b06}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!table\-\_\-describe@{table\-\_\-describe}}
+\index{table\-\_\-describe@{table\-\_\-describe}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{table\-\_\-describe}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-table\-\_\-describe (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{tablename, }
+\item[{}]{cursor}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a97b166af235aa1ce243ebc75fa7a3b06}
+
+
+Definition at line 54 of file db\-\_\-metadata.\-py.
+
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a32c4cd6bab19d0282cc77ffde68b541a}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!table\-\_\-status@{table\-\_\-status}}
+\index{table\-\_\-status@{table\-\_\-status}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{table\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-table\-\_\-status (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{cursor}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a32c4cd6bab19d0282cc77ffde68b541a}
+
+
+Definition at line 61 of file db\-\_\-metadata.\-py.
+
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a5ef6b3a8eec1312c4548e333bcca5810}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!tables@{tables}}
+\index{tables@{tables}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{tables}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-tables (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{cursor}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a5ef6b3a8eec1312c4548e333bcca5810}
+
+
+Definition at line 47 of file db\-\_\-metadata.\-py.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a83f51394bdc748df21c490b8ceef0dea}{\index{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}!database@{database}}
+\index{database@{database}!amonpy::dbase::db_metadata::DBMetadata@{amonpy\-::dbase\-::db\-\_\-metadata\-::\-D\-B\-Metadata}}
+\subsubsection[{database}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-dbase.\-db\-\_\-metadata.\-D\-B\-Metadata.\-database}}\label{classamonpy_1_1dbase_1_1db__metadata_1_1_d_b_metadata_a83f51394bdc748df21c490b8ceef0dea}
+
+
+Definition at line 36 of file db\-\_\-metadata.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/dbase/\hyperlink{db__metadata_8py}{db\-\_\-metadata.\-py}\end{DoxyCompactItemize}

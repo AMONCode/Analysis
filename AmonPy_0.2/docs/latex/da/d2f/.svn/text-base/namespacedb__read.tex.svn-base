@@ -1,0 +1,25 @@
+\hypertarget{namespacedb__read}{\section{db\-\_\-read Namespace Reference}
+\label{namespacedb__read}\index{db\-\_\-read@{db\-\_\-read}}
+}
+
+
+\begin{DoxyVerb}Module to read:
+\end{DoxyVerb}
+  
+
+
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Module to read:
+\end{DoxyVerb}
+ 
+\begin{DoxyItemize}
+\item single event from D\-B
+\item arrays of events from a given time slice
+\item single alert
+\item alert timeslice
+\item alert\-Config
+\item count the number of alerts
+\item everything else form D\-B\-: pending ... 
+\end{DoxyItemize}

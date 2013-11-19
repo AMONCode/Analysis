@@ -1,0 +1,32 @@
+\hypertarget{db__delete_8py}{\section{amonpy/dbase/db\-\_\-delete.py File Reference}
+\label{db__delete_8py}\index{amonpy/dbase/db\-\_\-delete.\-py@{amonpy/dbase/db\-\_\-delete.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__delete}{amonpy.\-dbase.\-db\-\_\-delete}
+\item 
+\hyperlink{namespacedb__delete}{db\-\_\-delete}
+\begin{DoxyCompactList}\small\item\em Module to delete entries from the tables in D\-B. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__delete}{amonpy.\-dbase.\-db\-\_\-delete}
+\item 
+\hyperlink{namespacedb__delete}{db\-\_\-delete}
+\begin{DoxyCompactList}\small\item\em Module to delete entries from the tables in D\-B. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a6e08541c61946a0824fee5a77f70ad11}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-\_\-stream}
+\begin{DoxyCompactList}\small\item\em Delete all alerts from a given stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_ae1e0858e85f62a9692ec040bd119bca0}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-event\-\_\-stream}
+\begin{DoxyCompactList}\small\item\em Delete all events from a given stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_acdfe02da91ca530b0881ae46b6f85902}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event}
+\begin{DoxyCompactList}\small\item\em Delete all alertlines from a given event stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a646321e8303a11c918f4a7134fd68c9e}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert}
+\begin{DoxyCompactList}\small\item\em Delete all alertlines from a given alert stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a1c17ad0c1f78379129afa8cdd5877b88}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-Config}
+\begin{DoxyCompactList}\small\item\em Delete all alert\-Config from a given alert stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a7b8b510bfe35a7217ec5c282305c7f29}{amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-Config\-\_\-rev}
+\begin{DoxyCompactList}\small\item\em Delete all alert\-Config from a given alert stream and revision number. \end{DoxyCompactList}\end{DoxyCompactItemize}

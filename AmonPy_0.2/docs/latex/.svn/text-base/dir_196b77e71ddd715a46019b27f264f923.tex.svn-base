@@ -1,0 +1,10 @@
+\hypertarget{dir_196b77e71ddd715a46019b27f264f923}{\section{mysql Directory Reference}
+\label{dir_196b77e71ddd715a46019b27f264f923}\index{mysql Directory Reference@{mysql Directory Reference}}
+}
+\subsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \hyperlink{db__build_8sql}{db\-\_\-build.\-sql}
+\item 
+file \hyperlink{db__mc__build_8sql}{db\-\_\-mc\-\_\-build.\-sql}
+\end{DoxyCompactItemize}

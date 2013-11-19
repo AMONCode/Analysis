@@ -1,0 +1,55 @@
+\hypertarget{classtest__classes_1_1_my_class2}{\section{test\-\_\-classes.\-My\-Class2 Class Reference}
+\label{classtest__classes_1_1_my_class2}\index{test\-\_\-classes.\-My\-Class2@{test\-\_\-classes.\-My\-Class2}}
+}
+Inheritance diagram for test\-\_\-classes.\-My\-Class2\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d6/d9f/classtest__classes_1_1_my_class2}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classtest__classes_1_1_my_class2_a277b1b75eaf63ed2a8d58583f757f6d9}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtest__classes_1_1_my_class2_aa8869bacaa7d8d98ba83bcfedd5bab49}{test1}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 16 of file test\-\_\-classes.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtest__classes_1_1_my_class2_a277b1b75eaf63ed2a8d58583f757f6d9}{\index{test\-\_\-classes\-::\-My\-Class2@{test\-\_\-classes\-::\-My\-Class2}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!test_classes::MyClass2@{test\-\_\-classes\-::\-My\-Class2}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def test\-\_\-classes.\-My\-Class2.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classtest__classes_1_1_my_class2_a277b1b75eaf63ed2a8d58583f757f6d9}
+
+
+Definition at line 18 of file test\-\_\-classes.\-py.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classtest__classes_1_1_my_class2_aa8869bacaa7d8d98ba83bcfedd5bab49}{\index{test\-\_\-classes\-::\-My\-Class2@{test\-\_\-classes\-::\-My\-Class2}!test1@{test1}}
+\index{test1@{test1}!test_classes::MyClass2@{test\-\_\-classes\-::\-My\-Class2}}
+\subsubsection[{test1}]{\setlength{\rightskip}{0pt plus 5cm}test\-\_\-classes.\-My\-Class2.\-test1}}\label{classtest__classes_1_1_my_class2_aa8869bacaa7d8d98ba83bcfedd5bab49}
+
+
+Definition at line 19 of file test\-\_\-classes.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/test/\hyperlink{test__classes_8py}{test\-\_\-classes.\-py}\end{DoxyCompactItemize}

@@ -1,0 +1,17 @@
+\hypertarget{namespacesidereal}{\section{sidereal Namespace Reference}
+\label{namespacesidereal}\index{sidereal@{sidereal}}
+}
+
+
+A Python module for astronomical calculations.  
+
+
+
+
+\subsection{Detailed Description}
+A Python module for astronomical calculations. \begin{DoxyVerb}A Python module for astronomical calculations.\end{DoxyVerb}
+
+
+For documentation, see\-: \href{http://www.nmt.edu/tcc/help/lang/python/examples/sidereal/ims/}{\tt http\-://www.\-nmt.\-edu/tcc/help/lang/python/examples/sidereal/ims/} 
+
+ \subsubsection*{Imports }

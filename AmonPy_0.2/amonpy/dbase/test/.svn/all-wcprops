@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/repos/amon/!svn/ver/816/trunk/AmonPy/amonpy/dbase/test
+END
+test_db_write.py
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/repos/amon/!svn/ver/816/trunk/AmonPy/amonpy/dbase/test/test_db_write.py
+END

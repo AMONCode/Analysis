@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<voe:VOEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
+xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0 http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd"
+ version="2.0" role="test" ivorn="ivo://amontest/test#1_0_0">
+    <Who>
+        <Date>2013-10-24T00:02:05.575680</Date>
+        <Author>
+            <contactName>Gordana Tesic, Miles Smith</contactName>
+            <contactEmail>gut10@psu.edu, mus44@psu.edu</contactEmail>
+        </Author>
+    </Who>
+    <What>
+        <Param name="stream" dataType="string" value="1" ucd="meta.number">
+            <Description>Analysis stream identification</Description>
+        </Param>
+        <Param name="id" dataType="string" value="0" ucd="meta.number">
+            <Description>Alert identification</Description>
+        </Param>
+        <Param name="rev" dataType="string" value="0" ucd="meta.number">
+            <Description>Alert revision</Description>
+        </Param>
+        <Param name="nevents" dataType="float" value="0.0" ucd="meta.number" unit=" ">
+            <Description>Number of events in the alert</Description>
+        </Param>
+        <Param name="deltaT" dataType="float" value="0.0" ucd="time.timeduration" unit="s">
+            <Description>Time window of the burst</Description>
+        </Param>
+        <Param name="sigmaT" dataType="float" value="0.0" ucd="time.timeduration" unit="s">
+            <Description>Uncertainty of the time window</Description>
+        </Param>
+        <Param name="false_pos" dataType="float" value="0.0" ucd="stat.probability" unit=" ">
+            <Description>False positive rate</Description>
+        </Param>
+        <Param name="observing" dataType="int" value="0" ucd="meta.number" unit=" ">
+            <Description>Observatories observing given part og the sky</Description>
+        </Param>
+        <Param name="trigger" dataType="int" value="0" ucd="meta.number" unit=" ">
+            <Description>Observatories triggering</Description>
+        </Param>
+        <Param name="pvalue" dataType="float" value="0.0" ucd="stat.probability" unit=" ">
+            <Description>Pvalue for the alert</Description>
+        </Param>
+        <Param name="skymap" dataType="string" value="False" ucd="meta.code.multip" unit=" ">
+            <Description>Skymap or no skymap assotiated with the alert</Description>
+        </Param>
+    </What>
+    <WhereWhen>
+        <ObsDataLocation>
+            <ObservatoryLocation>
+                <AstroCoordSystem id="UTC-GEOD-TOPO"/>
+                <AstroCoords coord_system_id="UTC-GEOD-TOPO"/>
+            </ObservatoryLocation>
+            <ObservationLocation>
+                <AstroCoordSystem id="UTC-ICRS-TOPO"/>
+                <AstroCoords coord_system_id="UTC-ICRS-TOPO">
+                    <Time unit="s">
+                        <TimeInstant>
+                            <ISOTime>2000-01-01T00:00:00.000001</ISOTime>
+                        </TimeInstant>
+                    </Time>
+                    <Position2D unit="deg-deg">
+                        <Name1>RA</Name1>
+                        <Name2>Dec</Name2>
+                        <Value2>
+                            <C1>-1.000000</C1>
+                            <C2>0.000000</C2>
+                        </Value2>
+                        <Error2Radius>0.000000</Error2Radius>
+                    </Position2D>
+                </AstroCoords>
+            </ObservationLocation>
+        </ObsDataLocation>
+    </WhereWhen>
+    <Description>Report of some irrelevant information</Description>
+</voe:VOEvent>
+

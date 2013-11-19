@@ -1,0 +1,81 @@
+\hypertarget{new__classes_8py}{\section{amonpy/dev/new\-\_\-classes.py File Reference}
+\label{new__classes_8py}\index{amonpy/dev/new\-\_\-classes.\-py@{amonpy/dev/new\-\_\-classes.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacenew__classes}{new\-\_\-classes}
+\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacenew__classes}{new\-\_\-classes}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacenew__classes_a82b097ba07d11f2a7bf0a850e0043a70}{new\-\_\-classes.\-wherewhen\-\_\-def}
+\begin{DoxyCompactList}\small\item\em wherewhen\-\_\-def is a class factory function Optional Inputs\-: args\mbox{[}0\mbox{]} is an object from the Event\-Stream\-Config class args\mbox{[}1\mbox{]} set to True if simulaiton is desired Output\-: returns the Where\-When class \end{DoxyCompactList}\item 
+def \hyperlink{namespacenew__classes_a0fcecfd8b12693568b52230e1d0d273b}{new\-\_\-classes.\-event\-\_\-def}
+\begin{DoxyCompactList}\small\item\em event\-\_\-def is a class factory function Optional Inputs\-: args\mbox{[}0\mbox{]} is an object from the Event\-Stream\-Config class args\mbox{[}1\mbox{]} set to True if simulaiton is desired Output\-: returns the Event class \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacenew__classes_a926925c7d7b1370085cdd9843a4de2d6}{new\-\_\-classes.\-pi} = math.\-pi
+\item 
+tuple \hyperlink{namespacenew__classes_a1e23606959988560c0907c1cf8927ca4}{new\-\_\-classes.\-Event} = event\-\_\-def()
+\item 
+tuple \hyperlink{namespacenew__classes_a366ef348dd236fbe8664e024bcd1a562}{new\-\_\-classes.\-event1} = Event(1,2,3)
+\item 
+tuple \hyperlink{namespacenew__classes_a9da4a983320cb3bba417ae32b79eb64e}{new\-\_\-classes.\-config} = simstream(0)
+\item 
+tuple \hyperlink{namespacenew__classes_abd582a733c0ca2e558194b6841b58136}{new\-\_\-classes.\-event2} = Event(45,25,0)
+\item 
+tuple \hyperlink{namespacenew__classes_a6935734165efd6cabde2e800a88d68db}{new\-\_\-classes.\-event3} = Event(45,25,0)
+\item 
+tuple \hyperlink{namespacenew__classes_af53bd2467cd3023f65d605a0c08e7d99}{new\-\_\-classes.\-event4} = Event(45,25,0)
+\item 
+\hyperlink{namespacenew__classes_ae7e3b2bbf607f39e07067686b7348b7a}{new\-\_\-classes.\-sigma\-R}
+\item 
+\hyperlink{namespacenew__classes_a8e8afe16f3a5e549a03f4ad5298cf7ed}{new\-\_\-classes.\-sigma\-T}
+\item 
+\hyperlink{namespacenew__classes_a76ab9d95ee5d2d765b15361481198b83}{new\-\_\-classes.\-point\-\_\-\-R\-A}
+\item 
+\hyperlink{namespacenew__classes_ac663519520be7e1c17272fe7f06318fa}{new\-\_\-classes.\-point\-\_\-dec}
+\item 
+\hyperlink{namespacenew__classes_ac61fbf8b44cf7c46f925a149bd6afed4}{new\-\_\-classes.\-longitude}
+\item 
+\hyperlink{namespacenew__classes_a751ff5877c531b073beb6fca3c77d5c6}{new\-\_\-classes.\-latitude}
+\item 
+\hyperlink{namespacenew__classes_a77bb4acd1885551ca8928152883a5dbb}{new\-\_\-classes.\-elevation}
+\item 
+\hyperlink{namespacenew__classes_ab6ff6d5e2780202214bd24996413a88a}{new\-\_\-classes.\-datetime}
+\item 
+\hyperlink{namespacenew__classes_a5d1c7cee918501ba5d095b7e870ff98f}{new\-\_\-classes.\-R\-A}
+\item 
+\hyperlink{namespacenew__classes_a6768c7ee54a17979c2768af041edd136}{new\-\_\-classes.\-dec}
+\item 
+\hyperlink{namespacenew__classes_afe97fb2eb19b6fe03d4b07ecacee4658}{new\-\_\-classes.\-stream}
+\item 
+\hyperlink{namespacenew__classes_a3234856273cc5325d02ef03dbdc94e86}{new\-\_\-classes.\-id}
+\item 
+\hyperlink{namespacenew__classes_a2110481a8843a09a46030b5e87d01981}{new\-\_\-classes.\-rev}
+\item 
+\hyperlink{namespacenew__classes_a7e571c5b4074ac3d8c65ddb6dd5a9e47}{new\-\_\-classes.\-nevents}
+\item 
+\hyperlink{namespacenew__classes_ac0d662fb6777f2b1b81f4f99120431e0}{new\-\_\-classes.\-delta\-T}
+\item 
+\hyperlink{namespacenew__classes_a34cb86eed8ecbbe1ec49cebcb4ef0fe3}{new\-\_\-classes.\-false\-\_\-pos}
+\item 
+\hyperlink{namespacenew__classes_a7a8d55030453bf244d53703d21006ab3}{new\-\_\-classes.\-pvalue}
+\item 
+\hyperlink{namespacenew__classes_ab7f105e235b85e724d2c7ea9ff6b4d76}{new\-\_\-classes.\-observing}
+\item 
+\hyperlink{namespacenew__classes_a84f9260d4b0fb62c11d7362ad5943629}{new\-\_\-classes.\-trigger}
+\item 
+\hyperlink{namespacenew__classes_afc03524838db7a090710d87eeef3330f}{new\-\_\-classes.\-type}
+\item 
+\hyperlink{namespacenew__classes_af28843b1ecce086a2bb21c7f932e1f9d}{new\-\_\-classes.\-psf\-\_\-type}
+\item 
+\hyperlink{namespacenew__classes_acdfe3efaff72c779a5129ce818a90849}{new\-\_\-classes.\-configstream}
+\end{DoxyCompactItemize}

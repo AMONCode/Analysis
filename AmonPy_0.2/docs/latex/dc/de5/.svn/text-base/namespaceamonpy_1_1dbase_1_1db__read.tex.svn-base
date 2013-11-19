@@ -1,0 +1,229 @@
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read}{\section{amonpy.\-dbase.\-db\-\_\-read Namespace Reference}
+\label{namespaceamonpy_1_1dbase_1_1db__read}\index{amonpy.\-dbase.\-db\-\_\-read@{amonpy.\-dbase.\-db\-\_\-read}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_aadfa918c61f17617c45347f988f99d40}{read\-\_\-event\-\_\-single}
+\begin{DoxyCompactList}\small\item\em Read a given event from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a87534985aa3a945c03ef031a3001b6fb}{read\-\_\-event\-\_\-timeslice}
+\begin{DoxyCompactList}\small\item\em Read a list of events from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a70f32a72bc370d0c49e1c37a9dee7400}{read\-\_\-event\-\_\-timeslice\-\_\-streams}
+\begin{DoxyCompactList}\small\item\em Read a list of events from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_add5550ef892288fab9ad494852474746}{read\-\_\-event\-Config}
+\begin{DoxyCompactList}\small\item\em Read a list of event configurations from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a827488ee2cbca3079ec2875508c9c9f5}{read\-\_\-alert\-\_\-single}
+\begin{DoxyCompactList}\small\item\em Read a given alert from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a5b9cc348ea38bff43d6d2798e33a6c50}{read\-\_\-alert\-\_\-timeslice}
+\begin{DoxyCompactList}\small\item\em Read a list of alerts from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_ac6c02b3b64cf22309d7ab92ec7aa64e8}{read\-\_\-alert\-Config}
+\begin{DoxyCompactList}\small\item\em Read a given alert configuration from the D\-B. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a043531a3ecc1db0de4824643e6a48e51}{alert\-\_\-count}
+\begin{DoxyCompactList}\small\item\em Counts the number of alerts from a given stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_ad56e9c199b78bc3ef94eb071f6a6c45c}{rev\-\_\-count}
+\begin{DoxyCompactList}\small\item\em Counts the revision number from a given stream in event table. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__read_a7650619e7c136d6b86feced068f6d334}{stream\-\_\-count\-\_\-alertconfig}
+\begin{DoxyCompactList}\small\item\em Counts the analysis stream number from a alert\-Config table. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a043531a3ecc1db0de4824643e6a48e51}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!alert\-\_\-count@{alert\-\_\-count}}
+\index{alert\-\_\-count@{alert\-\_\-count}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{alert\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-alert\-\_\-count (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-name, }
+\item[{}]{table\-\_\-name, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a043531a3ecc1db0de4824643e6a48e51}
+
+
+Counts the number of alerts from a given stream. 
+
+
+
+Definition at line 639 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a827488ee2cbca3079ec2875508c9c9f5}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-alert\-\_\-single@{read\-\_\-alert\-\_\-single}}
+\index{read\-\_\-alert\-\_\-single@{read\-\_\-alert\-\_\-single}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-alert\-\_\-single}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-alert\-\_\-single (
+\begin{DoxyParamCaption}
+\item[{}]{alert\-\_\-stream, }
+\item[{}]{alert\-\_\-num, }
+\item[{}]{alert\-\_\-rev, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a827488ee2cbca3079ec2875508c9c9f5}
+
+
+Read a given alert from the D\-B. 
+
+Input alert stream name (char), event I\-D (int) event\-\_\-\-Rev (int), host name, user name, password and D\-B name. 
+
+Definition at line 438 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a5b9cc348ea38bff43d6d2798e33a6c50}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-alert\-\_\-timeslice@{read\-\_\-alert\-\_\-timeslice}}
+\index{read\-\_\-alert\-\_\-timeslice@{read\-\_\-alert\-\_\-timeslice}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-alert\-\_\-timeslice}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-alert\-\_\-timeslice (
+\begin{DoxyParamCaption}
+\item[{}]{time\-\_\-start, }
+\item[{}]{time\-\_\-interval, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a5b9cc348ea38bff43d6d2798e33a6c50}
+
+
+Read a list of alerts from the D\-B. 
+
+Input start time (datetime), time window (in seconds), host name, user name, password and D\-B name. 
+
+Definition at line 504 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_ac6c02b3b64cf22309d7ab92ec7aa64e8}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-alert\-Config@{read\-\_\-alert\-Config}}
+\index{read\-\_\-alert\-Config@{read\-\_\-alert\-Config}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-alert\-Config}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-alert\-Config (
+\begin{DoxyParamCaption}
+\item[{}]{stream, }
+\item[{}]{rev, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_ac6c02b3b64cf22309d7ab92ec7aa64e8}
+
+
+Read a given alert configuration from the D\-B. 
+
+Input stream name (char), Rev (int), host name, user name, password and D\-B name. 
+
+Definition at line 577 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_aadfa918c61f17617c45347f988f99d40}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-event\-\_\-single@{read\-\_\-event\-\_\-single}}
+\index{read\-\_\-event\-\_\-single@{read\-\_\-event\-\_\-single}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-event\-\_\-single}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-event\-\_\-single (
+\begin{DoxyParamCaption}
+\item[{}]{event\-\_\-stream, }
+\item[{}]{event\-\_\-num, }
+\item[{}]{event\-\_\-rev, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_aadfa918c61f17617c45347f988f99d40}
+
+
+Read a given event from the D\-B. 
+
+Input event stream name (char), event I\-D (int) event\-\_\-\-Rev (int), host name, user name, password and D\-B name. 
+
+Definition at line 37 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a87534985aa3a945c03ef031a3001b6fb}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-event\-\_\-timeslice@{read\-\_\-event\-\_\-timeslice}}
+\index{read\-\_\-event\-\_\-timeslice@{read\-\_\-event\-\_\-timeslice}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-event\-\_\-timeslice}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-event\-\_\-timeslice (
+\begin{DoxyParamCaption}
+\item[{}]{time\-\_\-start, }
+\item[{}]{time\-\_\-interval, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a87534985aa3a945c03ef031a3001b6fb}
+
+
+Read a list of events from the D\-B. 
+
+Input start time (datetime), time window (in seconds), host name, user name, password and D\-B name. 
+
+Definition at line 117 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a70f32a72bc370d0c49e1c37a9dee7400}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-event\-\_\-timeslice\-\_\-streams@{read\-\_\-event\-\_\-timeslice\-\_\-streams}}
+\index{read\-\_\-event\-\_\-timeslice\-\_\-streams@{read\-\_\-event\-\_\-timeslice\-\_\-streams}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-event\-\_\-timeslice\-\_\-streams}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-event\-\_\-timeslice\-\_\-streams (
+\begin{DoxyParamCaption}
+\item[{}]{streams, }
+\item[{}]{time\-\_\-start, }
+\item[{}]{time\-\_\-interval, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a70f32a72bc370d0c49e1c37a9dee7400}
+
+
+Read a list of events from the D\-B. 
+
+Input start time (datetime), time window (in seconds), host name, user name, password and D\-B name. 
+
+Definition at line 200 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_add5550ef892288fab9ad494852474746}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!read\-\_\-event\-Config@{read\-\_\-event\-Config}}
+\index{read\-\_\-event\-Config@{read\-\_\-event\-Config}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{read\-\_\-event\-Config}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-read\-\_\-event\-Config (
+\begin{DoxyParamCaption}
+\item[{}]{time\-\_\-start, }
+\item[{}]{time\-\_\-interval, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_add5550ef892288fab9ad494852474746}
+
+
+Read a list of event configurations from the D\-B. 
+
+Input start time (datetime), time window (in seconds), host name, user name, password and D\-B name. 
+
+Definition at line 352 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_ad56e9c199b78bc3ef94eb071f6a6c45c}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!rev\-\_\-count@{rev\-\_\-count}}
+\index{rev\-\_\-count@{rev\-\_\-count}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{rev\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-rev\-\_\-count (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-name, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_ad56e9c199b78bc3ef94eb071f6a6c45c}
+
+
+Counts the revision number from a given stream in event table. 
+
+
+
+Definition at line 662 of file db\-\_\-read.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__read_a7650619e7c136d6b86feced068f6d334}{\index{amonpy\-::dbase\-::db\-\_\-read@{amonpy\-::dbase\-::db\-\_\-read}!stream\-\_\-count\-\_\-alertconfig@{stream\-\_\-count\-\_\-alertconfig}}
+\index{stream\-\_\-count\-\_\-alertconfig@{stream\-\_\-count\-\_\-alertconfig}!amonpy::dbase::db_read@{amonpy\-::dbase\-::db\-\_\-read}}
+\subsubsection[{stream\-\_\-count\-\_\-alertconfig}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-read.\-stream\-\_\-count\-\_\-alertconfig (
+\begin{DoxyParamCaption}
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__read_a7650619e7c136d6b86feced068f6d334}
+
+
+Counts the analysis stream number from a alert\-Config table. 
+
+
+
+Definition at line 686 of file db\-\_\-read.\-py.
+

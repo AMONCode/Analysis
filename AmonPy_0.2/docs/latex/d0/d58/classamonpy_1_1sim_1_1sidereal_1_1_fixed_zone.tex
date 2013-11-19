@@ -1,0 +1,111 @@
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{\section{amonpy.\-sim.\-sidereal.\-Fixed\-Zone Class Reference}
+\label{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}\index{amonpy.\-sim.\-sidereal.\-Fixed\-Zone@{amonpy.\-sim.\-sidereal.\-Fixed\-Zone}}
+}
+
+
+Represents a time zone with a fixed offset east of U\-T\-C.  
+
+
+Inheritance diagram for amonpy.\-sim.\-sidereal.\-Fixed\-Zone\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d0/d58/classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a4b1001f54b5a79fd3d4e36d22d6b1773}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{Fixed\-Zone}. \end{DoxyCompactList}\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a259dc7d17941495116721e9ad5aa75a5}{utcoffset}
+\begin{DoxyCompactList}\small\item\em Return self's offset east of U\-T\-C. \end{DoxyCompactList}\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a71498be1686ee252280e0aab5585c56b}{tzname}
+\begin{DoxyCompactList}\small\item\em Return self's name. \end{DoxyCompactList}\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a5a37ebf256e2dc3233aaf05c19a2f84d}{dst}
+\begin{DoxyCompactList}\small\item\em Return self's daylight time offset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a time zone with a fixed offset east of U\-T\-C. 
+
+Exports\-: \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{Fixed\-Zone} ( hours, minutes, name )\-: \mbox{[} (hours is a signed offset in hours as an int) and (minutes is a signed offset in minutes as an int) -\/$>$ return a new \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{Fixed\-Zone} instance representing those offsets east of U\-T\-C \mbox{]} State/\-Invariants\-: .\-\_\-\-\_\-offset\-: \mbox{[} a datetime.\-timedelta representing self's offset east of U\-T\-C \mbox{]} .\-\_\-\-\_\-name\-: \mbox{[} as passed to the constructor's name argument \mbox{]} 
+
+Definition at line 387 of file sidereal.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a4b1001f54b5a79fd3d4e36d22d6b1773}{\index{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::sim::sidereal::FixedZone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Fixed\-Zone.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{hh, }
+\item[{}]{mm, }
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a4b1001f54b5a79fd3d4e36d22d6b1773}
+
+
+Constructor for \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{Fixed\-Zone}. 
+
+
+
+Definition at line 391 of file sidereal.\-py.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a5a37ebf256e2dc3233aaf05c19a2f84d}{\index{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}!dst@{dst}}
+\index{dst@{dst}!amonpy::sim::sidereal::FixedZone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{dst}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Fixed\-Zone.\-dst (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a5a37ebf256e2dc3233aaf05c19a2f84d}
+
+
+Return self's daylight time offset. 
+
+
+
+Definition at line 407 of file sidereal.\-py.
+
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a71498be1686ee252280e0aab5585c56b}{\index{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}!tzname@{tzname}}
+\index{tzname@{tzname}!amonpy::sim::sidereal::FixedZone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{tzname}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Fixed\-Zone.\-tzname (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a71498be1686ee252280e0aab5585c56b}
+
+
+Return self's name. 
+
+
+
+Definition at line 402 of file sidereal.\-py.
+
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a259dc7d17941495116721e9ad5aa75a5}{\index{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}!utcoffset@{utcoffset}}
+\index{utcoffset@{utcoffset}!amonpy::sim::sidereal::FixedZone@{amonpy\-::sim\-::sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{utcoffset}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Fixed\-Zone.\-utcoffset (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone_a259dc7d17941495116721e9ad5aa75a5}
+
+
+Return self's offset east of U\-T\-C. 
+
+
+
+Definition at line 397 of file sidereal.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal_8py}{sidereal.\-py}\end{DoxyCompactItemize}

@@ -1,0 +1,216 @@
+\hypertarget{sidereal_8py}{\section{amonpy/sim/sidereal.py File Reference}
+\label{sidereal_8py}\index{amonpy/sim/sidereal.\-py@{amonpy/sim/sidereal.\-py}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_fixed_zone}{amonpy.\-sim.\-sidereal.\-Fixed\-Zone}
+\begin{DoxyCompactList}\small\item\em Represents a time zone with a fixed offset east of U\-T\-C. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone}{amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone}
+\begin{DoxyCompactList}\small\item\em Represents a U.\-S. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units}{amonpy.\-sim.\-sidereal.\-Mixed\-Units}
+\begin{DoxyCompactList}\small\item\em Represents a system with mixed units, e.\-g., hours/minutes/seconds. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_lat_lon}{amonpy.\-sim.\-sidereal.\-Lat\-Lon}
+\begin{DoxyCompactList}\small\item\em Represents a latitude+longitude. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_julian_date}{amonpy.\-sim.\-sidereal.\-Julian\-Date}
+\begin{DoxyCompactList}\small\item\em Class to represent Julian-\/date timestamps. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_sidereal_time}{amonpy.\-sim.\-sidereal.\-Sidereal\-Time}
+\begin{DoxyCompactList}\small\item\em Represents a sidereal time value. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_alt_az}{amonpy.\-sim.\-sidereal.\-Alt\-Az}
+\begin{DoxyCompactList}\small\item\em Represents a sky location in horizon coords. \end{DoxyCompactList}\item 
+class \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_r_a_dec}{amonpy.\-sim.\-sidereal.\-R\-A\-Dec}
+\begin{DoxyCompactList}\small\item\em Represents a celestial location in equatorial coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal}{amonpy.\-sim.\-sidereal}
+\item 
+\hyperlink{namespacesidereal}{sidereal}
+\begin{DoxyCompactList}\small\item\em A Python module for astronomical calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal}{amonpy.\-sim.\-sidereal}
+\item 
+\hyperlink{namespacesidereal}{sidereal}
+\begin{DoxyCompactList}\small\item\em A Python module for astronomical calculations. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a38b578fdaa553d893f33f1125ddc83b4}{amonpy.\-sim.\-sidereal.\-hours\-To\-Radians}
+\begin{DoxyCompactList}\small\item\em Convert hours (15 degrees) to radians. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aceb8518cc46da6afe750e992d26084e5}{amonpy.\-sim.\-sidereal.\-radians\-To\-Hours}
+\begin{DoxyCompactList}\small\item\em Convert radians to hours (15 degrees). \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a8ea39d13d3e7787a533dcc3c0d924080}{amonpy.\-sim.\-sidereal.\-hour\-Angle\-To\-R\-A}
+\begin{DoxyCompactList}\small\item\em Convert hour angle to right ascension. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a8ed0ba919921f3e67a86446adbedd742}{amonpy.\-sim.\-sidereal.\-ra\-To\-Hour\-Angle}
+\begin{DoxyCompactList}\small\item\em Convert right ascension to hour angle. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aed3d5d7c5fd6ad86fd18b9000c9534d8}{amonpy.\-sim.\-sidereal.\-day\-No}
+\begin{DoxyCompactList}\small\item\em Compute the day number within the year. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a7d8896425f6ad0b06b434772c558299d}{amonpy.\-sim.\-sidereal.\-parse\-Datetime}
+\begin{DoxyCompactList}\small\item\em Parse a date with optional time. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a88742e7ac3f8ecd952771e87c7da5939}{amonpy.\-sim.\-sidereal.\-parse\-Date}
+\begin{DoxyCompactList}\small\item\em Validate and convert a date in external form. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_af3b82f3dee1b20b94cc81b98a5d0b63d}{amonpy.\-sim.\-sidereal.\-parse\-Time}
+\begin{DoxyCompactList}\small\item\em Validate and convert a time and optional zone. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6eeb42277b679954122d251995342ec0}{amonpy.\-sim.\-sidereal.\-parse\-Zone}
+\begin{DoxyCompactList}\small\item\em Validate and convert a time zone suffix. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a8282330c49872b7637b932c4694bc4e0}{amonpy.\-sim.\-sidereal.\-parse\-Fixed\-Zone}
+\begin{DoxyCompactList}\small\item\em Convert a +hhmm or -\/hhmm zone suffix. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6b8a7e31bdf2bfa7318540ffd6fc316b}{amonpy.\-sim.\-sidereal.\-first\-Sunday\-On\-Or\-After}
+\begin{DoxyCompactList}\small\item\em Find the first Sunday on or after a given date. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a50946002d41765a733b45bb1e023c287}{amonpy.\-sim.\-sidereal.\-parse\-Angle}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external angle. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a9edb379c14fe6119a7ede7c36480e819}{amonpy.\-sim.\-sidereal.\-parse\-Float\-Suffix}
+\begin{DoxyCompactList}\small\item\em Parse a float followed by a letter code. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aeca4a919316574daa165a7d6dadef5d0}{amonpy.\-sim.\-sidereal.\-parse\-Float}
+\begin{DoxyCompactList}\small\item\em Parse a floating-\/point number at the front of s. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a3815664befcad914fcf2a8ec4ec1bc7e}{amonpy.\-sim.\-sidereal.\-parse\-Re}
+\begin{DoxyCompactList}\small\item\em Parse a regular expression at the head of a string. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a9e83b3626ba431e8272fcdd811d969da}{amonpy.\-sim.\-sidereal.\-parse\-Lat}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external latitude. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a501650d07baa2c24d0881e3103132754}{amonpy.\-sim.\-sidereal.\-parse\-Lon}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external longitude. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a0805787564084c416b4e201e710158f8}{amonpy.\-sim.\-sidereal.\-parse\-Hours}
+\begin{DoxyCompactList}\small\item\em Validate and convert a quantity in hours. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a0d12fc226bca67ce88441c23999a0985}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_acb147e1c9df6f3d42fbdda60fce84c89}{amonpy.\-sim.\-sidereal.\-mix\-To\-Single}
+\begin{DoxyCompactList}\small\item\em Convert mixed units to a single value. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a73379ed810f672f10a58df0115a09537}{amonpy.\-sim.\-sidereal.\-single\-To\-Mix}
+\begin{DoxyCompactList}\small\item\em Convert to mixed units. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a98956f2abc53776c6eafe8da523cb397}{amonpy.\-sim.\-sidereal.\-format}
+\begin{DoxyCompactList}\small\item\em Format mixed units. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a0d12fc226bca67ce88441c23999a0985}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_lat_lon}{Lat\-Lon}. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a642ffbfb2acc4e115b5b484c6c2d9cef}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-str\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Return self as a string. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a19698bae1422cc6262bcd71eec8aeb6a}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-float\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Convert self to a float. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a1cc24596a65c223ed73b0919fe5b87d6}{amonpy.\-sim.\-sidereal.\-datetime}
+\begin{DoxyCompactList}\small\item\em Convert to a standard Python datetime object in U\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a45f7a30958b923a8e0dd1bd4172633d2}{amonpy.\-sim.\-sidereal.\-offset}
+\begin{DoxyCompactList}\small\item\em Return a new \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_julian_date}{Julian\-Date} for self+(delta days) \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ad2b5f4f7b84e506b5fa3c2bc55a35c58}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-sub\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Implement subtraction. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a06ad8ed4711bbc5269214c99af3d33bf}{amonpy.\-sim.\-sidereal.\-\_\-\-\_\-cmp\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Compare two instances. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a4b33fef3bf95d11432a7e5d38e6c0915}{amonpy.\-sim.\-sidereal.\-from\-Datetime}
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_julian_date}{Julian\-Date} instance from a datetime.\-datetime. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a4b2a8e402bf171d31757ff6948a8a49b}{amonpy.\-sim.\-sidereal.\-utc}
+\begin{DoxyCompactList}\small\item\em Convert G\-S\-T to U\-T\-C. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a78a861d713d2bb72ba4a2e032b96ae6f}{amonpy.\-sim.\-sidereal.\-factor\-B}
+\begin{DoxyCompactList}\small\item\em Compute sidereal conversion factor B for a given year. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ad4e83a2a3e080065715e53d8d9175206}{amonpy.\-sim.\-sidereal.\-gst}
+\begin{DoxyCompactList}\small\item\em Convert L\-S\-T to G\-S\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a52abb986a1bcc8647ff048a1e327433a}{amonpy.\-sim.\-sidereal.\-lst}
+\begin{DoxyCompactList}\small\item\em Convert G\-S\-T to L\-S\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_af288a9b5b40d2d20c8f2535e1b209654}{amonpy.\-sim.\-sidereal.\-ra\-Dec}
+\begin{DoxyCompactList}\small\item\em Convert horizon coordinates to equatorial. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a9de9ad6b4752a55300cff5a5d87d4711}{amonpy.\-sim.\-sidereal.\-coord\-Rotate}
+\begin{DoxyCompactList}\small\item\em Used to convert between equatorial and horizon coordinates. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a5bd5459044e31d6dc85bb5e34841057b}{amonpy.\-sim.\-sidereal.\-hour\-Angle}
+\begin{DoxyCompactList}\small\item\em Find the hour angle at a given observer's location. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6fb37fea3ede082ddd9c84313433734a}{amonpy.\-sim.\-sidereal.\-alt\-Az}
+\begin{DoxyCompactList}\small\item\em Convert equatorial to horizon coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a0507d81c344a5ca1691e575909282b29}{amonpy.\-sim.\-sidereal.\-F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R} = 1583
+\item 
+float \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a2c8d9a578f93121ccd945504ac583f03}{amonpy.\-sim.\-sidereal.\-T\-W\-O\-\_\-\-P\-I} = 2.\-0
+\item 
+float \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6dc0322580f236f140468b48d70edc82}{amonpy.\-sim.\-sidereal.\-P\-I\-\_\-\-O\-V\-E\-R\-\_\-12} = pi/12.\-0
+\item 
+int \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ac5d3d76ef51676c5080775d472d67a98}{amonpy.\-sim.\-sidereal.\-J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S} = 2200000
+\item 
+float \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6ad7734e7b76fc336711a9a500bc8032}{amonpy.\-sim.\-sidereal.\-S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A} = 0.\-0657098
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ac016f678cf2cee161df382472e2d5949}{amonpy.\-sim.\-sidereal.\-F\-L\-O\-A\-T\-\_\-\-P\-A\-T}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ac5ea7c28fe60a3aee05aab43cf7077d0}{amonpy.\-sim.\-sidereal.\-D\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}d\-D\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a804824ee40100f10c0df7c2a78d7c557}{amonpy.\-sim.\-sidereal.\-M\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}m\-M\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a4b605d3e49744d64f74f57576d40f0de}{amonpy.\-sim.\-sidereal.\-S\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}s\-S\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a59cad1b2438b4770cff5fdc5c4b5b729}{amonpy.\-sim.\-sidereal.\-H\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}h\-H\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a0d12929ddde8e73c7a5caace56f4c6c5}{amonpy.\-sim.\-sidereal.\-N\-S\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}n\-Ns\-S\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ad7a8005369f4e3c771b42e5dadb008be}{amonpy.\-sim.\-sidereal.\-E\-W\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}e\-Ew\-W\mbox{]}' )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aeca578cc76ae401d8eaaaa9ce6c0ed47}{amonpy.\-sim.\-sidereal.\-T\-\_\-\-P\-A\-T\-T\-E\-R\-N} = re.\-compile( '\mbox{[}t\-T\mbox{]}' )
+\item 
+string \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a066da938654a2cfd3ad8822f3b902391}{amonpy.\-sim.\-sidereal.\-Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}Y\char`\"{}
+\item 
+string \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a24bbb70c569d2274730a610fd5380fee}{amonpy.\-sim.\-sidereal.\-M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}M\char`\"{}
+\item 
+string \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ac01daf2e3ea4cf146f758cb9beab4b80}{amonpy.\-sim.\-sidereal.\-D\-A\-Y\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}D\char`\"{}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a2af44303755d492213ebb82a6990b9b4}{amonpy.\-sim.\-sidereal.\-date\-Re}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6c9f45aebca6543bb464d0f6477f1103}{amonpy.\-sim.\-sidereal.\-D\-A\-T\-E\-\_\-\-P\-A\-T} = re.\-compile( date\-Re )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aa3d211b997762f17aeda244ab0bf4771}{amonpy.\-sim.\-sidereal.\-H\-H\-M\-M\-\_\-\-P\-A\-T}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ab96063e65dbd73e9f896b953e10576b3}{amonpy.\-sim.\-sidereal.\-D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O} = datetime.\-timedelta(0)
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a3766f520ebede113a6af900f31cad78c}{amonpy.\-sim.\-sidereal.\-D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R} = datetime.\-timedelta(hours=1)
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a08eaf9ec6406ff09c3029f019cdd10f9}{amonpy.\-sim.\-sidereal.\-utc\-Zone} = Fixed\-Zone(0, 0, \char`\"{}U\-T\-C\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a24a02d8044a4126d459464bf644ea7cb}{amonpy.\-sim.\-sidereal.\-est\-Zone} = Fixed\-Zone(-\/5, 0, \char`\"{}E\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a7dc76e45276335e04963acaa48314678}{amonpy.\-sim.\-sidereal.\-edt\-Zone} = Fixed\-Zone(-\/4, 0, \char`\"{}E\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a29ebdf7098f9eb57a1f5c78fada23824}{amonpy.\-sim.\-sidereal.\-et\-Zone} = U\-S\-Time\-Zone(-\/5, 0, \char`\"{}E\-T\char`\"{}, \char`\"{}E\-S\-T\char`\"{}, \char`\"{}E\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a549980fae021a9a5bb945772f8dc525a}{amonpy.\-sim.\-sidereal.\-cst\-Zone} = Fixed\-Zone(-\/6, 0, \char`\"{}C\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ad90a055931e7fb716b540ae1f0339ab5}{amonpy.\-sim.\-sidereal.\-cdt\-Zone} = Fixed\-Zone(-\/5, 0, \char`\"{}C\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a43bd98c47eb0b0647dc08ddad348459a}{amonpy.\-sim.\-sidereal.\-ct\-Zone} = U\-S\-Time\-Zone(-\/6, 0, \char`\"{}C\-T\char`\"{}, \char`\"{}C\-S\-T\char`\"{}, \char`\"{}C\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a34497c5b99af9d6762a3ca474aef4658}{amonpy.\-sim.\-sidereal.\-mst\-Zone} = Fixed\-Zone(-\/7, 0, \char`\"{}M\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a915285c8ea23cc18702c8c783c080355}{amonpy.\-sim.\-sidereal.\-mdt\-Zone} = Fixed\-Zone(-\/6, 0, \char`\"{}M\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aa9cbae5e2822246d12d6bca4aaf10043}{amonpy.\-sim.\-sidereal.\-mt\-Zone} = U\-S\-Time\-Zone(-\/7, 0, \char`\"{}M\-T\char`\"{}, \char`\"{}M\-S\-T\char`\"{}, \char`\"{}M\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a959f5a3bba85ba90d4efa5c021426171}{amonpy.\-sim.\-sidereal.\-pst\-Zone} = Fixed\-Zone(-\/8, 0, \char`\"{}P\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a5151d2554a093a90f7908e5e3dba4279}{amonpy.\-sim.\-sidereal.\-pdt\-Zone} = Fixed\-Zone(-\/7, 0, \char`\"{}P\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a1e8455573c3a0741ed720fd0534453ef}{amonpy.\-sim.\-sidereal.\-pt\-Zone} = U\-S\-Time\-Zone(-\/8, 0, \char`\"{}P\-T\char`\"{}, \char`\"{}P\-S\-T\char`\"{}, \char`\"{}P\-D\-T\char`\"{})
+\item 
+dictionary \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a6cd8e6bf54dcd2fc71cbd9ff87c0189b}{amonpy.\-sim.\-sidereal.\-zone\-Code\-Map}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a96f3c1e64339d84582035c717708e859}{amonpy.\-sim.\-sidereal.\-dms\-Units} = Mixed\-Units( (60, 60) )
+\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a3ad086c7aee5c5d5a6838ad7da5716e3}{amonpy.\-sim.\-sidereal.\-from\-Datetime} = staticmethod(from\-Datetime)
+\begin{DoxyCompactList}\small\item\em Convert civil time to Greenwich Sidereal. \end{DoxyCompactList}\item 
+tuple \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_aae0094a33936985d23752c0b42ea411f}{amonpy.\-sim.\-sidereal.\-factor\-B} = staticmethod(factor\-B)
+\item 
+float \hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a07bd4ddef1a220bfe344b9dda000fe0d}{amonpy.\-sim.\-sidereal.\-S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C} = 1.\-002738
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ab2edf7a627829f85f34e74fcdfe9cab3}{amonpy.\-sim.\-sidereal.\-factors}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ac080650ce6d42cba0dd39366ed428779}{amonpy.\-sim.\-sidereal.\-lat}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_acd876ff43fec30cffbf0b1df441599d0}{amonpy.\-sim.\-sidereal.\-lon}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_acada5fbb9f626863280f6d2ed180cae0}{amonpy.\-sim.\-sidereal.\-j}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a8f427c645843461ab5c9c698fa37f43c}{amonpy.\-sim.\-sidereal.\-hours}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a821964057b74cb5a406284766eb22f18}{amonpy.\-sim.\-sidereal.\-radians}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a8d228619aefc2000e3fee66d566f31e0}{amonpy.\-sim.\-sidereal.\-alt}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_a15578b81a6c550e6e65a8aca92d26205}{amonpy.\-sim.\-sidereal.\-az}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_ab0d219129e8288dbd1df5b48472a7ac7}{amonpy.\-sim.\-sidereal.\-ra}
+\item 
+\hyperlink{namespaceamonpy_1_1sim_1_1sidereal_afecc68b3348d79c934a33ea9918e68ff}{amonpy.\-sim.\-sidereal.\-dec}
+\end{DoxyCompactItemize}

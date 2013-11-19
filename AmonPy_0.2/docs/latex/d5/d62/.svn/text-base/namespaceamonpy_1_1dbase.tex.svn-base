@@ -1,0 +1,65 @@
+\hypertarget{namespaceamonpy_1_1dbase}{\section{amonpy.\-dbase Namespace Reference}
+\label{namespaceamonpy_1_1dbase}\index{amonpy.\-dbase@{amonpy.\-dbase}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1add__stream}{add\-\_\-stream}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1add__user}{add\-\_\-user}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1alert__to__voevent}{alert\-\_\-to\-\_\-voevent}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1archive}{archive}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1config__alert__stream}{config\-\_\-alert\-\_\-stream}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1config__event__stream}{config\-\_\-event\-\_\-stream}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__classes}{db\-\_\-classes}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__delete}{db\-\_\-delete}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__metadata}{db\-\_\-metadata}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__modify}{db\-\_\-modify}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__populate__class}{db\-\_\-populate\-\_\-class}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__read}{db\-\_\-read}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1db__write}{db\-\_\-write}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1del__stream}{del\-\_\-stream}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1del__user}{del\-\_\-user}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1event__to__voevent}{event\-\_\-to\-\_\-voevent}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1test}{test}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1voevent__to__alert}{voevent\-\_\-to\-\_\-alert}
+\item 
+\hyperlink{namespaceamonpy_1_1dbase_1_1voevent__to__event}{voevent\-\_\-to\-\_\-event}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \hyperlink{namespaceamonpy_1_1dbase_a73a84717e7e0a7c0189c3962bfa38641}{\-\_\-\-\_\-all\-\_\-\-\_\-}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceamonpy_1_1dbase_a73a84717e7e0a7c0189c3962bfa38641}{\index{amonpy\-::dbase@{amonpy\-::dbase}!\-\_\-\-\_\-all\-\_\-\-\_\-@{\-\_\-\-\_\-all\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-all\-\_\-\-\_\-@{\-\_\-\-\_\-all\-\_\-\-\_\-}!amonpy::dbase@{amonpy\-::dbase}}
+\subsubsection[{\-\_\-\-\_\-all\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-dbase.\-\_\-\-\_\-all\-\_\-\-\_\-}}\label{namespaceamonpy_1_1dbase_a73a84717e7e0a7c0189c3962bfa38641}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = [\textcolor{stringliteral}{"add\_stream"}, \textcolor{stringliteral}{"add\_user"}, \textcolor{stringliteral}{"archive"}, \textcolor{stringliteral}{"config\_alert\_stream"}, 
+2              \textcolor{stringliteral}{"config\_event\_stream"}, \textcolor{stringliteral}{"db\_classes"}, \textcolor{stringliteral}{"db\_read"}, \textcolor{stringliteral}{"db\_write"}, 
+3              \textcolor{stringliteral}{"del\_stream"}, \textcolor{stringliteral}{"del\_user"}, \textcolor{stringliteral}{"modify"}]
+\end{DoxyCode}
+
+
+Definition at line 2 of file \-\_\-\-\_\-init\-\_\-\-\_\-.\-py.
+

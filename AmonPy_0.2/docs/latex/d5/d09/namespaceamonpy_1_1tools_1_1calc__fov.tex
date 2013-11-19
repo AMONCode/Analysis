@@ -1,0 +1,171 @@
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov}{\section{amonpy.\-tools.\-calc\-\_\-fov Namespace Reference}
+\label{namespaceamonpy_1_1tools_1_1calc__fov}\index{amonpy.\-tools.\-calc\-\_\-fov@{amonpy.\-tools.\-calc\-\_\-fov}}
+}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_affa2b5e823ee36cb35cd6ff636ea9779}{filename} = sys.\-argv\mbox{[}1\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a15d9d06da5b6c8cfcf67268b8dac0a9e}{file} = open(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_affa2b5e823ee36cb35cd6ff636ea9779}{filename})
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_abd58f153114f0c0bbde7d57f8fa6355b}{line} = file.\-readline()
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{db} = ast.\-literal\-\_\-eval(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_abd58f153114f0c0bbde7d57f8fa6355b}{line})
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a08d7bd374fdd9e63ae99ef1bfb9e491e}{Host\-Fancy\-Name} = \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{db}\mbox{[}'host'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ad6d8c3b48b201711ced879a1deb01343}{User\-Fancy\-Name} = \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{db}\mbox{[}'user'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_afc1cd72f7d87836af535f28839548514}{Password\-Fancy} = \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{db}\mbox{[}'password'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_aaea6d1eb2555bb480ec49524534e7d7d}{D\-B\-Fancy\-Name} = \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{db}\mbox{[}'database'\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a1bc07dd3b189b89d03cd6bfb2ff9378f}{choices}
+\item 
+string \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af2bbe22561fc8fb6837ea58b5d8a0cd4}{result\-\_\-dialog} = ''
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams} = \mbox{[}0,1,7\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ab98f07a49951b24807130f86a97aa904}{num\-\_\-streams} = len(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams})
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ad4753f6c1a088c4b50d3ba93205b751a}{revisions} = \mbox{[}0,0,0\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af4b4c00c118d28fce747695a24f9893a}{conf} = \mbox{[}simstream(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams}\mbox{[}0\mbox{]}), simstream(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams}\mbox{[}1\mbox{]}), simstream(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams}\mbox{[}2\mbox{]})\mbox{]}
+\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a3bf1158446321df85f814bae76c9c168}{streams\-\_\-alert} = \mbox{[}1\mbox{]}
+\item 
+tuple \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a4bc31903fbe30c866faaa99229b67d5b}{results} = basic\-\_\-sim\-\_\-fov.\-signal\-\_\-inject(\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_af4b4c00c118d28fce747695a24f9893a}{conf},\hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_ad4753f6c1a088c4b50d3ba93205b751a}{revisions})
+\begin{DoxyCompactList}\small\item\em E\-X\-E\-C\-U\-T\-I\-O\-N O\-F M\-A\-I\-N S\-I\-M C\-O\-D\-E results=basic\-\_\-sim.\-basic\-\_\-sim(conf) \end{DoxyCompactList}\item 
+list \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a4c3759f624220d1b1baf047a412a779b}{k} = \hyperlink{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{streams}\mbox{[}i\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a1bc07dd3b189b89d03cd6bfb2ff9378f}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!choices@{choices}}
+\index{choices@{choices}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{choices}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-choices}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a1bc07dd3b189b89d03cd6bfb2ff9378f}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = [\textcolor{stringliteral}{'Do not write to DB'},\textcolor{stringliteral}{'Overwrite event streams'},
+2            \textcolor{stringliteral}{'Append events/new rev'}, \textcolor{stringliteral}{'Cancel'}]
+\end{DoxyCode}
+
+
+Definition at line 62 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_af4b4c00c118d28fce747695a24f9893a}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!conf@{conf}}
+\index{conf@{conf}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{conf}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-conf = \mbox{[}simstream({\bf streams}\mbox{[}0\mbox{]}), simstream({\bf streams}\mbox{[}1\mbox{]}), simstream({\bf streams}\mbox{[}2\mbox{]})\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_af4b4c00c118d28fce747695a24f9893a}
+
+
+Definition at line 79 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!db@{db}}
+\index{db@{db}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{db}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-db = ast.\-literal\-\_\-eval({\bf line})}}\label{namespaceamonpy_1_1tools_1_1calc__fov_af18ce88a52b6ecd5b14ebc9efcde7cd1}
+
+
+Definition at line 47 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_aaea6d1eb2555bb480ec49524534e7d7d}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!D\-B\-Fancy\-Name@{D\-B\-Fancy\-Name}}
+\index{D\-B\-Fancy\-Name@{D\-B\-Fancy\-Name}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{D\-B\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-D\-B\-Fancy\-Name = {\bf db}\mbox{[}'database'\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_aaea6d1eb2555bb480ec49524534e7d7d}
+
+
+Definition at line 52 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a15d9d06da5b6c8cfcf67268b8dac0a9e}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!file@{file}}
+\index{file@{file}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{file}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-file = open({\bf filename})}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a15d9d06da5b6c8cfcf67268b8dac0a9e}
+
+
+Definition at line 45 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_affa2b5e823ee36cb35cd6ff636ea9779}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!filename@{filename}}
+\index{filename@{filename}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{filename}]{\setlength{\rightskip}{0pt plus 5cm}string amonpy.\-tools.\-calc\-\_\-fov.\-filename = sys.\-argv\mbox{[}1\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_affa2b5e823ee36cb35cd6ff636ea9779}
+
+
+Definition at line 42 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a08d7bd374fdd9e63ae99ef1bfb9e491e}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!Host\-Fancy\-Name@{Host\-Fancy\-Name}}
+\index{Host\-Fancy\-Name@{Host\-Fancy\-Name}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{Host\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-Host\-Fancy\-Name = {\bf db}\mbox{[}'host'\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a08d7bd374fdd9e63ae99ef1bfb9e491e}
+
+
+Definition at line 49 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a4c3759f624220d1b1baf047a412a779b}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!k@{k}}
+\index{k@{k}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{k}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-k = {\bf streams}\mbox{[}i\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a4c3759f624220d1b1baf047a412a779b}
+
+
+Definition at line 98 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_abd58f153114f0c0bbde7d57f8fa6355b}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!line@{line}}
+\index{line@{line}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{line}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-line = file.\-readline()}}\label{namespaceamonpy_1_1tools_1_1calc__fov_abd58f153114f0c0bbde7d57f8fa6355b}
+
+
+Definition at line 46 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_ab98f07a49951b24807130f86a97aa904}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!num\-\_\-streams@{num\-\_\-streams}}
+\index{num\-\_\-streams@{num\-\_\-streams}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{num\-\_\-streams}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-num\-\_\-streams = len({\bf streams})}}\label{namespaceamonpy_1_1tools_1_1calc__fov_ab98f07a49951b24807130f86a97aa904}
+
+
+Definition at line 76 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_afc1cd72f7d87836af535f28839548514}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!Password\-Fancy@{Password\-Fancy}}
+\index{Password\-Fancy@{Password\-Fancy}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{Password\-Fancy}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-Password\-Fancy = {\bf db}\mbox{[}'password'\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_afc1cd72f7d87836af535f28839548514}
+
+
+Definition at line 51 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_af2bbe22561fc8fb6837ea58b5d8a0cd4}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!result\-\_\-dialog@{result\-\_\-dialog}}
+\index{result\-\_\-dialog@{result\-\_\-dialog}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{result\-\_\-dialog}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-result\-\_\-dialog = ''}}\label{namespaceamonpy_1_1tools_1_1calc__fov_af2bbe22561fc8fb6837ea58b5d8a0cd4}
+
+
+Definition at line 64 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a4bc31903fbe30c866faaa99229b67d5b}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!results@{results}}
+\index{results@{results}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{results}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-tools.\-calc\-\_\-fov.\-results = basic\-\_\-sim\-\_\-fov.\-signal\-\_\-inject({\bf conf},{\bf revisions})}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a4bc31903fbe30c866faaa99229b67d5b}
+
+
+E\-X\-E\-C\-U\-T\-I\-O\-N O\-F M\-A\-I\-N S\-I\-M C\-O\-D\-E results=basic\-\_\-sim.\-basic\-\_\-sim(conf) 
+
+
+
+Definition at line 92 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_ad4753f6c1a088c4b50d3ba93205b751a}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!revisions@{revisions}}
+\index{revisions@{revisions}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{revisions}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-revisions = \mbox{[}0,0,0\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_ad4753f6c1a088c4b50d3ba93205b751a}
+
+
+Definition at line 78 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!streams@{streams}}
+\index{streams@{streams}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{streams}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-streams = \mbox{[}0,1,7\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a0d65e01c12947128d7aed9b6751a5159}
+
+
+Definition at line 75 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_a3bf1158446321df85f814bae76c9c168}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!streams\-\_\-alert@{streams\-\_\-alert}}
+\index{streams\-\_\-alert@{streams\-\_\-alert}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{streams\-\_\-alert}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-streams\-\_\-alert = \mbox{[}1\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_a3bf1158446321df85f814bae76c9c168}
+
+
+Definition at line 82 of file calc\-\_\-fov.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1calc__fov_ad6d8c3b48b201711ced879a1deb01343}{\index{amonpy\-::tools\-::calc\-\_\-fov@{amonpy\-::tools\-::calc\-\_\-fov}!User\-Fancy\-Name@{User\-Fancy\-Name}}
+\index{User\-Fancy\-Name@{User\-Fancy\-Name}!amonpy::tools::calc_fov@{amonpy\-::tools\-::calc\-\_\-fov}}
+\subsubsection[{User\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}list amonpy.\-tools.\-calc\-\_\-fov.\-User\-Fancy\-Name = {\bf db}\mbox{[}'user'\mbox{]}}}\label{namespaceamonpy_1_1tools_1_1calc__fov_ad6d8c3b48b201711ced879a1deb01343}
+
+
+Definition at line 50 of file calc\-\_\-fov.\-py.
+

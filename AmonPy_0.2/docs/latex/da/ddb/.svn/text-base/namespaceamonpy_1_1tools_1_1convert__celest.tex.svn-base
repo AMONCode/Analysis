@@ -1,0 +1,36 @@
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__celest}{\section{amonpy.\-tools.\-convert\-\_\-celest Namespace Reference}
+\label{namespaceamonpy_1_1tools_1_1convert__celest}\index{amonpy.\-tools.\-convert\-\_\-celest@{amonpy.\-tools.\-convert\-\_\-celest}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1tools_1_1convert__celest_a0fca5a872514185e4fbe06792b14da3c}{radec2vec}
+\item 
+def \hyperlink{namespaceamonpy_1_1tools_1_1convert__celest_ad08d70c18ff9dd4c3e9454517bd3d16e}{vec2radec}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__celest_a0fca5a872514185e4fbe06792b14da3c}{\index{amonpy\-::tools\-::convert\-\_\-celest@{amonpy\-::tools\-::convert\-\_\-celest}!radec2vec@{radec2vec}}
+\index{radec2vec@{radec2vec}!amonpy::tools::convert_celest@{amonpy\-::tools\-::convert\-\_\-celest}}
+\subsubsection[{radec2vec}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-convert\-\_\-celest.\-radec2vec (
+\begin{DoxyParamCaption}
+\item[{}]{ra, }
+\item[{}]{dec}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1tools_1_1convert__celest_a0fca5a872514185e4fbe06792b14da3c}
+
+
+Definition at line 10 of file convert\-\_\-celest.\-py.
+
+\hypertarget{namespaceamonpy_1_1tools_1_1convert__celest_ad08d70c18ff9dd4c3e9454517bd3d16e}{\index{amonpy\-::tools\-::convert\-\_\-celest@{amonpy\-::tools\-::convert\-\_\-celest}!vec2radec@{vec2radec}}
+\index{vec2radec@{vec2radec}!amonpy::tools::convert_celest@{amonpy\-::tools\-::convert\-\_\-celest}}
+\subsubsection[{vec2radec}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-convert\-\_\-celest.\-vec2radec (
+\begin{DoxyParamCaption}
+\item[{}]{v}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1tools_1_1convert__celest_ad08d70c18ff9dd4c3e9454517bd3d16e}
+
+
+Definition at line 17 of file convert\-\_\-celest.\-py.
+

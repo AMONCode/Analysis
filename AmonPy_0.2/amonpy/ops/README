@@ -1,0 +1,11 @@
+This folder contains scripts to be run by user.
+
+1) To run simulation use run_basic_sim.py:
+    i) edit dbaccess.txt and enter your database hostname (e.g. db.hpc.rcc.psu.edu), 
+       database name (e.g. AMON_test2), username and password.
+    ii) run the script as: python run_basic_sim.py dbaccess.txt
+    
+2) To run clustering analysis use run_archival.py:
+    i) edit dbaccess.txt and enter your database hostname (e.g. db.hpc.rcc.psu.edu), 
+       database name (e.g. AMON_test2), username and password.
+    ii) run the script as: python run_archival.py dbaccess.txt   

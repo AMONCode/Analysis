@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/repos/amon/!svn/ver/817/trunk/AmonPy/amonpy/dev
+END
+run_amon_archival_new.py
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/repos/amon/!svn/ver/816/trunk/AmonPy/amonpy/dev/run_amon_archival_new.py
+END
+run_write_amon_archival.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/amon/!svn/ver/816/trunk/AmonPy/amonpy/dev/run_write_amon_archival.py
+END
+run_write_basic_sim_old.py
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/amon/!svn/ver/817/trunk/AmonPy/amonpy/dev/run_write_basic_sim_old.py
+END
+run_amon_archival.py
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/repos/amon/!svn/ver/816/trunk/AmonPy/amonpy/dev/run_amon_archival.py
+END

@@ -1,0 +1,136 @@
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete}{\section{amonpy.\-dbase.\-db\-\_\-delete Namespace Reference}
+\label{namespaceamonpy_1_1dbase_1_1db__delete}\index{amonpy.\-dbase.\-db\-\_\-delete@{amonpy.\-dbase.\-db\-\_\-delete}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a6e08541c61946a0824fee5a77f70ad11}{delete\-\_\-alert\-\_\-stream}
+\begin{DoxyCompactList}\small\item\em Delete all alerts from a given stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_ae1e0858e85f62a9692ec040bd119bca0}{delete\-\_\-event\-\_\-stream}
+\begin{DoxyCompactList}\small\item\em Delete all events from a given stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_acdfe02da91ca530b0881ae46b6f85902}{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event}
+\begin{DoxyCompactList}\small\item\em Delete all alertlines from a given event stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a646321e8303a11c918f4a7134fd68c9e}{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert}
+\begin{DoxyCompactList}\small\item\em Delete all alertlines from a given alert stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a1c17ad0c1f78379129afa8cdd5877b88}{delete\-\_\-alert\-Config}
+\begin{DoxyCompactList}\small\item\em Delete all alert\-Config from a given alert stream. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamonpy_1_1dbase_1_1db__delete_a7b8b510bfe35a7217ec5c282305c7f29}{delete\-\_\-alert\-Config\-\_\-rev}
+\begin{DoxyCompactList}\small\item\em Delete all alert\-Config from a given alert stream and revision number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_a6e08541c61946a0824fee5a77f70ad11}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-alert\-\_\-stream@{delete\-\_\-alert\-\_\-stream}}
+\index{delete\-\_\-alert\-\_\-stream@{delete\-\_\-alert\-\_\-stream}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-alert\-\_\-stream}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-\_\-stream (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_a6e08541c61946a0824fee5a77f70ad11}
+
+
+Delete all alerts from a given stream. 
+
+
+
+Definition at line 10 of file db\-\_\-delete.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_a1c17ad0c1f78379129afa8cdd5877b88}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-alert\-Config@{delete\-\_\-alert\-Config}}
+\index{delete\-\_\-alert\-Config@{delete\-\_\-alert\-Config}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-alert\-Config}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-Config (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_a1c17ad0c1f78379129afa8cdd5877b88}
+
+
+Delete all alert\-Config from a given alert stream. 
+
+
+
+Definition at line 91 of file db\-\_\-delete.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_a7b8b510bfe35a7217ec5c282305c7f29}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-alert\-Config\-\_\-rev@{delete\-\_\-alert\-Config\-\_\-rev}}
+\index{delete\-\_\-alert\-Config\-\_\-rev@{delete\-\_\-alert\-Config\-\_\-rev}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-alert\-Config\-\_\-rev}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alert\-Config\-\_\-rev (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{rev, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_a7b8b510bfe35a7217ec5c282305c7f29}
+
+
+Delete all alert\-Config from a given alert stream and revision number. 
+
+
+
+Definition at line 111 of file db\-\_\-delete.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_a646321e8303a11c918f4a7134fd68c9e}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert@{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert}}
+\index{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert@{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-alert (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_a646321e8303a11c918f4a7134fd68c9e}
+
+
+Delete all alertlines from a given alert stream. 
+
+
+
+Definition at line 71 of file db\-\_\-delete.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_acdfe02da91ca530b0881ae46b6f85902}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event@{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event}}
+\index{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event@{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-alertline\-\_\-stream\-\_\-by\-\_\-event (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_acdfe02da91ca530b0881ae46b6f85902}
+
+
+Delete all alertlines from a given event stream. 
+
+
+
+Definition at line 51 of file db\-\_\-delete.\-py.
+
+\hypertarget{namespaceamonpy_1_1dbase_1_1db__delete_ae1e0858e85f62a9692ec040bd119bca0}{\index{amonpy\-::dbase\-::db\-\_\-delete@{amonpy\-::dbase\-::db\-\_\-delete}!delete\-\_\-event\-\_\-stream@{delete\-\_\-event\-\_\-stream}}
+\index{delete\-\_\-event\-\_\-stream@{delete\-\_\-event\-\_\-stream}!amonpy::dbase::db_delete@{amonpy\-::dbase\-::db\-\_\-delete}}
+\subsubsection[{delete\-\_\-event\-\_\-stream}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-dbase.\-db\-\_\-delete.\-delete\-\_\-event\-\_\-stream (
+\begin{DoxyParamCaption}
+\item[{}]{stream\-\_\-number, }
+\item[{}]{host\-\_\-name, }
+\item[{}]{user\-\_\-name, }
+\item[{}]{passw\-\_\-name, }
+\item[{}]{db\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{namespaceamonpy_1_1dbase_1_1db__delete_ae1e0858e85f62a9692ec040bd119bca0}
+
+
+Delete all events from a given stream. 
+
+
+
+Definition at line 30 of file db\-\_\-delete.\-py.
+

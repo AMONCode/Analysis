@@ -1,0 +1,132 @@
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice}{\section{amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice Class Reference}
+\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice}\index{amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice@{amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice}}
+}
+Inheritance diagram for amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d5/d6e/classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a9ffb7fd1e40656e936f4485e5c3b3c6e}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac31e6372528c3039e831163f6e6bb939}{on\-\_\-click\-\_\-or\-\_\-close}
+\item 
+def \hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8bca0cecf2d89c6936849f69671d9945}{result}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8363438c3e75f765ca4b2c98eaf26699}{choices}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ab2d0390c17c73e14838add2d52d0f73d}{info}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a177ab137db91d1da6fa02abc917efe06}{frame}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a7823bcbaf7fa0bac5c175828edb1fc67}{text}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a403bd725ee5183ba2cd5134d05b7af61}{choice}
+\item 
+\hyperlink{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac385a7d49dee6e1be82e148d22a64717}{button}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 6 of file dialog\-\_\-choice.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a9ffb7fd1e40656e936f4485e5c3b3c6e}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{choices, }
+\item[{}]{kwargs}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a9ffb7fd1e40656e936f4485e5c3b3c6e}
+
+
+Definition at line 7 of file dialog\-\_\-choice.\-py.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac31e6372528c3039e831163f6e6bb939}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!on\-\_\-click\-\_\-or\-\_\-close@{on\-\_\-click\-\_\-or\-\_\-close}}
+\index{on\-\_\-click\-\_\-or\-\_\-close@{on\-\_\-click\-\_\-or\-\_\-close}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{on\-\_\-click\-\_\-or\-\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-on\-\_\-click\-\_\-or\-\_\-close (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{event}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac31e6372528c3039e831163f6e6bb939}
+
+
+Definition at line 15 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8bca0cecf2d89c6936849f69671d9945}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!result@{result}}
+\index{result@{result}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{result}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-result (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8bca0cecf2d89c6936849f69671d9945}
+
+
+Definition at line 20 of file dialog\-\_\-choice.\-py.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac385a7d49dee6e1be82e148d22a64717}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!button@{button}}
+\index{button@{button}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{button}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-button}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ac385a7d49dee6e1be82e148d22a64717}
+
+
+Definition at line 26 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a403bd725ee5183ba2cd5134d05b7af61}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!choice@{choice}}
+\index{choice@{choice}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{choice}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-choice}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a403bd725ee5183ba2cd5134d05b7af61}
+
+
+Definition at line 24 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8363438c3e75f765ca4b2c98eaf26699}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!choices@{choices}}
+\index{choices@{choices}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{choices}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-choices}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a8363438c3e75f765ca4b2c98eaf26699}
+
+
+Definition at line 9 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a177ab137db91d1da6fa02abc917efe06}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!frame@{frame}}
+\index{frame@{frame}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{frame}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-frame}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a177ab137db91d1da6fa02abc917efe06}
+
+
+Definition at line 21 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ab2d0390c17c73e14838add2d52d0f73d}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!info@{info}}
+\index{info@{info}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{info}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-info}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_ab2d0390c17c73e14838add2d52d0f73d}
+
+
+Definition at line 11 of file dialog\-\_\-choice.\-py.
+
+\hypertarget{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a7823bcbaf7fa0bac5c175828edb1fc67}{\index{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}!text@{text}}
+\index{text@{text}!amonpy::tools::dialog_choice::SelectChoice@{amonpy\-::tools\-::dialog\-\_\-choice\-::\-Select\-Choice}}
+\subsubsection[{text}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-tools.\-dialog\-\_\-choice.\-Select\-Choice.\-text}}\label{classamonpy_1_1tools_1_1dialog__choice_1_1_select_choice_a7823bcbaf7fa0bac5c175828edb1fc67}
+
+
+Definition at line 23 of file dialog\-\_\-choice.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/tools/\hyperlink{dialog__choice_8py}{dialog\-\_\-choice.\-py}\end{DoxyCompactItemize}

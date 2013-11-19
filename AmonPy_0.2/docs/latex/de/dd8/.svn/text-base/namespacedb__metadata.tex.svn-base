@@ -1,0 +1,12 @@
+\hypertarget{namespacedb__metadata}{\section{db\-\_\-metadata Namespace Reference}
+\label{namespacedb__metadata}\index{db\-\_\-metadata@{db\-\_\-metadata}}
+}
+
+
+This module access various metadata of a given database (e.\-g.  
+
+
+
+
+\subsection{Detailed Description}
+This module access various metadata of a given database (e.\-g. table names, column names, column types, column comments etc.). Under development. 

@@ -1,0 +1,22 @@
+\hypertarget{test__convert__celest_8py}{\section{amonpy/tools/test/test\-\_\-convert\-\_\-celest.py File Reference}
+\label{test__convert__celest_8py}\index{amonpy/tools/test/test\-\_\-convert\-\_\-celest.\-py@{amonpy/tools/test/test\-\_\-convert\-\_\-celest.\-py}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classtest__convert__celest_1_1_test_convert_celest}{test\-\_\-convert\-\_\-celest.\-Test\-Convert\-Celest}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacetest__convert__celest}{test\-\_\-convert\-\_\-celest}
+\item 
+\hyperlink{namespaceconvert__celest}{convert\-\_\-celest}
+\begin{DoxyCompactList}\small\item\em converts between celestial angles (R\-A,dec) given in degrees and unit vector on the sphere \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacetest__convert__celest}{test\-\_\-convert\-\_\-celest}
+\item 
+\hyperlink{namespaceconvert__celest}{convert\-\_\-celest}
+\begin{DoxyCompactList}\small\item\em converts between celestial angles (R\-A,dec) given in degrees and unit vector on the sphere \end{DoxyCompactList}\end{DoxyCompactItemize}

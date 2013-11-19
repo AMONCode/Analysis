@@ -1,0 +1,21 @@
+1) Directory ops contains scripts to be run by user. More information is given in  
+ ops/README file.
+ 
+2) Directory anal contains modules used by the above scripts to perform analysis.
+
+3) Directory comm is empty for now.
+
+4) Directory dbase contains modules and classes interacting with database.
+ 
+5) Directory dev is not distributed in the AmonPy package distribution. It contains 
+   development and/or outdated scripts and modules. It is available only in the respiratory
+   for developers.
+   
+6) Directory sim contains modules for simulations used by the simulation script
+   run_archival.py in ops.
+   
+7) Directory test contains testing scripts.
+
+8) Directory tools contains various non-analysis modules (for plotting, time conversion,
+   pop-up window creation etc.) used by the modules in other directories. 
+      

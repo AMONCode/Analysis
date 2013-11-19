@@ -1,0 +1,18 @@
+\hypertarget{test__sidereal_8py}{\section{amonpy/sim/test/test\-\_\-sidereal.py File Reference}
+\label{test__sidereal_8py}\index{amonpy/sim/test/test\-\_\-sidereal.\-py@{amonpy/sim/test/test\-\_\-sidereal.\-py}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classtest__sidereal_1_1_test_sidereal}{test\-\_\-sidereal.\-Test\-Sidereal}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacetest__sidereal}{test\-\_\-sidereal}
+\begin{DoxyCompactList}\small\item\em Testing module for sidereal\-\_\-m module. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacetest__sidereal}{test\-\_\-sidereal}
+\begin{DoxyCompactList}\small\item\em Testing module for sidereal\-\_\-m module. \end{DoxyCompactList}\end{DoxyCompactItemize}

@@ -1,0 +1,111 @@
+\hypertarget{classsidereal_1_1_fixed_zone}{\section{sidereal.\-Fixed\-Zone Class Reference}
+\label{classsidereal_1_1_fixed_zone}\index{sidereal.\-Fixed\-Zone@{sidereal.\-Fixed\-Zone}}
+}
+
+
+Represents a time zone with a fixed offset east of U\-T\-C.  
+
+
+Inheritance diagram for sidereal.\-Fixed\-Zone\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d7/d61/classsidereal_1_1_fixed_zone}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classsidereal_1_1_fixed_zone_a1e99366c0c96fd4f7ea27735ccfec6e6}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classsidereal_1_1_fixed_zone}{Fixed\-Zone}. \end{DoxyCompactList}\item 
+def \hyperlink{classsidereal_1_1_fixed_zone_a44e2aaa28a75279b5a3619ee02f1428d}{utcoffset}
+\begin{DoxyCompactList}\small\item\em Return self's offset east of U\-T\-C. \end{DoxyCompactList}\item 
+def \hyperlink{classsidereal_1_1_fixed_zone_a76f44703c82fe2ab9ed7d245a4b92d93}{tzname}
+\begin{DoxyCompactList}\small\item\em Return self's name. \end{DoxyCompactList}\item 
+def \hyperlink{classsidereal_1_1_fixed_zone_a4288527c2c4af727268455470160842d}{dst}
+\begin{DoxyCompactList}\small\item\em Return self's daylight time offset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a time zone with a fixed offset east of U\-T\-C. 
+
+Exports\-: \hyperlink{classsidereal_1_1_fixed_zone}{Fixed\-Zone} ( hours, minutes, name )\-: \mbox{[} (hours is a signed offset in hours as an int) and (minutes is a signed offset in minutes as an int) -\/$>$ return a new \hyperlink{classsidereal_1_1_fixed_zone}{Fixed\-Zone} instance representing those offsets east of U\-T\-C \mbox{]} State/\-Invariants\-: .\-\_\-\-\_\-offset\-: \mbox{[} a datetime.\-timedelta representing self's offset east of U\-T\-C \mbox{]} .\-\_\-\-\_\-name\-: \mbox{[} as passed to the constructor's name argument \mbox{]} 
+
+Definition at line 387 of file sidereal.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classsidereal_1_1_fixed_zone_a1e99366c0c96fd4f7ea27735ccfec6e6}{\index{sidereal\-::\-Fixed\-Zone@{sidereal\-::\-Fixed\-Zone}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!sidereal::FixedZone@{sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal.\-Fixed\-Zone.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{hh, }
+\item[{}]{mm, }
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}}\label{classsidereal_1_1_fixed_zone_a1e99366c0c96fd4f7ea27735ccfec6e6}
+
+
+Constructor for \hyperlink{classsidereal_1_1_fixed_zone}{Fixed\-Zone}. 
+
+
+
+Definition at line 391 of file sidereal.\-py.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classsidereal_1_1_fixed_zone_a4288527c2c4af727268455470160842d}{\index{sidereal\-::\-Fixed\-Zone@{sidereal\-::\-Fixed\-Zone}!dst@{dst}}
+\index{dst@{dst}!sidereal::FixedZone@{sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{dst}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal.\-Fixed\-Zone.\-dst (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classsidereal_1_1_fixed_zone_a4288527c2c4af727268455470160842d}
+
+
+Return self's daylight time offset. 
+
+
+
+Definition at line 407 of file sidereal.\-py.
+
+\hypertarget{classsidereal_1_1_fixed_zone_a76f44703c82fe2ab9ed7d245a4b92d93}{\index{sidereal\-::\-Fixed\-Zone@{sidereal\-::\-Fixed\-Zone}!tzname@{tzname}}
+\index{tzname@{tzname}!sidereal::FixedZone@{sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{tzname}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal.\-Fixed\-Zone.\-tzname (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classsidereal_1_1_fixed_zone_a76f44703c82fe2ab9ed7d245a4b92d93}
+
+
+Return self's name. 
+
+
+
+Definition at line 402 of file sidereal.\-py.
+
+\hypertarget{classsidereal_1_1_fixed_zone_a44e2aaa28a75279b5a3619ee02f1428d}{\index{sidereal\-::\-Fixed\-Zone@{sidereal\-::\-Fixed\-Zone}!utcoffset@{utcoffset}}
+\index{utcoffset@{utcoffset}!sidereal::FixedZone@{sidereal\-::\-Fixed\-Zone}}
+\subsubsection[{utcoffset}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal.\-Fixed\-Zone.\-utcoffset (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classsidereal_1_1_fixed_zone_a44e2aaa28a75279b5a3619ee02f1428d}
+
+
+Return self's offset east of U\-T\-C. 
+
+
+
+Definition at line 397 of file sidereal.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal_8py}{sidereal.\-py}\end{DoxyCompactItemize}

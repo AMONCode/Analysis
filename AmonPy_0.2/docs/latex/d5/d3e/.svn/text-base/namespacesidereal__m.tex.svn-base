@@ -1,0 +1,1212 @@
+\hypertarget{namespacesidereal__m}{\section{sidereal\-\_\-m Namespace Reference}
+\label{namespacesidereal__m}\index{sidereal\-\_\-m@{sidereal\-\_\-m}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}
+\begin{DoxyCompactList}\small\item\em Represents a time zone with a fixed offset east of U\-T\-C. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_u_s_time_zone}{U\-S\-Time\-Zone}
+\begin{DoxyCompactList}\small\item\em Represents a U.\-S. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_mixed_units}{Mixed\-Units}
+\begin{DoxyCompactList}\small\item\em Represents a system with mixed units, e.\-g., hours/minutes/seconds. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_lat_lon}{Lat\-Lon}
+\begin{DoxyCompactList}\small\item\em Represents a latitude+longitude. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date}
+\begin{DoxyCompactList}\small\item\em Class to represent Julian-\/date timestamps. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_sidereal_time}{Sidereal\-Time}
+\begin{DoxyCompactList}\small\item\em Represents a sidereal time value. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_alt_az}{Alt\-Az}
+\begin{DoxyCompactList}\small\item\em Represents a sky location in horizon coords. \end{DoxyCompactList}\item 
+class \hyperlink{classsidereal__m_1_1_r_a_dec}{R\-A\-Dec}
+\begin{DoxyCompactList}\small\item\em Represents a celestial location in equatorial coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacesidereal__m_a7248225b6e2f84db36378d4b0aa7f49b}{hours\-To\-Radians}
+\begin{DoxyCompactList}\small\item\em Convert hours (15 degrees) to radians. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a044b3ec61f739a9085615081a4f70143}{radians\-To\-Hours}
+\begin{DoxyCompactList}\small\item\em Convert radians to hours (15 degrees). \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_ad585501ad694e8d114dbbf1c97e5415d}{hour\-Angle\-To\-R\-A}
+\begin{DoxyCompactList}\small\item\em Convert hour angle to right ascension. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a477ed868db4b46e0523bcbde4f09a1dc}{ra\-To\-Hour\-Angle}
+\begin{DoxyCompactList}\small\item\em Convert right ascension to hour angle. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_ab3986b287a0b1c0eaca8c8db0b73ec62}{day\-No}
+\begin{DoxyCompactList}\small\item\em Compute the day number within the year. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_adb46fb5b2e269becd3d021ae2ce369ac}{parse\-Datetime}
+\begin{DoxyCompactList}\small\item\em Parse a date with optional time. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a813b9db33e6b0af3b127aef36768a45f}{parse\-Date}
+\begin{DoxyCompactList}\small\item\em Validate and convert a date in external form. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a500e4765c1978d14c8915ba94655cd3d}{parse\-Time}
+\begin{DoxyCompactList}\small\item\em Validate and convert a time and optional zone. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a0fd05a38609f0a1f902aa484c27f3113}{parse\-Zone}
+\begin{DoxyCompactList}\small\item\em Validate and convert a time zone suffix. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_aee55c797d5735d0fd98691549808e551}{parse\-Fixed\-Zone}
+\begin{DoxyCompactList}\small\item\em Convert a +hhmm or -\/hhmm zone suffix. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_af549cd30e802cacccdd5a8b495dd66e9}{first\-Sunday\-On\-Or\-After}
+\begin{DoxyCompactList}\small\item\em Find the first Sunday on or after a given date. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a480ed9733963f7b51c8ca23f4f3f9c59}{parse\-Angle}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external angle. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_af85eb1489ad39a857ecabd6fdae07353}{parse\-Float\-Suffix}
+\begin{DoxyCompactList}\small\item\em Parse a float followed by a letter code. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_ae48c937464ce0bf4fedf6b6913095141}{parse\-Float}
+\begin{DoxyCompactList}\small\item\em Parse a floating-\/point number at the front of s. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a16c1d5f58142f9edef70e715d011d8fe}{parse\-Re}
+\begin{DoxyCompactList}\small\item\em Parse a regular expression at the head of a string. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_acb89105866ffc0f5c75b33f7bbd0bcb5}{parse\-Lat}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external latitude. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_abc753ae763be135096575ad04ba3ec6d}{parse\-Lon}
+\begin{DoxyCompactList}\small\item\em Validate and convert an external longitude. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a06d02d6b9f3bff425bd05e9d62a2469b}{parse\-Hours}
+\begin{DoxyCompactList}\small\item\em Validate and convert a quantity in hours. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a77cd092bc7381c4482179be015b4f678}{mix\-To\-Single}
+\begin{DoxyCompactList}\small\item\em Convert mixed units to a single value. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a05309b16991a7a2008e27f32ee6bce83}{single\-To\-Mix}
+\begin{DoxyCompactList}\small\item\em Convert to mixed units. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a295595499e9fe030e534e65608b15d4b}{format}
+\begin{DoxyCompactList}\small\item\em Format mixed units. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{classsidereal__m_1_1_lat_lon}{Lat\-Lon}. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a18e09463cf8babd45f62f8120b0431af}{\-\_\-\-\_\-str\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Return self as a string. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a84208d136c80be2344ca1c9a6623ed7f}{\-\_\-\-\_\-float\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Convert self to a float. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a452d1dabde3c99deea2baca1ba5dd716}{datetime}
+\begin{DoxyCompactList}\small\item\em Convert to a standard Python datetime object in U\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_abfc63def139b13c305b96ff580c627da}{offset}
+\begin{DoxyCompactList}\small\item\em Return a new \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} for self+(delta days) \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_ad65ed51a82faebe12a3351ffcfc659ce}{\-\_\-\-\_\-sub\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Implement subtraction. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_add5fa7b90e00636c562e45b36e8bcf8b}{\-\_\-\-\_\-cmp\-\_\-\-\_\-}
+\begin{DoxyCompactList}\small\item\em Compare two instances. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a835e1a5a4797ab2ea7414c4e2e447705}{from\-Datetime}
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance from a datetime.\-datetime. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_aec4d48a847faa06934ba417d61b58ecc}{utc}
+\begin{DoxyCompactList}\small\item\em Convert G\-S\-T to U\-T\-C. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_aec2f558801d1f4be802c9822324a9188}{factor\-B}
+\begin{DoxyCompactList}\small\item\em Compute sidereal conversion factor B for a given year. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a1fdff084daf18c0f463541b53dfa8171}{gst}
+\begin{DoxyCompactList}\small\item\em Convert L\-S\-T to G\-S\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_ab8ecd49a286150753eafadaf00def93a}{lst}
+\begin{DoxyCompactList}\small\item\em Convert G\-S\-T to L\-S\-T. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a5ad0e1c8021f8e8de683f7ec05ae2661}{ra\-Dec}
+\begin{DoxyCompactList}\small\item\em Convert horizon coordinates to equatorial. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a70582e6968d0dbe9f39632f830552b46}{coord\-Rotate}
+\begin{DoxyCompactList}\small\item\em Used to convert between equatorial and horizon coordinates. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a5dca2735c3c88b3a718ce4244d210494}{hour\-Angle}
+\begin{DoxyCompactList}\small\item\em Find the hour angle at a given observer's location. \end{DoxyCompactList}\item 
+def \hyperlink{namespacesidereal__m_a4793dec51aff47225fce4c36829fe4d5}{alt\-Az}
+\begin{DoxyCompactList}\small\item\em Convert equatorial to horizon coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{namespacesidereal__m_a725204684fed9dbd998787c945d6c5a5}{F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R} = 1583
+\item 
+float \hyperlink{namespacesidereal__m_a8d2689ed09c70b40bb8df0e7a665fbf1}{T\-W\-O\-\_\-\-P\-I} = 2.\-0
+\item 
+float \hyperlink{namespacesidereal__m_a15ccd7ff6124271627f40a26c3bc846c}{P\-I\-\_\-\-O\-V\-E\-R\-\_\-12} = pi/12.\-0
+\item 
+int \hyperlink{namespacesidereal__m_a38061089760363bdc72a7c7b5de2f98b}{J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S} = 2200000
+\item 
+float \hyperlink{namespacesidereal__m_a496a7b85f6162056f897f9ff75355995}{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A} = 0.\-0657098
+\item 
+tuple \hyperlink{namespacesidereal__m_a80565211e8dfe2704212c831266cfaf2}{F\-L\-O\-A\-T\-\_\-\-P\-A\-T}
+\item 
+tuple \hyperlink{namespacesidereal__m_ae0bf984e245275f4ea80e4604f92c7b8}{D\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}d\-D\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_a1caf01a791e13c53e99127b3fe04ebed}{M\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}m\-M\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_a9d32f355803d14509f6e01b1986181d4}{S\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}s\-S\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_ad42e760bce089c48936fffcd5ab2c4b2}{H\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}h\-H\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_a18339cc2bb8977ce1e0b0d5a6632049b}{N\-S\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}n\-Ns\-S\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_ab119461f26d7e4d6060624948c4f9f44}{E\-W\-\_\-\-P\-A\-T} = re.\-compile( r'\mbox{[}e\-Ew\-W\mbox{]}' )
+\item 
+tuple \hyperlink{namespacesidereal__m_a3b4fab471bdb8cd9245e613efc956f40}{T\-\_\-\-P\-A\-T\-T\-E\-R\-N} = re.\-compile( '\mbox{[}t\-T\mbox{]}' )
+\item 
+string \hyperlink{namespacesidereal__m_a84aeb45ec2de1c4d50a8f4269db4c26b}{Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}Y\char`\"{}
+\item 
+string \hyperlink{namespacesidereal__m_af899b20a1f9e1c6b58db09a38d5919a7}{M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}M\char`\"{}
+\item 
+string \hyperlink{namespacesidereal__m_a5c36ac32632578970ca13d60cb47784d}{D\-A\-Y\-\_\-\-F\-I\-E\-L\-D} = \char`\"{}D\char`\"{}
+\item 
+tuple \hyperlink{namespacesidereal__m_af7f33e8c695f19f9d5827713dbedabde}{date\-Re}
+\item 
+tuple \hyperlink{namespacesidereal__m_a8af88f3206726f7628c672162578ff1e}{D\-A\-T\-E\-\_\-\-P\-A\-T} = re.\-compile( \hyperlink{namespacesidereal__m_af7f33e8c695f19f9d5827713dbedabde}{date\-Re} )
+\item 
+tuple \hyperlink{namespacesidereal__m_a56e3e688d330fce2dbb1d4c0f3dddd14}{H\-H\-M\-M\-\_\-\-P\-A\-T}
+\item 
+tuple \hyperlink{namespacesidereal__m_a539b5441786809f3edc4becbe18a9be5}{D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O} = datetime.\-timedelta(0)
+\item 
+tuple \hyperlink{namespacesidereal__m_aeb0c98a65d8fbf6a3d261aba22fbd58e}{D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R} = datetime.\-timedelta(\hyperlink{namespacesidereal__m_aa33cfb39f83f46f86c18c7fa19178619}{hours}=1)
+\item 
+tuple \hyperlink{namespacesidereal__m_acba2a1aac19372aa3682e05966c224f8}{utc\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(0, 0, \char`\"{}U\-T\-C\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a78983f72dd535ac1112dbd2d340d6637}{est\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/5, 0, \char`\"{}E\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a4c854e6a086ba5d2fe50e56b9dd25f5c}{edt\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/4, 0, \char`\"{}E\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_ab6d3514a8eb98e6d9b546de8686936e0}{et\-Zone} = \hyperlink{classsidereal__m_1_1_u_s_time_zone}{U\-S\-Time\-Zone}(-\/5, 0, \char`\"{}E\-T\char`\"{}, \char`\"{}E\-S\-T\char`\"{}, \char`\"{}E\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a841c443c8191849e9bd3e9a735965c86}{cst\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/6, 0, \char`\"{}C\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a05c79d7a2ed81916eb5b382f454be042}{cdt\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/5, 0, \char`\"{}C\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_addd75737f4a6dc9829a1345e5c9a4b23}{ct\-Zone} = \hyperlink{classsidereal__m_1_1_u_s_time_zone}{U\-S\-Time\-Zone}(-\/6, 0, \char`\"{}C\-T\char`\"{}, \char`\"{}C\-S\-T\char`\"{}, \char`\"{}C\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a9c2ade33436f33e9212d7a20ec0f26c8}{mst\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/7, 0, \char`\"{}M\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a0f18e7a6c79bd5fb3282f5112fc05bc7}{mdt\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/6, 0, \char`\"{}M\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a8a711c0468a09f6205ac5b8652396b73}{mt\-Zone} = \hyperlink{classsidereal__m_1_1_u_s_time_zone}{U\-S\-Time\-Zone}(-\/7, 0, \char`\"{}M\-T\char`\"{}, \char`\"{}M\-S\-T\char`\"{}, \char`\"{}M\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a04b98949e2d945cfaf0b696806c1aa97}{pst\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/8, 0, \char`\"{}P\-S\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_ab3f36473944b503edcd2d44ee22a727e}{pdt\-Zone} = \hyperlink{classsidereal__m_1_1_fixed_zone}{Fixed\-Zone}(-\/7, 0, \char`\"{}P\-D\-T\char`\"{})
+\item 
+tuple \hyperlink{namespacesidereal__m_a3e255a8eb58e3d60d0f3c73092fc423f}{pt\-Zone} = \hyperlink{classsidereal__m_1_1_u_s_time_zone}{U\-S\-Time\-Zone}(-\/8, 0, \char`\"{}P\-T\char`\"{}, \char`\"{}P\-S\-T\char`\"{}, \char`\"{}P\-D\-T\char`\"{})
+\item 
+dictionary \hyperlink{namespacesidereal__m_ad5215718e8f39e6e22cc8784bb56cf89}{zone\-Code\-Map}
+\item 
+tuple \hyperlink{namespacesidereal__m_a5a9371fca081e71c7da3d3a86163ca83}{dms\-Units} = \hyperlink{classsidereal__m_1_1_mixed_units}{Mixed\-Units}( (60, 60) )
+\item 
+tuple \hyperlink{namespacesidereal__m_ad26cce340a05c957e45bb6a417898309}{from\-Datetime} = staticmethod(from\-Datetime)
+\begin{DoxyCompactList}\small\item\em Convert civil time to Greenwich Sidereal. \end{DoxyCompactList}\item 
+tuple \hyperlink{namespacesidereal__m_afafa1b150c288c18b2b83d83392923f5}{factor\-B} = staticmethod(factor\-B)
+\item 
+float \hyperlink{namespacesidereal__m_ac918e6641ccb9633fc6772d5e0c0362d}{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C} = 1.\-002738
+\item 
+\hyperlink{namespacesidereal__m_a58bc23454a5cec5d9aeccc8cec718bee}{factors}
+\item 
+\hyperlink{namespacesidereal__m_a5e08e3f09045d8441bbba9c1484d5a11}{lat}
+\item 
+\hyperlink{namespacesidereal__m_a814620b0bb71a22b0cfd22925d9a8779}{lon}
+\item 
+\hyperlink{namespacesidereal__m_a401a49f7dc148912f92fcd07ae578344}{j}
+\item 
+\hyperlink{namespacesidereal__m_aa33cfb39f83f46f86c18c7fa19178619}{hours}
+\item 
+\hyperlink{namespacesidereal__m_a109cb9d081cec6a1636cf40b3cf3e41f}{radians}
+\item 
+\hyperlink{namespacesidereal__m_ab131e2d535caf37cb524a2626e57e396}{alt}
+\item 
+\hyperlink{namespacesidereal__m_ace3a607f32a0e920263e144e22db99c4}{az}
+\item 
+\hyperlink{namespacesidereal__m_a347a8238fc8167e230ce7b467d0979e9}{ra}
+\item 
+\hyperlink{namespacesidereal__m_ae13ffea6740eb47a75a83ab7a30e39bb}{dec}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespacesidereal__m_add5fa7b90e00636c562e45b36e8bcf8b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-cmp\-\_\-\-\_\-@{\-\_\-\-\_\-cmp\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-cmp\-\_\-\-\_\-@{\-\_\-\-\_\-cmp\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-cmp\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-cmp\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{other}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_add5fa7b90e00636c562e45b36e8bcf8b}
+
+
+Compare two instances. 
+
+\mbox{[} other is a \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance -\/$>$ if self.\-j $<$ other.\-j -\/$>$ return a negative number else if self.\-j == other.\-j -\/$>$ return zero else -\/$>$ return a positive number \mbox{]} 
+
+Definition at line 1108 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a84208d136c80be2344ca1c9a6623ed7f}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-float\-\_\-\-\_\-@{\-\_\-\-\_\-float\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-float\-\_\-\-\_\-@{\-\_\-\-\_\-float\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-float\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-float\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a84208d136c80be2344ca1c9a6623ed7f}
+
+
+Convert self to a float. 
+
+
+
+Definition at line 1025 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{factors}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}
+
+
+Constructor. 
+
+Constructor for \hyperlink{classsidereal__m_1_1_sidereal_time}{Sidereal\-Time}. 
+
+Definition at line 794 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{alt, }
+\item[{}]{az = {\ttfamily 0.0}}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a4dbbaf6e1cce5295d82dfe9d80dbbeb9}
+
+
+Constructor for \hyperlink{classsidereal__m_1_1_lat_lon}{Lat\-Lon}. 
+
+Constructor for \hyperlink{classsidereal__m_1_1_r_a_dec}{R\-A\-Dec}.
+
+Constructor for \hyperlink{classsidereal__m_1_1_alt_az}{Alt\-Az}, horizon coordinates.
+
+Constructor for \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date}.
+
+\mbox{[} (alt is an altitude in radians) and (az is an azimuth in radians) -\/$>$ return a new \hyperlink{classsidereal__m_1_1_alt_az}{Alt\-Az} instance with those values, normalized as per class invariants \mbox{]} 
+
+Definition at line 968 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a18e09463cf8babd45f62f8120b0431af}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-str\-\_\-\-\_\-@{\-\_\-\-\_\-str\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-str\-\_\-\-\_\-@{\-\_\-\-\_\-str\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-str\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-str\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a18e09463cf8babd45f62f8120b0431af}
+
+
+Return self as a string. 
+
+Convert self to a string.
+
+Convert to a string such as \char`\"{}\mbox{[}04h 40m 5.\-170s\mbox{]}\char`\"{}. 
+
+Definition at line 976 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ad65ed51a82faebe12a3351ffcfc659ce}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!\-\_\-\-\_\-sub\-\_\-\-\_\-@{\-\_\-\-\_\-sub\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-sub\-\_\-\-\_\-@{\-\_\-\-\_\-sub\-\_\-\-\_\-}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{\-\_\-\-\_\-sub\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-\_\-\-\_\-sub\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{other}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_ad65ed51a82faebe12a3351ffcfc659ce}
+
+
+Implement subtraction. 
+
+\mbox{[} other is a \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance -\/$>$ return self.\-j -\/ other.\-j \mbox{]} 
+
+Definition at line 1096 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a4793dec51aff47225fce4c36829fe4d5}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!alt\-Az@{alt\-Az}}
+\index{alt\-Az@{alt\-Az}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{alt\-Az}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-alt\-Az (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{h, }
+\item[{}]{lat}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a4793dec51aff47225fce4c36829fe4d5}
+
+
+Convert equatorial to horizon coordinates. 
+
+\mbox{[} (h is an object's hour angle in radians) and (lat is the observer's latitude in radians) -\/$>$ return self's position in the observer's sky in horizon coordinates as an \hyperlink{classsidereal__m_1_1_alt_az}{Alt\-Az} instance \mbox{]} 
+
+Definition at line 1504 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a70582e6968d0dbe9f39632f830552b46}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!coord\-Rotate@{coord\-Rotate}}
+\index{coord\-Rotate@{coord\-Rotate}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{coord\-Rotate}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-coord\-Rotate (
+\begin{DoxyParamCaption}
+\item[{}]{x, }
+\item[{}]{y, }
+\item[{}]{z}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a70582e6968d0dbe9f39632f830552b46}
+
+
+Used to convert between equatorial and horizon coordinates. 
+
+\mbox{[} x, y, and z are angles in radians -\/$>$ return (xt, yt) where xt=arcsin(sin(x)$\ast$sin(y)+cos(x)$\ast$cos(y)$\ast$cos(z)) and yt=arccos((sin(x)-\/sin(y)$\ast$sin(xt))/(cos(y)$\ast$cos(xt))) \mbox{]} 
+
+Definition at line 1439 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a452d1dabde3c99deea2baca1ba5dd716}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!datetime@{datetime}}
+\index{datetime@{datetime}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{datetime}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-datetime (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a452d1dabde3c99deea2baca1ba5dd716}
+
+
+Convert to a standard Python datetime object in U\-T. 
+
+
+
+Definition at line 1032 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ab3986b287a0b1c0eaca8c8db0b73ec62}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!day\-No@{day\-No}}
+\index{day\-No@{day\-No}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{day\-No}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-day\-No (
+\begin{DoxyParamCaption}
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_ab3986b287a0b1c0eaca8c8db0b73ec62}
+
+
+Compute the day number within the year. 
+
+\mbox{[} dt is a date as a datetime.\-datetime or datetime.\-date -\/$>$ return the number of days between dt and Dec. 31 of the preceding year \mbox{]} 
+
+Definition at line 112 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_aec2f558801d1f4be802c9822324a9188}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!factor\-B@{factor\-B}}
+\index{factor\-B@{factor\-B}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{factor\-B}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-factor\-B (
+\begin{DoxyParamCaption}
+\item[{}]{yyyy}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_aec2f558801d1f4be802c9822324a9188}
+
+
+Compute sidereal conversion factor B for a given year. 
+
+\mbox{[} yyyy is a year number as an int -\/$>$ return the G\-S\-T at time yyyy-\/01-\/00\-T00\-:00 \mbox{]} 
+
+Definition at line 1253 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_af549cd30e802cacccdd5a8b495dd66e9}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!first\-Sunday\-On\-Or\-After@{first\-Sunday\-On\-Or\-After}}
+\index{first\-Sunday\-On\-Or\-After@{first\-Sunday\-On\-Or\-After}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{first\-Sunday\-On\-Or\-After}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-first\-Sunday\-On\-Or\-After (
+\begin{DoxyParamCaption}
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_af549cd30e802cacccdd5a8b495dd66e9}
+
+
+Find the first Sunday on or after a given date. 
+
+\mbox{[} dt is a datetime.\-date -\/$>$ return a datetime.\-date representing the first Sunday on or after dt \mbox{]} 
+
+Definition at line 416 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a295595499e9fe030e534e65608b15d4b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!format@{format}}
+\index{format@{format}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{format}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-format (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{coeffs, }
+\item[{}]{decimals = {\ttfamily 0}, }
+\item[{}]{lz = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a295595499e9fe030e534e65608b15d4b}
+
+
+Format mixed units. 
+
+\mbox{[} (coeffs is a sequence of numbers as returned by \hyperlink{namespacesidereal_a974ddc06b5ff387392c7c3a7035ad738}{Mixed\-Units.\-single\-To\-Mix()}) and (decimals is a nonnegative integer) and (lz is a bool) -\/$>$ return a list of strings corresponding to the values of coeffs, with all the values but the last formatted as integers, all values zero padded iff lz is true, and the last value with (decimals) digits after the decimal point \mbox{]} 
+
+Definition at line 908 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a835e1a5a4797ab2ea7414c4e2e447705}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!from\-Datetime@{from\-Datetime}}
+\index{from\-Datetime@{from\-Datetime}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{from\-Datetime}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-from\-Datetime (
+\begin{DoxyParamCaption}
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a835e1a5a4797ab2ea7414c4e2e447705}
+
+
+Create a \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance from a datetime.\-datetime. 
+
+Convert civil time to Greenwich Sidereal.
+
+\mbox{[} dt is a datetime.\-datetime instance -\/$>$ if dt is naive -\/$>$ return the equivalent new \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance, assuming dt expresses U\-T\-C else -\/$>$ return a new \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} instance for the U\-T\-C time equivalent to dt \mbox{]}
+
+\mbox{[} dt is a datetime.\-datetime instance -\/$>$ if dt has time zone information -\/$>$ return the G\-S\-T at the U\-T\-C equivalent to dt else -\/$>$ return the G\-S\-T assuming dt is U\-T\-C \mbox{]} 
+
+Definition at line 1124 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a1fdff084daf18c0f463541b53dfa8171}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!gst@{gst}}
+\index{gst@{gst}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{gst}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-gst (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{e\-Long}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a1fdff084daf18c0f463541b53dfa8171}
+
+
+Convert L\-S\-T to G\-S\-T. 
+
+\mbox{[} self is local sidereal time at longitude e\-Long radians east of Greenwich -\/$>$ return the equivalent G\-S\-T as a \hyperlink{classsidereal__m_1_1_sidereal_time}{Sidereal\-Time} instance \mbox{]} 
+
+Definition at line 1284 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a5dca2735c3c88b3a718ce4244d210494}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!hour\-Angle@{hour\-Angle}}
+\index{hour\-Angle@{hour\-Angle}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{hour\-Angle}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-hour\-Angle (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{utc, }
+\item[{}]{e\-Long}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a5dca2735c3c88b3a718ce4244d210494}
+
+
+Find the hour angle at a given observer's location. 
+
+\mbox{[} (utc is a Universal Time as a datetime.\-datetime) and (e\-Long is an east longitude in radians) -\/$>$ return the hour angle of self at that time and longitude, in radians \mbox{]} 
+
+Definition at line 1492 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ad585501ad694e8d114dbbf1c97e5415d}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!hour\-Angle\-To\-R\-A@{hour\-Angle\-To\-R\-A}}
+\index{hour\-Angle\-To\-R\-A@{hour\-Angle\-To\-R\-A}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{hour\-Angle\-To\-R\-A}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-hour\-Angle\-To\-R\-A (
+\begin{DoxyParamCaption}
+\item[{}]{h, }
+\item[{}]{ut, }
+\item[{}]{e\-Long}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_ad585501ad694e8d114dbbf1c97e5415d}
+
+
+Convert hour angle to right ascension. 
+
+\mbox{[} (h is an hour angle in radians as a float) and (ut is a timestamp as a datetime.\-datetime instance) and (e\-Long is an east longitude in radians) -\/$>$ return the right ascension in radians corresponding to that hour angle at that time and location \mbox{]} 
+
+Definition at line 61 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a7248225b6e2f84db36378d4b0aa7f49b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!hours\-To\-Radians@{hours\-To\-Radians}}
+\index{hours\-To\-Radians@{hours\-To\-Radians}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{hours\-To\-Radians}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-hours\-To\-Radians (
+\begin{DoxyParamCaption}
+\item[{}]{hours}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a7248225b6e2f84db36378d4b0aa7f49b}
+
+
+Convert hours (15 degrees) to radians. 
+
+
+
+Definition at line 41 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ab8ecd49a286150753eafadaf00def93a}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!lst@{lst}}
+\index{lst@{lst}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{lst}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-lst (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{e\-Long}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_ab8ecd49a286150753eafadaf00def93a}
+
+
+Convert G\-S\-T to L\-S\-T. 
+
+\mbox{[} (self is Greenwich sidereal time) and (e\-Long is a longitude east of Greenwich in radians) -\/$>$ return a new \hyperlink{classsidereal__m_1_1_sidereal_time}{Sidereal\-Time} representing the L\-S\-T at longitude e\-Long \mbox{]} 
+
+Definition at line 1304 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a77cd092bc7381c4482179be015b4f678}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!mix\-To\-Single@{mix\-To\-Single}}
+\index{mix\-To\-Single@{mix\-To\-Single}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{mix\-To\-Single}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-mix\-To\-Single (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{coeffs}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a77cd092bc7381c4482179be015b4f678}
+
+
+Convert mixed units to a single value. 
+
+\mbox{[} coeffs is a sequence of numbers not longer than len(self.\-factors)+1 -\/$>$ return the equivalent single value in self's system \mbox{]} 
+
+Definition at line 805 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_abfc63def139b13c305b96ff580c627da}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!offset@{offset}}
+\index{offset@{offset}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{offset}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-offset (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{delta}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_abfc63def139b13c305b96ff580c627da}
+
+
+Return a new \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} for self+(delta days) 
+
+\mbox{[} delta is a number of days as a float -\/$>$ return a new \hyperlink{classsidereal__m_1_1_julian_date}{Julian\-Date} (delta) days in the future, or past if negative \mbox{]} 
+
+Definition at line 1077 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a480ed9733963f7b51c8ca23f4f3f9c59}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Angle@{parse\-Angle}}
+\index{parse\-Angle@{parse\-Angle}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Angle}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Angle (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a480ed9733963f7b51c8ca23f4f3f9c59}
+
+
+Validate and convert an external angle. 
+
+\mbox{[} s is a string -\/$>$ if s is a valid external angle -\/$>$ return s in radians else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 526 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a813b9db33e6b0af3b127aef36768a45f}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Date@{parse\-Date}}
+\index{parse\-Date@{parse\-Date}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Date}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Date (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a813b9db33e6b0af3b127aef36768a45f}
+
+
+Validate and convert a date in external form. 
+
+\mbox{[} s is a string -\/$>$ if s is a valid external date string -\/$>$ return that date as a datetime.\-date instance else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 199 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_adb46fb5b2e269becd3d021ae2ce369ac}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Datetime@{parse\-Datetime}}
+\index{parse\-Datetime@{parse\-Datetime}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Datetime}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Datetime (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_adb46fb5b2e269becd3d021ae2ce369ac}
+
+
+Parse a date with optional time. 
+
+\mbox{[} s is a string -\/$>$ if s is a valid date with optional time -\/$>$ return that timestamp as a datetime.\-datetime instance else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 134 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_aee55c797d5735d0fd98691549808e551}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Fixed\-Zone@{parse\-Fixed\-Zone}}
+\index{parse\-Fixed\-Zone@{parse\-Fixed\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Fixed\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Fixed\-Zone (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_aee55c797d5735d0fd98691549808e551}
+
+
+Convert a +hhmm or -\/hhmm zone suffix. 
+
+\mbox{[} s is a string -\/$>$ if s is a time zone suffix of the form \char`\"{}+hhmm\char`\"{} or \char`\"{}-\/hhmm\char`\"{} -\/$>$ return that zone information as an instance of a class that inherits from datetime.\-tzinfo else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 342 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ae48c937464ce0bf4fedf6b6913095141}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Float@{parse\-Float}}
+\index{parse\-Float@{parse\-Float}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Float}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Float (
+\begin{DoxyParamCaption}
+\item[{}]{s, }
+\item[{}]{message}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_ae48c937464ce0bf4fedf6b6913095141}
+
+
+Parse a floating-\/point number at the front of s. 
+
+\mbox{[} (s is a string) and (message is a string describing what is expected) -\/$>$ if s begins with a floating-\/point number -\/$>$ return (x, tail) where x is the number as type float and tail is the part of s after the match else -\/$>$ raise Syntax\-Error, \char`\"{}\-Expecting (message)\char`\"{} \mbox{]} 
+
+Definition at line 613 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_af85eb1489ad39a857ecabd6fdae07353}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Float\-Suffix@{parse\-Float\-Suffix}}
+\index{parse\-Float\-Suffix@{parse\-Float\-Suffix}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Float\-Suffix}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Float\-Suffix (
+\begin{DoxyParamCaption}
+\item[{}]{s, }
+\item[{}]{code\-Re, }
+\item[{}]{message}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_af85eb1489ad39a857ecabd6fdae07353}
+
+
+Parse a float followed by a letter code. 
+
+\mbox{[} (s is a string) and (code\-Re is a compiled regular expression) and (message is a string describing what is expected) -\/$>$ if s starts with a float, followed by code (using case-\/insensitive comparison) -\/$>$ return (x, tail) where x is that float as type float and tail is the part of s after the float and code else -\/$>$ raise Syntax\-Error, \char`\"{}\-Expecting (message)\char`\"{} \mbox{]} 
+
+Definition at line 585 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a06d02d6b9f3bff425bd05e9d62a2469b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Hours@{parse\-Hours}}
+\index{parse\-Hours@{parse\-Hours}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Hours}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Hours (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a06d02d6b9f3bff425bd05e9d62a2469b}
+
+
+Validate and convert a quantity in hours. 
+
+\mbox{[} s is a non-\/empty string -\/$>$ if s is a valid mixed hours expression -\/$>$ return the value of s as decimal hours else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 736 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_acb89105866ffc0f5c75b33f7bbd0bcb5}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Lat@{parse\-Lat}}
+\index{parse\-Lat@{parse\-Lat}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Lat}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Lat (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_acb89105866ffc0f5c75b33f7bbd0bcb5}
+
+
+Validate and convert an external latitude. 
+
+\mbox{[} s is a nonempty string -\/$>$ if s is a valid external latitude -\/$>$ return that latitude in radians else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 660 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_abc753ae763be135096575ad04ba3ec6d}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Lon@{parse\-Lon}}
+\index{parse\-Lon@{parse\-Lon}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Lon}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Lon (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_abc753ae763be135096575ad04ba3ec6d}
+
+
+Validate and convert an external longitude. 
+
+\mbox{[} s is a nonempty string -\/$>$ if s is a valid external longitude -\/$>$ return that longitude in radians else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 698 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a16c1d5f58142f9edef70e715d011d8fe}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Re@{parse\-Re}}
+\index{parse\-Re@{parse\-Re}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Re}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Re (
+\begin{DoxyParamCaption}
+\item[{}]{s, }
+\item[{}]{regex, }
+\item[{}]{message}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a16c1d5f58142f9edef70e715d011d8fe}
+
+
+Parse a regular expression at the head of a string. 
+
+\mbox{[} (s is a string) and (regex is a compiled regular expression) and (message is a string describing what is expected) -\/$>$ if s starts with a string that matches regex -\/$>$ return (head, tail) where head is the part of s that matched and tail is the rest else -\/$>$ raise Syntax\-Error, \char`\"{}\-Expecting (message)\char`\"{} \mbox{]} 
+
+Definition at line 636 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a500e4765c1978d14c8915ba94655cd3d}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Time@{parse\-Time}}
+\index{parse\-Time@{parse\-Time}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Time}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Time (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a500e4765c1978d14c8915ba94655cd3d}
+
+
+Validate and convert a time and optional zone. 
+
+\mbox{[} s is a string -\/$>$ if s is a valid time with optional zone suffix -\/$>$ return that time as a datetime.\-time else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 225 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a0fd05a38609f0a1f902aa484c27f3113}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!parse\-Zone@{parse\-Zone}}
+\index{parse\-Zone@{parse\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{parse\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-parse\-Zone (
+\begin{DoxyParamCaption}
+\item[{}]{s}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a0fd05a38609f0a1f902aa484c27f3113}
+
+
+Validate and convert a time zone suffix. 
+
+\mbox{[} s is a string -\/$>$ if s is a valid time zone suffix -\/$>$ return that zone's information as an instance of a class that inherits from datetime.\-tzinfo else -\/$>$ raise Syntax\-Error \mbox{]} 
+
+Definition at line 306 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a5ad0e1c8021f8e8de683f7ec05ae2661}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!ra\-Dec@{ra\-Dec}}
+\index{ra\-Dec@{ra\-Dec}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{ra\-Dec}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-ra\-Dec (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{lst, }
+\item[{}]{lat\-Lon}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a5ad0e1c8021f8e8de683f7ec05ae2661}
+
+
+Convert horizon coordinates to equatorial. 
+
+\mbox{[} (lst is a local sidereal time as a \hyperlink{classsidereal__m_1_1_sidereal_time}{Sidereal\-Time} instance) and (lat\-Lon is the observer's position as a \hyperlink{classsidereal__m_1_1_lat_lon}{Lat\-Lon} instance) -\/$>$ return the corresponding equatorial coordinates as a \hyperlink{classsidereal__m_1_1_r_a_dec}{R\-A\-Dec} instance \mbox{]} 
+
+Definition at line 1392 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a044b3ec61f739a9085615081a4f70143}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!radians\-To\-Hours@{radians\-To\-Hours}}
+\index{radians\-To\-Hours@{radians\-To\-Hours}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{radians\-To\-Hours}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-radians\-To\-Hours (
+\begin{DoxyParamCaption}
+\item[{}]{radians}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a044b3ec61f739a9085615081a4f70143}
+
+
+Convert radians to hours (15 degrees). 
+
+
+
+Definition at line 48 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a477ed868db4b46e0523bcbde4f09a1dc}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!ra\-To\-Hour\-Angle@{ra\-To\-Hour\-Angle}}
+\index{ra\-To\-Hour\-Angle@{ra\-To\-Hour\-Angle}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{ra\-To\-Hour\-Angle}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-ra\-To\-Hour\-Angle (
+\begin{DoxyParamCaption}
+\item[{}]{ra, }
+\item[{}]{ut, }
+\item[{}]{e\-Long}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a477ed868db4b46e0523bcbde4f09a1dc}
+
+
+Convert right ascension to hour angle. 
+
+\mbox{[} (ra is a right ascension in radians as a float) and (ut is a timestamp as a datetime.\-datetime instance) and (e\-Long is an east longitude in radians) -\/$>$ return the hour angle in radians at that time and location corresponding to that right ascension \mbox{]} 
+
+Definition at line 87 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a05309b16991a7a2008e27f32ee6bce83}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!single\-To\-Mix@{single\-To\-Mix}}
+\index{single\-To\-Mix@{single\-To\-Mix}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{single\-To\-Mix}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-single\-To\-Mix (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{value}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_a05309b16991a7a2008e27f32ee6bce83}
+
+
+Convert to mixed units. 
+
+\mbox{[} value is a float -\/$>$ return value as a sequence of coefficients in self's system \mbox{]} 
+
+Definition at line 874 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_aec4d48a847faa06934ba417d61b58ecc}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!utc@{utc}}
+\index{utc@{utc}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{utc}]{\setlength{\rightskip}{0pt plus 5cm}def sidereal\-\_\-m.\-utc (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{date}
+\end{DoxyParamCaption}
+)}}\label{namespacesidereal__m_aec4d48a847faa06934ba417d61b58ecc}
+
+
+Convert G\-S\-T to U\-T\-C. 
+
+\mbox{[} date is a U\-T\-C date as a datetime.\-date instance -\/$>$ return the first or only time at which self's G\-S\-T occurs at longitude 0 \mbox{]} 
+
+Definition at line 1215 of file sidereal\-\_\-m.\-py.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespacesidereal__m_ab131e2d535caf37cb524a2626e57e396}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!alt@{alt}}
+\index{alt@{alt}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{alt}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-alt}}\label{namespacesidereal__m_ab131e2d535caf37cb524a2626e57e396}
+
+
+Definition at line 1380 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ace3a607f32a0e920263e144e22db99c4}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!az@{az}}
+\index{az@{az}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{az}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-az}}\label{namespacesidereal__m_ace3a607f32a0e920263e144e22db99c4}
+
+
+Definition at line 1381 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a05c79d7a2ed81916eb5b382f454be042}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!cdt\-Zone@{cdt\-Zone}}
+\index{cdt\-Zone@{cdt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{cdt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-cdt\-Zone = {\bf Fixed\-Zone}(-\/5, 0, \char`\"{}C\-D\-T\char`\"{})}}\label{namespacesidereal__m_a05c79d7a2ed81916eb5b382f454be042}
+
+
+Definition at line 499 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a841c443c8191849e9bd3e9a735965c86}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!cst\-Zone@{cst\-Zone}}
+\index{cst\-Zone@{cst\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{cst\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-cst\-Zone = {\bf Fixed\-Zone}(-\/6, 0, \char`\"{}C\-S\-T\char`\"{})}}\label{namespacesidereal__m_a841c443c8191849e9bd3e9a735965c86}
+
+
+Definition at line 498 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_addd75737f4a6dc9829a1345e5c9a4b23}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!ct\-Zone@{ct\-Zone}}
+\index{ct\-Zone@{ct\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{ct\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-ct\-Zone = {\bf U\-S\-Time\-Zone}(-\/6, 0, \char`\"{}C\-T\char`\"{}, \char`\"{}C\-S\-T\char`\"{}, \char`\"{}C\-D\-T\char`\"{})}}\label{namespacesidereal__m_addd75737f4a6dc9829a1345e5c9a4b23}
+
+
+Definition at line 500 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ae0bf984e245275f4ea80e4604f92c7b8}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!D\-\_\-\-P\-A\-T@{D\-\_\-\-P\-A\-T}}
+\index{D\-\_\-\-P\-A\-T@{D\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{D\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-D\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}d\-D\mbox{]}' )}}\label{namespacesidereal__m_ae0bf984e245275f4ea80e4604f92c7b8}
+
+
+Definition at line 30 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a8af88f3206726f7628c672162578ff1e}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!D\-A\-T\-E\-\_\-\-P\-A\-T@{D\-A\-T\-E\-\_\-\-P\-A\-T}}
+\index{D\-A\-T\-E\-\_\-\-P\-A\-T@{D\-A\-T\-E\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{D\-A\-T\-E\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-D\-A\-T\-E\-\_\-\-P\-A\-T = re.\-compile( {\bf date\-Re} )}}\label{namespacesidereal__m_a8af88f3206726f7628c672162578ff1e}
+
+
+Definition at line 189 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_af7f33e8c695f19f9d5827713dbedabde}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!date\-Re@{date\-Re}}
+\index{date\-Re@{date\-Re}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{date\-Re}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-date\-Re}}\label{namespacesidereal__m_af7f33e8c695f19f9d5827713dbedabde}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = (
+2     \textcolor{stringliteral}{r'('}            \textcolor{comment}{# Begin YEAR\_FIELD}
+3       \textcolor{stringliteral}{r'?P<%s>'}       \textcolor{comment}{# Name this group YEAR\_FIELD}
+4       \textcolor{stringliteral}{r'\(\backslash\)d\{4\}'}        \textcolor{comment}{# Match exactly four digits}
+5     \textcolor{stringliteral}{r')'}            \textcolor{comment}{# End YEAR\_FIELD}
+6     \textcolor{stringliteral}{r'\(\backslash\)-'}           \textcolor{comment}{# Matches one hyphen}
+7     \textcolor{stringliteral}{r'('}            \textcolor{comment}{# Begin MONTH\_FIELD}
+8       \textcolor{stringliteral}{r'?P<%s>'}       \textcolor{comment}{# Name this group MONTH\_FIELD}
+9       \textcolor{stringliteral}{r'\(\backslash\)d\{1,2\}'}      \textcolor{comment}{# Matches one or two digits}
+10     \textcolor{stringliteral}{r')'}            \textcolor{comment}{# End MONTH\_FIELD}
+11     \textcolor{stringliteral}{r'\(\backslash\)-'}           \textcolor{comment}{# Matches "-"}
+12     \textcolor{stringliteral}{r'('}            \textcolor{comment}{# Begin DAY\_FIELD}
+13       \textcolor{stringliteral}{r'?P<%s>'}       \textcolor{comment}{# Name this group DAY\_FIELD}
+14       \textcolor{stringliteral}{r'\(\backslash\)d\{1,2\}'}      \textcolor{comment}{# Matches one or two digits}
+15     \textcolor{stringliteral}{r')'}            \textcolor{comment}{# End DAY\_FIELD}
+16     \textcolor{stringliteral}{r'$'}            \textcolor{comment}{# Make sure all characters match}
+17     )
+\end{DoxyCode}
+
+
+Definition at line 172 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a5c36ac32632578970ca13d60cb47784d}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!D\-A\-Y\-\_\-\-F\-I\-E\-L\-D@{D\-A\-Y\-\_\-\-F\-I\-E\-L\-D}}
+\index{D\-A\-Y\-\_\-\-F\-I\-E\-L\-D@{D\-A\-Y\-\_\-\-F\-I\-E\-L\-D}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{D\-A\-Y\-\_\-\-F\-I\-E\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}string sidereal\-\_\-m.\-D\-A\-Y\-\_\-\-F\-I\-E\-L\-D = \char`\"{}D\char`\"{}}}\label{namespacesidereal__m_a5c36ac32632578970ca13d60cb47784d}
+
+
+Definition at line 170 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ae13ffea6740eb47a75a83ab7a30e39bb}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!dec@{dec}}
+\index{dec@{dec}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{dec}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-dec}}\label{namespacesidereal__m_ae13ffea6740eb47a75a83ab7a30e39bb}
+
+
+Definition at line 1481 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_aeb0c98a65d8fbf6a3d261aba22fbd58e}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R@{D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R}}
+\index{D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R@{D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-D\-E\-L\-T\-A\-\_\-\-H\-O\-U\-R = datetime.\-timedelta({\bf hours}=1)}}\label{namespacesidereal__m_aeb0c98a65d8fbf6a3d261aba22fbd58e}
+
+
+Definition at line 369 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a539b5441786809f3edc4becbe18a9be5}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O@{D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O}}
+\index{D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O@{D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-D\-E\-L\-T\-A\-\_\-\-Z\-E\-R\-O = datetime.\-timedelta(0)}}\label{namespacesidereal__m_a539b5441786809f3edc4becbe18a9be5}
+
+
+Definition at line 368 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a5a9371fca081e71c7da3d3a86163ca83}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!dms\-Units@{dms\-Units}}
+\index{dms\-Units@{dms\-Units}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{dms\-Units}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-dms\-Units = {\bf Mixed\-Units}( (60, 60) )}}\label{namespacesidereal__m_a5a9371fca081e71c7da3d3a86163ca83}
+
+
+Definition at line 955 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a4c854e6a086ba5d2fe50e56b9dd25f5c}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!edt\-Zone@{edt\-Zone}}
+\index{edt\-Zone@{edt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{edt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-edt\-Zone = {\bf Fixed\-Zone}(-\/4, 0, \char`\"{}E\-D\-T\char`\"{})}}\label{namespacesidereal__m_a4c854e6a086ba5d2fe50e56b9dd25f5c}
+
+
+Definition at line 495 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a78983f72dd535ac1112dbd2d340d6637}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!est\-Zone@{est\-Zone}}
+\index{est\-Zone@{est\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{est\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-est\-Zone = {\bf Fixed\-Zone}(-\/5, 0, \char`\"{}E\-S\-T\char`\"{})}}\label{namespacesidereal__m_a78983f72dd535ac1112dbd2d340d6637}
+
+
+Definition at line 494 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ab6d3514a8eb98e6d9b546de8686936e0}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!et\-Zone@{et\-Zone}}
+\index{et\-Zone@{et\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{et\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-et\-Zone = {\bf U\-S\-Time\-Zone}(-\/5, 0, \char`\"{}E\-T\char`\"{}, \char`\"{}E\-S\-T\char`\"{}, \char`\"{}E\-D\-T\char`\"{})}}\label{namespacesidereal__m_ab6d3514a8eb98e6d9b546de8686936e0}
+
+
+Definition at line 496 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ab119461f26d7e4d6060624948c4f9f44}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!E\-W\-\_\-\-P\-A\-T@{E\-W\-\_\-\-P\-A\-T}}
+\index{E\-W\-\_\-\-P\-A\-T@{E\-W\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{E\-W\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-E\-W\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}e\-Ew\-W\mbox{]}' )}}\label{namespacesidereal__m_ab119461f26d7e4d6060624948c4f9f44}
+
+
+Definition at line 35 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_afafa1b150c288c18b2b83d83392923f5}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!factor\-B@{factor\-B}}
+\index{factor\-B@{factor\-B}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{factor\-B}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-factor\-B = staticmethod(factor\-B)}}\label{namespacesidereal__m_afafa1b150c288c18b2b83d83392923f5}
+
+
+Definition at line 1274 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a58bc23454a5cec5d9aeccc8cec718bee}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!factors@{factors}}
+\index{factors@{factors}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{factors}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-factors}}\label{namespacesidereal__m_a58bc23454a5cec5d9aeccc8cec718bee}
+
+
+Definition at line 795 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a725204684fed9dbd998787c945d6c5a5}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R@{F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R}}
+\index{F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R@{F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}int sidereal\-\_\-m.\-F\-I\-R\-S\-T\-\_\-\-G\-R\-E\-G\-O\-R\-I\-A\-N\-\_\-\-Y\-E\-A\-R = 1583}}\label{namespacesidereal__m_a725204684fed9dbd998787c945d6c5a5}
+
+
+Definition at line 19 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a80565211e8dfe2704212c831266cfaf2}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!F\-L\-O\-A\-T\-\_\-\-P\-A\-T@{F\-L\-O\-A\-T\-\_\-\-P\-A\-T}}
+\index{F\-L\-O\-A\-T\-\_\-\-P\-A\-T@{F\-L\-O\-A\-T\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{F\-L\-O\-A\-T\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-F\-L\-O\-A\-T\-\_\-\-P\-A\-T}}\label{namespacesidereal__m_a80565211e8dfe2704212c831266cfaf2}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = re.compile(
+2     \textcolor{stringliteral}{r'\(\backslash\)d+'}          \textcolor{comment}{# Matches one or more digits}
+3     \textcolor{stringliteral}{r'('}            \textcolor{comment}{# Start optional fraction}
+4       \textcolor{stringliteral}{r'[.]'}          \textcolor{comment}{# Matches the decimal point}
+5       \textcolor{stringliteral}{r'\(\backslash\)d+'}          \textcolor{comment}{# Matches one or more digits}
+6     \textcolor{stringliteral}{r')?'} )
+\end{DoxyCode}
+
+
+Definition at line 24 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ad26cce340a05c957e45bb6a417898309}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!from\-Datetime@{from\-Datetime}}
+\index{from\-Datetime@{from\-Datetime}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{from\-Datetime}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-from\-Datetime = staticmethod(from\-Datetime)}}\label{namespacesidereal__m_ad26cce340a05c957e45bb6a417898309}
+
+
+Convert civil time to Greenwich Sidereal. 
+
+\mbox{[} dt is a datetime.\-datetime instance -\/$>$ if dt has time zone information -\/$>$ return the G\-S\-T at the U\-T\-C equivalent to dt else -\/$>$ return the G\-S\-T assuming dt is U\-T\-C \mbox{]} 
+
+Definition at line 1170 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ad42e760bce089c48936fffcd5ab2c4b2}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!H\-\_\-\-P\-A\-T@{H\-\_\-\-P\-A\-T}}
+\index{H\-\_\-\-P\-A\-T@{H\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{H\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-H\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}h\-H\mbox{]}' )}}\label{namespacesidereal__m_ad42e760bce089c48936fffcd5ab2c4b2}
+
+
+Definition at line 33 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a56e3e688d330fce2dbb1d4c0f3dddd14}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!H\-H\-M\-M\-\_\-\-P\-A\-T@{H\-H\-M\-M\-\_\-\-P\-A\-T}}
+\index{H\-H\-M\-M\-\_\-\-P\-A\-T@{H\-H\-M\-M\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{H\-H\-M\-M\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-H\-H\-M\-M\-\_\-\-P\-A\-T}}\label{namespacesidereal__m_a56e3e688d330fce2dbb1d4c0f3dddd14}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = re.compile(
+2     \textcolor{stringliteral}{r'\(\backslash\)d\{4\}'}    \textcolor{comment}{# Matches exactly four digits}
+3     \textcolor{stringliteral}{r'$'} )
+\end{DoxyCode}
+
+
+Definition at line 329 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_aa33cfb39f83f46f86c18c7fa19178619}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!hours@{hours}}
+\index{hours@{hours}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{hours}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-hours}}\label{namespacesidereal__m_aa33cfb39f83f46f86c18c7fa19178619}
+
+
+Definition at line 1188 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a401a49f7dc148912f92fcd07ae578344}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!j@{j}}
+\index{j@{j}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{j}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-j}}\label{namespacesidereal__m_a401a49f7dc148912f92fcd07ae578344}
+
+
+Definition at line 1019 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a38061089760363bdc72a7c7b5de2f98b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S@{J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S}}
+\index{J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S@{J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S}]{\setlength{\rightskip}{0pt plus 5cm}int sidereal\-\_\-m.\-J\-U\-L\-I\-A\-N\-\_\-\-B\-I\-A\-S = 2200000}}\label{namespacesidereal__m_a38061089760363bdc72a7c7b5de2f98b}
+
+
+Definition at line 22 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a5e08e3f09045d8441bbba9c1484d5a11}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!lat@{lat}}
+\index{lat@{lat}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{lat}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-lat}}\label{namespacesidereal__m_a5e08e3f09045d8441bbba9c1484d5a11}
+
+
+Definition at line 969 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a814620b0bb71a22b0cfd22925d9a8779}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!lon@{lon}}
+\index{lon@{lon}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{lon}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-lon}}\label{namespacesidereal__m_a814620b0bb71a22b0cfd22925d9a8779}
+
+
+Definition at line 970 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a1caf01a791e13c53e99127b3fe04ebed}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!M\-\_\-\-P\-A\-T@{M\-\_\-\-P\-A\-T}}
+\index{M\-\_\-\-P\-A\-T@{M\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{M\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-M\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}m\-M\mbox{]}' )}}\label{namespacesidereal__m_a1caf01a791e13c53e99127b3fe04ebed}
+
+
+Definition at line 31 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a0f18e7a6c79bd5fb3282f5112fc05bc7}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!mdt\-Zone@{mdt\-Zone}}
+\index{mdt\-Zone@{mdt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{mdt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-mdt\-Zone = {\bf Fixed\-Zone}(-\/6, 0, \char`\"{}M\-D\-T\char`\"{})}}\label{namespacesidereal__m_a0f18e7a6c79bd5fb3282f5112fc05bc7}
+
+
+Definition at line 503 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_af899b20a1f9e1c6b58db09a38d5919a7}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D@{M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D}}
+\index{M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D@{M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}string sidereal\-\_\-m.\-M\-O\-N\-T\-H\-\_\-\-F\-I\-E\-L\-D = \char`\"{}M\char`\"{}}}\label{namespacesidereal__m_af899b20a1f9e1c6b58db09a38d5919a7}
+
+
+Definition at line 169 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a9c2ade33436f33e9212d7a20ec0f26c8}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!mst\-Zone@{mst\-Zone}}
+\index{mst\-Zone@{mst\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{mst\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-mst\-Zone = {\bf Fixed\-Zone}(-\/7, 0, \char`\"{}M\-S\-T\char`\"{})}}\label{namespacesidereal__m_a9c2ade33436f33e9212d7a20ec0f26c8}
+
+
+Definition at line 502 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a8a711c0468a09f6205ac5b8652396b73}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!mt\-Zone@{mt\-Zone}}
+\index{mt\-Zone@{mt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{mt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-mt\-Zone = {\bf U\-S\-Time\-Zone}(-\/7, 0, \char`\"{}M\-T\char`\"{}, \char`\"{}M\-S\-T\char`\"{}, \char`\"{}M\-D\-T\char`\"{})}}\label{namespacesidereal__m_a8a711c0468a09f6205ac5b8652396b73}
+
+
+Definition at line 504 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a18339cc2bb8977ce1e0b0d5a6632049b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!N\-S\-\_\-\-P\-A\-T@{N\-S\-\_\-\-P\-A\-T}}
+\index{N\-S\-\_\-\-P\-A\-T@{N\-S\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{N\-S\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-N\-S\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}n\-Ns\-S\mbox{]}' )}}\label{namespacesidereal__m_a18339cc2bb8977ce1e0b0d5a6632049b}
+
+
+Definition at line 34 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ab3f36473944b503edcd2d44ee22a727e}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!pdt\-Zone@{pdt\-Zone}}
+\index{pdt\-Zone@{pdt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{pdt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-pdt\-Zone = {\bf Fixed\-Zone}(-\/7, 0, \char`\"{}P\-D\-T\char`\"{})}}\label{namespacesidereal__m_ab3f36473944b503edcd2d44ee22a727e}
+
+
+Definition at line 507 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a15ccd7ff6124271627f40a26c3bc846c}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!P\-I\-\_\-\-O\-V\-E\-R\-\_\-12@{P\-I\-\_\-\-O\-V\-E\-R\-\_\-12}}
+\index{P\-I\-\_\-\-O\-V\-E\-R\-\_\-12@{P\-I\-\_\-\-O\-V\-E\-R\-\_\-12}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{P\-I\-\_\-\-O\-V\-E\-R\-\_\-12}]{\setlength{\rightskip}{0pt plus 5cm}float sidereal\-\_\-m.\-P\-I\-\_\-\-O\-V\-E\-R\-\_\-12 = pi/12.\-0}}\label{namespacesidereal__m_a15ccd7ff6124271627f40a26c3bc846c}
+
+
+Definition at line 21 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a04b98949e2d945cfaf0b696806c1aa97}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!pst\-Zone@{pst\-Zone}}
+\index{pst\-Zone@{pst\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{pst\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-pst\-Zone = {\bf Fixed\-Zone}(-\/8, 0, \char`\"{}P\-S\-T\char`\"{})}}\label{namespacesidereal__m_a04b98949e2d945cfaf0b696806c1aa97}
+
+
+Definition at line 506 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a3e255a8eb58e3d60d0f3c73092fc423f}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!pt\-Zone@{pt\-Zone}}
+\index{pt\-Zone@{pt\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{pt\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-pt\-Zone = {\bf U\-S\-Time\-Zone}(-\/8, 0, \char`\"{}P\-T\char`\"{}, \char`\"{}P\-S\-T\char`\"{}, \char`\"{}P\-D\-T\char`\"{})}}\label{namespacesidereal__m_a3e255a8eb58e3d60d0f3c73092fc423f}
+
+
+Definition at line 508 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a347a8238fc8167e230ce7b467d0979e9}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!ra@{ra}}
+\index{ra@{ra}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{ra}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-ra}}\label{namespacesidereal__m_a347a8238fc8167e230ce7b467d0979e9}
+
+
+Definition at line 1480 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a109cb9d081cec6a1636cf40b3cf3e41f}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!radians@{radians}}
+\index{radians@{radians}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{radians}]{\setlength{\rightskip}{0pt plus 5cm}sidereal\-\_\-m.\-radians}}\label{namespacesidereal__m_a109cb9d081cec6a1636cf40b3cf3e41f}
+
+
+Definition at line 1189 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a9d32f355803d14509f6e01b1986181d4}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!S\-\_\-\-P\-A\-T@{S\-\_\-\-P\-A\-T}}
+\index{S\-\_\-\-P\-A\-T@{S\-\_\-\-P\-A\-T}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{S\-\_\-\-P\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-S\-\_\-\-P\-A\-T = re.\-compile( r'\mbox{[}s\-S\mbox{]}' )}}\label{namespacesidereal__m_a9d32f355803d14509f6e01b1986181d4}
+
+
+Definition at line 32 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a496a7b85f6162056f897f9ff75355995}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A@{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A}}
+\index{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A@{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A}]{\setlength{\rightskip}{0pt plus 5cm}float sidereal\-\_\-m.\-S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-A = 0.\-0657098}}\label{namespacesidereal__m_a496a7b85f6162056f897f9ff75355995}
+
+
+Definition at line 23 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ac918e6641ccb9633fc6772d5e0c0362d}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C@{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C}}
+\index{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C@{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C}]{\setlength{\rightskip}{0pt plus 5cm}float sidereal\-\_\-m.\-S\-I\-D\-E\-R\-E\-A\-L\-\_\-\-C = 1.\-002738}}\label{namespacesidereal__m_ac918e6641ccb9633fc6772d5e0c0362d}
+
+
+Definition at line 1316 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a3b4fab471bdb8cd9245e613efc956f40}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!T\-\_\-\-P\-A\-T\-T\-E\-R\-N@{T\-\_\-\-P\-A\-T\-T\-E\-R\-N}}
+\index{T\-\_\-\-P\-A\-T\-T\-E\-R\-N@{T\-\_\-\-P\-A\-T\-T\-E\-R\-N}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{T\-\_\-\-P\-A\-T\-T\-E\-R\-N}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-T\-\_\-\-P\-A\-T\-T\-E\-R\-N = re.\-compile( '\mbox{[}t\-T\mbox{]}' )}}\label{namespacesidereal__m_a3b4fab471bdb8cd9245e613efc956f40}
+
+
+Definition at line 124 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a8d2689ed09c70b40bb8df0e7a665fbf1}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!T\-W\-O\-\_\-\-P\-I@{T\-W\-O\-\_\-\-P\-I}}
+\index{T\-W\-O\-\_\-\-P\-I@{T\-W\-O\-\_\-\-P\-I}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{T\-W\-O\-\_\-\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}float sidereal\-\_\-m.\-T\-W\-O\-\_\-\-P\-I = 2.\-0}}\label{namespacesidereal__m_a8d2689ed09c70b40bb8df0e7a665fbf1}
+
+
+Definition at line 20 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_acba2a1aac19372aa3682e05966c224f8}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!utc\-Zone@{utc\-Zone}}
+\index{utc\-Zone@{utc\-Zone}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{utc\-Zone}]{\setlength{\rightskip}{0pt plus 5cm}tuple sidereal\-\_\-m.\-utc\-Zone = {\bf Fixed\-Zone}(0, 0, \char`\"{}U\-T\-C\char`\"{})}}\label{namespacesidereal__m_acba2a1aac19372aa3682e05966c224f8}
+
+
+Definition at line 492 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_a84aeb45ec2de1c4d50a8f4269db4c26b}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D@{Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D}}
+\index{Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D@{Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}string sidereal\-\_\-m.\-Y\-E\-A\-R\-\_\-\-F\-I\-E\-L\-D = \char`\"{}Y\char`\"{}}}\label{namespacesidereal__m_a84aeb45ec2de1c4d50a8f4269db4c26b}
+
+
+Definition at line 168 of file sidereal\-\_\-m.\-py.
+
+\hypertarget{namespacesidereal__m_ad5215718e8f39e6e22cc8784bb56cf89}{\index{sidereal\-\_\-m@{sidereal\-\_\-m}!zone\-Code\-Map@{zone\-Code\-Map}}
+\index{zone\-Code\-Map@{zone\-Code\-Map}!sidereal_m@{sidereal\-\_\-m}}
+\subsubsection[{zone\-Code\-Map}]{\setlength{\rightskip}{0pt plus 5cm}dictionary sidereal\-\_\-m.\-zone\-Code\-Map}}\label{namespacesidereal__m_ad5215718e8f39e6e22cc8784bb56cf89}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = \{
+2     \textcolor{stringliteral}{"UTC"}: utcZone,
+3     \textcolor{stringliteral}{"EST"}: estZone,    \textcolor{stringliteral}{"EDT"}: edtZone,    \textcolor{stringliteral}{"ET"}:  etZone,
+4     \textcolor{stringliteral}{"CST"}: cstZone,    \textcolor{stringliteral}{"CDT"}: cdtZone,    \textcolor{stringliteral}{"CT"}:  ctZone,
+5     \textcolor{stringliteral}{"MST"}: mstZone,    \textcolor{stringliteral}{"MDT"}: mdtZone,    \textcolor{stringliteral}{"MT"}:  mtZone,
+6     \textcolor{stringliteral}{"PST"}: pstZone,    \textcolor{stringliteral}{"PDT"}: pdtZone,    \textcolor{stringliteral}{"PT"}:  ptZone \}
+\end{DoxyCode}
+
+
+Definition at line 510 of file sidereal\-\_\-m.\-py.
+
