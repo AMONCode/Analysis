@@ -5,38 +5,12 @@
 # Kill it with kill `cat twistd.pid`
 
 from zope.interface import implements
-
-from twisted.internet.protocol import ServerFactory, Protocol
 from twisted.application import internet, service
+
+from alertsimple import AlertProtocol, AlertFactory
 
 from twisted.python import usage, log
 from twisted.plugin import IPlugin
-
-
-# Move these to another module
-
-class AlertProtocol(Protocol):
-    """
-    Protocol for alert server.
-    """
-    def connectionMade(self):
-        alert = self.factory.service.alert
-        log.msg('Sending %d bytes of alert to %s'
-                % (len(alert), self.transport.getPeer()))
-        self.transport.write(alert)
-        self.transport.loseConnection()
-
-
-class AlertFactory(ServerFactory):
-    """
-    A factory making server protocols.
-    """
-    protocol = AlertProtocol
-
-    def __init__(self, service):
-        self.service = service
-
-# This is the plugin only part 
 
 class AlertService(service.Service):
     """
