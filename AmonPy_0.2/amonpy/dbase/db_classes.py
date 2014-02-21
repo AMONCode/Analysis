@@ -8,7 +8,7 @@ from numpy import *
 from operator import itemgetter, attrgetter
 from datetime import datetime, timedelta
 from sys import path
-path.append("../sim/")
+path.append("../sim")
 import random
 import ast
 import sidereal_m as sidereal
@@ -20,7 +20,7 @@ import sidereal_m as sidereal
 def wherewhen_def(*args):
     """ wherewhen_def is a class factory function
         Optional Inputs: args[0] is an object from the EventStreamConfig class
-                         args[1] set to True if simulaiton is desired
+                         args[1] set to True if simulation is desired
         Output: returns the WhereWhen class
     """
 
@@ -540,4 +540,36 @@ class AlertLine(object):
         for attr, value in self.__dict__.iteritems():
             #print attr, value
             print attr.ljust(20,' ')+': ', value  
+            
+# ******************* BEGIN parameter class definition **********************
+# create a generic parameter object for AMON
+
+class Parameter(object):
+    """ Creates the Parameter class. Instances are created by specifying a unique 
+        four of IDs (name, event_eventStreaemConfig_stream, event_id, event_rev). 
+        The other data attributes are set to
+        defaults on init. This style may later be replaced by the class
+        factory and __slots__ approach, currently adopted for the Event
+        class (see above). 
+    """
+    num_param = 0
+    def __init__(self,parname,stream,id,rev):
+        self.name = parname
+        self.event_eventStreamConfig_stream 	=  stream                       # defined by input
+        self.event_id 	=  id                           # defined by input
+        self.event_rev 	=  rev                          # defined by input
+        # remainder of data attributes are defaults
+        self.value 	=  0.
+        self.units		= "nounits"          
+                                   
+        Parameter.num_param +=1        
+
+    def __del__(self):	
+        Parameter.num_param -=1
+                
+    def forprint(self):
+        for attr, value in self.__dict__.iteritems():
+            #print attr, value
+            print attr.ljust(20,' ')+': ', value              
+            
 

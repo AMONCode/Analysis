@@ -624,6 +624,315 @@ def read_alertConfig(stream, rev, host_name, user_name, passw_name, db_name):
         
     return eventSingle  
     
+def read_parameter_single(event_name,event_stream, event_num, event_rev, host_name, user_name, passw_name, db_name):
+    """ Read a given event from the DB. Input event stream name (char), event ID (int)
+        event_Rev (int), host name, user name, password and DB name. """
+
+    eventSingle=db_classes.Parameter(event_name,event_stream, event_num, event_rev)
+          
+    con = mdb.connect(host_name, user_name, passw_name, db_name)    
+    cur = con.cursor()
+    
+    #if (eventSingle._Event__lock == False):
+    
+    try:
+        print "Try to connect to DB: %s %s %s %s" % (event_name, event_stream, event_num, event_rev)
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('parameter', cur) 
+        num_columns=len(r[1])
+        print "Connected"
+        print 'Number of columns in the table %d' %  num_columns
+        print
+        print 'Column names:'
+        print
+    
+        for ii in xrange(num_columns):
+            print r[1][ii][0]
+        print
+        
+        cur.execute("""SELECT * FROM parameter WHERE name = %s AND 
+                    event_eventStreamConfig_stream = %s AND
+                    event_id = %s AND event_rev = %s""", (event_name, event_stream, event_num, event_rev))
+                       
+       
+        row = cur.fetchone()
+        
+        eventSingle.name       =  event_name      # defined by input
+        eventSingle.event_eventStreamConfig_stream     =  event_stream   # defined by input
+        eventSingle.event_id         =  event_num       # defined by input
+        eventSingle.event_rev        =  event_rev      # defined by input
+        eventSingle.value     =  row[1]
+        eventSingle.units     =  row[2]
+        
+        cur.close()
+        con.close()
+    except mdb.Error, e:
+        print 'Exception %s' %e
+        con.rollback() 
+        #print "Event %s %s %s failed to be read." % event_stream, event_num, event_rev
+        cur.close()
+        con.close()
+        
+    return eventSingle  
+
+
+def read_parameter_interval(stream_name,id_start,id_stop,host_name,user_name,
+                         passw_name, db_name):
+    """ Read a list of parameters from the DB.
+        Input stream, event id minimum and maximum, host name, user name, password and DB name.
+    """
+
+    # initiate event list, put dummy identifiers and replace
+    # them later with real values
+    
+    eventList=[db_classes.Parameter("energy",0, 0, 0)]
+    
+    con = mdb.connect(host_name,user_name,passw_name,db_name)    
+    cur = con.cursor()
+     
+    idStart=id_start
+    idStop= id_stop
+    stream = stream_name
+    print '   Requested interval: %s - %s' %(idStart,idStop)
+
+    # **** Code to read the database column names is bellow****
+    # **** Just print them out for now ****
+    
+    #if (eventSingle._Event__lock == False):
+  
+    try:
+        print
+        print " TRYING TO CONNECT TO THE DATABASE..."
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('parameter', cur) 
+        num_columns=len(r[1])
+        print "  ...CONNECTED"
+        
+        cur.execute("""SELECT * FROM parameter WHERE event_eventStreamConfig_stream = %s AND 
+                    event_id>= %s AND event_id <= %s""", (stream_name,idStart, idStop))
+                       
+        #print "  ...CONNECTED"
+        numrows = int(cur.rowcount)
+        print  '   %d rows selected for reading' % numrows
+            
+        for i in range(numrows):
+            row = cur.fetchone()
+            eventList[i].name     = row[0]  
+            eventList[i].value         = row[1]       
+            eventList[i].units        = row[2]      
+            eventList[i].event_eventStreamConfig_stream   = row[3]
+            # add microseconds     
+            eventList[i].event_id  = row[4] 
+            eventList[i].event_rev        = row[5]   
+            
+            eventList+=[db_classes.Parameter("energy",0, 0, 0)] 
+        cur.close()
+        con.close()
+    except mdb.Error, e:
+        print 'Exception %s' %e
+        con.rollback() 
+        print "   Events failed to be read."
+        cur.close()
+        con.close()
+    eventList.pop()  # remove the last dummy event
+    print "   %d rows read from the database" % len(eventList)
+    return eventList  
+
+def read_parameter_interval_streams(streams_name,id_start,id_stop,host_name,user_name,
+                         passw_name, db_name):
+    """ Read a list of parameters from the DB from a list of streams,
+        within id intervals given in the lists id_start, id_stops for each of
+        the stream respectively
+        
+    """
+
+    # initiate event list, put dummy identifiers and replace
+    # them later with real values
+    eventList=[db_classes.Parameter("energy", 0, 0, 0)]
+    
+    con = mdb.connect(host_name,user_name,passw_name,db_name)    
+    cur = con.cursor()
+     
+    idStart=id_start
+    idStop  = id_stop
+    streams = streams_name
+        
+    # **** Code to read the database column names is bellow****
+    # **** Just print them out for now ****
+    
+    #if (eventSingle._Event__lock == False):
+    num_streams=len(streams)
+    try:
+        print
+        print " TRYING TO CONNECT TO THE DATABASE..."
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('parameter', cur) 
+        num_columns=len(r[1])
+        print "  ...CONNECTED"
+        #print '    Number of columns in the table %d' %  num_columns
+        #print
+        #print '    Column names:'
+        #print
+        #for ii in xrange(num_columns):
+        #    print '    ', r[1][ii][0]
+        #print 
+        if num_streams == 1:
+            cur.execute("""SELECT * FROM event WHERE event_id>= %s AND 
+                        event_id <= %s AND 
+                        event_eventStreamConfig_stream = %s""", (idStart[0], idStop[0], streams[0]))
+        elif num_streams == 2:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s))""",
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1]  
+                        ))
+        elif num_streams == 3:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) 
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2]  
+                        ))
+        elif num_streams == 4:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) OR
+                        ((idStart[3]>= %s AND 
+                        idStop[3] <= %s) AND (event_eventStreamConfig_stream[3] = %s))
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2],
+                          idStart[3], idStop[3], streams[3]  
+                        ))
+        elif num_streams == 5:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) OR
+                        ((idStart[3]>= %s AND 
+                        idStop[3] <= %s) AND (event_eventStreamConfig_stream[3] = %s)) OR
+                        ((idStart[4]>= %s AND 
+                        idStop[4] <= %s) AND (event_eventStreamConfig_stream[4] = %s))
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2],
+                          idStart[3], idStop[3], streams[3],
+                          idStart[4], idStop[4], streams[4]  
+                        ))
+        elif num_streams == 6:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) OR
+                        ((idStart[3]>= %s AND 
+                        idStop[3] <= %s) AND (event_eventStreamConfig_stream[3] = %s)) OR
+                        ((idStart[4]>= %s AND 
+                        idStop[4] <= %s) AND (event_eventStreamConfig_stream[4] = %s)) OR 
+                        ((idStart[5]>= %s AND 
+                        idStop[5] <= %s) AND (event_eventStreamConfig_stream[5] = %s))
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2],
+                          idStart[3], idStop[3], streams[3],
+                          idStart[4], idStop[4], streams[4],
+                          idStart[5], idStop[5], streams[5]  
+                        )) 
+        elif num_streams == 7:
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) OR
+                        ((idStart[3]>= %s AND 
+                        idStop[3] <= %s) AND (event_eventStreamConfig_stream[3] = %s)) OR
+                        ((idStart[4]>= %s AND 
+                        idStop[4] <= %s) AND (event_eventStreamConfig_stream[4] = %s)) OR 
+                        ((idStart[5]>= %s AND 
+                        idStop[5] <= %s) AND (event_eventStreamConfig_stream[5] = %s)) OR
+                        ((idStart[6]>= %s AND 
+                        idStop[6] <= %s) AND (event_eventStreamConfig_stream[6] = %s))
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2],
+                          idStart[3], idStop[3], streams[3],
+                          idStart[4], idStop[4], streams[4],
+                          idStart[5], idStop[5], streams[5], 
+                          idStart[6], idStop[6], streams[6] 
+                        ))  
+        else:
+            print 'Maximum number of streams is 8 for now'
+            cur.execute("""SELECT * FROM parameter WHERE ((idStart[0]>= %s AND 
+                        idStop[0] <= %s) AND (event_eventStreamConfig_stream[0] = %s) ) OR
+                        ((idStart[1]>= %s AND 
+                        idStop[1] <= %s) AND (event_eventStreamConfig_stream[1] = %s)) OR
+                        ((idStart[2]>= %s AND 
+                        idStop[2] <= %s) AND (event_eventStreamConfig_stream[2] = %s)) OR
+                        ((idStart[3]>= %s AND 
+                        idStop[3] <= %s) AND (event_eventStreamConfig_stream[3] = %s)) OR
+                        ((idStart[4]>= %s AND 
+                        idStop[4] <= %s) AND (event_eventStreamConfig_stream[4] = %s)) OR 
+                        ((idStart[5]>= %s AND 
+                        idStop[5] <= %s) AND (event_eventStreamConfig_stream[5] = %s)) OR
+                        ((idStart[6]>= %s AND 
+                        idStop[6] <= %s) AND (event_eventStreamConfig_stream[6] = %s)) OR
+                        ((idStart[7]>= %s AND 
+                        idStop[7] <= %s) AND (event_eventStreamConfig_stream[7] = %s)) 
+                        """,
+                         (idStart[0], idStop[0], streams[0], 
+                          idStart[1], idStop[1], streams[1], 
+                          idStart[2], idStop[2], streams[2],
+                          idStart[3], idStop[3], streams[3],
+                          idStart[4], idStop[4], streams[4],
+                          idStart[5], idStop[5], streams[5], 
+                          idStart[6], idStop[6], streams[6],
+                          idStart[7], idStop[7], streams[7] 
+                        ))  
+                                                                                                 
+        #print "  ...CONNECTED"
+        numrows = int(cur.rowcount)
+        print  '   %d rows selected for reading' % numrows
+            
+        for i in range(numrows):
+            row = cur.fetchone()
+            eventList[i].name     = row[0]  
+            eventList[i].value         = row[1]       
+            eventList[i].units        = row[2]      
+            eventList[i].event_eventStreamConfig_stream   = row[3]
+            eventList[i].event_id  = row[4]
+            eventList[i].event_rev        = row[5]   
+            
+            eventList+=[db_classes.Parameter("energy",0, 0, 0)] 
+        cur.close()
+        con.close()
+    except mdb.Error, e:
+        print 'Exception %s' %e
+        con.rollback() 
+        print "   Events failed to be read."
+        cur.close()
+        con.close()
+    eventList.pop()  # remove the last dummy event
+    print "   %d rows read from the database" % len(eventList)
+    return eventList    
+    
 def alert_count(stream_name, table_name, host_name, user_name, passw_name, db_name):
     """
     Counts the number of alerts from a given stream.

@@ -15,8 +15,8 @@ class TestDBRead(unittest.TestCase):
 # insert your host, user name and password here!    
         self.realArchive=0
         self.HostFancyName='yourhost'
-        self.UserFancyName='username'
-        self.PasswordFancy='passwd'
+        self.UserFancyName='yourname'
+        self.PasswordFancy='yourpass'
         self.DBFancyName='AMON_test1'
         self.DBFancyName2='AMON_test2'
         self.StreamFancyName=0
@@ -25,16 +25,20 @@ class TestDBRead(unittest.TestCase):
         self.TimeStart='2008-01-01 00:00:00'
         self.TimeSlice=10000 # seconds
         self.TimeStop='2010-01-01 00:00:00'  # not used for now
-        self.AlertStream=1
+        self.AlertStream=2
         self.AlertRev=0
         self.AlertID=0
+        self.ParameterName="energy"
+        self.StreamFancyName2=1
+        self.EventID2=0
+        self.EventRev2=0
         self.TimeStart2='2000-01-01 00:00:00'
         
     def tearDown(self):
         # no tear down actions yet
         # print 'tearing down unit tests: ', argv[0]        
         pass   
-     
+    
     def testReadSingle(self):
         print 'Testing read_event_single module'
         eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID, self.EventRev,
@@ -86,6 +90,14 @@ class TestDBRead(unittest.TestCase):
                                                  self.DBFancyName2)   
         for eventPrint in eventPrintList:
             print eventPrint.forprint()
+           
+    def testReadParameterSingle(self):
+        print 'Testing read_event_single module'
+        eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName2,
+                                  self.EventID2, self.EventRev2,
+                                  self.HostFancyName,self.UserFancyName,
+                                  self.PasswordFancy, self.DBFancyName2) 
+        print eventPrint.forprint()         
              
 if __name__ == '__main__':
     unittest.main()                                        

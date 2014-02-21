@@ -122,7 +122,41 @@ def write_event(real_archive, host_name, user_name, passw_name, db_name, eventli
     con.close()
     cur.close()  
     
-
+def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
+    """ Write parameter list to DB from MC and real-time data streams"""
+     
+    # connect to database
+    
+    con = mdb.connect(host_name, user_name, passw_name, db_name)    
+    cur = con.cursor()
+   
+    NEVENTS=len(paramlist)
+    print 'Number of events to be written: %d' % NEVENTS 
+    count=0     
+            
+    for i in range(NEVENTS):
+        if (paramlist[i].event_eventStreamConfig_stream >-1):
+            try:
+                cur.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
+                           (paramlist[i].name,paramlist[i].value,
+                            paramlist[i].units,paramlist[i].event_eventStreamConfig_stream, 
+                            paramlist[i].event_id,paramlist[i].event_rev))
+                con.commit()
+                count+=cur.rowcount
+            except mdb.Error, e:
+                print 'Something is wrong with this event %d ' % paramlist[i].name
+                print 'Exception %s' %e
+                con.rollback()
+            pd = perc_done(i,NEVENTS,2)
+            if pd != -1: print pd
+        else:
+            print 'Invalide stream number'
+                    
+    print "Number of rows written: %d" % count        
+    
+    con.close()
+    cur.close() 
+    
 def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, db_name, filename):
     """
     Write into parameter table in DB. Archival IceCube-40 data only supported for now.
