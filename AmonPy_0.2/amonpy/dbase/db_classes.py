@@ -11,7 +11,7 @@ from sys import path
 path.append("../sim")
 import random
 import ast
-import sidereal_m as sidereal
+import sim.sidereal_m as sidereal
 
 
 # ******************* BEGIN event class definition **********************
@@ -156,7 +156,7 @@ def event_def(*args):
                      'false_pos','pvalue','type','point_RA','point_dec',
                      'longitude','latitude','elevation','psf_type',
                      'configstream')
-        _max_streams = 100
+        _max_streams = 1010
         _num_events  = [0]*_max_streams
 
         def __init__(self,stream,id,rev):

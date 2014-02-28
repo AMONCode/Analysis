@@ -1,11 +1,11 @@
 """
 event_to_VOEvent: Sample program for use with VOEvent library.
-Builds a simple VOEvent packet from event
+Builds a simple VOEvent packet from event and parameter classes
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 
 #sys.path.append('../dbase')
 from db_classes import *
@@ -13,34 +13,31 @@ from db_classes import *
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
-def event_to_voevent(alert):
-    stream=alert[0].stream
+def event_to_voevent(alert, parameter):
+    stream=alert[0].stream +1000
     id = alert[0].id
     rev=alert[0].rev
+    aux_value = []
+    aux_unit = []
+    aux_name = []
+    
+    for param in parameter:
+       aux_value+=[param.value]
+       aux_unit+=[param.units]
+       aux_name+=[param.name]
+        
     datenow=datetime.now()
     
-    if (stream==0): 
+    if (stream==0 + 1000): 
         obsname="IceCube"
-        aux1_value=5.545
-        aux2_value=0.05
-        aux3_value=22.7
-        aux1_unit="TeV"
-        aux2_unit=" "
-        aux3_unit="deg"
-        aux1_name="energy"
-        aux2_name="kent_beta"
-        aux3_name="kent_phi0"
-        long=0.0000
-        lat=-90.00
-        elev=2835
-        #aux1_value=parameter[0].value
-        #aux1_unit=parameter[0].units
-        #aux1_name=parameter[0].name
-    elif (stream==1):
+        #long=0.0000
+        #lat=-90.00
+        #elev=2835
+    elif (stream==1 +1000):
         obsname="ANTARES"
-    elif (stream==3):
+    elif (stream==3+1000):
         obsname="Auger"  
-    elif (stream==7):
+    elif (stream==7+1000):
         obsname="HAWK"
     else:
         print "No stream valid stream number"
@@ -66,7 +63,22 @@ def event_to_voevent(alert):
 
     ############ What ############################
     w = What()
-
+        
+    #p = Param(name="time", ucd="meta.number", unit=" ", dataType="string",  value=str(alert[0].datetime))
+    #p.set_Description(["Number of events"])
+    #w.add_Param(p)
+    
+    p = Param(name="stream", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].stream + 1000))
+    p.set_Description(["Stream number"])
+    w.add_Param(p)
+    
+    p = Param(name="id", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].id))
+    p.set_Description(["Id number"])
+    w.add_Param(p)
+    
+    p = Param(name="rev", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].rev))
+    p.set_Description(["Revision number"])
+    w.add_Param(p)
     
     p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].nevents))
     p.set_Description(["Number of events"])
@@ -102,12 +114,11 @@ def event_to_voevent(alert):
     
     # A Group of Params
     g = Group(name="aux_params")
-    p = Param(name="%s" % str(aux1_name), ucd="phys.energy", unit="%s" % str(aux1_unit), dataType="float", value="%s" % str(aux1_value))
-    g.add_Param(p)
-    p = Param(name="%s" % str(aux2_name), ucd="instr.det.psf", unit="%s" % str(aux2_unit), dataType="float", value="%s" % str(aux2_value))
-    g.add_Param(p)
-    p = Param(name="%s" % str(aux3_name), ucd="instr.det.psf", unit="%s" % str(aux3_unit), dataType="float", value="%s" % str(aux3_value))
-    g.add_Param(p)
+    for ii in xrange(len(parameter)):
+        p = Param(name="%s" % str(aux_name[ii]), ucd="phys.energy", unit="%s" % str(aux_unit[ii]),
+                  dataType="float", value="%s" % str(aux_value[ii]))
+        g.add_Param(p)
+    
     w.add_Group(g)
     
     v.set_What(w)
@@ -133,7 +144,7 @@ def event_to_voevent(alert):
     obsloc=ObservatoryLocation()
     astro2=AstroCoordSystem("UTC-GEOD-TOPO")
     astro3=AstroCoords("UTC-GEOD-TOPO")
-    value3=Value3(long,lat,elev)
+    value3=Value3(alert[0].longitude,alert[0].latitude,alert[0].elevation)
     pos1=Position3D("deg-deg-m","longitude", "latitude", "elevation",value3)
     astro3.set_Position3D(pos1)
     obsloc.set_AstroCoordSystem(astro2)
@@ -142,7 +153,7 @@ def event_to_voevent(alert):
     observation=ObservationLocation()
     astro4=AstroCoordSystem("UTC-ICRS-TOPO")
     astro5=AstroCoords("UTC-ICRS-TOPO")
-    value2=Value2(200.0603169,45.3116578)
+    value2=Value2(alert[0].RA,alert[0].dec)
     pos2=Position2D("deg-deg", "RA","Dec",value2,alert[0].sigmaR)
     astro5.set_Position2D(pos2)
     #error2=Error2Radius(alert[0].sigmaR)
@@ -186,6 +197,7 @@ def event_to_voevent(alert):
 
 if __name__ == "__main__":
     alert=[Event(0,1,0)]
+    parameter = [Paremeter("energy",0,1,0)]
     alert[0].type='test'
     alert[0].RA=200.0603169
     alert[0].dec=45.3116578
@@ -201,7 +213,7 @@ if __name__ == "__main__":
     alert[0].datetime = datetime.now() 
     alert[0].forprint()         
     
-    xml1=event_to_voevent(alert)
+    xml1=event_to_voevent(alert,parameter)
     print xml1
     f1=open('./icecube_test.xml', 'w+')
     f1.write(xml1)
