@@ -1,6 +1,6 @@
 """@package amon_server_post_plugin
 receives events from a client using HTTP protocols and saves them in 
-an archive directory called server_events
+database.
 Twisted plugin for a server receiving events. Only a testing version.
 Run with twistd. Default is run as a daemon process.
  twistd -l server.log --pidfile server.pid serverpost --port 8000 --iface localhost
