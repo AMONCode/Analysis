@@ -10,70 +10,20 @@ Run with twistd. Default is run as a daemon process.
  Modify if you do not want to save sent events.
 """
 import sys, getopt, os, shutil, datetime
+import resource
+import fcntl
 
 sys.path.append("../../")
 
-from twisted.internet import reactor
-#from twisted.internet.task import LoopingCall
-from twisted.internet.defer import Deferred, succeed
-from twisted.internet.protocol import Protocol
-from twisted.web.client import Agent
-from twisted.web.iweb import IBodyProducer
-from twisted.web import http_headers
-
-from amon_client_post import StringProducer, printResource, printError
 
 from zope.interface import implements
 from twisted.application import internet, service
 from twisted.application.internet import TimerService
-
-from twisted.python import usage, log
 from twisted.plugin import IPlugin
+from twisted.python import usage, log
 
-def check_for_files(hostport, eventpath):
-    # check a directory with events (eventpath) for an oldest xml file
-    # if found post it to the server (hostport) using HTTP POST protocol
-    
-    host=hostport
-    path=eventpath
-    
-    agent = Agent(reactor)
-    
-    files = sorted(os.listdir(path), key=lambda p: os.path.getctime(os.path.join(path, p)))
-    files_xml=[]
-    
-    for filename in files:
-        if (os.path.isdir(path+filename) or filename[0]=='.' or filename.find(".log") !=-1):
-            pass
-        elif (filename.find(".xml")!=-1):
-            files_xml.append(filename)
-        else:
-            pass
-            
-    if len(files_xml)>0:
-        oldest = files_xml[0] 
-        try:
-            datafile=open(path+oldest)
-            data=datafile.read()
-            lenght_data=str(len(data))
-            #datafile.close()
-            shutil.move(path+oldest, path+"archive/"+oldest)
-            body = StringProducer(data)
-            headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
-                                            'Content-Type':['text/xml'], 
-                                            'Content-Lenght': [lenght_data],
-                                            'Content-Name':[filename]})
-            d = agent.request('POST', host, headers, bodyProducer=body)
-            # on success it returns Deferred with a response object
-            d.addCallbacks(printResource, printError)
-            datafile.close()
-            print "Event %s sent" % (oldest,)
-        except:
-            log.msg("Error parsing file %s " % (filename,))
-            
-    else:
-        pass
-
+from amon_client_post import check_for_files
+from twisted.python import usage, log
 # Make a plugin using IServiceMaker                
  
 class Options(usage.Options):
