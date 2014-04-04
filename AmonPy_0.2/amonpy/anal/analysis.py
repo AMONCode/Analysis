@@ -12,9 +12,11 @@ sys.path.append('../dbase')
 from datetime import datetime,timedelta
 from collections import deque
 import cluster
-from db_classes import Alert, event_def, Event
+#from db_classes import Alert, event_def, Event
+from amonpy.dbase.db_classes import Alert, event_def, Event
 import math
 import ast
+from operator import itemgetter, attrgetter
 
 
 # calculator for measuring the duration of the buffer
@@ -171,6 +173,8 @@ def anal(pipe,config):
     Nalerts_tp = 0
     alerts = []
     alerts_tp = []
+    # remove later
+    numreceived=0
     
     while True:
         
@@ -182,6 +186,7 @@ def anal(pipe,config):
 
         # check to see if an AMON Event type was received 
         if isinstance(ev,Event):
+            numreceived+=1
             # add the new event to the buffer (or start buffer)
             # buffer is in reverse temporal order
             try:
@@ -192,7 +197,7 @@ def anal(pipe,config):
             # ensure that the new event didn't mess up the order of the buffer
             if (ev.datetime < latest):
                 print '  reordering analysis buffer due to latent event'
-                events = sorted(events,key=sttrgetter('datetime'))
+                events = sorted(events,key=attrgetter('datetime'))
             else:
                 # the new event is the latest event
                 latest = ev.datetime
@@ -253,6 +258,10 @@ def anal(pipe,config):
             print 'Found %s doublets' % Nalerts
             print 'Found %s triplets' % Nalerts_tp
             server.send(alerts)
+            alerts=[]
+            Nalerts=0
+            Nalerts_tp=0
+            #print "lenghts of alerts %s" % (len(alerts),)
 
         # check to see if client has requested quit    
         elif (ev=='quit'):
@@ -261,6 +270,7 @@ def anal(pipe,config):
         # check for invalid request 
         else:
             print '   Event sent to analysis.anal() not recognized'
+            print ev
         
     # shutdown
 
