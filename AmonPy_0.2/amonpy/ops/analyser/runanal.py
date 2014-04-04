@@ -13,13 +13,13 @@
 
     To run (outside this directory called analizer):
     
-    celery worker --app=analizer -l info
+    celery worker --app=analyser -l info
 
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
 """
 from __future__ import absolute_import
-from analizer.celery import app
+from analyser.celery import app
 from celery import Task
 
 import sys
