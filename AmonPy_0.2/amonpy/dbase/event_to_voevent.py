@@ -28,16 +28,16 @@ def event_to_voevent(alert, parameter):
         
     datenow=datetime.now()
     
-    if (stream==0 + 1000): 
+    if (stream==0): 
         obsname="IceCube"
         #long=0.0000
         #lat=-90.00
         #elev=2835
-    elif (stream==1 +1000):
+    elif (stream==1):
         obsname="ANTARES"
-    elif (stream==3+1000):
+    elif (stream==3):
         obsname="Auger"  
-    elif (stream==7+1000):
+    elif (stream==7):
         obsname="HAWK"
     else:
         print "No stream valid stream number"
