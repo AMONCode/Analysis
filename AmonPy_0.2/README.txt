@@ -22,6 +22,10 @@ The following python packages are required:
 
 * VOEventLib
 
+* Celery
+
+* Twisted
+
 Other
 -----
 
@@ -34,6 +38,8 @@ Other
 (note: you have to edit Doxyfile to specify your path to AmonPy in order to run Doxygen)
 
 2) mysql 
+
+3) RabbitMQ
 
 
 Database
