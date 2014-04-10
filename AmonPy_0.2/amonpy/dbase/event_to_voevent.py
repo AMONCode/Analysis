@@ -14,7 +14,7 @@ from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
 def event_to_voevent(alert, parameter):
-    stream=alert[0].stream +1000
+    stream=alert[0].stream 
     id = alert[0].id
     rev=alert[0].rev
     aux_value = []
@@ -68,7 +68,7 @@ def event_to_voevent(alert, parameter):
     #p.set_Description(["Number of events"])
     #w.add_Param(p)
     
-    p = Param(name="stream", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].stream + 1000))
+    p = Param(name="stream", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].stream))
     p.set_Description(["Stream number"])
     w.add_Param(p)
     
