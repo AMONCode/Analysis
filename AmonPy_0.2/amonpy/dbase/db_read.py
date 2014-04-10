@@ -248,7 +248,7 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
                         (eventStreamConfig_stream = %s OR
                         eventStreamConfig_stream = %s OR
                         eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream)""", (timeStart, timeStop, 
+                        eventStreamConfig_stream = %s)""", (timeStart, timeStop, 
                         streams[0], streams[1], streams[2], streams[3])) 
         elif num_streams == 5:
             cur.execute("""SELECT * FROM event WHERE (time>= %s AND 
