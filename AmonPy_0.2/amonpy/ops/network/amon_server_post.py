@@ -50,7 +50,7 @@ class WriteEvent(object):
         print "Counter %s" % (WriteEvent.counter,) 
         
         # initialize task for AMON analysis in analyser.runanal
-        self.ana=AnalRT() 
+        #self.ana=AnalRT() 
                                           
     def doWriteEvent(self, event):
         #print "Counter %s" % (counter,) 
@@ -91,7 +91,11 @@ class WriteEvent(object):
         if result != None:
             print "This event is written"
             print self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev
-            self.ana.delay(self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev)
+            #self.ana.delay(self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev)
+            # delay method is a shortcut for apply_async, but less functionality 
+            #AnalRT().delay(self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev)
+            AnalRT().apply_async((self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev),
+                                link_error=error_handler.s())
         else:
             print "DB written"                        
     def Finish(self):
