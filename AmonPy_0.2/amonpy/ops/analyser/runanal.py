@@ -21,6 +21,7 @@
 from __future__ import absolute_import
 from analyser.celery import app
 from celery import Task
+from celery.result import AsyncResult
 
 import sys
 sys.path.append('../')
@@ -52,7 +53,13 @@ print
 print ' **** EXECUTING run_archival.py ****'
 
 # Create the most generic Event class
-
+@app.task
+def error_handler(uuid):
+    myresult = AsyncResult(uuid)
+    exc = myresult.get(propagate=False)
+    print('Task {0} raised exception: {1!r}\n{2!r}'.format(
+          uuid, exc, myresult.traceback))
+          
 class AnalRT(Task):
     def __init__(self):
         self.Event = event_def()
@@ -75,7 +82,7 @@ class AnalRT(Task):
                     args=((self.server_p,self.client_p),self.config))
         self.anal_p.start()
     
-    def run(self,evstream, evnumber,evrev,*args, **kwargs):
+    def run(self,evstream, evnumber,evrev):
         self.Event.stream = evstream
         self.Event.id     = evnumber
         self.Event.rev    = evrev
@@ -106,7 +113,7 @@ class AnalRT(Task):
         t1 = time()
         self.client_p.send('get_alerts')
         alerts = self.client_p.recv()
-        print '   %d alerts'     % len(alerts)
+        #print '   %d alerts'     % len(alerts)
         t2 = time()
         print '   Retrieval time: %.2f seconds' % float(t2-t1)
 
@@ -116,7 +123,7 @@ class AnalRT(Task):
         #print '   Analysis server closed'
         
         # write alerts to DB if any
-        if (len(alerts) > 0):
+        if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
             # populate alertline class
             alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts)  
             print '   %d alertlines generated' % len(alertlines) 
@@ -125,20 +132,6 @@ class AnalRT(Task):
             print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
             # modify it later to append to database, not to rewrite    
             if (self.stream_num !=0):    # don't take any action for stream zero in testing phase
-                print "   Checking if alerts are already in DB."
-                count=amonpy.dbase.db_read.alert_count(self.stream_num,"alert",self.HostFancyName,
-                           self.UserFancyName,self.PasswordFancy,self.DBFancyName) 
-                print '   Number of rows to be deleted: %d' % count                 
-                if (count > 0):
-                    amonpy.dbase.db_delete.delete_alertline_stream_by_alert(self.self.stream_num, 
-                                              self.HostFancyName,
-                                              self.UserFancyName,
-                                              self.PasswordFancy,
-                                              self.DBFancyName)  
-                    amonpy.dbase.db_delete.delete_alert_stream(self.stream_num,self.HostFancyName,
-                                             self.UserFancyName,
-                                             self.PasswordFancy,
-                                             self.DBFancyName)
                 amonpy.dbase.db_write.write_alert(self.stream_num,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
@@ -150,7 +143,9 @@ class AnalRT(Task):
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
-
+            return "%d alerts found" % (len(alerts),)    
+        else:
+            return "No alerts"
 """
 # identify what to do with alerts
 print
