@@ -83,11 +83,20 @@ class Fisher(object):
     @property   
     def psi1(self):
         cospsi1 = dot(self.x0,self.x1)
+        if cospsi1<-1.00:
+            cospsi1=-1.00
+        elif cospsi1>1.00:
+            cospsi1 = 1.00
+                
         return math.degrees(acos(cospsi1))
     # Angle between the best fit location and the second event
     @property  
     def psi2(self):
         cospsi2 = dot(self.x0,self.x2)
+        if cospsi2<-1.00:
+            cospsi2=-1.00
+        elif cospsi2>1.00:
+            cospsi2 = 1.00    
         return math.degrees(acos(cospsi2))   
     
 class Fisher_tp(object):
