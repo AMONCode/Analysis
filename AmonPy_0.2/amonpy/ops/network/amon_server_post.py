@@ -37,10 +37,11 @@ class WriteEvent(object):
     counter = 0
     def __init__(self):
         self.HostFancyName='localhost'
-        self.UserFancyName='yourname'
-        self.PasswordFancy='yourpass'
+        self.UserFancyName='Goci'
+        self.PasswordFancy='niki4laza6'
         self.DBFancyName='AMON_test2'
         self.eventlist = []
+        self.paramlist = []
         self.microsec = 0.
         self.dbpool = adbapi.ConnectionPool("MySQLdb", db = self.DBFancyName, 
                                             user = self.UserFancyName, 
@@ -48,24 +49,38 @@ class WriteEvent(object):
                                             host = self.HostFancyName)
         WriteEvent.counter +=1
         print "Counter %s" % (WriteEvent.counter,) 
-        
         # initialize task for AMON analysis in analyser.runanal
         #self.ana=AnalRT() 
-                                          
-    def doWriteEvent(self, event):
-        #print "Counter %s" % (counter,) 
+        
+    # run dbpool interaction instead of run query, which allows for a series of queries 
+    # to be run one after anther  
+    
+    def _writeEventParam(self,transaction, event, evparam):
+        # this will run in a separate thread, allowing us to use series of queries 
+        # without blocking the rest of the code
+        
+        # need to add event to self.eventlist because of a later callback 
+        #( e.g. printResult bellow) 
+        
         if (len(self.eventlist)) > 0:
             self.eventlist.pop()  
-            
         self.eventlist.append(event[0])
+        
+        # take microsecond part from datetime because of the older versions of mysql
+        
         if '.' in str(self.eventlist[0].datetime):
             self.microsec=int(float('.'+str(self.eventlist[0].datetime).split('.')[1])*1000000)
                 #print 'microseconds %d' % microsec
         else:
-            self.microsec=0. 
-    
+            self.microsec=0.
+          
+        # add parameter to self.parameterlist because of later callbacks
+            
+        if (len(self.paramlist)) > 0:
+            self.paramlist.pop()  
+        self.paramlist.append(evparam[0])    
         
-        return self.dbpool.runQuery("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+        transaction.execute("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
                             %s,%s,%s,%s,%s,%s,%s,%s,%s)""",(self.eventlist[0].stream,
                             self.eventlist[0].id,
                             self.eventlist[0].rev,
@@ -87,19 +102,38 @@ class WriteEvent(object):
                             self.eventlist[0].elevation,
                             self.eventlist[0].psf_type,
                             0)) 
+        transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
+                           (self.paramlist[0].name,
+                            self.paramlist[0].value,
+                            self.paramlist[0].units,
+                            self.paramlist[0].event_eventStreamConfig_stream, 
+                            self.paramlist[0].event_id,self.paramlist[0].event_rev))
+    
+    def writeEventParam(self, event, evparam):
+        return self.dbpool.runInteraction(self._writeEventParam, event, evparam)                                             
+    
     def printResult(self,result):
-        if result != None:
-            print "This event is written"
-            print self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev
-            #self.ana.delay(self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev)
-            # delay method is a shortcut for apply_async, but less functionality 
-            #AnalRT().delay(self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev)
-            AnalRT().apply_async((self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev),
-                                link_error=error_handler.s())
-        else:
-            print "DB written"                        
+        print "This event is written"
+        print self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev
+        print "This parameter is written"
+        print self.paramlist[0].event_eventStreamConfig_stream, self.paramlist[0].event_id, \
+            self.paramlist[0].event_rev
+        
+        #after Event and Parameter are written in DB, it is safe to send 
+        # a message to the analyser about new event to be read from DB and added to 
+        # analyses 
+            
+        AnalRT().apply_async((self.eventlist[0].stream, self.eventlist[0].id, self.eventlist[0].rev),
+                                link_error=error_handler.s())      
+         
+    def printError(self,error):
+        print "Got Error: %r" % error
+        error.printTraceback()                              
+    
     def Finish(self):
-        self.dbpool.close()                                                
+        # do not call this function in reaal-time settings 
+        self.dbpool.close()  
+                                                      
 
 class EventPage(Resource):
     isLeaf = True
@@ -110,7 +144,6 @@ class EventPage(Resource):
     # about new incoming event
     #n=AnalRT()
 
-    
     def render_POST(self, request):
         self.headers = request.getAllHeaders()
         print self.headers
@@ -133,23 +166,20 @@ class EventPage(Resource):
         fp.write(request.content.getvalue())
         fp.close()
         # convert it to Event object
-        event=dbase.voevent_to_event.make_event(path+"server_tmp_events/"+fname) 
-        #event[0].forprint()
+        event, evParam=dbase.voevent_to_event.make_event(path+"server_tmp_events/"+fname) 
+        event[0].forprint()
+        evParam[0].forprint()
         
         os.remove(path+"server_tmp_events/"+fname)
         # write to DB
         t1 = time()                                                                
         #w = WriteEvent(event)
-        
+                  
         #write event to DB (does it in a separate thread)
-        d = EventPage.w.doWriteEvent(event)
-       # d.addCallback(EventPage.n.delay(event[0].stream, event[0].id, event[0].rev))
-       
-        # when result is written, send a message to the AMON analysis code in amonpy.analyser
-        # via broker, use deferred callback to keep code asynchronous  
-        d.addCallback(EventPage.w.printResult)
-        #w.Finish()
-        #print "Counter %s" % (counter,)
+        d = EventPage.w.writeEventParam(event, evParam)
+        # send a meesage to the analyser in case event and parameter
+        # are written to DB, otherwise print error
+        d.addCallbacks(EventPage.w.printResult, EventPage.w.printError)
         t2 = time() 
         print '   DB writing time: %.5f seconds' % float(t2-t1) 
         
