@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 """
-Synopsis:
-    Sample program demonstrating use of VOEvent library and Vutil.py.
+A module to create an instance of Event from VOEvent
+Call function make_event from your program in order to use it.
 
-    Reads a VOEvent file and produces basic HTML rendering.
-    See the VOEvent specification for details 
-    http://www.ivoa.net/Documents/latest/VOEvent.html
-Usage:
-    python format_to_html.py [options] input_event_file.xml
 Options:
     -h, --help      Display this help message.
     -s, --stdout    Send output to stdout.
@@ -15,16 +10,12 @@ Options:
                     Send output to file.
     -t, --text-string
                     Capture output as a text string, then write to stdout.
-    -f, --force     Force: over-write output file without asking.
-Examples:
-    python format_to_html.py --stdout input_event_file.xml
-    python format_to_html.py --file=outfile1.html input_event_file.xml
-    python format_to_html.py -s -o outfile2.html input_event_file.xml
+    -f, --force     Force: over-write output file without asking
 
 """
 
-# Copyright 2010 Roy D. Williams and Dave Kuhlmann
-# modified by g.t.
+# Modified by G.T.from format_to_html.py by Roy D. Williams and Dave Kuhlmann
+# 
 
 import sys
 import os
@@ -34,9 +25,9 @@ import getopt
 import Vutil 
 
 from datetime import datetime
-#sys.path.append('../db_classes')
+sys.path.append('../../../dbase')
 
-from db_classes import *
+from dbase.db_classes import *
 
 try:
     from cStringIO import StringIO
@@ -48,18 +39,19 @@ def usage():
     sys.exit(1)
 
 def make_event(source, o=sys.stdout):
-    '''Generate printout that provides a display of an event.
+    '''Makes an instance of Event class from a given VOEvent.
     '''
+    # initialize Event and Parameter classes to be populated from this VOEvent
     event=[Event(1,1,0)]
-    
-    
+    evParam=[Parameter("energy",1,1,0)]
+      
     v = Vutil.parse(source)
-   
+    """
     print>>o, 'VOEvent'
     print
     print>>o, 'IVORN %s' % v.get_ivorn()
     print
-    
+    """
     streamname=str(v.get_ivorn())
     len_sname=len(streamname)
     count, count1= 0, 0
@@ -70,20 +62,19 @@ def make_event(source, o=sys.stdout):
     streamname3=streamname[count1+1:]
     count2=1+count1+streamname3.index('/')
     event[0].stream = int(streamname[count1+1:count2])
-    print "STREAM NAME %s" % event[0].stream 
-    print
-    event[0].configstream=event[0].stream     
+    #print "STREAM NAME %s" % event[0].stream 
+    #print
+    event[0].configstream= 0 # change later to get revision from eventConfigTable event[0].stream     
     
-    print>>o, '(ROLE IS %s)' % v.get_role()
-    print
+    #print>>o, '(ROLE IS %s)' % v.get_role()
+    #print
     event[0].type=v.get_role()
 
-    print>>o, 'EVENT DESCRIPTION: %s\n' % v.get_Description()
-    print
+    #print>>o, 'EVENT DESCRIPTION: %s\n' % v.get_Description()
+    #print
     
-    
-
     r = v.get_Reference()
+    """
     if r:
         print>>o, 'Reference Name=%s, Type=%s, uri=%s' \
                     % (r.get_name(), r.get_type(), r.get_uri())
@@ -91,7 +82,7 @@ def make_event(source, o=sys.stdout):
         
     print>>o, 'WHO'
     print
-    
+    """
        
     who = v.get_Who()
     '''
@@ -102,30 +93,40 @@ def make_event(source, o=sys.stdout):
     print>>o, 'Phone: %s'                        % Vutil.htmlList(a.get_contactPhone())
     print>>o, 'Contributor: %s' % Vutil.htmlList(a.get_contributor())
     '''
+    """
     print>>o, 'WHAT'
     print
     print>>o, 'PARAMS'
     print
-    
+    """
     g = None
     params = v.get_What().get_Param()
     for p in params:
         #print>>o,  Vutil.htmlParam(g, p)
-        print p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType() 
+        #print p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType() 
         if p.get_name() in dir(event[0]):
-                #print "YES"
-                setattr(event[0],p.get_name(), p.get_value())
+                if (p.get_name()=="stream" or p.get_name()=="id" or p.get_name()=="rev" or p.get_name()=="nevents"):
+                    setattr(event[0],p.get_name(), int(p.get_value()))
+                elif  (p.get_name()=="deltaT" or p.get_name()=="sigmaT" or p.get_name()=="false_pos" or \
+                p.get_name()=="pvalue" or p.get_name()=="point_RA" or p.get_name()=="point_dec" ):
+                   setattr(event[0],p.get_name(), float(p.get_value())) 
+                else:
+                    setattr(event[0],p.get_name(), p.get_value())
+        """                 
         print        
         print "DESCRIPTION:"        
         for d in p.get_Description(): print str(d)
         print
-    
-    
-    print>>o, 'GROUP'
-    print
+        """
+
+    #print>>o, 'GROUP'
+    #print
     groups = v.get_What().get_Group()
-    print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
+    #print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
     print
+    evParam[0].event_eventStreamConfig_stream = event[0].stream
+    evParam[0].event_id = event[0].id
+    evParam[0].event_rev = event[0].rev
     for g in groups:
         for p in g.get_Param():
             #print>>o, Vutil.htmlParam(g, p) 
@@ -134,12 +135,21 @@ def make_event(source, o=sys.stdout):
             print
                         
             for d in p.get_Description(): print "DESCRIPTION" , str(d)
-            
+            if p.get_name() in dir(evParam[0]):
+                if (p.get_name()=="stream" or p.get_name()=="id" or p.get_name()=="rev" or p.get_name()=="nevents"):
+                    setattr(evParam[0],p.get_name(), int(p.get_value()))
+                elif  (p.get_name()=="value"):
+                   setattr(evParam[0],p.get_name(), float(p.get_value())) 
+                else:
+                    setattr(evParam[0],p.get_name(), p.get_value())
+    print "PARAMETER"
+    #evParam[0].forprint()       
 
-    print>>o, 'WHEREWHEN'
-    print
+    #print>>o, 'WHEREWHEN'
+    #print
     wwd = Vutil.whereWhenDict(v)
     if wwd:
+        """
         print>>o, 'Observatory     %s' % wwd['observatory']
         print>>o, 'Coord system %s' % wwd['coord_system']
         print>>o, 'Time             %s' % wwd['time']
@@ -147,6 +157,7 @@ def make_event(source, o=sys.stdout):
         print>>o, 'RA                %s' % wwd['longitude']
         print>>o, 'Dec %s' % wwd['latitude']
         print>>o, 'Pos error %s ' % wwd['posError']
+        """
         event[0].sigmaR=wwd['posError']
         timeevent=wwd['time']
         year=int(timeevent[0:4])
@@ -174,9 +185,10 @@ def make_event(source, o=sys.stdout):
         event[0].latitude=values.get_C2()
         event[0].elevation=values.get_C3()
      
-    print>>o, 'WHY'
-    print
+    #print>>o, 'WHY'
+    #print
     w = v.get_Why()
+    """
     if w:
         if w.get_Concept():
             print>>o, "Concept: %s" % Vutil.htmlList(w.get_Concept())
@@ -192,19 +204,18 @@ def make_event(source, o=sys.stdout):
             print>>o, 'Description %s' % Vutil.htmlList(i.get_Description())
             print>>o, 'Name %s ' % Vutil.htmlList(i.get_Name())
             print>>o, 'Reference %s' % str(i.get_Reference())
-           
+    """  
+    """       
     print>>o, 'Citations'
     cc = v.get_Citations()
     if cc:
         for c in cc.get_EventIVORN():
     
             print>>o, '%s with a %s' % (c.get_valueOf_(), c.get_cite())
-
-
-    return event
-
-
-
+    #event[0].forprint()
+    print "Number of events: %s " % Event._num_events
+    """
+    return event, evParam
 
 def main():
     args = sys.argv[1:]
