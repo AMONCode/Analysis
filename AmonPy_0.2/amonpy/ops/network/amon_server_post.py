@@ -1,7 +1,7 @@
 """@package amon_server_post
 - receives events from a client using HTTP protocols in
 an xml form (VOEvents), 
-- converts then into Event objects
+- converts then into Event and Parameter objects
 - writes them into DB using twisted adbapi connection pool that 
 performs DB transactions in a separate threat, thus keeping the code asynchronous
 - send a message to AMON analysis code about new event (event stream, id and rev)
