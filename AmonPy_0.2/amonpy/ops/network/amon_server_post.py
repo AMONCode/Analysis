@@ -37,8 +37,8 @@ class WriteEvent(object):
     counter = 0
     def __init__(self):
         self.HostFancyName='localhost'
-        self.UserFancyName='Goci'
-        self.PasswordFancy='niki4laza6'
+        self.UserFancyName='yourname'
+        self.PasswordFancy='yourpass'
         self.DBFancyName='AMON_test2'
         self.eventlist = []
         self.paramlist = []
