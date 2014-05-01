@@ -13,20 +13,23 @@
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
 """
-
+from __future__ import absolute_import
 import sys
 sys.path.append('../')
+sys.path.append('../..')
 sys.path.append('../tools')
 sys.path.append('../dbase')
 sys.path.append('../anal')
 
 # AmonPy modules:
-from db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
-import db_populate_class
-import db_read
-import db_write
-import db_delete
-import analysis
+from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
+from amonpy.dbase.db_classes import Event
+import amonpy.dbase.db_populate_class as db_populate_class
+import amonpy.dbase.db_read as db_read
+import amonpy.dbase.db_write  as db_write
+import amonpy.dbase.db_delete as db_delete
+import amonpy.anal.analysis as analysis
+
 import dialog_choice
 import input_text_window
 
