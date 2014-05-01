@@ -8,6 +8,7 @@
 
 import sys
 sys.path.append('../')
+sys.path.append('../..')
 sys.path.append('../dbase')
 from datetime import datetime,timedelta
 from collections import deque
@@ -175,6 +176,7 @@ def anal(pipe,config):
     alerts_tp = []
     # remove later
     numreceived=0
+    id = -1 # -1 no alerts, 0 first alert 
     
     while True:
         
@@ -228,7 +230,8 @@ def anal(pipe,config):
                     far = far_density(evlist,config,f)
                     pvalue = pvalue_calc(evlist,config,f)
                     # create alert, with id next in list
-                    id=Nalerts + Nalerts_tp
+                    #id=Nalerts + Nalerts_tp
+                    id+=1
                     rev = 0
                     evlist = [events[jj],ev]
                     new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
@@ -244,7 +247,8 @@ def anal(pipe,config):
                         evlist=[events[jj-1],events[jj],ev]
                         far = far_density(evlist,config,f)
                         pvalue = pvalue_calc(evlist,config,f)
-                        id=Nalerts + Nalerts_tp
+                        #id=Nalerts + Nalerts_tp
+                        id+=1
                         rev = 0
                         new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
                         Nalerts_tp +=1             
@@ -257,7 +261,14 @@ def anal(pipe,config):
         elif (ev=='get_alerts'):
             print 'Found %s doublets' % Nalerts
             print 'Found %s triplets' % Nalerts_tp
-            server.send(alerts)
+            if len(alerts)==0:
+                server.send("Empty") 
+            else: 
+                try:    
+                    server.send(alerts)
+                except:
+                    server.send("Problem")
+                        
             alerts=[]
             Nalerts=0
             Nalerts_tp=0
