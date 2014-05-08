@@ -4,8 +4,6 @@
    identically, as the code is unaware of the state of the parent
    program.
 """
-
-
 import sys
 sys.path.append('../')
 sys.path.append('../..')
@@ -18,7 +16,6 @@ from amonpy.dbase.db_classes import Alert, event_def, Event
 import math
 import ast
 from operator import itemgetter, attrgetter
-
 
 # calculator for measuring the duration of the buffer
 def bufdur(events):
@@ -36,7 +33,6 @@ def bufdur(events):
         #datetimes = [ev.datetime for ev in events]
         #dt = timedelta.total_seconds(max(datetimes)-min(datetimes))
     return dt
-
 
 # alert builder (build alerts from preliminary cluster)
 def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
@@ -177,7 +173,11 @@ def anal(pipe,config):
     # remove later
     numreceived=0
     id = -1 # -1 no alerts, 0 first alert 
-    
+    #events=deque()
+    events=[]
+    inBuffer = False
+    print "Config dT %d" % config.deltaT
+    print "Buffer dT %d" % config.bufferT
     while True:
         
         # look for incoming packet in the pipe
@@ -189,72 +189,99 @@ def anal(pipe,config):
         # check to see if an AMON Event type was received 
         if isinstance(ev,Event):
             numreceived+=1
+            inBuffer = False
+            print "I received %d events" % numreceived
+            # g.t. for some reason deque is not working in real-time setting; 
+            # works only in archival setup 
             # add the new event to the buffer (or start buffer)
             # buffer is in reverse temporal order
-            try:
-                events.appendleft(ev)
-            except:
-                events = deque([ev])
+            #try:
+            #    events.appendleft(ev)
+            #    print "appended"
+            #except:
+            #    events = deque([ev])
+            #    print "dequed"
+                       
+            # do not search or add event if it is already in the buffer
+            for eve in events:
+                if ((ev.stream == eve.stream) and (ev.id == eve.id) \
+                and (ev.rev == eve.rev)):
+                    "Event is already in the buffer. It will not be added to the buffer."
+                    inBuffer = True
+             
+            #
+            print inBuffer
+            if (inBuffer==False):
+                print "Adding event"
+                events+=[ev]        
             
+                print 'lenght of buffer is %d' % len(events)
             # ensure that the new event didn't mess up the order of the buffer
-            if (ev.datetime < latest):
-                print '  reordering analysis buffer due to latent event'
-                events = sorted(events,key=attrgetter('datetime'))
-            else:
+                if (ev.datetime < latest):
+                    print '  reordering analysis buffer due to latent event'
+                    events = sorted(events,key=attrgetter('datetime'))
+                else:
                 # the new event is the latest event
-                latest = ev.datetime
+                    latest = ev.datetime
 
             #clean up the buffer (assumes temporal order)
-            while bufdur(events) > config.bufferT:
-                events.pop()
+                while bufdur(events) > config.bufferT:
+                    "cleaning buffer"
+                    events.pop()
 
             # search the event buffer for *pairings* (v0.1)
-            Nev = len(events)
-            jj = 1
-
-            while True:
+                Nev = len(events)
+            #jj = 1
+                jj=0
+                
+                while True:
                 #print Nev, jj, ev.id
-                if jj >= Nev:
-                    break
+                    if jj >= Nev:
+                        break
                 
                 # assuming temporal order, continue loop until deltaT exceeded
-                dt = timedelta.total_seconds(ev.datetime-events[jj].datetime)
-                if dt > config.deltaT:
-                    break
-
+                    dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
+                
+                # g.t. do not brake here since in case of late arrival our event will
+                # not be on the top of the buffer list
+                #if dt > config.deltaT:
+                #    break
+                                
+                    if ((dt <= config.deltaT) and (events.index(ev) !=jj)):
                 # check if cluster distance is within threshold
-                f = cluster.Fisher(events[jj],ev)
-                if (f.Nsigma <= config.cluster_thresh):
+                        f = cluster.Fisher(events[jj],ev)
+                        if (f.Nsigma <= config.cluster_thresh):
                     # calculate false alarm rate
-                    evlist=[events[jj],ev]
-                    far = far_density(evlist,config,f)
-                    pvalue = pvalue_calc(evlist,config,f)
+                            evlist=[events[jj],ev]
+                            far = far_density(evlist,config,f)
+                            pvalue = pvalue_calc(evlist,config,f)
                     # create alert, with id next in list
                     #id=Nalerts + Nalerts_tp
-                    id+=1
-                    rev = 0
-                    evlist = [events[jj],ev]
-                    new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
-                    Nalerts +=1             
-                    alerts +=[new_alert]
-                if jj>1: # look for triplets
-                    
-                    f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
-                    if ((f_tp.Nsigma <= config.cluster_thresh) and \
-                       (f_tp.Nsigma_2 <= config.cluster_thresh) and \
-                       (f_tp.Nsigma_3 <= config.cluster_thresh)):
+                            id+=1
+                            rev = 0
+                            evlist = [events[jj],ev]
+                            new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
+                            Nalerts +=1             
+                            alerts +=[new_alert]
+                    #if jj>1: # look for triplets
+                            if ((jj > 1) and (events.index(ev) !=jj-1) \
+                                 and (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))<config.deltaT)):
+                                f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
+                                if ((f_tp.Nsigma <= config.cluster_thresh) and \
+                                   (f_tp.Nsigma_2 <= config.cluster_thresh) and \
+                                   (f_tp.Nsigma_3 <= config.cluster_thresh)):
                         # create alert, with id next in list
-                        evlist=[events[jj-1],events[jj],ev]
-                        far = far_density(evlist,config,f)
-                        pvalue = pvalue_calc(evlist,config,f)
+                                    evlist=[events[jj-1],events[jj],ev]
+                                    far = far_density(evlist,config,f)
+                                    pvalue = pvalue_calc(evlist,config,f)
                         #id=Nalerts + Nalerts_tp
-                        id+=1
-                        rev = 0
-                        new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
-                        Nalerts_tp +=1             
-                        alerts +=[new_alert]
-                       
-                jj+=1
+                                    id+=1
+                                    rev = 0
+                                    new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
+                                    Nalerts_tp +=1             
+                                    alerts +=[new_alert]
+                                                           
+                    jj+=1
             #print 'Found %s doublets' % Nalerts
             #print 'Found %s triplets' % Nalerts_tp
         # check to see if client has requested alerts        
