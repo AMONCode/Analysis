@@ -210,7 +210,7 @@ def anal(pipe,config):
                     inBuffer = True
              
             #
-            print inBuffer
+            #print inBuffer
             if (inBuffer==False):
                 print "Adding event"
                 events+=[ev]        
