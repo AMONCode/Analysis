@@ -16,9 +16,6 @@ from twisted.plugin import IPlugin
 
 sys.path.append("../../")
 
-from amon_server_post import EventPage
-from twisted.web.resource import Resource
-
 from twisted.web.server import Site
 
 # make a plugin service
@@ -38,7 +35,7 @@ class ServerPostServiceMaker(object):
     options = Options
 
     def makeService(self, options):
-        
+        from amon_server_post import EventPage
         resource = EventPage()
         factory = Site(resource)
         
