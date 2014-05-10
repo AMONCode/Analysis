@@ -17,10 +17,17 @@
 
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
+    
+    Each alert will be saved to DB, and also written to XML file (in VOEvent format) 
+    to the directory /network/server_events. AMON client will send this events in the future 
+    to GCN and delete each xml fiel after it has been sent.
 """
 from __future__ import absolute_import
 from analyser.celery import app
 from celery import Task
+#from celery import current_app
+#from celery.contrib.methods import task_method
+#from celery.contrib.methods import task
 from celery.result import AsyncResult
 
 import sys
@@ -37,6 +44,7 @@ import amonpy.dbase.db_populate_class
 import amonpy.dbase.db_read
 import amonpy.dbase.db_write
 import amonpy.dbase.db_delete
+import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.anal.analysis as analysis
 #import dialog_choice
 #import input_text_window
@@ -50,7 +58,7 @@ import multiprocessing
 import ast
 
 print
-print ' **** EXECUTING run_archival.py ****'
+print ' **** EXECUTING runanal.py ****'
 
 # Create the most generic Event class
 @app.task
@@ -61,12 +69,14 @@ def error_handler(uuid):
           uuid, exc, myresult.traceback))
           
 class AnalRT(Task):
+#class AnalRT(object):
     def __init__(self):
         self.Event = event_def()
         self.HostFancyName='localhost'
         self.UserFancyName='yourname'
         self.PasswordFancy='yourpass'
         self.DBFancyName='AMON_test2'
+        self.alertDir = 'yourdirpath'
 
         # get the Alert Stream config
         print
@@ -81,7 +91,7 @@ class AnalRT(Task):
         self.anal_p = multiprocessing.Process(target=analysis.anal,
                     args=((self.server_p,self.client_p),self.config))
         self.anal_p.start()
-    
+    #@app.task(filter=task_method, name='analser.runanal.AnalRT.run')
     def run(self,evstream, evnumber,evrev):
         self.Event.stream = evstream
         self.Event.id     = evnumber
@@ -116,7 +126,7 @@ class AnalRT(Task):
         #print '   %d alerts'     % len(alerts)
         t2 = time()
         print '   Retrieval time: %.2f seconds' % float(t2-t1)
-
+        
         # analysis done, close the pipe
         #server_p.close()
         #client_p.close()
@@ -125,6 +135,7 @@ class AnalRT(Task):
         # write alerts to DB if any
         if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
             # populate alertline class
+            alerts[0].forprint()
             alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts)  
             print '   %d alertlines generated' % len(alertlines) 
             print ' ANALYSIS COMPLETE'
@@ -139,7 +150,15 @@ class AnalRT(Task):
                 amonpy.dbase.db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
                                                       self.PasswordFancy, 
-                                                      self.DBFancyName,alertlines)                         
+                                                      self.DBFancyName,alertlines) 
+                # write alert to the directory from where AMON client will read it and delete 
+                # it after sending it to GCN in the future
+                xmlForm=alert_to_voevent.alert_to_voevent(alerts) 
+                fname=self.alertDir + 'amon_%s_%s_%s.xml' \
+                % (alerts[0].stream, alerts[0].id, alerts[0].rev)
+                f1=open(fname, 'w+')
+                f1.write(xmlForm)
+                f1.close()                                                              
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
