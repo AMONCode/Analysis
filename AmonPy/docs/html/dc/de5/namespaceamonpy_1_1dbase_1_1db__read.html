@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../amon_logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">AmonPy
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -116,6 +116,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ac6c02b3b64cf22309d7ab92ec7aa64e8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de5/namespaceamonpy_1_1dbase_1_1db__read.html#ac6c02b3b64cf22309d7ab92ec7aa64e8">read_alertConfig</a></td></tr>
 <tr class="memdesc:ac6c02b3b64cf22309d7ab92ec7aa64e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a given alert configuration from the DB.  <a href="#ac6c02b3b64cf22309d7ab92ec7aa64e8">More...</a><br/></td></tr>
 <tr class="separator:ac6c02b3b64cf22309d7ab92ec7aa64e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44cf8f28c8cb5c845fab0667f035770"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de5/namespaceamonpy_1_1dbase_1_1db__read.html#af44cf8f28c8cb5c845fab0667f035770">read_parameter_single</a></td></tr>
+<tr class="memdesc:af44cf8f28c8cb5c845fab0667f035770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a given event from the DB.  <a href="#af44cf8f28c8cb5c845fab0667f035770">More...</a><br/></td></tr>
+<tr class="separator:af44cf8f28c8cb5c845fab0667f035770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb91007cbf02a072b256bc02dd59b1fd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de5/namespaceamonpy_1_1dbase_1_1db__read.html#aeb91007cbf02a072b256bc02dd59b1fd">read_parameter_interval</a></td></tr>
+<tr class="memdesc:aeb91007cbf02a072b256bc02dd59b1fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a list of parameters from the DB.  <a href="#aeb91007cbf02a072b256bc02dd59b1fd">More...</a><br/></td></tr>
+<tr class="separator:aeb91007cbf02a072b256bc02dd59b1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ea1ff5e9c081631e6df34550a8005f0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de5/namespaceamonpy_1_1dbase_1_1db__read.html#a9ea1ff5e9c081631e6df34550a8005f0">read_parameter_interval_streams</a></td></tr>
+<tr class="memdesc:a9ea1ff5e9c081631e6df34550a8005f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a list of parameters from the DB from a list of streams, within id intervals given in the lists id_start, id_stops for each of the stream respectively.  <a href="#a9ea1ff5e9c081631e6df34550a8005f0">More...</a><br/></td></tr>
+<tr class="separator:a9ea1ff5e9c081631e6df34550a8005f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a043531a3ecc1db0de4824643e6a48e51"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/de5/namespaceamonpy_1_1dbase_1_1db__read.html#a043531a3ecc1db0de4824643e6a48e51">alert_count</a></td></tr>
 <tr class="memdesc:a043531a3ecc1db0de4824643e6a48e51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of alerts from a given stream.  <a href="#a043531a3ecc1db0de4824643e6a48e51">More...</a><br/></td></tr>
 <tr class="separator:a043531a3ecc1db0de4824643e6a48e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,7 +186,7 @@ Functions</h2></td></tr>
 
 <p>Counts the number of alerts from a given stream. </p>
 
-<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00639">639</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00951">951</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
 
 </div>
 </div>
@@ -584,6 +593,194 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aeb91007cbf02a072b256bc02dd59b1fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def amonpy.dbase.db_read.read_parameter_interval </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stream_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>id_start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>id_stop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>host_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>user_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>passw_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>db_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a list of parameters from the DB. </p>
+<p>Input stream, event id minimum and maximum, host name, user name, password and DB name. </p>
+
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00693">693</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9ea1ff5e9c081631e6df34550a8005f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def amonpy.dbase.db_read.read_parameter_interval_streams </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>streams_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>id_start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>id_stop</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>host_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>user_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>passw_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>db_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a list of parameters from the DB from a list of streams, within id intervals given in the lists id_start, id_stops for each of the stream respectively. </p>
+
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00758">758</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af44cf8f28c8cb5c845fab0667f035770"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def amonpy.dbase.db_read.read_parameter_single </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>event_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>event_stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>event_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>event_rev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>host_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>user_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>passw_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>db_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read a given event from the DB. </p>
+<p>Input event stream name (char), event ID (int) event_Rev (int), host name, user name, password and DB name. </p>
+
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00638">638</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ad56e9c199b78bc3ef94eb071f6a6c45c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -628,7 +825,7 @@ Functions</h2></td></tr>
 
 <p>Counts the revision number from a given stream in event table. </p>
 
-<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00662">662</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00974">974</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
 
 </div>
 </div>
@@ -670,14 +867,14 @@ Functions</h2></td></tr>
 
 <p>Counts the analysis stream number from a alertConfig table. </p>
 
-<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00686">686</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
+<p>Definition at line <a class="el" href="../../df/d43/db__read_8py_source.html#l00998">998</a> of file <a class="el" href="../../df/d43/db__read_8py_source.html">db_read.py</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 18:34:57 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 14 2014 18:38:30 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

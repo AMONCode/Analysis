@@ -1,0 +1,37 @@
+\hypertarget{namespaceamon__server__post}{\section{amon\-\_\-server\-\_\-post Namespace Reference}
+\label{namespaceamon__server__post}\index{amon\-\_\-server\-\_\-post@{amon\-\_\-server\-\_\-post}}
+}
+
+
+receives events from a client using H\-T\-T\-P protocols and saves them in an archive directory called server\-\_\-events  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classamon__server__post_1_1_event_page}{Event\-Page}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{namespaceamon__server__post_aaeff5dac76a8f34d07656ac4d2aac125}{path} = \char`\"{}twisted/\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+receives events from a client using H\-T\-T\-P protocols and saves them in an archive directory called server\-\_\-events 
+\begin{DoxyItemize}
+\item receives events from a client using H\-T\-T\-P protocols in an xml form (V\-O\-Events),
+\item converts then into Event and Parameter objects
+\item writes them into D\-B using twisted adbapi connection pool that performs D\-B transactions in a separate threat, thus keeping the code asynchronous
+\item send a message to A\-M\-O\-N analysis code about new event (event stream, id and rev) 
+\end{DoxyItemize}
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceamon__server__post_aaeff5dac76a8f34d07656ac4d2aac125}{\index{amon\-\_\-server\-\_\-post@{amon\-\_\-server\-\_\-post}!path@{path}}
+\index{path@{path}!amon_server_post@{amon\-\_\-server\-\_\-post}}
+\subsubsection[{path}]{\setlength{\rightskip}{0pt plus 5cm}string amon\-\_\-server\-\_\-post.\-path = \char`\"{}twisted/\char`\"{}}}\label{namespaceamon__server__post_aaeff5dac76a8f34d07656ac4d2aac125}
+
+
+Definition at line 11 of file amon\-\_\-server\-\_\-post.\-py.
+

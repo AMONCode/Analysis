@@ -1,0 +1,225 @@
+\hypertarget{namespaceamon__client__post__events}{\section{amon\-\_\-client\-\_\-post\-\_\-events Namespace Reference}
+\label{namespaceamon__client__post__events}\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+}
+
+
+client that sends events to the server using H\-T\-T\-P protocol with method=P\-O\-S\-T  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classamon__client__post__events_1_1_string_producer}{String\-Producer}
+\item 
+class \hyperlink{classamon__client__post__events_1_1_resource_printer}{Resource\-Printer}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceamon__client__post__events_afc50fe46ea786f92db2b05adc0dcdb52}{usage}
+\begin{DoxyCompactList}\small\item\em Displays program usage menu. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceamon__client__post__events_adf891b9502a8638c49a52f1662255e70}{print\-Resource}
+\item 
+def \hyperlink{namespaceamon__client__post__events_a35b30df4fe373be2f3ea9c2e70cbd2b7}{print\-Error}
+\item 
+def \hyperlink{namespaceamon__client__post__events_ab5e3ef35888a54a77fef20bb5524032c}{stop}
+\item 
+def \hyperlink{namespaceamon__client__post__events_a1c982a5e21070091bab9d892aba2532d}{check\-\_\-for\-\_\-files}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespaceamon__client__post__events_a027c76dd7a438a9a0ec7bb76a44f9bd2}{path} = False
+\item 
+\hyperlink{namespaceamon__client__post__events_a03c635092fabd2377d49fc08d83c54ed}{log} = a
+\item 
+\hyperlink{namespaceamon__client__post__events_a1c1848cdc573caaba7d46953a60f44d4}{host} = a
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a9a89e37f5a2f8e40f91be99a5bc5b500}{agent} = Agent(reactor)
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a965df8add9147fd407c543b219762f2a}{filelist} = os.\-listdir(\hyperlink{namespaceamon__client__post__events_a027c76dd7a438a9a0ec7bb76a44f9bd2}{path})
+\item 
+list \hyperlink{namespaceamon__client__post__events_a9b83b7a9506f77788a8ceabdf9c5e126}{filelist\-\_\-xml} = \mbox{[}$\,$\mbox{]}
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a4d19062ba6a7999d70e77b4be1893e26}{len1} = len(\hyperlink{namespaceamon__client__post__events_a9b83b7a9506f77788a8ceabdf9c5e126}{filelist\-\_\-xml})
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a1b0936a861518a5a9dcf1d57c37bd61f}{datafile} = open(\hyperlink{namespaceamon__client__post__events_a027c76dd7a438a9a0ec7bb76a44f9bd2}{path}+filename)
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a15fe42ff6e69403619e0bc52518c867d}{data} = datafile.\-read()
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_a01c39c83ce37b30cf0fc7c3f3aa779b1}{lenght\-\_\-data} = str(len(\hyperlink{namespaceamon__client__post__events_a15fe42ff6e69403619e0bc52518c867d}{data}))
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_aeb700347754fd34b279e4d3349177203}{body} = \hyperlink{classamon__client__post__events_1_1_string_producer}{String\-Producer}(\hyperlink{namespaceamon__client__post__events_a15fe42ff6e69403619e0bc52518c867d}{data})
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_afa009b881ab85a1384666c2f7a2463ac}{headers}
+\item 
+tuple \hyperlink{namespaceamon__client__post__events_aaa19dceed6887d2592636a2f442429c2}{d} = agent.\-request('P\-O\-S\-T', \hyperlink{namespaceamon__client__post__events_a1c1848cdc573caaba7d46953a60f44d4}{host}, \hyperlink{namespaceamon__client__post__events_afa009b881ab85a1384666c2f7a2463ac}{headers}, body\-Producer=\hyperlink{namespaceamon__client__post__events_aeb700347754fd34b279e4d3349177203}{body})
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+client that sends events to the server using H\-T\-T\-P protocol with method=P\-O\-S\-T client that sends events to the server using H\-T\-T\-P protocol with method=P\-O\-S\-T Run with twistd.
+
+Default is run as a daemon process. twistd -\/l client.\-log --pidfile client.\-pid clientpost --hostport \char`\"{}http\-://127.\-0.\-0.\-1\-:8000\char`\"{} --epath /path\-\_\-to\-\_\-client\-\_\-ents Kill it with kill {\ttfamily cat client.\-pid} Before running make directory archive within directory where your client events live. Each sent event will be moved from client directory to archive directory. Modify if you do not want to save sent events. 
+
+\subsection{Function Documentation}
+\hypertarget{namespaceamon__client__post__events_a1c982a5e21070091bab9d892aba2532d}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!check\-\_\-for\-\_\-files@{check\-\_\-for\-\_\-files}}
+\index{check\-\_\-for\-\_\-files@{check\-\_\-for\-\_\-files}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{check\-\_\-for\-\_\-files}]{\setlength{\rightskip}{0pt plus 5cm}def amon\-\_\-client\-\_\-post\-\_\-events.\-check\-\_\-for\-\_\-files (
+\begin{DoxyParamCaption}
+\item[{}]{path}
+\end{DoxyParamCaption}
+)}}\label{namespaceamon__client__post__events_a1c982a5e21070091bab9d892aba2532d}
+
+
+Definition at line 117 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a35b30df4fe373be2f3ea9c2e70cbd2b7}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!print\-Error@{print\-Error}}
+\index{print\-Error@{print\-Error}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{print\-Error}]{\setlength{\rightskip}{0pt plus 5cm}def amon\-\_\-client\-\_\-post\-\_\-events.\-print\-Error (
+\begin{DoxyParamCaption}
+\item[{}]{failure}
+\end{DoxyParamCaption}
+)}}\label{namespaceamon__client__post__events_a35b30df4fe373be2f3ea9c2e70cbd2b7}
+
+
+Definition at line 110 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_adf891b9502a8638c49a52f1662255e70}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!print\-Resource@{print\-Resource}}
+\index{print\-Resource@{print\-Resource}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{print\-Resource}]{\setlength{\rightskip}{0pt plus 5cm}def amon\-\_\-client\-\_\-post\-\_\-events.\-print\-Resource (
+\begin{DoxyParamCaption}
+\item[{}]{response}
+\end{DoxyParamCaption}
+)}}\label{namespaceamon__client__post__events_adf891b9502a8638c49a52f1662255e70}
+
+
+Definition at line 105 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_ab5e3ef35888a54a77fef20bb5524032c}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!stop@{stop}}
+\index{stop@{stop}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}def amon\-\_\-client\-\_\-post\-\_\-events.\-stop (
+\begin{DoxyParamCaption}
+\item[{}]{result}
+\end{DoxyParamCaption}
+)}}\label{namespaceamon__client__post__events_ab5e3ef35888a54a77fef20bb5524032c}
+
+
+Definition at line 113 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_afc50fe46ea786f92db2b05adc0dcdb52}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!usage@{usage}}
+\index{usage@{usage}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{usage}]{\setlength{\rightskip}{0pt plus 5cm}def amon\-\_\-client\-\_\-post\-\_\-events.\-usage (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{namespaceamon__client__post__events_afc50fe46ea786f92db2b05adc0dcdb52}
+
+
+Displays program usage menu. 
+
+
+
+Definition at line 23 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceamon__client__post__events_a9a89e37f5a2f8e40f91be99a5bc5b500}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!agent@{agent}}
+\index{agent@{agent}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{agent}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-agent = Agent(reactor)}}\label{namespaceamon__client__post__events_a9a89e37f5a2f8e40f91be99a5bc5b500}
+
+
+Definition at line 118 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_aeb700347754fd34b279e4d3349177203}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!body@{body}}
+\index{body@{body}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{body}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-body = {\bf String\-Producer}({\bf data})}}\label{namespaceamon__client__post__events_aeb700347754fd34b279e4d3349177203}
+
+
+Definition at line 143 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_aaa19dceed6887d2592636a2f442429c2}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!d@{d}}
+\index{d@{d}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{d}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-d = agent.\-request('P\-O\-S\-T', {\bf host}, {\bf headers}, body\-Producer={\bf body})}}\label{namespaceamon__client__post__events_aaa19dceed6887d2592636a2f442429c2}
+
+
+Definition at line 148 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a15fe42ff6e69403619e0bc52518c867d}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!data@{data}}
+\index{data@{data}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-data = datafile.\-read()}}\label{namespaceamon__client__post__events_a15fe42ff6e69403619e0bc52518c867d}
+
+
+Definition at line 138 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a1b0936a861518a5a9dcf1d57c37bd61f}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!datafile@{datafile}}
+\index{datafile@{datafile}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{datafile}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-datafile = open({\bf path}+filename)}}\label{namespaceamon__client__post__events_a1b0936a861518a5a9dcf1d57c37bd61f}
+
+
+Definition at line 137 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a965df8add9147fd407c543b219762f2a}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!filelist@{filelist}}
+\index{filelist@{filelist}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{filelist}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-filelist = os.\-listdir({\bf path})}}\label{namespaceamon__client__post__events_a965df8add9147fd407c543b219762f2a}
+
+
+Definition at line 126 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a9b83b7a9506f77788a8ceabdf9c5e126}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!filelist\-\_\-xml@{filelist\-\_\-xml}}
+\index{filelist\-\_\-xml@{filelist\-\_\-xml}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{filelist\-\_\-xml}]{\setlength{\rightskip}{0pt plus 5cm}list amon\-\_\-client\-\_\-post\-\_\-events.\-filelist\-\_\-xml = \mbox{[}$\,$\mbox{]}}}\label{namespaceamon__client__post__events_a9b83b7a9506f77788a8ceabdf9c5e126}
+
+
+Definition at line 127 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_afa009b881ab85a1384666c2f7a2463ac}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!headers@{headers}}
+\index{headers@{headers}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{headers}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-headers}}\label{namespaceamon__client__post__events_afa009b881ab85a1384666c2f7a2463ac}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = http\_headers.Headers(\{\textcolor{stringliteral}{'User-Agent'}: [\textcolor{stringliteral}{'Twisted HTTP Client'}],
+2                                             \textcolor{stringliteral}{'Content-Type'}:[\textcolor{stringliteral}{'text/xml'}], 
+3                                             \textcolor{stringliteral}{'Content-Lenght'}: [lenght\_data],
+4                                             \textcolor{stringliteral}{'Content-Name'}:[filename]\})
+\end{DoxyCode}
+
+
+Definition at line 144 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a1c1848cdc573caaba7d46953a60f44d4}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!host@{host}}
+\index{host@{host}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{host}]{\setlength{\rightskip}{0pt plus 5cm}amon\-\_\-client\-\_\-post\-\_\-events.\-host = a}}\label{namespaceamon__client__post__events_a1c1848cdc573caaba7d46953a60f44d4}
+
+
+Definition at line 46 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a4d19062ba6a7999d70e77b4be1893e26}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!len1@{len1}}
+\index{len1@{len1}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{len1}]{\setlength{\rightskip}{0pt plus 5cm}int amon\-\_\-client\-\_\-post\-\_\-events.\-len1 = len({\bf filelist\-\_\-xml})}}\label{namespaceamon__client__post__events_a4d19062ba6a7999d70e77b4be1893e26}
+
+
+Definition at line 135 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a01c39c83ce37b30cf0fc7c3f3aa779b1}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!lenght\-\_\-data@{lenght\-\_\-data}}
+\index{lenght\-\_\-data@{lenght\-\_\-data}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{lenght\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}tuple amon\-\_\-client\-\_\-post\-\_\-events.\-lenght\-\_\-data = str(len({\bf data}))}}\label{namespaceamon__client__post__events_a01c39c83ce37b30cf0fc7c3f3aa779b1}
+
+
+Definition at line 139 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a03c635092fabd2377d49fc08d83c54ed}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!log@{log}}
+\index{log@{log}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{log}]{\setlength{\rightskip}{0pt plus 5cm}string amon\-\_\-client\-\_\-post\-\_\-events.\-log = a}}\label{namespaceamon__client__post__events_a03c635092fabd2377d49fc08d83c54ed}
+
+
+Definition at line 44 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+
+\hypertarget{namespaceamon__client__post__events_a027c76dd7a438a9a0ec7bb76a44f9bd2}{\index{amon\-\_\-client\-\_\-post\-\_\-events@{amon\-\_\-client\-\_\-post\-\_\-events}!path@{path}}
+\index{path@{path}!amon_client_post_events@{amon\-\_\-client\-\_\-post\-\_\-events}}
+\subsubsection[{path}]{\setlength{\rightskip}{0pt plus 5cm}string amon\-\_\-client\-\_\-post\-\_\-events.\-path = False}}\label{namespaceamon__client__post__events_a027c76dd7a438a9a0ec7bb76a44f9bd2}
+
+
+Definition at line 17 of file amon\-\_\-client\-\_\-post\-\_\-events.\-py.
+

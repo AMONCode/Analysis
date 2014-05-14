@@ -1,0 +1,158 @@
+\hypertarget{namespacetestevents_1_1create__voevents}{\section{testevents.\-create\-\_\-voevents Namespace Reference}
+\label{namespacetestevents_1_1create__voevents}\index{testevents.\-create\-\_\-voevents@{testevents.\-create\-\_\-voevents}}
+}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{namespacetestevents_1_1create__voevents_ac3b88f58e63db0a1c376d21566b8e8f9}{Host\-Fancy\-Name} = 'localhost'
+\item 
+string \hyperlink{namespacetestevents_1_1create__voevents_ac24452ad8ddb38fa85ee46742e8ea754}{User\-Fancy\-Name} = 'yourhost'
+\item 
+string \hyperlink{namespacetestevents_1_1create__voevents_a2db4ec9f725eb156b3fa3d86e0a10ba0}{Password\-Fancy} = 'yourpass'
+\item 
+string \hyperlink{namespacetestevents_1_1create__voevents_afa107656f14779d5495d5591960e5fdf}{D\-B\-Fancy\-Name} = '\hyperlink{db__mc__build_8sql_a19c21c59303d8b6591b92240ff7de1d5}{A\-M\-O\-N\-\_\-test2}'
+\item 
+list \hyperlink{namespacetestevents_1_1create__voevents_a616c13718ef9e11dffec25cdea829347}{event\-\_\-streams} = \mbox{[}0,1,3,7\mbox{]}
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_a9ea0cae1b844a0d1b5ff6fae78565167}{valid\-Start} = datetime(2012,1,1,0,0,0,0)
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_a80fe94b0ac338bc706910bebac4132aa}{valid\-Stop} = datetime(2013,1,1,0,0,0,0)
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_aa05646e11a377bb3c5550b25e37ed4fa}{Time\-Slice} = timedelta.\-total\-\_\-seconds(\hyperlink{namespacetestevents_1_1create__voevents_a80fe94b0ac338bc706910bebac4132aa}{valid\-Stop} -\/ \hyperlink{namespacetestevents_1_1create__voevents_a9ea0cae1b844a0d1b5ff6fae78565167}{valid\-Start})
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_abd84c25fbf80dd061bed62068efa42b7}{Time\-Start} = str(\hyperlink{namespacetestevents_1_1create__voevents_a9ea0cae1b844a0d1b5ff6fae78565167}{valid\-Start})
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_a2ba47c08e33102e401a760206d7d1fe7}{Time\-Stop} = str(\hyperlink{namespacetestevents_1_1create__voevents_a80fe94b0ac338bc706910bebac4132aa}{valid\-Stop})
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{events}
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_a9d1fb9b932bfacc5ed0fa2b335d25917}{nevents} = len(\hyperlink{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{events})
+\item 
+list \hyperlink{namespacetestevents_1_1create__voevents_a4fda3e759933451b530433ab406bbd2f}{parameters} = \mbox{[}\hyperlink{classamonpy_1_1dbase_1_1db__classes_1_1_parameter}{Parameter}(\char`\"{}energy\char`\"{},events\mbox{[}kk\mbox{]}.\hyperlink{db__mc__build_8sql_a67b7e9fc922cbf49b5ae3124240f4188}{stream}, \hyperlink{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{events}\mbox{[}kk\mbox{]}.id, \hyperlink{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{events}\mbox{[}kk\mbox{]}.rev)\mbox{]}
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_ad8ad71a3c97e80e15265f9cdcf854921}{xml1} = \hyperlink{namespaceevent__to__voevent_a540d6b7d91d6033f3334987e1e0a7aeb}{event\-\_\-to\-\_\-voevent.\-event\-\_\-to\-\_\-voevent}(\mbox{[}\hyperlink{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{events}\mbox{[}kk\mbox{]}\mbox{]}, \hyperlink{namespacetestevents_1_1create__voevents_a4fda3e759933451b530433ab406bbd2f}{parameters})
+\item 
+string \hyperlink{namespacetestevents_1_1create__voevents_a94eff63efc65e7054a0f943be84ca3e7}{fname} = ''
+\item 
+tuple \hyperlink{namespacetestevents_1_1create__voevents_ab8cf18f8fb2b4e2eccd7953918cb1760}{f1} = open(\hyperlink{namespacetestevents_1_1create__voevents_a94eff63efc65e7054a0f943be84ca3e7}{fname}, 'w+')
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespacetestevents_1_1create__voevents_afa107656f14779d5495d5591960e5fdf}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!D\-B\-Fancy\-Name@{D\-B\-Fancy\-Name}}
+\index{D\-B\-Fancy\-Name@{D\-B\-Fancy\-Name}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{D\-B\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}string testevents.\-create\-\_\-voevents.\-D\-B\-Fancy\-Name = '{\bf A\-M\-O\-N\-\_\-test2}'}}\label{namespacetestevents_1_1create__voevents_afa107656f14779d5495d5591960e5fdf}
+
+
+Definition at line 24 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a616c13718ef9e11dffec25cdea829347}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!event\-\_\-streams@{event\-\_\-streams}}
+\index{event\-\_\-streams@{event\-\_\-streams}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{event\-\_\-streams}]{\setlength{\rightskip}{0pt plus 5cm}list testevents.\-create\-\_\-voevents.\-event\-\_\-streams = \mbox{[}0,1,3,7\mbox{]}}}\label{namespacetestevents_1_1create__voevents_a616c13718ef9e11dffec25cdea829347}
+
+
+Definition at line 26 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!events@{events}}
+\index{events@{events}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{events}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-events}}\label{namespacetestevents_1_1create__voevents_ad445227e1dca6e875f1f85de9777d008}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+1 = db\_read.read\_event\_timeslice\_streams(event\_streams, TimeStart,TimeSlice,HostFancyName,
+2                                     UserFancyName,PasswordFancy,DBFancyName)
+\end{DoxyCode}
+
+
+Definition at line 36 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_ab8cf18f8fb2b4e2eccd7953918cb1760}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!f1@{f1}}
+\index{f1@{f1}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{f1}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-f1 = open({\bf fname}, 'w+')}}\label{namespacetestevents_1_1create__voevents_ab8cf18f8fb2b4e2eccd7953918cb1760}
+
+
+Definition at line 59 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a94eff63efc65e7054a0f943be84ca3e7}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!fname@{fname}}
+\index{fname@{fname}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{fname}]{\setlength{\rightskip}{0pt plus 5cm}string testevents.\-create\-\_\-voevents.\-fname = ''}}\label{namespacetestevents_1_1create__voevents_a94eff63efc65e7054a0f943be84ca3e7}
+
+
+Definition at line 46 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_ac3b88f58e63db0a1c376d21566b8e8f9}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!Host\-Fancy\-Name@{Host\-Fancy\-Name}}
+\index{Host\-Fancy\-Name@{Host\-Fancy\-Name}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{Host\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}string testevents.\-create\-\_\-voevents.\-Host\-Fancy\-Name = 'localhost'}}\label{namespacetestevents_1_1create__voevents_ac3b88f58e63db0a1c376d21566b8e8f9}
+
+
+Definition at line 21 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a9d1fb9b932bfacc5ed0fa2b335d25917}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!nevents@{nevents}}
+\index{nevents@{nevents}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{nevents}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-nevents = len({\bf events})}}\label{namespacetestevents_1_1create__voevents_a9d1fb9b932bfacc5ed0fa2b335d25917}
+
+
+Definition at line 39 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a4fda3e759933451b530433ab406bbd2f}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!parameters@{parameters}}
+\index{parameters@{parameters}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{parameters}]{\setlength{\rightskip}{0pt plus 5cm}list testevents.\-create\-\_\-voevents.\-parameters = \mbox{[}{\bf Parameter}(\char`\"{}energy\char`\"{},events\mbox{[}kk\mbox{]}.{\bf stream}, {\bf events}\mbox{[}kk\mbox{]}.id, {\bf events}\mbox{[}kk\mbox{]}.rev)\mbox{]}}}\label{namespacetestevents_1_1create__voevents_a4fda3e759933451b530433ab406bbd2f}
+
+
+Definition at line 42 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a2db4ec9f725eb156b3fa3d86e0a10ba0}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!Password\-Fancy@{Password\-Fancy}}
+\index{Password\-Fancy@{Password\-Fancy}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{Password\-Fancy}]{\setlength{\rightskip}{0pt plus 5cm}string testevents.\-create\-\_\-voevents.\-Password\-Fancy = 'yourpass'}}\label{namespacetestevents_1_1create__voevents_a2db4ec9f725eb156b3fa3d86e0a10ba0}
+
+
+Definition at line 23 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_aa05646e11a377bb3c5550b25e37ed4fa}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!Time\-Slice@{Time\-Slice}}
+\index{Time\-Slice@{Time\-Slice}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{Time\-Slice}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-Time\-Slice = timedelta.\-total\-\_\-seconds({\bf valid\-Stop} -\/ {\bf valid\-Start})}}\label{namespacetestevents_1_1create__voevents_aa05646e11a377bb3c5550b25e37ed4fa}
+
+
+Definition at line 30 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_abd84c25fbf80dd061bed62068efa42b7}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!Time\-Start@{Time\-Start}}
+\index{Time\-Start@{Time\-Start}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{Time\-Start}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-Time\-Start = str({\bf valid\-Start})}}\label{namespacetestevents_1_1create__voevents_abd84c25fbf80dd061bed62068efa42b7}
+
+
+Definition at line 32 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a2ba47c08e33102e401a760206d7d1fe7}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!Time\-Stop@{Time\-Stop}}
+\index{Time\-Stop@{Time\-Stop}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{Time\-Stop}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-Time\-Stop = str({\bf valid\-Stop})}}\label{namespacetestevents_1_1create__voevents_a2ba47c08e33102e401a760206d7d1fe7}
+
+
+Definition at line 33 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_ac24452ad8ddb38fa85ee46742e8ea754}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!User\-Fancy\-Name@{User\-Fancy\-Name}}
+\index{User\-Fancy\-Name@{User\-Fancy\-Name}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{User\-Fancy\-Name}]{\setlength{\rightskip}{0pt plus 5cm}string testevents.\-create\-\_\-voevents.\-User\-Fancy\-Name = 'yourhost'}}\label{namespacetestevents_1_1create__voevents_ac24452ad8ddb38fa85ee46742e8ea754}
+
+
+Definition at line 22 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a9ea0cae1b844a0d1b5ff6fae78565167}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!valid\-Start@{valid\-Start}}
+\index{valid\-Start@{valid\-Start}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{valid\-Start}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-valid\-Start = datetime(2012,1,1,0,0,0,0)}}\label{namespacetestevents_1_1create__voevents_a9ea0cae1b844a0d1b5ff6fae78565167}
+
+
+Definition at line 28 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_a80fe94b0ac338bc706910bebac4132aa}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!valid\-Stop@{valid\-Stop}}
+\index{valid\-Stop@{valid\-Stop}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{valid\-Stop}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-valid\-Stop = datetime(2013,1,1,0,0,0,0)}}\label{namespacetestevents_1_1create__voevents_a80fe94b0ac338bc706910bebac4132aa}
+
+
+Definition at line 29 of file create\-\_\-voevents.\-py.
+
+\hypertarget{namespacetestevents_1_1create__voevents_ad8ad71a3c97e80e15265f9cdcf854921}{\index{testevents\-::create\-\_\-voevents@{testevents\-::create\-\_\-voevents}!xml1@{xml1}}
+\index{xml1@{xml1}!testevents::create_voevents@{testevents\-::create\-\_\-voevents}}
+\subsubsection[{xml1}]{\setlength{\rightskip}{0pt plus 5cm}tuple testevents.\-create\-\_\-voevents.\-xml1 = {\bf event\-\_\-to\-\_\-voevent.\-event\-\_\-to\-\_\-voevent}(\mbox{[}{\bf events}\mbox{[}kk\mbox{]}\mbox{]}, {\bf parameters})}}\label{namespacetestevents_1_1create__voevents_ad8ad71a3c97e80e15265f9cdcf854921}
+
+
+Definition at line 44 of file create\-\_\-voevents.\-py.
+

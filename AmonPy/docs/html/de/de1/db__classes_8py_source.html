@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../amon_logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">AmonPy
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -101,10 +101,10 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter, attrgetter</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">from</span> sys <span class="keyword">import</span> path</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;path.append(<span class="stringliteral">&quot;../sim/&quot;</span>)</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;path.append(<span class="stringliteral">&quot;../sim&quot;</span>)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">import</span> random</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">import</span> ast</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">import</span> sidereal_m <span class="keyword">as</span> sidereal</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">import</span> sim.sidereal_m <span class="keyword">as</span> sidereal</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"># ******************* BEGIN event class definition **********************</span></div>
@@ -113,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">##</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">#  wherewhen_def is a class factory function</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">#         Optional Inputs: args[0] is an object from the EventStreamConfig class</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">#                          args[1] set to True if simulaiton is desired</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">#                          args[1] set to True if simulation is desired</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">#         Output: returns the WhereWhen class</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">#     </span></div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a17d82764a82f5d4057aa427d04a745cd">   27</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a17d82764a82f5d4057aa427d04a745cd" title="wherewhen_def is a class factory function Optional Inputs: args[0] is an object from the EventStreamC...">wherewhen_def</a>(*args):</div>
@@ -148,7 +148,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                     <span class="stringliteral">&#39;point_dec&#39;</span>,<span class="stringliteral">&#39;longitude&#39;</span>,<span class="stringliteral">&#39;latitude&#39;</span>,<span class="stringliteral">&#39;elevation&#39;</span>)</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        _numobj = 0</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">def </span><a class="code" href="../../d4/d68/namespaceamonpy_1_1sim_1_1sidereal.html#a0d12fc226bca67ce88441c23999a0985" title="Constructor. ">__init__</a>(self):</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">def </span><a class="code" href="../../d0/d88/namespaceanalyser_1_1runanal.html#ae52cd6ae7d15c438c57923641d847356">__init__</a>(self):</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">if</span> (config != <span class="keywordtype">None</span>):</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                </div>
@@ -251,10 +251,10 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                     <span class="stringliteral">&#39;false_pos&#39;</span>,<span class="stringliteral">&#39;pvalue&#39;</span>,<span class="stringliteral">&#39;type&#39;</span>,<span class="stringliteral">&#39;point_RA&#39;</span>,<span class="stringliteral">&#39;point_dec&#39;</span>,</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                     <span class="stringliteral">&#39;longitude&#39;</span>,<span class="stringliteral">&#39;latitude&#39;</span>,<span class="stringliteral">&#39;elevation&#39;</span>,<span class="stringliteral">&#39;psf_type&#39;</span>,</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                     <span class="stringliteral">&#39;configstream&#39;</span>)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        _max_streams = 100</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        _max_streams = 1010</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        _num_events  = [0]*_max_streams</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">def </span><a class="code" href="../../d4/d68/namespaceamonpy_1_1sim_1_1sidereal.html#a0d12fc226bca67ce88441c23999a0985" title="Constructor. ">__init__</a>(self,stream,id,rev):</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">def </span><a class="code" href="../../d0/d88/namespaceanalyser_1_1runanal.html#ae52cd6ae7d15c438c57923641d847356">__init__</a>(self,stream,id,rev):</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            WhereWhen.__init__(self)            </div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            <span class="keywordflow">if</span> (config != <span class="keywordtype">None</span>):</div>
@@ -642,12 +642,45 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;        <span class="keywordflow">for</span> attr, value <span class="keywordflow">in</span> self.__dict__.iteritems():</div>
 <div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;            <span class="comment">#print attr, value</span></div>
 <div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;            <span class="keywordflow">print</span> attr.ljust(20,<span class="stringliteral">&#39; &#39;</span>)+<span class="stringliteral">&#39;: &#39;</span>, value  </div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;            </div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="comment"># ******************* BEGIN parameter class definition **********************</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="comment"># create a generic parameter object for AMON</span></div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="comment">#  Creates the Parameter class. Instances are created by specifying a unique </span></div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;<span class="comment">#         four of IDs (name, event_eventStreaemConfig_stream, event_id, event_rev). </span></div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="comment">#         The other data attributes are set to</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;<span class="comment">#         defaults on init. This style may later be replaced by the class</span></div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;<span class="comment">#         factory and __slots__ approach, currently adopted for the Event</span></div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;<span class="comment">#         class (see above). </span></div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00565"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html">  565</a></span>&#160;<span class="keyword">class </span><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html" title="Creates the Parameter class. ">Parameter</a>(object):</div>
+<div class="line"><a name="l00566"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#a505d26cebffda6dbddfb2366052606e2">  566</a></span>&#160;    num_param = 0</div>
+<div class="line"><a name="l00567"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abc3913dc5879e008adb7de677cf34b8e">  567</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abc3913dc5879e008adb7de677cf34b8e">__init__</a>(self,parname,stream,id,rev):</div>
+<div class="line"><a name="l00568"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#a0578aa061ddcf50100cdcbb3851b4c8d">  568</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#a0578aa061ddcf50100cdcbb3851b4c8d">name</a> = parname</div>
+<div class="line"><a name="l00569"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#af157b9f3c2405f093d65190a6c078bdb">  569</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#af157b9f3c2405f093d65190a6c078bdb">event_eventStreamConfig_stream</a>     =  stream                       <span class="comment"># defined by input</span></div>
+<div class="line"><a name="l00570"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abe0eddf1963377c0d06d38e712fe6753">  570</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abe0eddf1963377c0d06d38e712fe6753">event_id</a>   =  id                           <span class="comment"># defined by input</span></div>
+<div class="line"><a name="l00571"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#a6908790136a283636be265dcca358567">  571</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#a6908790136a283636be265dcca358567">event_rev</a>  =  rev                          <span class="comment"># defined by input</span></div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        <span class="comment"># remainder of data attributes are defaults</span></div>
+<div class="line"><a name="l00573"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#ac077e0db5b88e49166cd5066a1ffafe7">  573</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#ac077e0db5b88e49166cd5066a1ffafe7">value</a>  =  0.</div>
+<div class="line"><a name="l00574"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#aafe3f971978610b9e6a29a9853c71c61">  574</a></span>&#160;        self.<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#aafe3f971978610b9e6a29a9853c71c61">units</a>      = <span class="stringliteral">&quot;nounits&quot;</span>          </div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;                                   </div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        Parameter.num_param +=1        </div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;</div>
+<div class="line"><a name="l00578"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abac2de24228484435501c9c463761b87">  578</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#abac2de24228484435501c9c463761b87">__del__</a>(self):  </div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        Parameter.num_param -=1</div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;                </div>
+<div class="line"><a name="l00581"></a><span class="lineno"><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#ae24e3a156b51cb1885f55962943dcdef">  581</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html#ae24e3a156b51cb1885f55962943dcdef">forprint</a>(self):</div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;        <span class="keywordflow">for</span> attr, value <span class="keywordflow">in</span> self.__dict__.iteritems():</div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;            <span class="comment">#print attr, value</span></div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;            <span class="keywordflow">print</span> attr.ljust(20,<span class="stringliteral">&#39; &#39;</span>)+<span class="stringliteral">&#39;: &#39;</span>, value              </div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;            </div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 18:34:55 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 14 2014 18:38:20 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

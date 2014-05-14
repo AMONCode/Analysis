@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../amon_logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">AmonPy
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -108,8 +108,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;CREATE  TABLE IF NOT EXISTS `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`<a class="code" href="../../d0/d00/db__build_8sql.html#a880777584c38261efe4e807a93688bb6">alertConfig</a>` (</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a0e199a7f868e23d8c9fbc7b24bdb077b">stream</a>` INT NOT NULL ,</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a670afebce6bd27727a769e9b8146a5ca">rev</a>` INT NOT NULL ,</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  `validStart` DATETIME NULL DEFAULT NULL ,</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  `validStop` DATETIME NULL DEFAULT NULL ,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  `<a class="code" href="../../d5/dd9/namespacetestevents_1_1create__voevents.html#a9ea0cae1b844a0d1b5ff6fae78565167">validStart</a>` DATETIME NULL DEFAULT NULL ,</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  `<a class="code" href="../../d5/dd9/namespacetestevents_1_1create__voevents.html#a80fe94b0ac338bc706910bebac4132aa">validStop</a>` DATETIME NULL DEFAULT NULL ,</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  `participating` INT NULL DEFAULT NULL COMMENT <span class="stringliteral">&#39;superset of alert.observing&#39;</span> ,</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  `p_thresh` FLOAT NULL DEFAULT NULL COMMENT <span class="stringliteral">&#39;universal cut on the pairwise position probability for a clustering analysis&#39;</span> ,</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  `N_thresh` VARCHAR(100) NULL DEFAULT NULL COMMENT &#39;the number thresholds for each observatory&#39; ,</div>
@@ -143,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#ace7891a3d914ddc3aada697fc748e7b7">RA</a>` FLOAT NULL DEFAULT NULL COMMENT &#39;Right ascension&#39; ,</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#ae05fd637497daebdcb0cca7044926cd3">sigmaR</a>` FLOAT NULL DEFAULT NULL ,</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#aabd0c63e0a065a5da54e18f169409cd1">nevents</a>` INT NULL DEFAULT NULL ,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a4da539a081d13412d12017ea4d2ef1e1">deltaT</a>` FLOAT NULL DEFAULT NULL COMMENT &#39;Time window for <a class="code" href="../../d6/de1/namespacerun__archival.html#a46a929fd7b61c93a6bf4aa010103b238">events</a>&#39; ,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a4da539a081d13412d12017ea4d2ef1e1">deltaT</a>` FLOAT NULL DEFAULT NULL COMMENT &#39;Time window for <a class="code" href="../../d5/dd9/namespacetestevents_1_1create__voevents.html#ad445227e1dca6e875f1f85de9777d008">events</a>&#39; ,</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#ad0767f5c0c80ad02abbf61aab485b444">sigmaT</a>` FLOAT NULL ,</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  `<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a1dc960a2cbb148fcf2d7be31578f6d7c">false_pos</a>` FLOAT NULL DEFAULT NULL COMMENT &#39;False Alarm Rate density&#39; ,</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  `<a class="code" href="../../d2/dc6/namespacenew__classes.html#ab7f105e235b85e724d2c7ea9ff6b4d76">observing</a>` INT NULL DEFAULT NULL COMMENT &#39;observatories <a class="code" href="../../d2/dc6/namespacenew__classes.html#ab7f105e235b85e724d2c7ea9ff6b4d76">observing</a>&#39; ,</div>
@@ -172,8 +172,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;CREATE  TABLE IF NOT EXISTS `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`eventStreamConfig` (</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  `stream` INT NOT NULL ,</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  `rev` INT NOT NULL ,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  `validStart` DATETIME NULL DEFAULT NULL ,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  `validStop` DATETIME NULL DEFAULT NULL ,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  `<a class="code" href="../../d5/dd9/namespacetestevents_1_1create__voevents.html#a9ea0cae1b844a0d1b5ff6fae78565167">validStart</a>` DATETIME NULL DEFAULT NULL ,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  `<a class="code" href="../../d5/dd9/namespacetestevents_1_1create__voevents.html#a80fe94b0ac338bc706910bebac4132aa">validStop</a>` DATETIME NULL DEFAULT NULL ,</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  `observ_name` VARCHAR(100) NULL DEFAULT NULL ,</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  `astro_coord_system` VARCHAR(100) NULL ,</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  `obs_coord_system` VARCHAR(100) NULL COMMENT &#39;Earth-centred or observatory centred coordinate system (eg. UTC-ICRS-TOP.)&#39; ,</div>
@@ -616,9 +616,9 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;SHOW WARNINGS;</div>
 <div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;</div>
 <div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;-- -----------------------------------------------------</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;-- Table `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`<a class="code" href="../../d0/d00/db__build_8sql.html#a514887ea26968fc959d02aa8337b0955">parameter</a>`</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;-- Table `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`<a class="code" href="../../d9/d5c/namespaceamonpy_1_1dbase_1_1event__to__voevent.html#aa8180682dfe74a764c3804656183d081">parameter</a>`</div>
 <div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;-- -----------------------------------------------------</div>
-<div class="line"><a name="l00529"></a><span class="lineno"><a class="code" href="../../d9/da7/db__mc__build_8sql.html#ae160d9514a53a2b7c888f4b9e50004f3">  529</a></span>&#160;DROP TABLE IF EXISTS `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`<a class="code" href="../../d0/d00/db__build_8sql.html#a514887ea26968fc959d02aa8337b0955">parameter</a>` ;</div>
+<div class="line"><a name="l00529"></a><span class="lineno"><a class="code" href="../../d9/da7/db__mc__build_8sql.html#ae160d9514a53a2b7c888f4b9e50004f3">  529</a></span>&#160;DROP TABLE IF EXISTS `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`<a class="code" href="../../d9/d5c/namespaceamonpy_1_1dbase_1_1event__to__voevent.html#aa8180682dfe74a764c3804656183d081">parameter</a>` ;</div>
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;</div>
 <div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;SHOW WARNINGS;</div>
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;CREATE  TABLE IF NOT EXISTS `<a class="code" href="../../d9/da7/db__mc__build_8sql.html#a19c21c59303d8b6591b92240ff7de1d5">AMON_test2</a>`.`parameter` (</div>
@@ -678,7 +678,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 18:34:57 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 14 2014 18:38:24 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

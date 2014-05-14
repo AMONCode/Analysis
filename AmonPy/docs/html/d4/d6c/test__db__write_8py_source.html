@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="../../amon_logo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">AmonPy
-   &#160;<span id="projectnumber">0.2</span>
+   &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
  </tr>
@@ -123,60 +123,70 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="comment">#self.AlertConfigSingle=[AlertConfig(1,0)]</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a46fd1b5ec3c30b43fc1ba03a19603f3a">   32</a></span>&#160;        self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a46fd1b5ec3c30b43fc1ba03a19603f3a">AlertConfigSingle</a>=[<a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a06a8874ab6b9b555ec11356861fb94a2" title="Returns an example AlertConfig object, used for testing the analysis code. ">exAlertConfig</a>()]</div>
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#abf87a227a67042fea9ec1a8056656d77">   33</a></span>&#160;        self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#abf87a227a67042fea9ec1a8056656d77">AlertSingle</a>=[<a class="code" href="../../d1/d95/classamonpy_1_1dbase_1_1db__classes_1_1_alert.html" title="Creates the Alert class. ">Alert</a>(1,0,0)]</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">#        self.Event=[Event2(1,1,0)]</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;              </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#aa32d3bef1374ed78d24d9576db67efab">   36</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#aa32d3bef1374ed78d24d9576db67efab">tearDown</a>(self):</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment"># no tear down actions yet</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="comment"># print &#39;tearing down unit tests: &#39;, argv[0]        </span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">pass</span>  </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"># Function to test the code, use it to write events on your localhost</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"># Running it on AMON db machine will fail since these data are already written</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;         </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;     </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a8f1e78ed7fb69e2163ad947a634d4326">   45</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a8f1e78ed7fb69e2163ad947a634d4326">testWriteConfigArchive</a>(self):</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&#39;Testing write_event_config module&#39;</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        db_write.write_event_config_archive(self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a12e956ebf3f624d6b36bb053369dd608">StreamFancyName</a>,self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a1d99ea6d169624f39acc56254f9f7f30">HostFancyName</a>,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#ab23c3c078c9ef84ff80e595d0906cd83">UserFancyName</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a69e2b25f75c000b814fa55d4945cd241">PasswordFancy</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a7b07a25b051063de016eaa355562eac3">DBFancyName</a>) </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;     </span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="stringliteral">    def testWriteConfig(self):</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="stringliteral">        print &#39;Testing write_event_config module&#39;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="stringliteral">        db_write.write_event_config(self.StreamFancyNameMC,self.HostFancyName,</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.SimConfig)</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>          </div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a894227c7d803e8555a9a979731afd2d7">   55</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a894227c7d803e8555a9a979731afd2d7">testWriteEventArchive</a>(self):</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&#39;Testing write_event module for archive data (for now)&#39;</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        db_write.write_event_archive(self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a21f01f500a675067822bf868ce371306">realArchive</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a12e956ebf3f624d6b36bb053369dd608">StreamFancyName</a>,self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a1d99ea6d169624f39acc56254f9f7f30">HostFancyName</a>,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#ab23c3c078c9ef84ff80e595d0906cd83">UserFancyName</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a69e2b25f75c000b814fa55d4945cd241">PasswordFancy</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a7b07a25b051063de016eaa355562eac3">DBFancyName</a>,self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a9d4454368eabffc5e634852d7f6bf809">Filename</a>)</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    </div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#adc4ec167459df746be42a7a073a51d48">   60</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#adc4ec167459df746be42a7a073a51d48">testWriteParam</a>(self):</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&#39;Testing write_parameter module for archive data (for now)&#39;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        db_write.write_parameter(self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a21f01f500a675067822bf868ce371306">realArchive</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a12e956ebf3f624d6b36bb053369dd608">StreamFancyName</a>,self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a1d99ea6d169624f39acc56254f9f7f30">HostFancyName</a>,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                         self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#ab23c3c078c9ef84ff80e595d0906cd83">UserFancyName</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a69e2b25f75c000b814fa55d4945cd241">PasswordFancy</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a7b07a25b051063de016eaa355562eac3">DBFancyName</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a9d4454368eabffc5e634852d7f6bf809">Filename</a>)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="stringliteral">    def testWriteAlertConfig(self):</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="stringliteral">        print &#39;Testing write_alert_config module&#39;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="stringliteral">        db_write.write_alert_config(self.StreamAlertConfig,self.HostFancyName,</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle)</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="stringliteral">        </span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral">    def testWriteAlert(self):</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral">        print &#39;Testing write_alert module&#39;</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral">        db_write.write_alert(self.AlertStreamFancyName,self.HostFancyName,</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertSingle) </span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral">       </span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral">    </span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">    def testWriteEvent(self):</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">        print &#39;Testing write_event module for archive data (for now)&#39;</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="stringliteral">        db_write.write_event(self.realArchive,self.HostFancyName,</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.Event) </span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>                       </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    unittest.main()</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a678e5a1daa722c397816fbcbf21aba3b">   34</a></span>&#160;        self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a678e5a1daa722c397816fbcbf21aba3b">Parameter</a>=[<a class="code" href="../../d1/d74/classamonpy_1_1dbase_1_1db__classes_1_1_parameter.html" title="Creates the Parameter class. ">Parameter</a>(<span class="stringliteral">&quot;energy&quot;</span>,1,0,0)]</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">#        self.Event=[Event2(1,1,0)]</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;              </div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#aa32d3bef1374ed78d24d9576db67efab">   38</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#aa32d3bef1374ed78d24d9576db67efab">tearDown</a>(self):</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="comment"># no tear down actions yet</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="comment"># print &#39;tearing down unit tests: &#39;, argv[0]        </span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">pass</span>  </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"># Function to test the code, use it to write events on your localhost</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"># Running it on AMON db machine will fail since these data are already written</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;         </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="stringliteral">    def testWriteConfigArchive(self):</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="stringliteral">        print &#39;Testing write_event_config module&#39;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="stringliteral">        db_write.write_event_config_archive(self.StreamFancyName,self.HostFancyName,</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyName) </span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>   </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;  </span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="stringliteral">    def testWriteConfig(self):</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="stringliteral">        print &#39;Testing write_event_config module&#39;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="stringliteral">        db_write.write_event_config(self.StreamFancyNameMC,self.HostFancyName,</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.SimConfig)</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>  </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;        </span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="stringliteral">    def testWriteEventArchive(self):</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="stringliteral">        print &#39;Testing write_event module for archive data (for now)&#39;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="stringliteral">        db_write.write_event_archive(self.realArchive, self.StreamFancyName,self.HostFancyName,</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyName,self.Filename)</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="stringliteral">    </span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="stringliteral">    def testWriteParam(self):</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="stringliteral">        print &#39;Testing write_parameter module for archive data (for now)&#39;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="stringliteral">        db_write.write_parameter(self.realArchive, self.StreamFancyName,self.HostFancyName,</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="stringliteral">                         self.UserFancyName, self.PasswordFancy, self.DBFancyName, self.Filename)</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="stringliteral">    def testWriteAlertConfig(self):</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="stringliteral">        print &#39;Testing write_alert_config module&#39;</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="stringliteral">        db_write.write_alert_config(self.StreamAlertConfig,self.HostFancyName,</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle)</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="stringliteral">        </span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="stringliteral">    def testWriteAlert(self):</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="stringliteral">        print &#39;Testing write_alert module&#39;</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="stringliteral">        db_write.write_alert(self.AlertStreamFancyName,self.HostFancyName,</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertSingle) </span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="stringliteral">       </span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="stringliteral">    </span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="stringliteral">    def testWriteEvent(self):</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="stringliteral">        print &#39;Testing write_event module for archive data (for now)&#39;</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="stringliteral">        db_write.write_event(self.realArchive,self.HostFancyName,</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="stringliteral">        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.Event) </span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span>      </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a02684496f0a6f809cc60ab8873b125c8">   86</a></span>&#160;    <span class="keyword">def </span><a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a02684496f0a6f809cc60ab8873b125c8">testWriteParamList</a>(self):</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&#39;Testing write_parameter_list module&#39;</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        db_write.write_parameter_list(self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a1d99ea6d169624f39acc56254f9f7f30">HostFancyName</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#ab23c3c078c9ef84ff80e595d0906cd83">UserFancyName</a>, </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                                      self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a69e2b25f75c000b814fa55d4945cd241">PasswordFancy</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#ad305c09b7cfbca1150be4b5819d0fdf4">DBFancyNameMC</a>, self.<a class="code" href="../../db/d42/classamonpy_1_1dbase_1_1test_1_1test__db__write_1_1_test_d_b_write.html#a678e5a1daa722c397816fbcbf21aba3b">Parameter</a>)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                     </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordflow">if</span> __name__ == <span class="stringliteral">&#39;__main__&#39;</span>:</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    unittest.main()</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 28 2013 18:34:55 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 14 2014 18:38:21 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

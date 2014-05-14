@@ -1,0 +1,101 @@
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units}{\section{amonpy.\-sim.\-sidereal.\-Mixed\-Units Class Reference}
+\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units}\index{amonpy.\-sim.\-sidereal.\-Mixed\-Units@{amonpy.\-sim.\-sidereal.\-Mixed\-Units}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_ae013673eef30b196f86b6f2c486b3bd8}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a7f7c5351e7552b3a52f3c2627f3efc16}{mix\-To\-Single}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a631ae021c6ea42cab1237ee08e12c0cd}{single\-To\-Mix}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a25bd5d0dd86c8a6bebc073c838389c01}{format}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a69ff4aed75529b62b39cc23e1e9ed790}{factors}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Represents a system with mixed units, e.g., hours/minutes/seconds
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_ae013673eef30b196f86b6f2c486b3bd8}{\index{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::sim::sidereal::MixedUnits@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Mixed\-Units.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{factors}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_ae013673eef30b196f86b6f2c486b3bd8}
+\begin{DoxyVerb}Constructor
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a25bd5d0dd86c8a6bebc073c838389c01}{\index{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}!format@{format}}
+\index{format@{format}!amonpy::sim::sidereal::MixedUnits@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}}
+\subsubsection[{format}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Mixed\-Units.\-format (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{coeffs, }
+\item[{}]{decimals = {\ttfamily 0}, }
+\item[{}]{lz = {\ttfamily False}}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a25bd5d0dd86c8a6bebc073c838389c01}
+\begin{DoxyVerb}Format mixed units.
+
+  [ (coeffs is a sequence of numbers as returned by
+    MixedUnits.singleToMix()) and
+    (decimals is a nonnegative integer) and
+    (lz is a bool) ->
+      return a list of strings corresponding to the values
+      of coeffs, with all the values but the last formatted
+      as integers, all values zero padded iff lz is true,
+      and the last value with (decimals) digits after the
+      decimal point ]
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a7f7c5351e7552b3a52f3c2627f3efc16}{\index{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}!mix\-To\-Single@{mix\-To\-Single}}
+\index{mix\-To\-Single@{mix\-To\-Single}!amonpy::sim::sidereal::MixedUnits@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}}
+\subsubsection[{mix\-To\-Single}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Mixed\-Units.\-mix\-To\-Single (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{coeffs}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a7f7c5351e7552b3a52f3c2627f3efc16}
+\begin{DoxyVerb}Convert mixed units to a single value.
+
+  [ coeffs is a sequence of numbers not longer than
+    len(self.factors)+1 ->
+      return the equivalent single value in self's system ]
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a631ae021c6ea42cab1237ee08e12c0cd}{\index{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}!single\-To\-Mix@{single\-To\-Mix}}
+\index{single\-To\-Mix@{single\-To\-Mix}!amonpy::sim::sidereal::MixedUnits@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}}
+\subsubsection[{single\-To\-Mix}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-Mixed\-Units.\-single\-To\-Mix (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{value}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a631ae021c6ea42cab1237ee08e12c0cd}
+\begin{DoxyVerb}Convert to mixed units.
+
+  [ value is a float ->
+      return value as a sequence of coefficients in
+      self's system ]
+\end{DoxyVerb}
+ 
+
+\subsection{Member Data Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a69ff4aed75529b62b39cc23e1e9ed790}{\index{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}!factors@{factors}}
+\index{factors@{factors}!amonpy::sim::sidereal::MixedUnits@{amonpy\-::sim\-::sidereal\-::\-Mixed\-Units}}
+\subsubsection[{factors}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-sim.\-sidereal.\-Mixed\-Units.\-factors}}\label{classamonpy_1_1sim_1_1sidereal_1_1_mixed_units_a69ff4aed75529b62b39cc23e1e9ed790}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal_8py}{sidereal.\-py}\end{DoxyCompactItemize}

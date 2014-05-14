@@ -1,0 +1,146 @@
+\hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date}{\section{amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date Class Reference}
+\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date}\index{amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date@{amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_aa5d1ecfd1d23140c37c473da88789f34}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad89c927e0354e86297b6975b403cfe50}{\-\_\-\-\_\-float\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab92c3edf4c241c001b6d8e243b32a005}{datetime}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab19c7d5fb7cdefdb24c42ebc9af6b0e7}{offset}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a5a4e15a49c08ec8ae3f20f95a381fb53}{\-\_\-\-\_\-sub\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad80629902a7bbd94722a53deb690504b}{\-\_\-\-\_\-cmp\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a6d5720248c65bd554f5015aa34168ac5}{from\-Datetime}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_abfaf0b8875ebeebf2b55372f0f08ad2c}{j}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+tuple \hyperlink{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a1e1700d98b10b6aef67f55af0d20d007}{from\-Datetime} = staticmethod(from\-Datetime)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Class to represent Julian-date timestamps.
+
+  State/Invariants:
+    .f:  [ (Julian date as a float) - JULIAN_BIAS ]
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_aa5d1ecfd1d23140c37c473da88789f34}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{j, }
+\item[{}]{f = {\ttfamily 0.0}}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_aa5d1ecfd1d23140c37c473da88789f34}
+\begin{DoxyVerb}Constructor for JulianDate.
+\end{DoxyVerb}
+ 
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad80629902a7bbd94722a53deb690504b}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!\-\_\-\-\_\-cmp\-\_\-\-\_\-@{\-\_\-\-\_\-cmp\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-cmp\-\_\-\-\_\-@{\-\_\-\-\_\-cmp\-\_\-\-\_\-}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{\-\_\-\-\_\-cmp\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-\_\-\-\_\-cmp\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{other}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad80629902a7bbd94722a53deb690504b}
+\begin{DoxyVerb}Compare two instances.
+
+  [ other is a JulianDate instance ->
+      if  self.j < other.j ->  return a negative number
+      else if self.j == other.j -> return zero
+      else -> return a positive number ]
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad89c927e0354e86297b6975b403cfe50}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!\-\_\-\-\_\-float\-\_\-\-\_\-@{\-\_\-\-\_\-float\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-float\-\_\-\-\_\-@{\-\_\-\-\_\-float\-\_\-\-\_\-}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{\-\_\-\-\_\-float\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-\_\-\-\_\-float\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ad89c927e0354e86297b6975b403cfe50}
+\begin{DoxyVerb}Convert self to a float.
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a5a4e15a49c08ec8ae3f20f95a381fb53}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!\-\_\-\-\_\-sub\-\_\-\-\_\-@{\-\_\-\-\_\-sub\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-sub\-\_\-\-\_\-@{\-\_\-\-\_\-sub\-\_\-\-\_\-}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{\-\_\-\-\_\-sub\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-\_\-\-\_\-sub\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{other}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a5a4e15a49c08ec8ae3f20f95a381fb53}
+\begin{DoxyVerb}Implement subtraction.
+
+  [ other is a JulianDate instance ->
+      return self.j - other.j ]
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab92c3edf4c241c001b6d8e243b32a005}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!datetime@{datetime}}
+\index{datetime@{datetime}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{datetime}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-datetime (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab92c3edf4c241c001b6d8e243b32a005}
+\begin{DoxyVerb}Convert to a standard Python datetime object in UT.
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a6d5720248c65bd554f5015aa34168ac5}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!from\-Datetime@{from\-Datetime}}
+\index{from\-Datetime@{from\-Datetime}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{from\-Datetime}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-from\-Datetime (
+\begin{DoxyParamCaption}
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a6d5720248c65bd554f5015aa34168ac5}
+\begin{DoxyVerb}Create a JulianDate instance from a datetime.datetime.
+
+  [ dt is a datetime.datetime instance ->
+      if  dt is naive ->
+return the equivalent new JulianDate instance,
+assuming dt expresses UTC
+      else ->
+return a new JulianDate instance for the UTC
+time equivalent to dt ]              
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab19c7d5fb7cdefdb24c42ebc9af6b0e7}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!offset@{offset}}
+\index{offset@{offset}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{offset}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-offset (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{delta}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_ab19c7d5fb7cdefdb24c42ebc9af6b0e7}
+\begin{DoxyVerb}Return a new JulianDate for self+(delta days)
+
+  [ delta is a number of days as a float ->
+      return a new JulianDate (delta) days in the
+      future, or past if negative ]
+\end{DoxyVerb}
+ 
+
+\subsection{Member Data Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a1e1700d98b10b6aef67f55af0d20d007}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!from\-Datetime@{from\-Datetime}}
+\index{from\-Datetime@{from\-Datetime}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{from\-Datetime}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-from\-Datetime = staticmethod(from\-Datetime)\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_a1e1700d98b10b6aef67f55af0d20d007}
+\hypertarget{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_abfaf0b8875ebeebf2b55372f0f08ad2c}{\index{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}!j@{j}}
+\index{j@{j}!amonpy::sim::sidereal_m::JulianDate@{amonpy\-::sim\-::sidereal\-\_\-m\-::\-Julian\-Date}}
+\subsubsection[{j}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-sim.\-sidereal\-\_\-m.\-Julian\-Date.\-j}}\label{classamonpy_1_1sim_1_1sidereal__m_1_1_julian_date_abfaf0b8875ebeebf2b55372f0f08ad2c}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal__m_8py}{sidereal\-\_\-m.\-py}\end{DoxyCompactItemize}

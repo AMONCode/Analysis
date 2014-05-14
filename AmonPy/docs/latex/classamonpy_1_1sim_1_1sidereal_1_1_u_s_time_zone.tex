@@ -1,0 +1,123 @@
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone}{\section{amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone Class Reference}
+\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone}\index{amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone@{amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone}}
+}
+Inheritance diagram for amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ab601802cc6ed96e739dcadd996d9587a}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a0ec12f482689f531ca39f9af8af0182c}{tzname}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ad34a3532bf51a65d154dd7e288059ebc}{utcoffset}
+\item 
+def \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a54135cabb3cc06777a94e5912b4ff29e}{dst}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+tuple \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_afea8d961d34e0b6a75bdad0f9ac41b34}{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D} = datetime.\-datetime( 1, 4, 1, 2 )
+\item 
+tuple \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a4bb27c0cb6a5aefb11ed8c9ef9f4a5ea}{D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D} = datetime.\-datetime( 1, 10, 25, 2 )
+\item 
+tuple \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_aa40ce77d299e1e3539f146b415383614}{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007} = datetime.\-datetime( 1, 3, 8, 2 )
+\item 
+tuple \hyperlink{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a96f5f104143b5b371c91ffbb4c01e1bd}{D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007} = datetime.\-datetime( 1, 11, 1, 2 )
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Represents a U.S. time zone, with automatic daylight time.
+
+  Exports:
+    USTimeZone ( hh, mm, name, stdName, dstName ):
+      [ (hh is an offset east of UTC in hours) and
+        (mm is an offset east of UTC in minutes) and
+        (name is the composite zone name) and
+        (stdName is the non-DST name) and
+        (dstName is the DST name) ->
+          return a new USTimeZone instance with those values ]
+
+  State/Invariants:
+    .__offset:
+      [ self's offset east of UTC as a datetime.timedelta ]
+    .__name:      [ as passed to constructor's name ]
+    .__stdName:   [ as passed to constructor's stdName ]
+    .__dstName:   [ as passed to constructor's dstName ]
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ab601802cc6ed96e739dcadd996d9587a}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{hh, }
+\item[{}]{mm, }
+\item[{}]{name, }
+\item[{}]{std\-Name, }
+\item[{}]{dst\-Name}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ab601802cc6ed96e739dcadd996d9587a}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a54135cabb3cc06777a94e5912b4ff29e}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!dst@{dst}}
+\index{dst@{dst}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{dst}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-dst (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a54135cabb3cc06777a94e5912b4ff29e}
+\begin{DoxyVerb}Return the current DST offset.
+
+  [ dt is a datetime.date ->
+      if  daylight time is in effect in self's zone on
+      date dt ->
+return +1 hour as a datetime.timedelta
+      else ->
+return 0 as a datetime.delta ]
+\end{DoxyVerb}
+ \hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a0ec12f482689f531ca39f9af8af0182c}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!tzname@{tzname}}
+\index{tzname@{tzname}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{tzname}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-tzname (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a0ec12f482689f531ca39f9af8af0182c}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ad34a3532bf51a65d154dd7e288059ebc}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!utcoffset@{utcoffset}}
+\index{utcoffset@{utcoffset}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{utcoffset}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-utcoffset (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{dt}
+\end{DoxyParamCaption}
+)}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_ad34a3532bf51a65d154dd7e288059ebc}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a96f5f104143b5b371c91ffbb4c01e1bd}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007@{D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007}}
+\index{D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007@{D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-D\-S\-T\-\_\-\-E\-N\-D\-\_\-2007 = datetime.\-datetime( 1, 11, 1, 2 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a96f5f104143b5b371c91ffbb4c01e1bd}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a4bb27c0cb6a5aefb11ed8c9ef9f4a5ea}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D@{D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D}}
+\index{D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D@{D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-D\-S\-T\-\_\-\-E\-N\-D\-\_\-\-O\-L\-D = datetime.\-datetime( 1, 10, 25, 2 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_a4bb27c0cb6a5aefb11ed8c9ef9f4a5ea}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_aa40ce77d299e1e3539f146b415383614}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007@{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007}}
+\index{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007@{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-2007 = datetime.\-datetime( 1, 3, 8, 2 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_aa40ce77d299e1e3539f146b415383614}
+\hypertarget{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_afea8d961d34e0b6a75bdad0f9ac41b34}{\index{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}!D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D@{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D}}
+\index{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D@{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D}!amonpy::sim::sidereal::USTimeZone@{amonpy\-::sim\-::sidereal\-::\-U\-S\-Time\-Zone}}
+\subsubsection[{D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}tuple amonpy.\-sim.\-sidereal.\-U\-S\-Time\-Zone.\-D\-S\-T\-\_\-\-S\-T\-A\-R\-T\-\_\-\-O\-L\-D = datetime.\-datetime( 1, 4, 1, 2 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1sim_1_1sidereal_1_1_u_s_time_zone_afea8d961d34e0b6a75bdad0f9ac41b34}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/sim/\hyperlink{sidereal_8py}{sidereal.\-py}\end{DoxyCompactItemize}
