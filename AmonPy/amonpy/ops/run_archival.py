@@ -242,7 +242,6 @@ print '   Retrieving alerts'
 t1 = time()
 client_p.send('get_alerts')
 alerts = client_p.recv()
-print '   %d alerts'     % len(alerts)
 t2 = time()
 print '   Retrieval time: %.2f seconds' % float(t2-t1)
 
@@ -251,61 +250,73 @@ server_p.close()
 client_p.close()
 print '   Analysis server closed'
 
+if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
+    print '   %d alerts'     % len(alerts)
+elif(alerts == 'Empty' or alerts == 'Problem'):
+    print alerts
+    print "No alerts, exiting."
+    sys.exit(0)
+else:
+    print alerts
+    print "No alerts, exiting."
+    sys.exit(0)  
+
+if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
-alertlines=db_populate_class.populate_alertline(alerts)  
-print '   %d alertlines generated' % len(alertlines) 
-print ' ANALYSIS COMPLETE'
+    alertlines=db_populate_class.populate_alertline(alerts)  
+    print '   %d alertlines generated' % len(alertlines) 
+    print ' ANALYSIS COMPLETE'
 
 
 # identify what to do with alerts
-print
-choices = ['Do not write to DB','Overwrite alert stream',
+    print
+    choices = ['Do not write to DB','Overwrite alert stream',
            'Make new alert stream', 'Cancel']
-info = 'What would you like to do with the alerts?'
-result_dialog = dialog_choice.SelectChoice(choices,info=info).result
-if result_dialog==choices[0]:
-    print ' QUIT: Analysis results will NOT be written to DB' 
-elif result_dialog==choices[1]:
-    print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
-    if (stream_num !=0):    # don't take any action for stream zero
-        print "   Checking if arhival alerts are already in DB."
-        count=db_read.alert_count(stream_num,"alert",HostFancyName,
+    info = 'What would you like to do with the alerts?'
+    result_dialog = dialog_choice.SelectChoice(choices,info=info).result
+    if result_dialog==choices[0]:
+        print ' QUIT: Analysis results will NOT be written to DB' 
+    elif result_dialog==choices[1]:
+        print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+        if (stream_num !=0):    # don't take any action for stream zero
+            print "   Checking if arhival alerts are already in DB."
+            count=db_read.alert_count(stream_num,"alert",HostFancyName,
                            UserFancyName,PasswordFancy,DBFancyName) 
-        print '   Number of rows to be deleted: %d' % count                 
-        if (count > 0):
-            db_delete.delete_alertline_stream_by_alert(stream_num,
-               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
-            db_delete.delete_alert_stream(stream_num,HostFancyName,
-               UserFancyName,PasswordFancy,DBFancyName)
-        db_write.write_alert(stream_num,HostFancyName,UserFancyName,
-           PasswordFancy,DBFancyName,alerts)
-        db_write.write_alertline(HostFancyName,UserFancyName,
-            PasswordFancy, DBFancyName,alertlines)                         
-    else:
-        print '   Invalid stream number'
-        print '   Only streams >= 1 allowed for archival analysis'
-elif result_dialog==choices[2]:
-    print 'APPENDING NEW ALERT STREAM TO THE DATABASE'
-    if (stream_num !=0):    # don't take any action for stream zero
-        print "   Checking if arhival alerts are already in DB."
-        count=db_read.alert_count(stream_num,"alert",HostFancyName,
+            print '   Number of rows to be deleted: %d' % count                 
+            if (count > 0):
+                db_delete.delete_alertline_stream_by_alert(stream_num,
+                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+                db_delete.delete_alert_stream(stream_num,HostFancyName,
+                UserFancyName,PasswordFancy,DBFancyName)
+            db_write.write_alert(stream_num,HostFancyName,UserFancyName,
+               PasswordFancy,DBFancyName,alerts)
+            db_write.write_alertline(HostFancyName,UserFancyName,
+                PasswordFancy, DBFancyName,alertlines)                         
+        else:
+            print '   Invalid stream number'
+            print '   Only streams >= 1 allowed for archival analysis'
+    elif result_dialog==choices[2]:
+        print 'APPENDING NEW ALERT STREAM TO THE DATABASE'
+        if (stream_num !=0):    # don't take any action for stream zero
+            print "   Checking if arhival alerts are already in DB."
+            count=db_read.alert_count(stream_num,"alert",HostFancyName,
                            UserFancyName,PasswordFancy,DBFancyName) 
-        print '   Number of rows to be deleted: %d' % count                 
-        if (count > 0):
-            db_delete.delete_alertline_stream_by_alert(stream_num,
-               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
-            db_delete.delete_alert_stream(stream_num,HostFancyName,
-               UserFancyName,PasswordFancy,DBFancyName)
-        db_write.write_alert(stream_num,HostFancyName,UserFancyName,
-           PasswordFancy,DBFancyName,alerts)
-        db_write.write_alertline(HostFancyName,UserFancyName,
-            PasswordFancy, DBFancyName,alertlines)                         
+            print '   Number of rows to be deleted: %d' % count                 
+            if (count > 0):
+                db_delete.delete_alertline_stream_by_alert(stream_num,
+                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+                db_delete.delete_alert_stream(stream_num,HostFancyName,
+                    UserFancyName,PasswordFancy,DBFancyName)
+            db_write.write_alert(stream_num,HostFancyName,UserFancyName,
+               PasswordFancy,DBFancyName,alerts)
+            db_write.write_alertline(HostFancyName,UserFancyName,
+                PasswordFancy, DBFancyName,alertlines)                         
+        else:
+            print '   Invalid stream number'
+            print '   Only streams >= 1 allowed for archival analysis'
     else:
-        print '   Invalid stream number'
-        print '   Only streams >= 1 allowed for archival analysis'
-else:
-    print ' QUIT: User request'
-    sys.exit(0)
+        print ' QUIT: User request'
+        sys.exit(0)
     
 
 print
