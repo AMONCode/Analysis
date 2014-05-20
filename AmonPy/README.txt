@@ -22,6 +22,8 @@ The following python packages are required:
 
 * VOEventLib
 
+* wxPython 
+
 * Celery
 
 * Twisted
