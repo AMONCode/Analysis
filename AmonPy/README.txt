@@ -67,7 +67,7 @@ Installation (i.e. only if this code is obtained via package distribution, rathe
 
 Ignore text bellow if you have a developer distribution of the code from the AMON SVN respiratory.
 
-To istall AMON package run:
+To install AMON package run:
 
 python setup.py install
 
