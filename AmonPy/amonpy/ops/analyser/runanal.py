@@ -38,7 +38,7 @@ sys.path.append('../../dbase')
 sys.path.append('../../anal')
 
 # AmonPy modules:
-from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
+from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, exAlertArchivConfig, event_def, AlertConfig2
 from amonpy.dbase.db_classes import Event
 import amonpy.dbase.db_populate_class
 import amonpy.dbase.db_read
@@ -76,15 +76,17 @@ class AnalRT(Task):
         self.UserFancyName='yourname'
         self.PasswordFancy='yourpass'
         self.DBFancyName='AMON_test2'
-        self.alertDir = 'yourdirpath'
+        self.alertDir = '/Users/Goci/work/AMON/AmonPy/amonpy/ops/network/alerts'
 
         # get the Alert Stream config
         print
         print ' USING TEST ALERT CONFIG'
         self.config = exAlertConfig()
+        self.archiv_config = exAlertArchivConfig()
         self.config.forprint()
         self.event_streams = [0,1,7]  # testing streams
         self.stream_num = self.config.stream
+        self.stream_num2 = self.archiv_config.stream
         print
         print ' STARTING ANALYSIS SERVER'
         (self.server_p,self.client_p) = multiprocessing.Pipe()
@@ -103,7 +105,7 @@ class AnalRT(Task):
                                     self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
         t2 = time()
         print '   Read time: %.2f seconds' % float(t2-t1)
-        events.forprint()
+        #events.forprint()
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
         # send events to the analysis process
@@ -133,9 +135,9 @@ class AnalRT(Task):
         #print '   Analysis server closed'
         
         # write alerts to DB if any
-        if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
+        if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
             # populate alertline class
-            alerts[0].forprint()
+            #alerts[0].forprint()
             alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts)  
             print '   %d alertlines generated' % len(alertlines) 
             print ' ANALYSIS COMPLETE'
@@ -162,7 +164,101 @@ class AnalRT(Task):
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
-            return "%d alerts found" % (len(alerts),)    
+            return "%d alerts found" % (len(alerts),) 
+        elif(alerts[0] ==True):
+            # call archival analysis
+            print "Call archival"
+            #print "True or false, true is correct"
+            #print alerts[0]
+            #print "Event"
+            #alerts[1].forprint()
+            timeEvent = alerts[1].datetime
+            events = []
+            TimeSlice = 3.*self.config.deltaT
+            TimeStart = timeEvent - timedelta(seconds=1.5*self.config.deltaT)
+            TimeStart = str(TimeStart)
+            events=amonpy.dbase.db_read.read_event_timeslice_streams(self.event_streams,
+                                    TimeStart,TimeSlice,self.HostFancyName,
+                                    self.UserFancyName,self.PasswordFancy,self.DBFancyName)
+            # also read the highest alert number within this stream
+            max_id=amonpy.dbase.db_read.alert_max_id(self.stream_num2,self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName) 
+            print "max_id is"
+            print max_id                                  
+            if (max_id==None):
+                max_id=-1                                 
+            # code the function bellow in module analysis                                                       
+            alerts_archive = analysis.alerts_late(events,alerts[1],self.archiv_config, max_id)
+            if (len(alerts_archive)!=0):
+                alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts_archive)  
+                print '   %d alertlines generated' % len(alertlines) 
+                print ' ARCHIVAL ANALYSIS COMPLETE'
+        
+                print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+                   
+                if (self.stream_num2 !=0):    # don't take any action for stream zero in testing phase
+                   
+                    # first check if that archival alert is already in DB
+                    # this is important since out of buffer event can be analysed twice
+                    # in case that another late event in coincidence gets written in DB
+                    # simultaneously while we are reading a given timeslice. The second late event will be 
+                    # read within this time slice in same cases before an information about it
+                    # being written is passed to this module via
+                    # as a regular incoming event.  
+                    # It will be analysed 2nd time when 
+                    # celery delivers message to this module about it being written to DB. 
+                    # This never happens for real real-time events since they are not 
+                    # read from DB using time-slice, but passed one-by-one to this module, 
+                    # and read one-by-one from DB. After that they are kept in time buffer 
+                    # and never read as a time-slice bunch from DB.
+                    
+                    # 
+                    try:
+                        # check if event has already being analysed and contributed to alers
+                        alertlines_written=amonpy.dbase.db_read.read_alertline_events([alerts[1].stream],[alerts[1].id],
+                                             [alerts[1].rev],self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName) 
+                    except:
+                        print "Alert line cannot be read, probably not written yet"
+                        alertlines_written = [] 
+                    # check if this out-of-buffer event was already analysed in case in close-in time arrival
+                    # with another out-of-buffer event
+                    
+                    if not ((len(alertlines_written)>0) and (alertlines_written[0].stream_event==alerts[1].stream) and 
+                             (alertlines_written[0].id_event==alerts[1].id) and
+                             (alertlines_written[0].rev_event==alerts[1].rev)):                           
+                        amonpy.dbase.db_write.write_alert(self.stream_num2,self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName,alerts_archive)
+                        amonpy.dbase.db_write.write_alertline(self.HostFancyName,
+                                                      self.UserFancyName,
+                                                      self.PasswordFancy, 
+                                                      self.DBFancyName,alertlines) 
+                                                      
+                # write alert to the directory from where AMON client will read it and delete 
+                # it after sending it to GCN in the future
+                        xmlForm=alert_to_voevent.alert_to_voevent(alerts_archive) 
+                        fname=self.alertDir + 'amon_%s_%s_%s.xml' \
+                        % (alerts_archive[0].stream, alerts_archive[0].id, alerts_archive[0].rev)
+                        f1=open(fname, 'w+')
+                        f1.write(xmlForm)
+                        f1.close() 
+                    else:
+                        print "Late event already analysed"
+                        alerts_archive=[]                                                                  
+                else:
+                    print '   Invalid stream number'
+                    print '   Only streams >= 1 allowed for testing analysis'
+            if len(alerts_archive)!=0:       
+                return "%d alerts found" % (len(alerts_archive),)  
+            else:
+                return "No alerts" 
+              
         else:
             return "No alerts"
 """
