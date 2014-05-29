@@ -311,6 +311,7 @@ def simstream(stream):
         config.observ_name      = 'IceCube' 
         config.validStart       = datetime(2012,1,1,0,0,0,0)
         config.validStop        = datetime(2013,1,1,0,0,0,0)
+        #config.validStop        = datetime(2013,1,1,0,0,0,0)
         config.observ_coord_sys = 'UTC-GEOD-TOPO'
         config.astro_coord_sys  = 'UTC-ICRS-TOPO'
         config.point_type       = 'GEO-UPGOING'
@@ -497,10 +498,10 @@ def exAlertConfig():
     rev = 0
     config = AlertConfig2(stream,rev)
     config.participating  = 2**0 + 2**1 + 2**7  # index of event streams
-    config.deltaT         = 100.0               # seconds
-    config.bufferT        = 1000.0              # seconds
+    config.deltaT         = 100.00 #80000.0 #100.0               # seconds
+    config.bufferT        = 86400.00 #1000.0 86400 24 h buffer             # seconds
     config.cluster_method = 'Fisher'            # function to be called
-    config.cluster_thresh = 2.0                 # significance
+    config.cluster_thresh = 2.00 #10.0 #2.0                 # significance
     config.psf_paramDesc1 = 'deg'
     config.psf_paramDesc2 = 'N/A'
     config.psf_paramDesc3 = 'N/A'   
@@ -514,7 +515,30 @@ def exAlertConfig():
     config.R_thresh       = 0.0
     return config
 
-
+def exAlertArchivConfig():
+    """ Returns an example AlertConfig object,
+        used for testing the analysis code
+    """
+    stream = 2 # archival change this after testing 0 RT, 1 archival
+    rev = 0
+    config = AlertConfig2(stream,rev)
+    config.participating  = 2**0 + 2**1 + 2**7  # index of event streams
+    config.deltaT         = 100.00 #80000.0 #100.0               # seconds
+    config.bufferT        = 86400.00 #10000.00 # 86400.00 #1000.0 86400 24 h buffer             # seconds
+    config.cluster_method = 'Fisher'            # function to be called
+    config.cluster_thresh = 2.00 #10.0 #2.0                 # significance
+    config.psf_paramDesc1 = 'deg'
+    config.psf_paramDesc2 = 'N/A'
+    config.psf_paramDesc3 = 'N/A'   
+    config.skymap_val1Desc= 'N/A'
+    config.skymap_val2Desc= 'N/A'
+    config.skymap_val3Desc= 'N/A'
+    config.N_thresh       = '{0:1,1:1,7:1}'
+    config.sens_thresh    = 'N/A'
+    config.validStart     = datetime(2012,1,1,0,0,0,0)
+    config.validStop      = datetime(2013,1,1,0,0,0,0)
+    config.R_thresh       = 0.0
+    return config
 
  # ******************* BEGIN alertline class definition **********************
 # create a generic alertline object for AMON
