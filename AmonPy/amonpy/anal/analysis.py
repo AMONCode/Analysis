@@ -156,7 +156,87 @@ def sum_poisson(expect,obs):
         sum+=(expect**ii)*math.exp(-1.*expect)/math.factorial(ii)
     return sum        
     #return 1.
+
+# used for late arrival events in real-time code, i.e. for events that our out of time buffer
+
+def alerts_late(events_rec, eve, config_rec, max_id):
+    Nalerts = 0
+    Nalerts_tp = 0
+    alerts = []
+    alerts_tp = []
+    # remove later
+    numreceived=0
+    id = max_id #max_id+1 is the first alert 
+    #events=deque()
+    events=events_rec
+    ev = eve # the late arrival event
+    #sort event
+    # sorting???
+    events = sorted(events,key=attrgetter('datetime'), reverse=True)
+    config=config_rec
     
+    print "Config dT %d" % config.deltaT
+    print "Buffer dT %d" % config.bufferT
+                    
+    Nev = len(events)
+               #jj = 1
+    #jj=0
+    if isinstance(ev,Event):
+        for jj in xrange(Nev):             
+            # assuming temporal order, continue loop until deltaT exceeded
+            if not((ev.stream==events[jj].stream) and (ev.id==events[jj].id)):
+                dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
+                if (dt <= config.deltaT):
+                        # check if cluster distance is within threshold
+                    f = cluster.Fisher(events[jj],ev)
+                    if (f.Nsigma <= config.cluster_thresh):
+                            # calculate false alarm rate
+                        evlist=[events[jj],ev]
+                        far = far_density(evlist,config,f)
+                        pvalue = pvalue_calc(evlist,config,f)
+                            # create alert, with id next in list
+                            #id=Nalerts + Nalerts_tp
+                        id+=1
+                        rev = 0
+                        evlist = [events[jj],ev]
+                        new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
+                        Nalerts +=1   
+                        print "FOUND ARCHIVAL"        
+                        alerts +=[new_alert]
+                            #if jj>1: # look for triplets
+                        if ((jj > 1) and not ((ev.stream==events[jj-1].stream) and (ev.id==events[jj-1].id)) \
+                            and (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))<config.deltaT)):
+                            f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
+                            if ((f_tp.Nsigma <= config.cluster_thresh) and \
+                               (f_tp.Nsigma_2 <= config.cluster_thresh) and \
+                               (f_tp.Nsigma_3 <= config.cluster_thresh)):
+                                # create alert, with id next in list
+                                # if there is a triplet, discard doublet ?
+                                alerts.pop() 
+                                Nalerts-=1
+                                evlist=[events[jj-1],events[jj],ev]
+                                far = far_density(evlist,config,f)
+                                pvalue = pvalue_calc(evlist,config,f)
+                                    #id=Nalerts + Nalerts_tp
+                                    # no need to increase id since doublet is discarded.
+                                    #id+=1
+                                rev = 0
+                                new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
+                                Nalerts_tp +=1             
+                                alerts +=[new_alert]
+                                                           
+        #jj+=1
+                    #print 'Found %s doublets' % Nalerts
+                    #print 'Found %s triplets' % Nalerts_tp
+                        # check to see if client has requested alerts
+    else:
+        print "Not event"  
+    print 'Found %s doublets' % Nalerts
+    print 'Found %s triplets' % Nalerts_tp                                  
+    return alerts                    
+        
+        
+    # shutdown    
 # main analysis process
 def anal(pipe,config):
     """
@@ -176,6 +256,9 @@ def anal(pipe,config):
     #events=deque()
     events=[]
     inBuffer = False
+    eventLate = False
+    eventAnalysed = False
+    eveout = Event(-1,-1,-1)
     print "Config dT %d" % config.deltaT
     print "Buffer dT %d" % config.bufferT
     while True:
@@ -190,6 +273,9 @@ def anal(pipe,config):
         if isinstance(ev,Event):
             numreceived+=1
             inBuffer = False
+            eventAnalysed = False
+            eventIn=ev
+            eventLate = False
             #print "I received %d events" % numreceived
             # g.t. for some reason deque is not working in real-time setting; 
             # works only in archival setup 
@@ -216,27 +302,42 @@ def anal(pipe,config):
                 events+=[ev]        
             
                 #print 'lenght of buffer is %d' % len(events)
-            # ensure that the new event didn't mess up the order of the buffer
+                # ensure that the new event didn't mess up the order of the buffer
                 if (ev.datetime < latest):
                     print '  reordering analysis buffer due to latent event'
-                    events = sorted(events,key=attrgetter('datetime'))
+                    events = sorted(events,key=attrgetter('datetime'),reverse=True)
                 else:
                 # the new event is the latest event
                     latest = ev.datetime
             
-            #clean up the buffer (assumes temporal order)
+                #clean up the buffer (assumes temporal order)
                 while bufdur(events) > config.bufferT:
-                    #"cleaning buffer"
-                    events.pop()
-        
-            # search the event buffer for *pairings* (v0.1)
+                    #cleaning buffer, but first check if the new event
+                    # is one that is late arrival i.e.out of time buffer as well
+                    eveout=events.pop()
+                    if ((eveout.stream==ev.stream) and (eveout.id==ev.id) and (eveout.rev==ev.rev)):
+                        # implement this function!!!!!!!
+                        #alerts = alerts_late(eveout,config.deltaT)
+                        eventLate= True
+                # if new events is in time buffer 
+                # search the event buffer for *pairings* (v0.1)
                 Nev = len(events)
-            #jj = 1
+                
+                # do archival also if event is less or deltaT before end of the buffer
+                # do it if buffer is long enough, otherwise every new event starting 
+                # from the first will be analysed by archival instead RL
+                 
+                #if (bufdur(events) > (config.bufferT - config.deltaT)):
+                #    if (abs(timedelta.total_seconds(events[Nev-1].datetime-ev.datetime))
+                #        <=config.deltaT):
+                #        eventLate= True     
+                
+               #jj = 1
                 jj=0
                 
                 while True:
                     #print Nev, jj, ev.id
-                    if jj >= Nev:
+                    if (jj >= Nev) or (eventLate==True):
                         break
                 
                     # assuming temporal order, continue loop until deltaT exceeded
@@ -247,7 +348,7 @@ def anal(pipe,config):
                     #if dt > config.deltaT:
                     #    break
                                 
-                    if ((dt <= config.deltaT) and (events.index(ev) !=jj)):
+                    if ((dt <= config.deltaT) and (events.index(ev) !=jj)): 
                         # check if cluster distance is within threshold
                         f = cluster.Fisher(events[jj],ev)
                         if (f.Nsigma <= config.cluster_thresh):
@@ -271,11 +372,15 @@ def anal(pipe,config):
                                    (f_tp.Nsigma_2 <= config.cluster_thresh) and \
                                    (f_tp.Nsigma_3 <= config.cluster_thresh)):
                                      # create alert, with id next in list
+                                     # if there is a triplet, discard doublet ?
+                                    alerts.pop() 
+                                    Nalerts-=1
                                     evlist=[events[jj-1],events[jj],ev]
                                     far = far_density(evlist,config,f)
                                     pvalue = pvalue_calc(evlist,config,f)
                                     #id=Nalerts + Nalerts_tp
-                                    id+=1
+                                    # no need to increase id since doublet is discarded.
+                                    #id+=1
                                     rev = 0
                                     new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
                                     Nalerts_tp +=1             
@@ -288,8 +393,13 @@ def anal(pipe,config):
         elif (ev=='get_alerts'):
             print 'Found %s doublets' % Nalerts
             print 'Found %s triplets' % Nalerts_tp
-            if len(alerts)==0:
-                server.send("Empty") 
+            if (len(alerts))==0:
+                if (eventLate==False):
+                    server.send("Empty") 
+                else:
+                    # send the event out of time buffer so that archival analysis can be started
+                    server.send([eventLate,eventIn])    
+                
             else: 
                 try:    
                     server.send(alerts)
@@ -299,6 +409,8 @@ def anal(pipe,config):
             alerts=[]
             Nalerts=0
             Nalerts_tp=0
+            eventLate=False
+            inBuffer=False
             #print "lenghts of alerts %s" % (len(alerts),)
 
         # check to see if client has requested quit    
