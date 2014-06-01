@@ -19,7 +19,7 @@ This folder contains scripts to be run by user.
        
     ii) Run AMON analysis code as a Celery worker:
     
-        celery worker --app=analyser -l info
+        celery worker --app=analyser --concurrency=1 -l info 
         
     iii) Cd to network directory and start the AMON server:
     
