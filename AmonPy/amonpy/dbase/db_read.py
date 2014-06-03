@@ -1069,7 +1069,7 @@ def read_alertline_events(streams,ids,revs,host_name,user_name,
             # add microseconds     
             eventList[i].id_event  = row[4] 
             eventList[i].rev_event        = row[5]   
-            
+            eventList+=[db_classes.AlertLine(-1, -1, -1, -1, -1, -1)]
         cur.close()
         con.close()
     except mdb.Error, e:
@@ -1078,6 +1078,95 @@ def read_alertline_events(streams,ids,revs,host_name,user_name,
         print "   Alertlines failed to be read."
         cur.close()
         con.close()
-    #eventList.pop()  # remove the last dummy event
+    eventList.pop()  # remove the last dummy event
     print "   %d rows read from the database" % len(eventList)
-    return eventList       
+    return eventList 
+def read_alertline_events2(streams,ids,host_name,user_name,
+                         passw_name, db_name):
+    """ Read a list of alertlines from the DB.
+        Input streams, event ids and revesions, host name, user name, password and DB name.
+    """
+
+    # initiate event list, put dummy identifiers and replace
+    # them later with real values
+    
+    eventList=[db_classes.AlertLine(-1, -1, -1, -1, -1, -1)]
+    
+    con = mdb.connect(host_name,user_name,passw_name,db_name)    
+    cur = con.cursor()
+     
+    idevent=ids
+    #rev = revs
+    stream = streams
+    
+    if (len(idevent)==len(stream) and len(stream)>0):
+        try:
+            print
+            print " TRYING TO CONNECT TO THE DATABASE..."
+            mydb = db_metadata.DBMetadata()
+            r=mydb.table_describe('alertLine', cur) 
+            num_columns=len(r[1])
+            print "  ...CONNECTED"
+        
+            if len(stream)==1:
+                cur.execute("""SELECT * FROM alertLine WHERE event_eventStreamConfig_stream = %s AND 
+                            event_id= %s""", (stream[0],idevent[0]))
+            elif len(stream)==2:
+                cur.execute("""SELECT * FROM alertLine WHERE (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) """, (stream[0],idevent[0],stream[1],idevent[1]))
+            elif len(stream)==3:
+                cur.execute("""SELECT * FROM alertLine WHERE (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s)""", (stream[0],idevent[0],stream[1],idevent[1],
+                             stream[2],idevent[2]))
+            elif len(stream)==4:
+                cur.execute("""SELECT * FROM alertLine WHERE (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) """, (stream[0],idevent[0],stream[1],idevent[1],
+                             stream[2],idevent[2],stream[3],idevent[3])) 
+            elif len(stream)==5:
+                cur.execute("""SELECT * FROM alertLine WHERE (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) """, (stream[0],idevent[0],stream[1],idevent[1],
+                             stream[2],idevent[2],stream[3],idevent[3], stream[4],idevent[4])) 
+            else:
+                cur.execute("""SELECT * FROM alertLine WHERE (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) OR (event_eventStreamConfig_stream = %s AND 
+                            event_id= %s) """, (stream[0],idevent[0],stream[1],idevent[1],
+                             stream[2],idevent[2],stream[3],idevent[3], stream[4],idevent[4],
+                             stream[5],idevent[5]))
+                                                                             
+            numrows = int(cur.rowcount)
+            print  '   %d rows selected for reading' % numrows
+            
+            for i in range(numrows):
+                row = cur.fetchone()
+                eventList[i].stream_alert     = row[0]  
+                eventList[i].id_alert         = row[1]       
+                eventList[i].rev_alert        = row[2]      
+                eventList[i].stream_event   = row[3]
+                eventList[i].id_event  = row[4] 
+                eventList[i].rev_event        = row[5]   
+                eventList+=[db_classes.AlertLine(-1, -1, -1, -1, -1, -1)]
+            cur.close()
+            con.close()
+        except mdb.Error, e:
+            print 'Exception %s' %e
+            con.rollback() 
+            print "   Alertlines failed to be read."
+            cur.close()
+            con.close()
+    eventList.pop()  # remove the last dummy event
+    print "   %d rows read from the database" % len(eventList)
+    return eventList          
