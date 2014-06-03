@@ -40,10 +40,10 @@ sys.path.append('../../anal')
 # AmonPy modules:
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, exAlertArchivConfig, event_def, AlertConfig2
 from amonpy.dbase.db_classes import Event
-import amonpy.dbase.db_populate_class
-import amonpy.dbase.db_read
-import amonpy.dbase.db_write
-import amonpy.dbase.db_delete
+import amonpy.dbase.db_populate_class as db_populate_class
+import amonpy.dbase.db_read as db_read
+import amonpy.dbase.db_write as db_write
+import amonpy.dbase.db_delete as db_delete
 import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.anal.analysis as analysis
 #import dialog_choice
@@ -98,11 +98,12 @@ class AnalRT(Task):
         self.Event.stream = evstream
         self.Event.id     = evnumber
         self.Event.rev    = evrev
+        eventInAlertLine = False
         
         t1 = time()
         
-        events=amonpy.dbase.db_read.read_event_single(evstream,evnumber,evrev,self.HostFancyName,
-                                    self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
+        events=db_read.read_event_single(evstream,evnumber,evrev,self.HostFancyName,
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
         t2 = time()
         print '   Read time: %.2f seconds' % float(t2-t1)
         #events.forprint()
@@ -138,29 +139,67 @@ class AnalRT(Task):
         if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
             # populate alertline class
             #alerts[0].forprint()
-            alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts)  
-            print '   %d alertlines generated' % len(alertlines) 
+            #alertlines=db_populate_class.populate_alertline(alerts)  
+            #print '   %d alertlines generated' % len(alertlines) 
             print ' ANALYSIS COMPLETE'
         
             print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
             # modify it later to append to database, not to rewrite    
             if (self.stream_num !=0):    # don't take any action for stream zero in testing phase
-                amonpy.dbase.db_write.write_alert(self.stream_num,self.HostFancyName,
+                
+                for alert in alerts:
+                    streams=[]
+                    ids=[]
+                    alertIdChange=False
+                    # check to see if older alerts with these events existed 
+                    num_events=len(alert.events)
+                    for j in xrange(num_events):
+                        streams+=[alert.events[j].stream]
+                        ids+=[alert.events[j].id]
+                    lines_db=db_read.read_alertline_events2(streams,ids,
+                                             self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName)
+                                             
+                    if not (len(lines_db)==0): # alerts with these events were found in the past, check revisions
+                        len1=len(lines_db)
+                        stream_tmp=lines_db[0].stream_alert
+                        id_tmp=lines_db[0].id_alert
+                        rev_max=lines_db[0].rev_alert
+                        for linedb in lines_db:
+                            if not ((linedb.stream_alert==stream_tmp) and (linedb.id_alert==id_tmp)):
+                                    # more than one alert with this events in the past, code 
+                                    # checking each single alert revision in the future
+                                alertIdChange=True    
+                                pass
+                            else:
+                                if (linedb.rev_alert>rev_max):
+                                    # same old alerts but more revision check
+                                    rev_max=linedb.rev_alert 
+                        if (alertIdChange==False):  
+                             # finally do revision, by assigning id from the old alert and rev+1            
+                            alert.rev=rev_max+1
+                            alert.id=id_tmp             
+                                                     
+                alertlines=db_populate_class.populate_alertline(alerts)                               
+                db_write.write_alert(self.stream_num,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName,alerts)
-                amonpy.dbase.db_write.write_alertline(self.HostFancyName,
+                db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
                                                       self.PasswordFancy, 
                                                       self.DBFancyName,alertlines) 
-                # write alert to the directory from where AMON client will read it and delete 
-                # it after sending it to GCN in the future
+                    # write alert to the directory from where AMON client will read it and delete 
+                    # it after sending it to GCN in the future
                 xmlForm=alert_to_voevent.alert_to_voevent(alerts) 
                 fname=self.alertDir + 'amon_%s_%s_%s.xml' \
-                % (alerts[0].stream, alerts[0].id, alerts[0].rev)
+                    % (alerts[0].stream, alerts[0].id, alerts[0].rev)
                 f1=open(fname, 'w+')
                 f1.write(xmlForm)
-                f1.close()                                                              
+                f1.close() 
+                                                                                   
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
@@ -177,11 +216,11 @@ class AnalRT(Task):
             TimeSlice = 3.*self.config.deltaT
             TimeStart = timeEvent - timedelta(seconds=1.5*self.config.deltaT)
             TimeStart = str(TimeStart)
-            events=amonpy.dbase.db_read.read_event_timeslice_streams(self.event_streams,
+            events=db_read.read_event_timeslice_streams(self.event_streams,
                                     TimeStart,TimeSlice,self.HostFancyName,
                                     self.UserFancyName,self.PasswordFancy,self.DBFancyName)
             # also read the highest alert number within this stream
-            max_id=amonpy.dbase.db_read.alert_max_id(self.stream_num2,self.HostFancyName,
+            max_id=db_read.alert_max_id(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName) 
@@ -192,8 +231,8 @@ class AnalRT(Task):
             # code the function bellow in module analysis                                                       
             alerts_archive = analysis.alerts_late(events,alerts[1],self.archiv_config, max_id)
             if (len(alerts_archive)!=0):
-                alertlines=amonpy.dbase.db_populate_class.populate_alertline(alerts_archive)  
-                print '   %d alertlines generated' % len(alertlines) 
+                #alertlines=db_populate_class.populate_alertline(alerts_archive)  
+                #print '   %d alertlines generated' % len(alertlines) 
                 print ' ARCHIVAL ANALYSIS COMPLETE'
         
                 print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
@@ -216,8 +255,10 @@ class AnalRT(Task):
                     
                     # 
                     try:
-                        # check if event has already being analysed and contributed to alers
-                        alertlines_written=amonpy.dbase.db_read.read_alertline_events([alerts[1].stream],[alerts[1].id],
+                        # check if late arrival event with same (id, rev, and stream) has already being analysed and contributed to alers
+                        # in rare cases when it could be read from a timeslice around a previous late arrival
+                        # event
+                        alertlines_written=db_read.read_alertline_events([alerts[1].stream],[alerts[1].id],
                                              [alerts[1].rev],self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
@@ -230,24 +271,63 @@ class AnalRT(Task):
                     
                     if not ((len(alertlines_written)>0) and (alertlines_written[0].stream_event==alerts[1].stream) and 
                              (alertlines_written[0].id_event==alerts[1].id) and
-                             (alertlines_written[0].rev_event==alerts[1].rev)):                           
-                        amonpy.dbase.db_write.write_alert(self.stream_num2,self.HostFancyName,
+                             (alertlines_written[0].rev_event==alerts[1].rev)): 
+                        # the same event was not analysed, what about an event with diff. revision
+                        
+                        
+                        for alert_ar in alerts_archive:
+                            streams_ar=[]
+                            ids_ar=[]
+                            alertIdChangeAr=False
+                            # check to see if older alerts with these events existed 
+                            num_events_ar=len(alert_ar.events)
+                            for j in xrange(num_events_ar):
+                                streams_ar+=[alert_ar.events[j].stream]
+                                ids_ar+=[alert_ar.events[j].id]
+                            lines_db_ar=db_read.read_alertline_events2(streams_ar,ids_ar,
+                                                                       self.HostFancyName,
+                                                                       self.UserFancyName,
+                                                                       self.PasswordFancy,
+                                                                       self.DBFancyName)
+                                             
+                            if not (len(lines_db_ar)==0): # alerts with these events were found in the past, check revisions
+                                len2=len(lines_db_ar)
+                                stream_tmp2=lines_db_ar[0].stream_alert
+                                id_tmp2=lines_db_ar[0].id_alert
+                                rev_max2=lines_db_ar[0].rev_alert
+                                for linedb2 in lines_db_ar:
+                                    if not ((linedb2.stream_alert==stream_tmp2) and (linedb2.id_alert==id_tmp2)):
+                                    # more than one alert with this events in the past, code 
+                                    # checking each single alert revision in the future
+                                        alertIdChangeAr=True    
+                                        pass
+                                    else:
+                                        if (linedb2.rev_alert>rev_max2):
+                                    # same old alerts but more revision check
+                                            rev_max2=linedb2.rev_alert 
+                                if (alertIdChangeAr==False):  
+                                # finally do revision, by assigning id from the old alert and rev+1            
+                                    alert_ar.rev=rev_max2+1
+                                    alert_ar.id=id_tmp2
+                        alertlines=db_populate_class.populate_alertline(alerts_archive)                                
+                        db_write.write_alert(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName,alerts_archive)
-                        amonpy.dbase.db_write.write_alertline(self.HostFancyName,
+                        db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
                                                       self.PasswordFancy, 
                                                       self.DBFancyName,alertlines) 
                                                       
-                # write alert to the directory from where AMON client will read it and delete 
-                # it after sending it to GCN in the future
+                        # write alert to the directory from where AMON client will read it and delete 
+                        # it after sending it to GCN in the future
                         xmlForm=alert_to_voevent.alert_to_voevent(alerts_archive) 
                         fname=self.alertDir + 'amon_%s_%s_%s.xml' \
                         % (alerts_archive[0].stream, alerts_archive[0].id, alerts_archive[0].rev)
                         f1=open(fname, 'w+')
                         f1.write(xmlForm)
                         f1.close() 
+                                   
                     else:
                         print "Late event already analysed"
                         alerts_archive=[]                                                                  
