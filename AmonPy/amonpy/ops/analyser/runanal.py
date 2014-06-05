@@ -46,6 +46,7 @@ import amonpy.dbase.db_write as db_write
 import amonpy.dbase.db_delete as db_delete
 import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.anal.analysis as analysis
+import amonpy.anal.alert_revision as alert_revision
 #import dialog_choice
 #import input_text_window
 
@@ -163,24 +164,8 @@ class AnalRT(Task):
                                              self.DBFancyName)
                                              
                     if not (len(lines_db)==0): # alerts with these events were found in the past, check revisions
-                        len1=len(lines_db)
-                        stream_tmp=lines_db[0].stream_alert
-                        id_tmp=lines_db[0].id_alert
-                        rev_max=lines_db[0].rev_alert
-                        for linedb in lines_db:
-                            if not ((linedb.stream_alert==stream_tmp) and (linedb.id_alert==id_tmp)):
-                                    # more than one alert with this events in the past, code 
-                                    # checking each single alert revision in the future
-                                alertIdChange=True    
-                                pass
-                            else:
-                                if (linedb.rev_alert>rev_max):
-                                    # same old alerts but more revision check
-                                    rev_max=linedb.rev_alert 
-                        if (alertIdChange==False):  
-                             # finally do revision, by assigning id from the old alert and rev+1            
-                            alert.rev=rev_max+1
-                            alert.id=id_tmp             
+                        alert=alert_revision.check_old_alert_rev(lines_db, alert)
+                                 
                                                      
                 alertlines=db_populate_class.populate_alertline(alerts)                               
                 db_write.write_alert(self.stream_num,self.HostFancyName,
@@ -291,24 +276,8 @@ class AnalRT(Task):
                                                                        self.DBFancyName)
                                              
                             if not (len(lines_db_ar)==0): # alerts with these events were found in the past, check revisions
-                                len2=len(lines_db_ar)
-                                stream_tmp2=lines_db_ar[0].stream_alert
-                                id_tmp2=lines_db_ar[0].id_alert
-                                rev_max2=lines_db_ar[0].rev_alert
-                                for linedb2 in lines_db_ar:
-                                    if not ((linedb2.stream_alert==stream_tmp2) and (linedb2.id_alert==id_tmp2)):
-                                    # more than one alert with this events in the past, code 
-                                    # checking each single alert revision in the future
-                                        alertIdChangeAr=True    
-                                        pass
-                                    else:
-                                        if (linedb2.rev_alert>rev_max2):
-                                    # same old alerts but more revision check
-                                            rev_max2=linedb2.rev_alert 
-                                if (alertIdChangeAr==False):  
-                                # finally do revision, by assigning id from the old alert and rev+1            
-                                    alert_ar.rev=rev_max2+1
-                                    alert_ar.id=id_tmp2
+                                alert_ar=alert_revision.check_old_alert_rev(lines_db_ar, alert_ar)
+                                
                         alertlines=db_populate_class.populate_alertline(alerts_archive)                                
                         db_write.write_alert(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
