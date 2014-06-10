@@ -13,7 +13,7 @@
 
     To run (outside this directory called analizer):
     
-    celery worker --app=analyser -l info
+    celery worker --app=analyser --concurrency=1 -l info
 
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
@@ -149,33 +149,54 @@ class AnalRT(Task):
             if (self.stream_num !=0):    # don't take any action for stream zero in testing phase
                 
                 for alert in alerts:
-                    streams=[]
-                    ids=[]
+                    streams=[] # for case where old alerts are with current event (just diff rev)
+                    ids=[]  # for case where old alerts are with current event (just diff rev)
+                    streams_old=[] # for case where old alerts are without current event
+                    ids_old=[] # for case where old alerts are without current event
                     alertIdChange=False
                     # check to see if older alerts with these events existed 
                     num_events=len(alert.events)
                     for j in xrange(num_events):
                         streams+=[alert.events[j].stream]
                         ids+=[alert.events[j].id]
+                        if not ((alert.events[j].stream == events.stream) and 
+                            (alert.events[j].id == events.id) and
+                            (alert.events[j].rev == events.rev)):
+                             streams_old+=[alert.events[j].stream]
+                             ids_old+=[alert.events[j].id]
                     lines_db=db_read.read_alertline_events2(streams,ids,
                                              self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName)
-                                             
+                    #lines_db_old=db_read.read_alertline_events2(streams_old,ids_old,
+                     #                        self.HostFancyName,
+                      #                       self.UserFancyName,
+                       #                      self.PasswordFancy,
+                        #                     self.DBFancyName)                         
                     if not (len(lines_db)==0): # alerts with these events were found in the past, check revisions
                         alert=alert_revision.check_old_alert_rev(lines_db, alert)
                                  
-                                                     
-                alertlines=db_populate_class.populate_alertline(alerts)                               
-                db_write.write_alert(self.stream_num,self.HostFancyName,
-                                             self.UserFancyName,
+                    #if not (len(lines_db_old)==0): # alerts with these events were found in the past, check revisions
+                     #   alert=alert_revision.check_old_alert_rev2(lines_db_old, alert)
+                    alertlines=db_populate_class.populate_alertline([alert])
+                    db_write.write_alert(self.stream_num,self.HostFancyName,
+                                            self.UserFancyName,
                                              self.PasswordFancy,
-                                             self.DBFancyName,alerts)
-                db_write.write_alertline(self.HostFancyName,
+                                             self.DBFancyName,[alert])
+                    db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
                                                       self.PasswordFancy, 
-                                                      self.DBFancyName,alertlines) 
+                                                      self.DBFancyName,alertlines)                         
+                #alertlines=db_populate_class.populate_alertline(alerts)                               
+                #db_write.write_alert(self.stream_num,self.HostFancyName,
+                 #                            self.UserFancyName,
+                  #                           self.PasswordFancy,
+                   #                          self.DBFancyName,alerts)
+                #db_write.write_alertline(self.HostFancyName,
+                 #                                     self.UserFancyName,
+                  #                                    self.PasswordFancy, 
+                   #                                   self.DBFancyName,alertlines) 
                     # write alert to the directory from where AMON client will read it and delete 
                     # it after sending it to GCN in the future
                 xmlForm=alert_to_voevent.alert_to_voevent(alerts) 
@@ -278,12 +299,12 @@ class AnalRT(Task):
                             if not (len(lines_db_ar)==0): # alerts with these events were found in the past, check revisions
                                 alert_ar=alert_revision.check_old_alert_rev(lines_db_ar, alert_ar)
                                 
-                        alertlines=db_populate_class.populate_alertline(alerts_archive)                                
-                        db_write.write_alert(self.stream_num2,self.HostFancyName,
+                            alertlines=db_populate_class.populate_alertline([alert_ar])                                
+                            db_write.write_alert(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
-                                             self.DBFancyName,alerts_archive)
-                        db_write.write_alertline(self.HostFancyName,
+                                             self.DBFancyName,[alert_ar])
+                            db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
                                                       self.PasswordFancy, 
                                                       self.DBFancyName,alertlines) 
