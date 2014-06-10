@@ -219,7 +219,7 @@ events=db_read.read_event_timeslice_streams(event_streams, TimeStart,TimeSlice,H
 t2 = time()
 print '   Read time: %.2f seconds' % float(t2-t1)
 
-# put events in temporal order
+# put events in temporal order, oldest events first
 events = sorted(events,key=attrgetter('datetime'))
 
 # start analysis server process
@@ -230,7 +230,7 @@ anal_p = multiprocessing.Process(target=analysis.anal,
                     args=((server_p,client_p),config))
 anal_p.start()
 
-# send events to the analysis process
+# send events to the analysis process, send the oldest events first
 print '   Sending events'
 t1 = time()
 for ev in events:
@@ -261,7 +261,8 @@ else:
     print "No alerts, exiting."
     sys.exit(0)  
 
-if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
+if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
+#if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
     alertlines=db_populate_class.populate_alertline(alerts)  
     print '   %d alertlines generated' % len(alertlines) 
@@ -318,6 +319,10 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
         print ' QUIT: User request'
         sys.exit(0)
     
-
+else:
+    print "Last event"
+    alerts[1].forprint()
+    print "No alerts found"
+    sys.exit(0)
 print
 print ' **** END run_archival.py ****'
