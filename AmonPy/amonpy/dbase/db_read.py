@@ -201,9 +201,12 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
     
     con = mdb.connect(host_name,user_name,passw_name,db_name)    
     cur = con.cursor()
-     
-    timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
-    timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    try: 
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    except:
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)   
     print '   Requested time slice: %s - %s' %(timeStart,timeStop)
 
     # **** Code to read the database column names is bellow****
