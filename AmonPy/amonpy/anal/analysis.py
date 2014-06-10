@@ -277,7 +277,8 @@ def anal(pipe,config):
             eventIn=ev
             eventLate = False
             #print "I received %d events" % numreceived
-            # g.t. for some reason deque is not working in real-time setting; 
+            #print "with this date %s" % ev.datetime
+            # g.t. is not working in real-time setting; 
             # works only in archival setup 
             # add the new event to the buffer (or start buffer)
             # buffer is in reverse temporal order
@@ -290,17 +291,21 @@ def anal(pipe,config):
                        
             # do not search or add event if it is already in the buffer
             for eve in events:
-                if ((ev.stream == eve.stream) and (ev.id == eve.id) \
-                and (ev.rev == eve.rev)):
-                    "Event is already in the buffer. It will not be added to the buffer."
-                    inBuffer = True
+                if ((ev.stream == eve.stream) and (ev.id == eve.id)):
+                    if (ev.rev == eve.rev):
+                        print "Event is already in the buffer. It will not be added to the buffer."
+                        inBuffer = True
+                    else:
+                        print "Old event revision in the buffer, remove it."
+                        events.pop(events.index(eve))    
+                        
              
             #
-            #print inBuffer
+            # add the new event to the buffer (or start buffer)
+            # buffer is in reverse temporal order, so sorted afterward 
             if (inBuffer==False):
-                #print "Adding event"
                 events+=[ev]        
-            
+                
                 #print 'lenght of buffer is %d' % len(events)
                 # ensure that the new event didn't mess up the order of the buffer
                 if (ev.datetime < latest):
@@ -309,6 +314,7 @@ def anal(pipe,config):
                 else:
                 # the new event is the latest event
                     latest = ev.datetime
+                    events = sorted(events,key=attrgetter('datetime'),reverse=True)
             
                 #clean up the buffer (assumes temporal order)
                 while bufdur(events) > config.bufferT:
@@ -347,8 +353,15 @@ def anal(pipe,config):
                     # not be on the top of the buffer list
                     #if dt > config.deltaT:
                     #    break
-                                
+                    
+                    #check for time clustering, and also do not test event against the
+                    # the same event with different revision, in case a previous revision
+                    # is still in a buffer             
                     if ((dt <= config.deltaT) and (events.index(ev) !=jj)): 
+                       #and not((ev.stream==events[jj].stream) and (ev.id==events[jj].id))): # here we check so that a different
+                       # revisions of the same event are not analysed together
+                        #if  ((ev.stream==events[jj].stream) and (ev.id==events[jj].id)):
+                         #   events.pop(jj)    
                         # check if cluster distance is within threshold
                         f = cluster.Fisher(events[jj],ev)
                         if (f.Nsigma <= config.cluster_thresh):
@@ -365,8 +378,14 @@ def anal(pipe,config):
                             Nalerts +=1             
                             alerts +=[new_alert]
                             #if jj>1: # look for triplets
-                            if ((jj > 1) and (events.index(ev) !=jj-1) \
+                            print "New doublet"
+                            print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
+                            print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
+                            if ((jj > 0) and (events.index(ev) !=jj-1) \
                                  and (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))<config.deltaT)):
+                                 #and not((ev.stream==events[jj-1].stream) and (ev.id==events[jj-1].id)) \
+                                 #and not ((events[jj].stream==events[jj-1].stream) and (events[jj].id==events[jj-1].id))):
+                                
                                 f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
                                 if ((f_tp.Nsigma <= config.cluster_thresh) and \
                                    (f_tp.Nsigma_2 <= config.cluster_thresh) and \
@@ -375,6 +394,9 @@ def anal(pipe,config):
                                      # if there is a triplet, discard doublet ?
                                     alerts.pop() 
                                     Nalerts-=1
+                                    print "Doublet deleted"
+                                    print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev)
+                                    print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev)
                                     evlist=[events[jj-1],events[jj],ev]
                                     far = far_density(evlist,config,f)
                                     pvalue = pvalue_calc(evlist,config,f)
@@ -385,7 +407,10 @@ def anal(pipe,config):
                                     new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
                                     Nalerts_tp +=1             
                                     alerts +=[new_alert]
-                                                           
+                                    print "new triplet"
+                                    print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev)
+                                    print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev)
+                                    print "With old event %s %s %s" % (events[jj-1].stream,events[jj-1].id,events[jj-1].rev)                       
                     jj+=1
                     #print 'Found %s doublets' % Nalerts
                     #print 'Found %s triplets' % Nalerts_tp
