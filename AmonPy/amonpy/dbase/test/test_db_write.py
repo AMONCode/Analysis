@@ -22,7 +22,7 @@ class TestDBWrite(unittest.TestCase):
         self.DBFancyName='AMON_test1'
         self.DBFancyNameMC='AMON_test2'
         self.StreamFancyName=0
-        self.AlertStreamFancyName=1000
+        self.AlertStreamFancyName=1
         self.StreamFancyNameMC=[0,1,3,7]  # IceCube is 0
         self.StreamAlertConfig=[1]
         self.StreamAlertConfig2=[2]
