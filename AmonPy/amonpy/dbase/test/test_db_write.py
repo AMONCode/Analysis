@@ -34,7 +34,7 @@ class TestDBWrite(unittest.TestCase):
         self.AlertSingle=[Alert(1,0,0)]
         self.Parameter=[Parameter("energy",1,0,0)]
         
-#        self.Event=[Event2(1,1,0)]
+        self.Event=[Event(0,0,0)]
               
     def tearDown(self):
         # no tear down actions yet
@@ -46,13 +46,13 @@ class TestDBWrite(unittest.TestCase):
          
     
     def testWriteConfigArchive(self):
-        print 'Testing write_event_config module'
+        print 'Testing write_event_config module archive'
         db_write.write_event_config_archive(self.StreamFancyName,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyName) 
         
       
     def testWriteConfig(self):
-        print 'Testing write_event_config module'
+        print 'Testing write_event_config module MC'
         db_write.write_event_config(self.StreamFancyNameMC,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.SimConfig)
     
@@ -69,30 +69,30 @@ class TestDBWrite(unittest.TestCase):
     
     
     def testWriteAlertConfig(self):
-        print 'Testing write_alert_config module'
+        print 'Testing write_alert_config module MC'
         db_write.write_alert_config(self.StreamAlertConfig,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle)
         
     def testWriteAlert(self):
-        print 'Testing write_alert module'
+        print 'Testing write_alert module MC'
         db_write.write_alert(self.AlertStreamFancyName,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertSingle) 
        
     
     def testWriteEvent(self):
-        print 'Testing write_event module for archive data (for now)'
+        print 'Testing write_event module MC'
         db_write.write_event(self.realArchive,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.Event) 
      
        
     def testWriteParamList(self):
-        print 'Testing write_parameter_list module'
+        print 'Testing write_parameter_list module MC'
         db_write.write_parameter_list(self.HostFancyName, self.UserFancyName, 
                                       self.PasswordFancy, self.DBFancyNameMC, self.Parameter)
                                       
     
     def testWriteAlertConfigArchive(self):
-        print 'Testing write_alert_config module'
+        print 'Testing write_alert_config module, MC, late arival'
         db_write.write_alert_config(self.StreamAlertConfig2,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle2)             
 if __name__ == '__main__':
