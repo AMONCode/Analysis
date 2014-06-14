@@ -144,7 +144,7 @@ def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
                 con.commit()
                 count+=cur.rowcount
             except mdb.Error, e:
-                print 'Something is wrong with this event %d ' % paramlist[i].name
+                print 'Something is wrong with this parameter %d ' % paramlist[i].event_id
                 print 'Exception %s' %e
                 con.rollback()
             pd = perc_done(i,NEVENTS,2)
