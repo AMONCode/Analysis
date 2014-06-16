@@ -32,7 +32,7 @@ class TestDBWrite(unittest.TestCase):
         self.AlertConfigSingle=[exAlertConfig()]
         self.AlertConfigSingle2=[exAlertArchivConfig()]
         self.AlertSingle=[Alert(1,0,0)]
-        self.Parameter=[Parameter("energy",1,0,0)]
+        self.Parameter=[Parameter("energy",0,0,0)]
         
         self.Event=[Event(0,0,0)]
               
@@ -73,12 +73,13 @@ class TestDBWrite(unittest.TestCase):
         db_write.write_alert_config(self.StreamAlertConfig,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle)
         
+    """   
     def testWriteAlert(self):
         print 'Testing write_alert module MC'
         db_write.write_alert(self.AlertStreamFancyName,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertSingle) 
-       
-    
+    """   
+    """
     def testWriteEvent(self):
         print 'Testing write_event module MC'
         db_write.write_event(self.realArchive,self.HostFancyName,
@@ -90,10 +91,11 @@ class TestDBWrite(unittest.TestCase):
         db_write.write_parameter_list(self.HostFancyName, self.UserFancyName, 
                                       self.PasswordFancy, self.DBFancyNameMC, self.Parameter)
                                       
-    
+    """
     def testWriteAlertConfigArchive(self):
         print 'Testing write_alert_config module, MC, late arival'
         db_write.write_alert_config(self.StreamAlertConfig2,self.HostFancyName,
-        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle2)             
+        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle2)   
+                  
 if __name__ == '__main__':
     unittest.main()
