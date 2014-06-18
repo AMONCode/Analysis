@@ -11,7 +11,7 @@ def delete_alert_stream(stream_number,host_name, user_name, passw_name, db_name)
     cur = con.cursor()
     
     try:
-        cur.execute("""DELETE FROM alert WHERE alertConfig_stream=%s""",(str(stream_number)))
+        cur.execute("""DELETE FROM alert WHERE alertConfig_stream=%s""" %(stream_number,))
         con.commit()
         print '   This alert stream is deleted.'
         # count+=cur.rowcount
@@ -31,7 +31,7 @@ def delete_event_stream(stream_number, host_name, user_name, passw_name, db_name
     
     try:
         print 'stream num %d' % stream_number 
-        cur.execute("""DELETE FROM event WHERE eventStreamConfig_stream=%s""",(str(stream_number)))
+        cur.execute("""DELETE FROM event WHERE eventStreamConfig_stream=%s""" %(stream_number,))
         con.commit()
         # count+=cur.rowcount
         print 'Event stream is deleted'
@@ -50,7 +50,7 @@ def delete_alertline_stream_by_event(stream_number,host_name, user_name, passw_n
     cur = con.cursor()
     
     try:
-        cur.execute("""DELETE FROM alertLine WHERE event_eventStreamConfig_stream=%s""",(str(stream_number)))
+        cur.execute("""DELETE FROM alertLine WHERE event_eventStreamConfig_stream=%s""" %(stream_number,))
         con.commit()
         print '   This alertline stream is deleted.'
        
@@ -69,7 +69,7 @@ def delete_alertline_stream_by_alert(stream_number,host_name, user_name, passw_n
     cur = con.cursor()
     
     try:
-        cur.execute("""DELETE FROM alertLine WHERE alert_alertConfig_stream=%s""",(str(stream_number)))
+        cur.execute("""DELETE FROM alertLine WHERE alert_alertConfig_stream=%s""" %(stream_number,))
         con.commit()
         print '   This alertline stream is deleted.'
        
@@ -88,7 +88,7 @@ def delete_alertConfig(stream_number,host_name, user_name, passw_name, db_name):
     cur = con.cursor()
     
     try:
-        cur.execute("""DELETE FROM alertConfig WHERE stream=%s""",(str(stream_number)))
+        cur.execute("""DELETE FROM alertConfig WHERE stream=%s""" %(stream_number,))
         con.commit()
         print '   This alertConfig stream is deleted.'
        
@@ -107,7 +107,7 @@ def delete_alertConfig_rev(stream_number,rev, host_name, user_name, passw_name, 
     cur = con.cursor()
     
     try:
-        cur.execute("""DELETE FROM alertConfig WHERE stream=%s and rev=%s""",(str(stream_number), str(rev)))
+        cur.execute("""DELETE FROM alertConfig WHERE stream=%s and rev=%s""" %(stream_number, rev,))
         con.commit()
         print '   This alertConfig stream and rev is deleted.'
        
