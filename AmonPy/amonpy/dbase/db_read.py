@@ -945,7 +945,7 @@ def alert_count(stream_name, table_name, host_name, user_name, passw_name, db_na
     cur = con.cursor()                 
                       
     try:
-        cur.execute("""SELECT * FROM alert WHERE alertConfig_stream = %s""",(stream_name))
+        cur.execute("""SELECT * FROM alert WHERE alertConfig_stream = %s""" %(stream_name,))
         con.commit()
         count+=cur.rowcount
         cur.close()
@@ -967,7 +967,7 @@ def rev_count(stream_name, host_name, user_name, passw_name, db_name):
     cur = con.cursor()                 
                       
     try:
-        cur.execute("""SELECT max(rev) FROM event WHERE eventStreamConfig_stream = %s""",(stream_name))
+        cur.execute("""SELECT max(rev) FROM event WHERE eventStreamConfig_stream = %s""" %(stream_name,))
         con.commit()
         row = cur.fetchone()
         count = row[0]
@@ -1013,7 +1013,7 @@ def alert_max_id(stream_name,host_name, user_name, passw_name, db_name):
     cur = con.cursor()                 
                       
     try:
-        cur.execute("""SELECT MAX(id) FROM alert WHERE alertConfig_Stream = %s""",(stream_name))
+        cur.execute("""SELECT MAX(id) FROM alert WHERE alertConfig_Stream = %s""" % (stream_name,))
         con.commit()
         row = cur.fetchone()
         #print "max id %s" % (row,)
