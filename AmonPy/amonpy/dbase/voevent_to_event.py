@@ -25,9 +25,7 @@ import getopt
 import Vutil 
 
 from datetime import datetime
-sys.path.append('../../../dbase')
-
-from dbase.db_classes import *
+from amonpy.dbase.db_classes import *
 
 try:
     from cStringIO import StringIO
@@ -215,7 +213,7 @@ def make_event(source, o=sys.stdout):
     #event[0].forprint()
     print "Number of events: %s " % Event._num_events
     """
-    return event, evParam
+    return (event, evParam)
 
 def main():
     args = sys.argv[1:]
