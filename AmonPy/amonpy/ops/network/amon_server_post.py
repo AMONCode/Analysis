@@ -25,9 +25,9 @@ sys.path.append("../../sim")
 sys.path.append("../../tools")
 sys.path.append("../../ops")
 
-from dbase.db_classes import Event
-import dbase.db_write
-import dbase.voevent_to_event
+from amonpy.dbase.db_classes import Event
+import amonpy.dbase.db_write as db_write
+import amonpy.dbase.voevent_to_event as voevent_to_event
 
 from analyser.runanal import *
 
@@ -42,7 +42,7 @@ class EventPage(Resource):
     
     HostFancyName='localhost'
     UserFancyName='yourname'
-    PasswordFancy='yourpass'
+    PasswordFancy='yourhost'
     DBFancyName='AMON_test2'
     eventlist = []
     paramlist = []
@@ -150,7 +150,12 @@ class EventPage(Resource):
         fp.write(request.content.getvalue())
         fp.close()
         # convert it to Event object
-        event, evParam=dbase.voevent_to_event.make_event(path+"server_tmp_events/"+fname) 
+        #evpar = 
+        #event, evParam=dbase.voevent_to_event.make_event(path+"server_tmp_events/"+fname)
+        #evpar = []
+        evpar = voevent_to_event.make_event(path+"server_tmp_events/"+fname) 
+        event  = evpar[0]
+        evParam = evpar[1]
         event[0].forprint()
         evParam[0].forprint()
         
