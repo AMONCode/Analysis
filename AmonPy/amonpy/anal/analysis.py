@@ -97,11 +97,11 @@ def far_density(evlist, conf, fcluster):
     far_den=0. 
     ev_len=len(evlist)
     if ev_len==2:
-        far_den=evlist[0].false_pos*evlist[1].false_pos*conf.deltaT*fcluster.sigmaQ * \
-                conf.cluster_thresh
+        far_den=evlist[0].false_pos*evlist[1].false_pos*conf.deltaT* 2.*math.pi*( 1. - \
+                math.cos(math.radians(fcluster.sigmaQ * conf.cluster_thresh)))
     elif ev_len==3:
         far_den=0.5*evlist[0].false_pos*evlist[1].false_pos*evlist[2].false_pos * \
-                (conf.deltaT*fcluster.sigmaQ*conf.cluster_thresh)**2
+                (conf.deltaT*2.*math.pi*(1.-math.cos(math.radians(fcluster.sigmaQ*conf.cluster_thresh))))**2
     else:
         # generalize for 3+ events
         pass 
