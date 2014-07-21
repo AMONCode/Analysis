@@ -90,9 +90,9 @@ def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
     new_alert.anarev=0
     return new_alert
 
-def far_density(evlist, conf, fcluster):
+def far_density_old(evlist, conf, fcluster):
     """
-    False alarm density calculator (per sr per second)
+    Old false alarm density calculator (per sr per second), obsolete
     """ 
     far_den=0. 
     ev_len=len(evlist)
@@ -105,8 +105,59 @@ def far_density(evlist, conf, fcluster):
     else:
         # generalize for 3+ events
         pass 
-    return far_den  
-                                               
+    return far_den 
+     
+def far_density(evlist, conf, fcluster):
+    """
+    False alarm density calculator (per sr per second)
+    """ 
+    far_den=0. 
+    ev_len=len(evlist)
+    
+    #print "number of events in a multiplet %s" % (ev_len,)
+    #print "space window in deg %s" %(fcluster.sigmaQ,)
+    
+    solid_angle = 2.*math.pi*(1. - math.cos(math.radians(fcluster.sigmaQ * conf.cluster_thresh)))
+    #print "solid angle %s" % (solid_angle,)
+    spaceTimeWind = conf.deltaT * solid_angle
+    #print "serach window space-time %s" % (spaceTimeWind, )
+    streamCurrent = evlist[0].stream 
+    kkCurrent = 0
+    kk=1
+    event_dict={}
+    event_dict[str(streamCurrent)]=[evlist[0]]
+    # dictionary of lists of events in the multiplet coming from the same streams
+    # e.g. :if a triplet has 2 event from stream 0 and one from stream 1
+    #       the dictionary would be {'0': [ice_ev1, ice_ev2], '1': [antares_ev1]}
+    #       prob. of this triplet is prob_doublet*prob_singlet
+    #       compared to the triplet from 3 different streams
+    #      where prob_triplet=prob_singlet1*prob_singlet2*prob_singlet3
+    while (kk < ev_len):
+        if (evlist[kk].stream ==streamCurrent):
+            event_dict[str(streamCurrent)].append(evlist[kk])
+             
+        else:
+            try:
+                event_dict[str(evlist[kk].stream)].append(evlist[kk]) 
+                streamCurrent = evlist[kk].stream
+                
+            except:
+                event_dict[str(evlist[kk].stream)] = [evlist[kk]]          
+                streamCurrent = evlist[kk].stream
+        kk+=1       
+    # calculate rates (probab. per unit spacetime) for various of stream combination and
+    # multiplets
+    poiss_prob = 1.
+    for k in sorted(event_dict.keys()):
+        num_ev = len(event_dict[k]) 
+        rate = 0.
+        for ll in xrange(num_ev):
+            rate +=event_dict[k][ll].false_pos
+        rate = rate/float(num_ev)    
+        poiss_prob *=(prob_poisson(rate*spaceTimeWind,num_ev)) 
+    far_den = poiss_prob/spaceTimeWind                   
+      
+    return far_den                                                
 def pvalue_calc(evlist, conf, fcluster):
     """
     Combined p-value calculator (dummy for now). 
@@ -157,6 +208,13 @@ def sum_poisson(expect,obs):
     return sum        
     #return 1.
 
+def prob_poisson(expect,obs):
+    """
+    Poisson probability to observe obs number of events in a given stream
+    """           
+    sum=0.
+    sum=(expect**obs)*math.exp(-1.*expect)/math.factorial(obs)
+    return sum
 # used for late arrival events in real-time code, i.e. for events that our out of time buffer
 
 def alerts_late(events_rec, eve, config_rec, max_id):
