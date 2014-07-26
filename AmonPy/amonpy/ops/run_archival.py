@@ -46,8 +46,6 @@ import getpass
 
 def parse_command_line():
        #TODO Make usage part of help menu better
-       #parser=OptionParser(usage='test')
-       #parser=OptionParser()
        parser=ArgumentParser(usage='run_archival [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]')
        parser.add_argument("-v", "--verbose", action="store_true", help="Be verbose.")
        parser.add_argument("-p", "--password", metavar="password", help="Input password in plain text \
@@ -342,7 +340,6 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
             print '   Invalid stream number'
             print '   Only streams >= 1 allowed for archival analysis'
     else:
-       #FIXME shouldn't be allowed to go this far, make sure output config set properly at beginning
        raise RuntimeError("Not sure what to do with alerts, see --help for more details")
     
 else:
