@@ -211,7 +211,8 @@ class AnalRT(Task):
                 print '   Only streams >= 1 allowed for testing analysis'
             return "%d alerts found" % (len(alerts),) 
         elif(alerts[0] ==True):
-            # call archival analysis
+            # call archival analysis for a very late arrival event that is outside of time 
+            # buffer 
             print "Call archival"
             #print "True or false, true is correct"
             #print alerts[0]
@@ -222,7 +223,7 @@ class AnalRT(Task):
             TimeSlice = 3.*self.config.deltaT
             TimeStart = timeEvent - timedelta(seconds=1.5*self.config.deltaT)
             TimeStart = str(TimeStart)
-            events=db_read.read_event_timeslice_streams(self.event_streams,
+            events=db_read.read_event_timeslice_streams_latest(self.event_streams,
                                     TimeStart,TimeSlice,self.HostFancyName,
                                     self.UserFancyName,self.PasswordFancy,self.DBFancyName)
             # also read the highest alert number within this stream
@@ -230,6 +231,7 @@ class AnalRT(Task):
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName) 
+            # sort the events!!1                                 
             print "max_id is"
             print max_id                                  
             if (max_id==None):
