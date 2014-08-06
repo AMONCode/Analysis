@@ -77,9 +77,13 @@ def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
     new_alert.Nsigma = fcluster.Nsigma
     #new_alert.Nsigma_2 = fcluster.Nsigma_2
     #new_alert.Nsigma_3 = fcluster.Nsigma_3
-    new_alert.psi = fcluster.psi 
-    new_alert.psi1 = fcluster.psi1
-    new_alert.psi2 = fcluster.psi2
+    #new_alert.psi = fcluster.psi 
+    # in case we decide to save angles between the events
+    #new_alert.psi=[]
+    #for kk in xrange(len(fcluster.psi)):
+    #    new_alert.psi +=[fcluster.psi[kk]]
+    #new_alert.psi1 = fcluster.psi1
+    #new_alert.psi2 = fcluster.psi2
     #new_alert.psi3 = fcluster.psi2
     #new_alert.events = [ev1,ev2]
     new_alert.events = []
@@ -217,7 +221,22 @@ def prob_poisson(expect,obs):
     return sum
 # used for late arrival events in real-time code, i.e. for events that our out of time buffer
 
+def check_nsigma(nsigma,cluster_th):
+    """
+    check if each pair of events within a cluster are separated by # of sigma < clusterThreshold
+    return True if yes, False if not
+    """
+    checkSigma = True
+    for kk_nsigma in nsigma:
+        if kk_nsigma > cluster_th:
+            checkSigma = False
+    return checkSigma    
+                
 def alerts_late(events_rec, eve, config_rec, max_id):
+    """
+    analyser to be called in real-time analysis in case of very late
+    arrival events (events out of time buffer)
+    """
     Nalerts = 0
     Nalerts_tp = 0
     alerts = []
@@ -229,73 +248,180 @@ def alerts_late(events_rec, eve, config_rec, max_id):
     events=events_rec
     ev = eve # the late arrival event
     #sort event
-    # sorting???
     events = sorted(events,key=attrgetter('datetime'), reverse=True)
     config=config_rec
-    
+    print "Late arival event analysis (archival) started"
+    print
     print "Config dT %d" % config.deltaT
-    print "Buffer dT %d" % config.bufferT
-                    
-    Nev = len(events)
+                        
+    Nevents = len(events)
                #jj = 1
     #jj=0
+    inBuffer = False
+    alertCluster=False
+    evIndex=0
+        
     if isinstance(ev,Event):
-        for jj in xrange(Nev):             
+        #for jj in xrange(Nevents):             
             # assuming temporal order, continue loop until deltaT exceeded
-            if not((ev.stream==events[jj].stream) and (ev.id==events[jj].id)):
+        for eve in events:
+            if ((ev.stream == eve.stream) and (ev.id == eve.id)):
+                if (ev.rev > eve.rev):
+                    print "Old event revision in the archival time slice, remove it."
+                    events.pop(events.index(eve)) 
+                elif (ev.rev < eve.rev):
+                    print "Old event revision arrived later than a newer one."
+                    print "No analysis for this obsolete event"
+                    inBuffer==True 
+                else:
+                    #ev = eve   # this is our real time event   
+                    evIndex = events.index(eve)
+           
+        if (inBuffer==False):
+                               
+            Nev = len(events)
+                
+            jj=0
+                
+            while True:
+                alertCluster = False
+                    #print Nev, jj, ev.id
+                if (jj >= Nev):
+                    break
+                if ((evIndex==jj) and (jj< Nev-1)):
+                    jj+=1
+                    # assuming temporal order, continue loop until deltaT exceeded
                 dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
-                if (dt <= config.deltaT):
+                
+                while dt > config.deltaT:
+                    jj+=1
+                    if (jj >= Nev):
+                        break
+                    elif (evIndex !=jj):   
+                        dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
+                    else:
+                        jj+=1
+                        if (jj >= Nev):
+                            break 
+                        else:
+                            dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))  
+                        
+                if (jj >= Nev):
+                    break        
+                    
+                    #check for time clustering           
+                if ((dt <= config.deltaT) and (evIndex !=jj)): 
+                        # time clusters
+                    list_time = [ev, events[jj]]
+                        # check if there are more events within the (dt<t<deltaT-dt)
+                        # to form time cluster
+                    if (evIndex !=jj+1):
+                        kk = jj+1
+                    else:
+                        kk = jj+2    
+                        
+                    if kk<Nev:
+                        
+                        dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                        if (kk < evIndex):
+                            while (dt2 < dt):
+                                if kk > Nev -1:
+                                    break
+                                if (evIndex!=kk):
+                                    list_time.append(events[kk])
+                                kk+=1
+                                if kk >= Nev -1:
+                                    break
+                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                        elif (kk > evIndex and jj < evIndex):
+                            while (dt2 < config.deltaT - dt):
+                                if kk > Nev -1:
+                                    break
+                                if (evIndex!=kk):
+                                    list_time.append(events[kk])
+                                kk+=1
+                                if kk >= Nev -1:
+                                    break
+                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                        elif (kk > evIndex and jj > evIndex):
+                            while (dt2 < config.deltaT):
+                                if kk > Nev -1:
+                                    break
+                                if (evIndex!=kk):
+                                    list_time.append(events[kk])
+                                kk+=1
+                                if kk >= Nev -1:
+                                    break
+                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                        elif (kk == evIndex):
+                            kk+=1 
+                            dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            while (dt2 < config.deltaT):
+                                if kk > Nev -1:
+                                    break
+                                if (evIndex!=kk):
+                                    list_time.append(events[kk])
+                                kk+=1
+                                if kk >= Nev -1:
+                                    break
+                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                        else:
+                            break         
+                                           
+                    print "Lenght of time cluster is: %s" % (len(list_time),)
+                        
+                        # check space clustering for each multiplet from time cluster 
+                        #containing new event (ev) in it
+                    list_space=[ev]
+                    for ll in xrange (len(list_time)-1):
+                        list_space.append(list_time[ll+1])
+                            # check fisher for list space      
                         # check if cluster distance is within threshold
-                    f = cluster.Fisher(events[jj],ev)
-                    if (f.Nsigma <= config.cluster_thresh):
-                            # calculate false alarm rate
-                        evlist=[events[jj],ev]
-                        far = far_density(evlist,config,f)
-                        pvalue = pvalue_calc(evlist,config,f)
-                            # create alert, with id next in list
-                            #id=Nalerts + Nalerts_tp
-                        id+=1
-                        rev = 0
-                        evlist = [events[jj],ev]
-                        new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
-                        Nalerts +=1   
-                        print "FOUND ARCHIVAL"        
-                        alerts +=[new_alert]
-                            #if jj>1: # look for triplets
-                        if ((jj > 1) and not ((ev.stream==events[jj-1].stream) and (ev.id==events[jj-1].id)) \
-                            and (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))<config.deltaT)):
-                            f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
-                            if ((f_tp.Nsigma <= config.cluster_thresh) and \
-                               (f_tp.Nsigma_2 <= config.cluster_thresh) and \
-                               (f_tp.Nsigma_3 <= config.cluster_thresh)):
-                                # create alert, with id next in list
-                                # if there is a triplet, discard doublet ?
+                        # code FisherNew and new fNsigma check 
+                        f = cluster.Fisher(list_space)
+                        Nsigma_check = check_nsigma(f.Nsigma,config.cluster_thresh)
+                        if Nsigma_check:
+                                # calculate false alarm rate
+                            evlist=list_space
+                            far = far_density(evlist,config,f)
+                            pvalue = pvalue_calc(evlist,config,f)
+                            if (alertCluster==True):
+                                    # higher multiplet found, remove lower multiplet
+                                    # no need to increase id, since it will be 
+                                    # taken from obsolete old multiplet 
+                                print "higher multiplet found"
+                                print "remove lower multiplet"
                                 alerts.pop() 
                                 Nalerts-=1
-                                evlist=[events[jj-1],events[jj],ev]
-                                far = far_density(evlist,config,f)
-                                pvalue = pvalue_calc(evlist,config,f)
-                                    #id=Nalerts + Nalerts_tp
-                                    # no need to increase id since doublet is discarded.
-                                    #id+=1
-                                rev = 0
-                                new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
-                                Nalerts_tp +=1             
-                                alerts +=[new_alert]
-                                                           
-        #jj+=1
-                    #print 'Found %s doublets' % Nalerts
-                    #print 'Found %s triplets' % Nalerts_tp
-                        # check to see if client has requested alerts
+                            else:
+                                    # this is the first multiplet, increase id    
+                                id+=1
+                                alertCluster = True
+                            rev = 0
+                                #evlist = [events[jj],ev]
+                            new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
+                            Nalerts +=1             
+                            alerts +=[new_alert]
+                            #if jj>1: # look for triplets
+                            print "New alert"
+                            print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
+                            print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
+                                                
+                jj+=1       
+                
+        else:
+            print "No analysis, event revision is older than previously arived event"        
+                                
     else:
         print "Not event"  
     print 'Found %s doublets' % Nalerts
-    print 'Found %s triplets' % Nalerts_tp                                  
-    return alerts                    
-        
+    #print 'Found %s triplets' % Nalerts_tp                                  
+    return alerts        
         
     # shutdown    
 # main analysis process
+
+
 def anal(pipe,config):
     """
     Main analysis process, which is run as a server, accepting events
@@ -316,6 +442,7 @@ def anal(pipe,config):
     inBuffer = False
     eventLate = False
     eventAnalysed = False
+    alertCluster = False
     eveout = Event(-1,-1,-1)
     print "Config dT %d" % config.deltaT
     print "Buffer dT %d" % config.bufferT
@@ -334,6 +461,8 @@ def anal(pipe,config):
             eventAnalysed = False
             eventIn=ev
             eventLate = False
+            alertCluster = False
+            
             #print "I received %d events" % numreceived
             #print "with this date %s" % ev.datetime
             # g.t. is not working in real-time setting; 
@@ -353,7 +482,12 @@ def anal(pipe,config):
                     if (ev.rev == eve.rev):
                         print "Event is already in the buffer. It will not be added to the buffer."
                         inBuffer = True
-                    else:
+                    elif (ev.rev < eve.rev):
+                        print "Old event revision arrived later than a newer one."
+                        print "No analysis for this obsolete event"
+                        
+                        inBuffer = True
+                    else:    
                         print "Old event revision in the buffer, remove it."
                         events.pop(events.index(eve))    
                         
@@ -373,14 +507,13 @@ def anal(pipe,config):
                 # the new event is the latest event
                     latest = ev.datetime
                     events = sorted(events,key=attrgetter('datetime'),reverse=True)
-            
+                    
                 #clean up the buffer (assumes temporal order)
                 while bufdur(events) > config.bufferT:
                     #cleaning buffer, but first check if the new event
                     # is one that is late arrival i.e.out of time buffer as well
                     eveout=events.pop()
                     if ((eveout.stream==ev.stream) and (eveout.id==ev.id) and (eveout.rev==ev.rev)):
-                        # implement this function!!!!!!!
                         #alerts = alerts_late(eveout,config.deltaT)
                         eventLate= True
                 # if new events is in time buffer 
@@ -400,82 +533,140 @@ def anal(pipe,config):
                 jj=0
                 
                 while True:
+                    AlertCluster = False
                     #print Nev, jj, ev.id
                     if (jj >= Nev) or (eventLate==True):
                         break
-                
+                    if ((events.index(ev)==jj) and (jj< Nev-1)):
+                        jj+=1
                     # assuming temporal order, continue loop until deltaT exceeded
                     dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
                 
                     # g.t. do not brake here since in case of late arrival our event will
                     # not be on the top of the buffer list
-                    #if dt > config.deltaT:
-                    #    break
+                    # add code for jj< ev index and jj> event index
+                    while dt > config.deltaT:
+                        jj+=1
+                        if (jj >= Nev):
+                            break
+                        elif (events.index(ev) !=jj):   
+                            dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))
+                        else:
+                            jj+=1
+                            if (jj >= Nev):
+                                break 
+                            else:
+                                dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))  
+                        
+                    if (jj >= Nev):
+                        break        
                     
-                    #check for time clustering, and also do not test event against the
-                    # the same event with different revision, in case a previous revision
-                    # is still in a buffer             
+                    #check for time clustering           
                     if ((dt <= config.deltaT) and (events.index(ev) !=jj)): 
-                       #and not((ev.stream==events[jj].stream) and (ev.id==events[jj].id))): # here we check so that a different
-                       # revisions of the same event are not analysed together
-                        #if  ((ev.stream==events[jj].stream) and (ev.id==events[jj].id)):
-                         #   events.pop(jj)    
+                        # time clusters
+                        list_time = [ev, events[jj]]
+                        # check if there are more events within the (dt<t<deltaT-dt)
+                        # to form time cluster
+                        if (events.index(ev) !=jj+1):
+                            kk = jj+1
+                        else:
+                            kk = jj+2    
+                        
+                        if kk<Nev:
+                        
+                            dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            if (kk < events.index(ev)):
+                                while (dt2 < dt):
+                                    if kk > Nev -1:
+                                        break
+                                    if (events.index(ev)!=kk):
+                                        list_time.append(events[kk])
+                                    kk+=1
+                                    if kk >= Nev -1:
+                                        break
+                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            elif (kk > events.index(ev) and jj < events.index(ev)):
+                                while (dt2 < config.deltaT - dt):
+                                    if kk > Nev -1:
+                                        break
+                                    if (events.index(ev)!=kk):
+                                        list_time.append(events[kk])
+                                    kk+=1
+                                    if kk >= Nev -1:
+                                        break
+                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            elif (kk > events.index(ev) and jj > events.index(ev)):
+                                while (dt2 < config.deltaT):
+                                    if kk > Nev -1:
+                                        break
+                                    if (events.index(ev)!=kk):
+                                        list_time.append(events[kk])
+                                    kk+=1
+                                    if kk >= Nev -1:
+                                        break
+                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            elif (kk == events.index(ev)):
+                                kk+=1 
+                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                                while (dt2 < config.deltaT):
+                                    if kk > Nev -1:
+                                        break
+                                    if (events.index(ev)!=kk):
+                                        list_time.append(events[kk])
+                                        
+                                    kk+=1
+                                    if kk >= Nev -1:
+                                        break
+                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))
+                            else:
+                                break         
+                                           
+                        print "Lenght of time cluster is: %s" % (len(list_time),)
+                        
+                        # check space clustering for each multiplet from time cluster 
+                        #containing new event (ev) in it
+                        list_space=[ev]
+                        for ll in xrange (len(list_time)-1):
+                            list_space.append(list_time[ll+1])
+                            # check fisher for list space      
                         # check if cluster distance is within threshold
-                        f = cluster.Fisher(events[jj],ev)
-                        if (f.Nsigma <= config.cluster_thresh):
-                            # calculate false alarm rate
-                            evlist=[events[jj],ev]
-                            far = far_density(evlist,config,f)
-                            pvalue = pvalue_calc(evlist,config,f)
-                            # create alert, with id next in list
-                            #id=Nalerts + Nalerts_tp
-                            id+=1
-                            rev = 0
-                            evlist = [events[jj],ev]
-                            new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
-                            Nalerts +=1             
-                            alerts +=[new_alert]
-                            #if jj>1: # look for triplets
-                            print "New doublet"
-                            print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
-                            print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
-                            if ((jj > 0) and (events.index(ev) !=jj-1) \
-                                 and (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))<config.deltaT)):
-                                 #and not((ev.stream==events[jj-1].stream) and (ev.id==events[jj-1].id)) \
-                                 #and not ((events[jj].stream==events[jj-1].stream) and (events[jj].id==events[jj-1].id))):
-                                
-                                f_tp = cluster.Fisher_tp(events[jj-1], events[jj], ev) 
-                                if ((f_tp.Nsigma <= config.cluster_thresh) and \
-                                   (f_tp.Nsigma_2 <= config.cluster_thresh) and \
-                                   (f_tp.Nsigma_3 <= config.cluster_thresh)):
-                                     # create alert, with id next in list
-                                     # if there is a triplet, discard doublet ?
+                        # code FisherNew and new fNsigma check 
+                            f = cluster.Fisher(list_space)
+                            Nsigma_check = check_nsigma(f.Nsigma,config.cluster_thresh)
+                            if Nsigma_check:
+                                # calculate false alarm rate
+                                evlist=list_space
+                                far = far_density(evlist,config,f)
+                                pvalue = pvalue_calc(evlist,config,f)
+                                if alertCluster==True:
+                                    # higher multiplet found, remove lower multiplet
+                                    # no need to increase id, since it will be 
+                                    # taken from obsolete old multiplet 
+                                    print "higher multiplet found"
+                                    print "remove lower multiplet"
                                     alerts.pop() 
                                     Nalerts-=1
-                                    print "Doublet deleted"
-                                    print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev)
-                                    print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev)
-                                    evlist=[events[jj-1],events[jj],ev]
-                                    far = far_density(evlist,config,f)
-                                    pvalue = pvalue_calc(evlist,config,f)
-                                    #id=Nalerts + Nalerts_tp
-                                    # no need to increase id since doublet is discarded.
-                                    #id+=1
-                                    rev = 0
-                                    new_alert= build_alert(config,id,rev,f_tp, evlist, far, pvalue)
-                                    Nalerts_tp +=1             
-                                    alerts +=[new_alert]
-                                    print "new triplet"
-                                    print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev)
-                                    print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev)
-                                    print "With old event %s %s %s" % (events[jj-1].stream,events[jj-1].id,events[jj-1].rev)                       
+                                else:
+                                    # this is the first multiplet, increase id    
+                                    id+=1
+                                    AlertCluster = True
+                                rev = 0
+                                #evlist = [events[jj],ev]
+                                new_alert = build_alert(config,id,rev,f,evlist,far, pvalue)
+                                Nalerts +=1             
+                                alerts +=[new_alert]
+                            #if jj>1: # look for triplets
+                                print "New alert"
+                                print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
+                                print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
+                                                
                     jj+=1
                     #print 'Found %s doublets' % Nalerts
                     #print 'Found %s triplets' % Nalerts_tp
                     # check to see if client has requested alerts        
         elif (ev=='get_alerts'):
-            print 'Found %s doublets' % Nalerts
-            print 'Found %s triplets' % Nalerts_tp
+            print 'Found %s alerts' % Nalerts
+            #print 'Found %s triplets' % Nalerts_tp
             if (len(alerts))==0:
                 if (eventLate==False):
                     server.send("Empty") 
@@ -494,6 +685,7 @@ def anal(pipe,config):
             Nalerts_tp=0
             eventLate=False
             inBuffer=False
+            alertCluster = False
             #print "lenghts of alerts %s" % (len(alerts),)
 
         # check to see if client has requested quit    
@@ -506,4 +698,3 @@ def anal(pipe,config):
             print ev
         
     # shutdown
-
