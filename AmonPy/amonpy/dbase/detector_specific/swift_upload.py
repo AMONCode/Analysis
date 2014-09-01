@@ -13,6 +13,14 @@ def parse_command_line():
     parser.add_argument("--attitude-files", help="Path to attitude files directory.")
     parser.add_argument("--fits-files", help="Path to fits files directory.")
     parser.add_argument("--pvalue-file", help="Path to SNR to P-Value table.")
+    parser.add_argument("-H", "--host", metavar="address", default='db.hpc.rcc.psu.edu', 
+            help="Database host address [default: db.hpc.rcc.psu.edu]")
+    # TODO Add feature to pull username from login information so that the
+    # username option is optional, similar to how MySQL is used from the command
+    # line
+    parser.add_argument("-u", "--username", metavar="username", help="Database username")
+    parser.add_argument("-d", "--database", metavar="name", help="Name of database")
+
     return parser.parse_args()
 
 class attitude:
@@ -212,13 +220,13 @@ def interpolate_pvalue(pvalue_file_loc):
 	pvalue_interp_class = interp1d(snr_list,pvalue_list,bounds_error=False,fill_value=0.0)
 	return pvalue_interp_class
 
-def db_load(snr_events, pw):
+def db_load(snr_events, pw, options):
         '''
         Load the data into the MySQL database
         '''
 
         # Open the connection
-	con = mdb.connect('db.hpc.rcc.psu.edu','ccm188',pw,'AMON_ccm188')
+	con = mdb.connect(options.host,options.username,pw,options.database)
 	with con:
 		cur = con.cursor() 
 
@@ -270,4 +278,4 @@ pvalue_interp_class = interpolate_pvalue(pvalue_file_loc)
 # Get the events from the fits files
 for fits_file in fits_file_locations:
         snr_events = get_swift_data(fits_file, pvalue_interp_class, positions)
-        db_load(snr_events, pw)
+        db_load(snr_events, pw, options)
