@@ -8,6 +8,7 @@
 
 from numpy.random import randint
 import time
+from decimal import Decimal
 
 def met2day(met):
         """ 
