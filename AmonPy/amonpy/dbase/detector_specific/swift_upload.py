@@ -11,9 +11,9 @@ import sys
 
 def parse_command_line():
     parser = ArgumentParser()#)usage='run_archival [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]')
-    parser.add_argument("--attitude-files", help="Path to attitude files directory.")
-    parser.add_argument("--fits-files", help="Path to fits files directory.")
-    parser.add_argument("--pvalue-file", help="Path to SNR to P-Value table.")
+    parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files")
+    parser.add_argument("--fits-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data', help="Path to fits files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data]")
+    parser.add_argument("--pvalue-file", default='pvalue_table.txt', help="Path to SNR to P-Value table [default: pvalue_table.txt]")
     parser.add_argument("-H", "--host", metavar="address", default='db.hpc.rcc.psu.edu', 
             help="Database host address [default: db.hpc.rcc.psu.edu]")
     # TODO Add feature to pull username from login information so that the
@@ -147,7 +147,7 @@ class observation:
 
 		# Set the type of event and psf_type
 		self.db_type = ('observation',) * self.num_detection
-		self.psf_type = ('gaussian',) * self.num_detection
+		self.psf_type = ('fisher',) * self.num_detection
 
 		# Interpolate the pvalue from the SNR
 		#FIXME Currently, if snr < 2.6005, pvalue will be 0.  
@@ -266,7 +266,7 @@ def db_load(snr_events, pw, options):
 options=parse_command_line()
 
 # Get the MySQL database password
-pw = getpass.getpass()
+pw = getpass.getpass('Database Password:')
 
 #print sorted(glob.glob(options.attitude_files + '/attitude_month*'))
 # Get the files needed
