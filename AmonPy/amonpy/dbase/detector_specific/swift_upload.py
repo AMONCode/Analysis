@@ -7,6 +7,7 @@ import glob
 from scipy.interpolate import interp1d
 import itertools
 from argparse import ArgumentParser
+import sys
 
 def parse_command_line():
     parser = ArgumentParser()#)usage='run_archival [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]')
@@ -267,8 +268,9 @@ options=parse_command_line()
 # Get the MySQL database password
 pw = getpass.getpass()
 
+#print sorted(glob.glob(options.attitude_files + '/attitude_month*'))
 # Get the files needed
-positions = attitude(sorted(glob.glob(options.attitude_files + '/*')))
+positions = attitude(sorted(glob.glob(options.attitude_files + '/attitude_month*')))
 pvalue_file_loc = options.pvalue_file
 fits_file_locations = sorted(glob.glob(options.fits_files + '/*'))
 
