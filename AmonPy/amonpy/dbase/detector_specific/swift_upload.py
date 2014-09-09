@@ -1,3 +1,6 @@
+#
+# Before running, make sure to add a row in eventStreamConfig table in the database that has a stream number assigned to the triggering observatory (for example number 4 for swift). That can be done by running only the testWriteConfigArchive(self) function in /amonpy/dbase/test/test_db_write.py.
+
 import pyfits
 import MySQLdb as mdb
 import getpass
@@ -10,7 +13,7 @@ from argparse import ArgumentParser
 import sys
 
 def parse_command_line():
-    parser = ArgumentParser()#)usage='run_archival [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]')
+    parser = ArgumentParser()#usage='python swift_upload.py [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]'
     parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files")
     parser.add_argument("--fits-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data', help="Path to fits files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data]")
     parser.add_argument("--pvalue-file", default='pvalue_table.txt', help="Path to SNR to P-Value table [default: pvalue_table.txt]")
@@ -122,7 +125,7 @@ class observation:
 
 		# Set Swift stream number as 1, and use hardcoded revision
 		# number and stream revision number of 0
-		self.stream_config = (1,) * self.num_detection
+		self.stream_config = (4,) * self.num_detection
 		self.rev = (0,) * self.num_detection
 		self.stream_rev = (0,) * self.num_detection
 
