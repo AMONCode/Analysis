@@ -68,8 +68,8 @@ def parse_command_line():
        new_config_options_group=parser.add_argument_group("options required if invoking --use-new-config")
        #TODO Determine a method of handling stream config and cluster method to replace the number input method
        new_config_options_group.add_argument("-s", "--stream-config", metavar="int", type=int, 
-                     help="Stream configuration, 1=IceCube only,2=ANTARES only,3=HAWC only, \
-                     4=IceCube + ANTARES,5=IceCube + HAWC,6=ANTARES + HAWC,7=All")
+                     help="Stream configuration, 1=IceCube only,2=ANTARES only,3=HAWC only, 4=Swift only, \
+                     5=IceCube + ANTARES,6=IceCube + HAWC,7=ANTARES + HAWC,8=IceCube + Swift,9=All")
        new_config_options_group.add_argument("-P", "--pvalue", metavar="float", type=float, default=0.0, 
                      help="P-Value threshold level, 0.0 means no threshold [default: 0.0]")
        new_config_options_group.add_argument("-n", "--num-events-thresh", metavar="int", type=int, 
@@ -151,7 +151,7 @@ if options.use_new_config:
        rev = 0  
        config = AlertConfig2(stream_num, rev)
        choices_stream=['IceCube only','ANTARES only', 'HAWC only', 'IceCube + ANTARES',
-                    'IceCube + HAWC', 'ANTARES + HAWC','All', 'Cancel']
+                    'IceCube + HAWC', 'ANTARES + HAWC','IceCube + Swift','All', 'Cancel']
        event_streams = []
        if options.stream_config == 1:
               config.participating      = 2**0
@@ -163,16 +163,22 @@ if options.use_new_config:
               config.participating      = 2**7 
               event_streams +=[7] 
        elif options.stream_config == 4:
-              config.participating      = 2**0 + 2**1
-              event_streams.extend([0,1])
+              config.participating      = 2**4
+              event_streams +=[4]
        elif options.stream_config == 5:
+              event_streams.extend([0,1])
+              config.participating      = 2**0 + 2**1
+       elif options.stream_config == 6:
               event_streams.extend([0,7])
               config.participating      = 2**0 + 2**7
-       elif options.stream_config == 6:
-              event_streams.extend([1,7])
-              config.participating      = 2**1 + 2**7 
        elif options.stream_config == 7:
-              config.participating      = 2**0 + 2**1 + 2**7 
+              config.participating      = 2**1 + 2**7
+              event_streams.extend([1,7])
+       elif options.stream_config == 8:
+              config.participating      = 2**0 + 2**4
+              event_streams.extend([0,4])
+       elif options.stream_config == 9:
+              config.participating      =2**0 + 2**1 + 2**7
               event_streams.extend([0,1,7])
        else:
               raise RuntimeError('Either no stream config or an invalid stream config specified, see --help for more information')
@@ -182,13 +188,13 @@ if options.use_new_config:
        #config.false_pos = float(far)
        config.p_thresh = options.pvalue
 
-       if (options.stream_config == 1) or (options.stream_config == 2) or (options.stream_config == 3):
+       if (options.stream_config == 1) or (options.stream_config == 2) or (options.stream_config == 3) or (options.stream_config == 4):
               if len(options.num_events_thresh) > 1:
                      print 'More number thresholds input than config streams chosen, using first number in list (%d)' % \
                                    options.num_events_thresh[0]
               config.N_thresh='{' + str(event_streams[0]) + ':' + str(options.num_events_thresh[0]) + '}' 
 
-       elif (options.stream_config == 4) or (options.stream_config == 5) or (options.stream_config == 6):
+       elif (options.stream_config == 5) or (options.stream_config == 6) or (options.stream_config == 7) or (options.stream_config == 8):
               if len(options.num_events_thresh) > 2:
                      print 'More number thresholds input than config streams chosen, using first two numbers in list \
                                    (%d and %d)' % (options.num_events_thresh[0], options.num_events_thresh[1])
@@ -224,8 +230,8 @@ if options.use_new_config:
        config.skymap_val1Desc    = 'N/A'                
        config.skymap_val2Desc    = 'N/A'
        config.skymap_val3Desc    = 'N/A'
-       config.validStart         = datetime(2012,1,1,0,0,0,0)
-       config.validStop          = datetime(2013,1,1,0,0,0,0)
+       config.validStart         = datetime(2008,6,4,9,20,13,0)
+       config.validStop          = datetime(2009,5,20,3,12,53,0)
        config.R_thresh           = 0.0    
                                
        config.forprint() 
