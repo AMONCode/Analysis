@@ -207,18 +207,18 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
     
 def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_name):
     """
-        Write into eventStreamConfig table for the archival data.
-        """
-    con = mdb.connect(host_name, user_name, passw_name, db_name)
+    Write into eventStreamConfig table for the archival data.
+    """
+    con = mdb.connect(host_name, user_name, passw_name, db_name)    
     cur = con.cursor()
     if stream_num==0:
         obs_name='IceCube'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
-                                                            '2009-06-01 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-                                                            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-                                                            'tabulated','bckgr.dat','0'))
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00', 
+            '2009-06-01 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
             con.commit()
         except mdb.Error, e:
             print 'Exception %s' %e
@@ -226,21 +226,21 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             con.rollback()
         
         con.close()
-    
+
     elif stream_num==4:
         obs_name='Swift'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
-                                                            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-                                                            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-                                                            'tabulated','bckgr.dat','0'))
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
+            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
             con.commit()
         except mdb.Error, e:
             print 'Exception %s' %e
             print 'Something went wrong, no data are written.'
             con.rollback()
-        
+    
         con.close()
     else:
         print "Not ready for other streams. Only IceCube and Swift for now."
@@ -323,8 +323,10 @@ def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist
     for i in range(NEVENTS):
         if (eventlist[i].stream == stream_name):
             try:
-                microsec=int(float('.'+str(eventlist[i].datetime).split('.')[1])*1000000)
- #               print 'microseconds %d' % microsec
+                if ('.' in str(eventlist[i].datetime)):
+                    microsec=int(float('.'+str(eventlist[i].datetime).split('.')[1])*1000000)
+                else:
+                    microsec=0
                 cur.execute("""INSERT INTO alert VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
                             %s,%s,%s,%s,%s,%s)""",(eventlist[i].stream,eventlist[i].id,
                             eventlist[i].rev,eventlist[i].datetime, microsec, 
