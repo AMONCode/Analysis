@@ -179,13 +179,15 @@ def pvalue_calc(evlist, conf, fcluster):
     streams_dict = ast.literal_eval(conf.N_thresh)
     len_streams = len(streams_dict)
     streams=streams_dict.keys()
-        
-    for kk in streams:
-        kk=str(kk)
-        rate+=rates[kk]
+    
+    # changed on 09/15/2014 in order to run Swift
+
+    #for kk in streams:
+        #kk=str(kk)
+        #rate+=rates[kk]
     # method bellow is not correct because all rates should be included in poisson process    
-    #for ii in xrange(ev_len):
-    #    rate+=evlist[kk].false_pos
+    for ii in xrange(ev_len):
+        rate+=evlist[ii].false_pos
     
     # time-space window used in analysis
     deltaT=conf.deltaT
@@ -368,7 +370,7 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                         else:
                             break         
                                            
-                    print "Lenght of time cluster is: %s" % (len(list_time),)
+                        #print "Lenght of time cluster is: %s" % (len(list_time),)
                         
                         # check space clustering for each multiplet from time cluster 
                         #containing new event (ev) in it
