@@ -13,10 +13,11 @@ from argparse import ArgumentParser
 import sys
 
 def parse_command_line():
-    parser = ArgumentParser()#usage='python swift_upload.py [--host address] [--username username] [--database name] [--output-config int] [ALERT CONFIG CHOICE] [ADDITIONAL OPTIONS]'
-    parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files")
+    parser = ArgumentParser()
+    parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files]")
     parser.add_argument("--fits-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data', help="Path to fits files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data]")
     parser.add_argument("--pvalue-file", default='pvalue_table.txt', help="Path to SNR to P-Value table [default: pvalue_table.txt]")
+    parser.add_argument("--scramble-timestamps", action="store_true", help="Use scrambled time stamps [default: False]")
     parser.add_argument("-H", "--host", metavar="address", default='db.hpc.rcc.psu.edu', 
             help="Database host address [default: db.hpc.rcc.psu.edu]")
     # TODO Add feature to pull username from login information so that the
@@ -136,8 +137,10 @@ class observation:
 		self.observation_time = row[data_list_arg['TIME']]
                 # TODO Add command line option to decide if using random time
                 # stamps or real ones
-		#self.time = (swift.met2day(self.observation_time)[0],) * self.num_detection
-		self.time = swift.random_time_stamp(self.num_detection)
+                if options.scramble_timestamps:
+                    self.time = swift.random_time_stamp(self.num_detection)
+                else:
+                    self.time = (swift.met2day(self.observation_time)[0],) * self.num_detection
 		self.time_msec = (swift.met2day(self.observation_time)[1],) * self.num_detection
 
 		# Get the ra and dec of the source
