@@ -28,6 +28,10 @@ The following python packages are required:
 
 * Twisted
 
+* PyOpenSSL
+
+* PyCrypto
+
 Other
 -----
 
