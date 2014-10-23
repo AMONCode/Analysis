@@ -15,11 +15,22 @@ This folder contains scripts to be run by user.
     i) Start RabbitMQ server^(*), which serves as a broker for transmitting messages
        about new received events between the AMON server and AMON analysis code:
        
-       sudo rabbitmq-server  
+       sudo rabbitmq-server 
+       or for daemon
+       
+       sudo rabbitmq-server detached
+        
        
     ii) Run AMON analysis code as a Celery worker:
     
         celery worker --app=analyser --concurrency=1 -l info 
+        
+        or for daemon
+        
+        celery worker --detach --pidfile="celery.pid" --logfile="celery.log" --app=analyser  
+        --concurrency=1 -l info 
+        
+        kill the process by kill `cat celery.pid`
         
     iii) Cd to network directory and start the AMON server:
     
@@ -28,8 +39,27 @@ This folder contains scripts to be run by user.
     iv) Start the AMON client to simulate observatories sending VOEvents to AMON server
         in real-time:
         
+        local option without TLS authorization
+        
         twistd -l client.log --pidfile client.pid clientpost --hostport "http://127.0.0.1:8000" 
         --epath /path_to_client_events
+        
+        Accessing AMON server @ PennState (certificate is needed: client.crt and client.key)
+        
+        Create a certificate request:
+        
+        yourcomputer>  openssl genrsa -out client.key 1024
+        yourcomputer>  openssl req -new -key client.key -out client.csr
+        
+        send client.csr to AMON, get client.crt from AMON and then:
+         
+        
+        twistd -l client.log --pidfile client.pid clientpostssl --hostport "https://isis.rcc.psu.edu/amon" 
+        --epath /path_to_client_events  --cfile client.crt --kfile client.key
+        
+        
+        
+        
                        
        
        
