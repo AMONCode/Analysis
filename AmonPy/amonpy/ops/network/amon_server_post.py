@@ -55,7 +55,8 @@ class EventPage(Resource):
                                             passwd = PasswordFancy, 
                                             host = HostFancyName,
                                             cp_min=1,
-                                            cp_max=1)
+                                            cp_max=1,
+                                            cp_reconnect=True)
         
         # initialize task for AMON analysis in analyser.runanal
     ana=AnalRT()
