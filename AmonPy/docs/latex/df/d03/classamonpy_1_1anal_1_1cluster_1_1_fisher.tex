@@ -21,8 +21,6 @@ def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a238e5334a3a13208ebeac5
 \item 
 def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_add8460bfd7a9fa30956eee8248ccff99}{x1}
 \item 
-def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a1865f423eaf9db7e167962310c3bf72c}{x2}
-\item 
 def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab95d705b923546dc9977d8171b6eab49}{cospsi}
 \item 
 def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a685cc6a7da95f2d37d5aac4eea88e244}{psi}
@@ -40,17 +38,11 @@ def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a8f261458556cf374fb773f
 def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_aa91ec0a66f3d15037cc2e9c4fe51e258}{ra0}
 \item 
 def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a60cc5f63c12c34f67e51de2dbf7b1ad2}{dec0}
-\item 
-def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a0818967bb958e432d500365356f25754}{psi1}
-\item 
-def \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_aec59ac332e02859dcc3e55e177ca6735}{psi2}
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a38c295960480aaacc74561dc8f9ef2af}{ev1}
-\item 
-\hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab2cce79b453ffcfced2266553ea60d19}{ev2}
+\hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher_a00d2f81ecb3a6a6f6258f39444d1fa60}{ev}
 \end{DoxyCompactItemize}
 \subsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
@@ -66,11 +58,11 @@ The small angle limit of \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher}{F
 
 Current version of the code only tests for clustering of pairs of events, but can be generalized in the future.
 
-Inputs\-: ev1, ev2 (a pair of event class objects)
+Inputs\-: \mbox{[}ev1, ev2\mbox{]} (a list of event class objects)
 
 Instances of the \hyperlink{classamonpy_1_1anal_1_1cluster_1_1_fisher}{Fisher} class contain methods that are useful for interpretting the relative position on the two event. 
 
-Definition at line 30 of file cluster.\-py.
+Definition at line 237 of file cluster.\-py.
 
 
 
@@ -80,13 +72,12 @@ Definition at line 30 of file cluster.\-py.
 \subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-cluster.\-Fisher.\-\_\-\-\_\-init\-\_\-\-\_\- (
 \begin{DoxyParamCaption}
 \item[{}]{self, }
-\item[{}]{ev1, }
-\item[{}]{ev2}
+\item[{}]{evlist}
 \end{DoxyParamCaption}
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a1e13053a9daa25129c9c2090b2834434}
 
 
-Definition at line 32 of file cluster.\-py.
+Definition at line 239 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a238e5334a3a13208ebeac508dedc55ff}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!\-\_\-\-\_\-del\-\_\-\-\_\-@{\-\_\-\-\_\-del\-\_\-\-\_\-}}
 \index{\-\_\-\-\_\-del\-\_\-\-\_\-@{\-\_\-\-\_\-del\-\_\-\-\_\-}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -97,7 +88,7 @@ Definition at line 32 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a238e5334a3a13208ebeac508dedc55ff}
 
 
-Definition at line 36 of file cluster.\-py.
+Definition at line 242 of file cluster.\-py.
 
 
 
@@ -111,7 +102,7 @@ Definition at line 36 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab95d705b923546dc9977d8171b6eab49}
 
 
-Definition at line 49 of file cluster.\-py.
+Definition at line 255 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a60cc5f63c12c34f67e51de2dbf7b1ad2}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!dec0@{dec0}}
 \index{dec0@{dec0}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -122,7 +113,7 @@ Definition at line 49 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a60cc5f63c12c34f67e51de2dbf7b1ad2}
 
 
-Definition at line 82 of file cluster.\-py.
+Definition at line 306 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_aaaec3b4e68a97b73d359858cdd11ad65}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!Nsigma@{Nsigma}}
 \index{Nsigma@{Nsigma}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -133,7 +124,7 @@ Definition at line 82 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_aaaec3b4e68a97b73d359858cdd11ad65}
 
 
-Definition at line 65 of file cluster.\-py.
+Definition at line 284 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a685cc6a7da95f2d37d5aac4eea88e244}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!psi@{psi}}
 \index{psi@{psi}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -144,29 +135,7 @@ Definition at line 65 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a685cc6a7da95f2d37d5aac4eea88e244}
 
 
-Definition at line 53 of file cluster.\-py.
-
-\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a0818967bb958e432d500365356f25754}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!psi1@{psi1}}
-\index{psi1@{psi1}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
-\subsubsection[{psi1}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-cluster.\-Fisher.\-psi1 (
-\begin{DoxyParamCaption}
-\item[{}]{self}
-\end{DoxyParamCaption}
-)}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a0818967bb958e432d500365356f25754}
-
-
-Definition at line 86 of file cluster.\-py.
-
-\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_aec59ac332e02859dcc3e55e177ca6735}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!psi2@{psi2}}
-\index{psi2@{psi2}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
-\subsubsection[{psi2}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-cluster.\-Fisher.\-psi2 (
-\begin{DoxyParamCaption}
-\item[{}]{self}
-\end{DoxyParamCaption}
-)}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_aec59ac332e02859dcc3e55e177ca6735}
-
-
-Definition at line 96 of file cluster.\-py.
+Definition at line 263 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_aa91ec0a66f3d15037cc2e9c4fe51e258}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!ra0@{ra0}}
 \index{ra0@{ra0}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -177,7 +146,7 @@ Definition at line 96 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_aa91ec0a66f3d15037cc2e9c4fe51e258}
 
 
-Definition at line 79 of file cluster.\-py.
+Definition at line 303 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a8f261458556cf374fb773fe17950610d}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!radec0@{radec0}}
 \index{radec0@{radec0}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -188,7 +157,7 @@ Definition at line 79 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a8f261458556cf374fb773fe17950610d}
 
 
-Definition at line 76 of file cluster.\-py.
+Definition at line 300 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_ac3ecfdabbf304533940d63c1af93de8f}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!sigma\-Q@{sigma\-Q}}
 \index{sigma\-Q@{sigma\-Q}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -199,7 +168,7 @@ Definition at line 76 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_ac3ecfdabbf304533940d63c1af93de8f}
 
 
-Definition at line 57 of file cluster.\-py.
+Definition at line 270 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab42c5b1d33517dacb0f4885607873780}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!sigma\-W@{sigma\-W}}
 \index{sigma\-W@{sigma\-W}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -210,7 +179,7 @@ Definition at line 57 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab42c5b1d33517dacb0f4885607873780}
 
 
-Definition at line 61 of file cluster.\-py.
+Definition at line 277 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a20eff95eb8d36f153875752a81fcadbc}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!x0@{x0}}
 \index{x0@{x0}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -221,7 +190,7 @@ Definition at line 61 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a20eff95eb8d36f153875752a81fcadbc}
 
 
-Definition at line 70 of file cluster.\-py.
+Definition at line 292 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_add8460bfd7a9fa30956eee8248ccff99}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!x1@{x1}}
 \index{x1@{x1}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
@@ -232,42 +201,24 @@ Definition at line 70 of file cluster.\-py.
 )}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_add8460bfd7a9fa30956eee8248ccff99}
 
 
-Definition at line 41 of file cluster.\-py.
-
-\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a1865f423eaf9db7e167962310c3bf72c}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!x2@{x2}}
-\index{x2@{x2}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
-\subsubsection[{x2}]{\setlength{\rightskip}{0pt plus 5cm}def amonpy.\-anal.\-cluster.\-Fisher.\-x2 (
-\begin{DoxyParamCaption}
-\item[{}]{self}
-\end{DoxyParamCaption}
-)}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a1865f423eaf9db7e167962310c3bf72c}
-
-
-Definition at line 45 of file cluster.\-py.
+Definition at line 247 of file cluster.\-py.
 
 
 
 \subsection{Member Data Documentation}
-\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a38c295960480aaacc74561dc8f9ef2af}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!ev1@{ev1}}
-\index{ev1@{ev1}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
-\subsubsection[{ev1}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-anal.\-cluster.\-Fisher.\-ev1}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a38c295960480aaacc74561dc8f9ef2af}
+\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a00d2f81ecb3a6a6f6258f39444d1fa60}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!ev@{ev}}
+\index{ev@{ev}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
+\subsubsection[{ev}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-anal.\-cluster.\-Fisher.\-ev}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a00d2f81ecb3a6a6f6258f39444d1fa60}
 
 
-Definition at line 34 of file cluster.\-py.
-
-\hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab2cce79b453ffcfced2266553ea60d19}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!ev2@{ev2}}
-\index{ev2@{ev2}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
-\subsubsection[{ev2}]{\setlength{\rightskip}{0pt plus 5cm}amonpy.\-anal.\-cluster.\-Fisher.\-ev2}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_ab2cce79b453ffcfced2266553ea60d19}
-
-
-Definition at line 35 of file cluster.\-py.
+Definition at line 241 of file cluster.\-py.
 
 \hypertarget{classamonpy_1_1anal_1_1cluster_1_1_fisher_a2c44a65df3f24bc786522df8d5aa2db7}{\index{amonpy\-::anal\-::cluster\-::\-Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}!num@{num}}
 \index{num@{num}!amonpy::anal::cluster::Fisher@{amonpy\-::anal\-::cluster\-::\-Fisher}}
 \subsubsection[{num}]{\setlength{\rightskip}{0pt plus 5cm}int amonpy.\-anal.\-cluster.\-Fisher.\-num = 0\hspace{0.3cm}{\ttfamily [static]}}}\label{classamonpy_1_1anal_1_1cluster_1_1_fisher_a2c44a65df3f24bc786522df8d5aa2db7}
 
 
-Definition at line 31 of file cluster.\-py.
+Definition at line 238 of file cluster.\-py.
 
 
 

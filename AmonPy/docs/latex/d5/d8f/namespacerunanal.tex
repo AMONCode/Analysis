@@ -19,7 +19,7 @@ Works with the Enthought Canopy package management, Rabitt\-M\-Q server as a bro
 
 To run (outside this directory called analizer)\-:
 
-celery worker --app=analyser -\/l info
+celery worker --app=analyser --concurrency=1 -\/l info
 
 where \hyperlink{dbaccess_8txt}{dbaccess.\-txt} contans a string in dictionary format, containing the information required to access the database
 

@@ -1,0 +1,100 @@
+\hypertarget{run__archival__gui_8py}{\section{amonpy/ops/run\-\_\-archival\-\_\-gui.py File Reference}
+\label{run__archival__gui_8py}\index{amonpy/ops/run\-\_\-archival\-\_\-gui.\-py@{amonpy/ops/run\-\_\-archival\-\_\-gui.\-py}}
+}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacerun__archival__gui}{run\-\_\-archival\-\_\-gui}
+\item 
+\hyperlink{namespacerun__archival}{run\-\_\-archival}
+\begin{DoxyCompactList}\small\item\em \begin{DoxyVerb} This is a top level script which imports
+ a large timeslice of events from the database and
+ executes an analysis on them to generate alerts.\end{DoxyVerb}
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Constant Groups}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacerun__archival__gui}{run\-\_\-archival\-\_\-gui}
+\item 
+\hyperlink{namespacerun__archival}{run\-\_\-archival}
+\begin{DoxyCompactList}\small\item\em \begin{DoxyVerb} This is a top level script which imports
+ a large timeslice of events from the database and
+ executes an analysis on them to generate alerts.\end{DoxyVerb}
+ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_ae4bf328fca6859457a543a7ff933ccfa}{run\-\_\-archival\-\_\-gui.\-Event} = event\-\_\-def()
+\item 
+list \hyperlink{namespacerun__archival__gui_a152f939cb3f2e943a37737fb505c7b7e}{run\-\_\-archival\-\_\-gui.\-filename} = sys.\-argv\mbox{[}1\mbox{]}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a9a26e2184288cff2d81e765003fe7897}{run\-\_\-archival\-\_\-gui.\-file} = open(filename)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a3008707290c47efb54081330e99bd7f4}{run\-\_\-archival\-\_\-gui.\-line} = file.\-readline()
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a243ccc20ff1988a6ee254f1436f1f540}{run\-\_\-archival\-\_\-gui.\-db} = ast.\-literal\-\_\-eval(line)
+\item 
+list \hyperlink{namespacerun__archival__gui_a300818b5e7911daac7a5ffc565ef38bb}{run\-\_\-archival\-\_\-gui.\-Host\-Fancy\-Name} = db\mbox{[}'host'\mbox{]}
+\item 
+list \hyperlink{namespacerun__archival__gui_aefe12f3665230898e8f53887190a2c43}{run\-\_\-archival\-\_\-gui.\-User\-Fancy\-Name} = db\mbox{[}'user'\mbox{]}
+\item 
+list \hyperlink{namespacerun__archival__gui_a6ff13b2dcf15748288e82dc02c7f189d}{run\-\_\-archival\-\_\-gui.\-Password\-Fancy} = db\mbox{[}'password'\mbox{]}
+\item 
+list \hyperlink{namespacerun__archival__gui_af7e6fd62864fd6f9bfa5ef7dff8e20e9}{run\-\_\-archival\-\_\-gui.\-D\-B\-Fancy\-Name} = db\mbox{[}'database'\mbox{]}
+\item 
+list \hyperlink{namespacerun__archival__gui_aa423912994ac1bddf7fcb25b590089d5}{run\-\_\-archival\-\_\-gui.\-choices\-\_\-conf}
+\item 
+string \hyperlink{namespacerun__archival__gui_ad1643ab4eafe2c9327907387e49d1763}{run\-\_\-archival\-\_\-gui.\-info} = 'Which Alert configuration?'
+\item 
+tuple \hyperlink{namespacerun__archival__gui_aee5d9d725a2d81626f709acca7420a84}{run\-\_\-archival\-\_\-gui.\-result\-\_\-dialog\-\_\-conf} = dialog\-\_\-choice.\-Select\-Choice(choices\-\_\-conf,info=info)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a1d8fd345205ef225bd22809ef7491177}{run\-\_\-archival\-\_\-gui.\-config} = ex\-Alert\-Config()
+\item 
+list \hyperlink{namespacerun__archival__gui_a663b3af69401dfd54271cd973d0bb968}{run\-\_\-archival\-\_\-gui.\-event\-\_\-streams} = \mbox{[}0,1,7\mbox{]}
+\item 
+int \hyperlink{namespacerun__archival__gui_a62873170b28c127df5a067091c237022}{run\-\_\-archival\-\_\-gui.\-stream\-\_\-num} = 1
+\item 
+int \hyperlink{namespacerun__archival__gui_a7a0000484d87d296a359fc208834f58b}{run\-\_\-archival\-\_\-gui.\-rev} = 0
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a0b79d0287b0d0657f1aa1af18063c1e1}{run\-\_\-archival\-\_\-gui.\-stream\-\_\-count}
+\item 
+list \hyperlink{namespacerun__archival__gui_ae5a341b12805f049c64adaa23e98c3ab}{run\-\_\-archival\-\_\-gui.\-choices\-\_\-stream}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_ab6fdfba3d0c721228ed99b51992b59af}{run\-\_\-archival\-\_\-gui.\-result\-\_\-dialog\-\_\-stream} = dialog\-\_\-choice.\-Select\-Choice(choices\-\_\-stream,info=info)
+\item 
+int \hyperlink{namespacerun__archival__gui_a3316510dcd59d172ae55c2f37998d130}{run\-\_\-archival\-\_\-gui.\-pvalue} = 0
+\item 
+string \hyperlink{namespacerun__archival__gui_ab8a2a553c59d2c9c0bd81a138341bdbd}{run\-\_\-archival\-\_\-gui.\-thresh1} = '\{'
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a9c3d13b4619e84a8e7a69c1f8586a6bc}{run\-\_\-archival\-\_\-gui.\-thresh2} = str(event\-\_\-streams\mbox{[}1\mbox{]})
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a74997656480908b3c860d53d2b06c6b5}{run\-\_\-archival\-\_\-gui.\-thresh3} = str(event\-\_\-streams\mbox{[}2\mbox{]})
+\item 
+list \hyperlink{namespacerun__archival__gui_a4abdf77bd62302aa406c3109694e07b8}{run\-\_\-archival\-\_\-gui.\-choices\-\_\-clust} = \mbox{[}'Fisher','New method (not supported yet)'\mbox{]}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a06b1db0dac381a36a3d08d53e32cef14}{run\-\_\-archival\-\_\-gui.\-result\-\_\-clust} = dialog\-\_\-choice.\-Select\-Choice(choices\-\_\-clust,info=info)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_acc1fabeb046529cb059968a74ee28886}{run\-\_\-archival\-\_\-gui.\-Time\-Slice} = timedelta.\-total\-\_\-seconds(config.\-valid\-Stop -\/ config.\-valid\-Start)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_abae7c9a7fe9ae6b56c4ceab0757610a4}{run\-\_\-archival\-\_\-gui.\-Time\-Start} = str(config.\-valid\-Start)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a010097e05cebeb13d608b126cfa3c7a8}{run\-\_\-archival\-\_\-gui.\-Time\-Stop} = str(config.\-valid\-Stop)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_af91f95bd327e5d074319142c030b1828}{run\-\_\-archival\-\_\-gui.\-t1} = time()
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a2b12ba57b71812997e5dd0f627c6b7fe}{run\-\_\-archival\-\_\-gui.\-events}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a7f38eabe30ed0eff6aec3000df2d83e3}{run\-\_\-archival\-\_\-gui.\-t2} = time()
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a7be598f74e925475644c60e7d7de9f85}{run\-\_\-archival\-\_\-gui.\-anal\-\_\-p}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a3e4b04aca47acb89e6fa3ae1b54ced46}{run\-\_\-archival\-\_\-gui.\-alerts} = client\-\_\-p.\-recv()
+\item 
+tuple \hyperlink{namespacerun__archival__gui_aed1f848fe03adbd8a175023f71246c2f}{run\-\_\-archival\-\_\-gui.\-alertlines} = db\-\_\-populate\-\_\-class.\-populate\-\_\-alertline(alerts)
+\item 
+list \hyperlink{namespacerun__archival__gui_a2d228f17b955250b06a982284ad9fdf6}{run\-\_\-archival\-\_\-gui.\-choices}
+\item 
+tuple \hyperlink{namespacerun__archival__gui_a8150e0f3711f1ecc9f609f017904320c}{run\-\_\-archival\-\_\-gui.\-result\-\_\-dialog} = dialog\-\_\-choice.\-Select\-Choice(choices,info=info)
+\item 
+tuple \hyperlink{namespacerun__archival__gui_aa8935b1559e71c8b6fb48106b2129880}{run\-\_\-archival\-\_\-gui.\-count}
+\end{DoxyCompactItemize}

@@ -1,0 +1,161 @@
+\hypertarget{namespaceswift__upload}{\section{swift\-\_\-upload Namespace Reference}
+\label{namespaceswift__upload}\index{swift\-\_\-upload@{swift\-\_\-upload}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classswift__upload_1_1attitude}{attitude}
+\begin{DoxyCompactList}\small\item\em Class to interpolate latitude, longitude, and elevation values from data taken from Swift attitude files The relevant data from the attitude files are currently grouped in txt files with four columns, in this order\-: time, latitude, longitude, elevation. \end{DoxyCompactList}\item 
+class \hyperlink{classswift__upload_1_1observation}{observation}
+\begin{DoxyCompactList}\small\item\em Class to store all of the information needed by the My\-S\-Q\-L database for a set of observations at a given time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceswift__upload_afb3aeedcd6324609616af510e7d5ab77}{parse\-\_\-command\-\_\-line}
+\item 
+def \hyperlink{namespaceswift__upload_a9d72a96223b34f720ff10ded383a85f4}{get\-\_\-swift\-\_\-data}
+\begin{DoxyCompactList}\small\item\em Obtain the swift data as a list of class objects. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceswift__upload_afd59363e3ba6ebbf496eba54eb48deab}{interpolate\-\_\-pvalue}
+\begin{DoxyCompactList}\small\item\em Open a file containing snr values and corresponding pvalues. \end{DoxyCompactList}\item 
+def \hyperlink{namespaceswift__upload_ae4b72aa67bc1f3f066e245971cee64b1}{db\-\_\-load}
+\begin{DoxyCompactList}\small\item\em Load the data into the My\-S\-Q\-L database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+tuple \hyperlink{namespaceswift__upload_a4d388713f6a0d16328488675c4d482a3}{options} = \hyperlink{namespaceswift__upload_afb3aeedcd6324609616af510e7d5ab77}{parse\-\_\-command\-\_\-line}()
+\begin{DoxyCompactList}\small\item\em \begin{DoxyVerb}                        ###
+\end{DoxyVerb}
+ Main \#\#\# \paragraph*{}\end{DoxyCompactList}\item 
+tuple \hyperlink{namespaceswift__upload_ae6ff833c36ee2cf47e509afe217a0617}{pw} = getpass.\-getpass('Database Password\-:')
+\item 
+tuple \hyperlink{namespaceswift__upload_a377519eb5588b9332f113754e4baa783}{positions} = \hyperlink{classswift__upload_1_1attitude}{attitude}(sorted(glob.\-glob(options.\-attitude\-\_\-files + '/attitude\-\_\-month$\ast$')))
+\item 
+\hyperlink{namespaceswift__upload_abd11718745781fc3b22a4e8afb312c7b}{pvalue\-\_\-file\-\_\-loc} = options.\-pvalue\-\_\-file
+\item 
+tuple \hyperlink{namespaceswift__upload_a3a9f04e4f02ad4c7b5626cee4d2888e8}{fits\-\_\-file\-\_\-locations} = sorted(glob.\-glob(options.\-fits\-\_\-files + '/$\ast$'))
+\item 
+tuple \hyperlink{namespaceswift__upload_a47786733b71afff4100ce30a5522235e}{pvalue\-\_\-interp\-\_\-class} = \hyperlink{namespaceswift__upload_afd59363e3ba6ebbf496eba54eb48deab}{interpolate\-\_\-pvalue}(\hyperlink{namespaceswift__upload_abd11718745781fc3b22a4e8afb312c7b}{pvalue\-\_\-file\-\_\-loc})
+\item 
+tuple \hyperlink{namespaceswift__upload_aa7b8b09b55bc451f3bf4383f952dbe80}{snr\-\_\-events} = \hyperlink{namespaceswift__upload_a9d72a96223b34f720ff10ded383a85f4}{get\-\_\-swift\-\_\-data}(fits\-\_\-file, \hyperlink{namespaceswift__upload_a47786733b71afff4100ce30a5522235e}{pvalue\-\_\-interp\-\_\-class}, \hyperlink{namespaceswift__upload_a377519eb5588b9332f113754e4baa783}{positions})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{namespaceswift__upload_ae4b72aa67bc1f3f066e245971cee64b1}{\index{swift\-\_\-upload@{swift\-\_\-upload}!db\-\_\-load@{db\-\_\-load}}
+\index{db\-\_\-load@{db\-\_\-load}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{db\-\_\-load}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-db\-\_\-load (
+\begin{DoxyParamCaption}
+\item[{}]{snr\-\_\-events, }
+\item[{}]{pw, }
+\item[{}]{options}
+\end{DoxyParamCaption}
+)}}\label{namespaceswift__upload_ae4b72aa67bc1f3f066e245971cee64b1}
+
+
+Load the data into the My\-S\-Q\-L database. 
+
+
+
+Definition at line 238 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_a9d72a96223b34f720ff10ded383a85f4}{\index{swift\-\_\-upload@{swift\-\_\-upload}!get\-\_\-swift\-\_\-data@{get\-\_\-swift\-\_\-data}}
+\index{get\-\_\-swift\-\_\-data@{get\-\_\-swift\-\_\-data}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{get\-\_\-swift\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-get\-\_\-swift\-\_\-data (
+\begin{DoxyParamCaption}
+\item[{}]{fits\-\_\-file\-\_\-loc, }
+\item[{}]{pvalue\-\_\-interp\-\_\-class, }
+\item[{}]{positions}
+\end{DoxyParamCaption}
+)}}\label{namespaceswift__upload_a9d72a96223b34f720ff10ded383a85f4}
+
+
+Obtain the swift data as a list of class objects. 
+
+
+
+Definition at line 196 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_afd59363e3ba6ebbf496eba54eb48deab}{\index{swift\-\_\-upload@{swift\-\_\-upload}!interpolate\-\_\-pvalue@{interpolate\-\_\-pvalue}}
+\index{interpolate\-\_\-pvalue@{interpolate\-\_\-pvalue}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{interpolate\-\_\-pvalue}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-interpolate\-\_\-pvalue (
+\begin{DoxyParamCaption}
+\item[{}]{pvalue\-\_\-file\-\_\-loc}
+\end{DoxyParamCaption}
+)}}\label{namespaceswift__upload_afd59363e3ba6ebbf496eba54eb48deab}
+
+
+Open a file containing snr values and corresponding pvalues. 
+
+Use to created interpolate object 
+
+Definition at line 222 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_afb3aeedcd6324609616af510e7d5ab77}{\index{swift\-\_\-upload@{swift\-\_\-upload}!parse\-\_\-command\-\_\-line@{parse\-\_\-command\-\_\-line}}
+\index{parse\-\_\-command\-\_\-line@{parse\-\_\-command\-\_\-line}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{parse\-\_\-command\-\_\-line}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-parse\-\_\-command\-\_\-line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{namespaceswift__upload_afb3aeedcd6324609616af510e7d5ab77}
+
+
+Definition at line 15 of file swift\-\_\-upload.\-py.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{namespaceswift__upload_a3a9f04e4f02ad4c7b5626cee4d2888e8}{\index{swift\-\_\-upload@{swift\-\_\-upload}!fits\-\_\-file\-\_\-locations@{fits\-\_\-file\-\_\-locations}}
+\index{fits\-\_\-file\-\_\-locations@{fits\-\_\-file\-\_\-locations}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{fits\-\_\-file\-\_\-locations}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-fits\-\_\-file\-\_\-locations = sorted(glob.\-glob(options.\-fits\-\_\-files + '/$\ast$'))}}\label{namespaceswift__upload_a3a9f04e4f02ad4c7b5626cee4d2888e8}
+
+
+Definition at line 286 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_a4d388713f6a0d16328488675c4d482a3}{\index{swift\-\_\-upload@{swift\-\_\-upload}!options@{options}}
+\index{options@{options}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{options}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-options = {\bf parse\-\_\-command\-\_\-line}()}}\label{namespaceswift__upload_a4d388713f6a0d16328488675c4d482a3}
+
+
+\begin{DoxyVerb}                        ###
+\end{DoxyVerb}
+ Main \#\#\# \paragraph*{}
+
+
+
+Definition at line 277 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_a377519eb5588b9332f113754e4baa783}{\index{swift\-\_\-upload@{swift\-\_\-upload}!positions@{positions}}
+\index{positions@{positions}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{positions}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-positions = {\bf attitude}(sorted(glob.\-glob(options.\-attitude\-\_\-files + '/attitude\-\_\-month$\ast$')))}}\label{namespaceswift__upload_a377519eb5588b9332f113754e4baa783}
+
+
+Definition at line 284 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_abd11718745781fc3b22a4e8afb312c7b}{\index{swift\-\_\-upload@{swift\-\_\-upload}!pvalue\-\_\-file\-\_\-loc@{pvalue\-\_\-file\-\_\-loc}}
+\index{pvalue\-\_\-file\-\_\-loc@{pvalue\-\_\-file\-\_\-loc}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{pvalue\-\_\-file\-\_\-loc}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-pvalue\-\_\-file\-\_\-loc = options.\-pvalue\-\_\-file}}\label{namespaceswift__upload_abd11718745781fc3b22a4e8afb312c7b}
+
+
+Definition at line 285 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_a47786733b71afff4100ce30a5522235e}{\index{swift\-\_\-upload@{swift\-\_\-upload}!pvalue\-\_\-interp\-\_\-class@{pvalue\-\_\-interp\-\_\-class}}
+\index{pvalue\-\_\-interp\-\_\-class@{pvalue\-\_\-interp\-\_\-class}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{pvalue\-\_\-interp\-\_\-class}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-pvalue\-\_\-interp\-\_\-class = {\bf interpolate\-\_\-pvalue}({\bf pvalue\-\_\-file\-\_\-loc})}}\label{namespaceswift__upload_a47786733b71afff4100ce30a5522235e}
+
+
+Definition at line 289 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_ae6ff833c36ee2cf47e509afe217a0617}{\index{swift\-\_\-upload@{swift\-\_\-upload}!pw@{pw}}
+\index{pw@{pw}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{pw}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-pw = getpass.\-getpass('Database Password\-:')}}\label{namespaceswift__upload_ae6ff833c36ee2cf47e509afe217a0617}
+
+
+Definition at line 280 of file swift\-\_\-upload.\-py.
+
+\hypertarget{namespaceswift__upload_aa7b8b09b55bc451f3bf4383f952dbe80}{\index{swift\-\_\-upload@{swift\-\_\-upload}!snr\-\_\-events@{snr\-\_\-events}}
+\index{snr\-\_\-events@{snr\-\_\-events}!swift_upload@{swift\-\_\-upload}}
+\subsubsection[{snr\-\_\-events}]{\setlength{\rightskip}{0pt plus 5cm}tuple swift\-\_\-upload.\-snr\-\_\-events = {\bf get\-\_\-swift\-\_\-data}(fits\-\_\-file, {\bf pvalue\-\_\-interp\-\_\-class}, {\bf positions})}}\label{namespaceswift__upload_aa7b8b09b55bc451f3bf4383f952dbe80}
+
+
+Definition at line 293 of file swift\-\_\-upload.\-py.
+

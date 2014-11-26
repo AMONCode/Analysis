@@ -1,0 +1,157 @@
+\hypertarget{classswift__upload_1_1attitude}{\section{swift\-\_\-upload.\-attitude Class Reference}
+\label{classswift__upload_1_1attitude}\index{swift\-\_\-upload.\-attitude@{swift\-\_\-upload.\-attitude}}
+}
+
+
+Class to interpolate latitude, longitude, and elevation values from data taken from Swift attitude files The relevant data from the attitude files are currently grouped in txt files with four columns, in this order\-: time, latitude, longitude, elevation.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classswift__upload_1_1attitude_ac99f688772e96b5303f40adefa07e646}{\-\_\-\-\_\-init\-\_\-\-\_\-}
+\item 
+def \hyperlink{classswift__upload_1_1attitude_a393d23e7314de06fd487536ae42adf8c}{compute\-\_\-interpolate\-\_\-position}
+\item 
+def \hyperlink{classswift__upload_1_1attitude_abd05d9be607987027b4e5670f53c5b17}{interpolate\-\_\-position}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a7eb9757c91199dd9a44246678daa1049}{file\-\_\-locs}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a5a86e47a33e8621d28b5eb4fd600ff6f}{file\-\_\-num}
+\item 
+\hyperlink{classswift__upload_1_1attitude_ac941b470c877ac9b1e9d6e5130fdd82e}{files\-\_\-exhausted}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a31fae6bcf3664084a8ff477d6b780e9e}{attitude\-\_\-time}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a6d512f1ccc9aef20f398c074c4fee60f}{interp\-\_\-latitude}
+\item 
+\hyperlink{classswift__upload_1_1attitude_acc0cf2dc8573ea6cebf0e3fd83df6dd7}{interp\-\_\-longitude}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a7604e09edcd1b292c656a937fb33d462}{interp\-\_\-elevation}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a8644c4ef3043a6ed4173a22a158855c5}{warning\-\_\-gaps}
+\item 
+\hyperlink{classswift__upload_1_1attitude_a7e94e961a197f72b4ce146a86101e25b}{invalid\-\_\-gaps}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class to interpolate latitude, longitude, and elevation values from data taken from Swift attitude files The relevant data from the attitude files are currently grouped in txt files with four columns, in this order\-: time, latitude, longitude, elevation. 
+
+Definition at line 34 of file swift\-\_\-upload.\-py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classswift__upload_1_1attitude_ac99f688772e96b5303f40adefa07e646}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-init\-\_\-\-\_\-@{\-\_\-\-\_\-init\-\_\-\-\_\-}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{\-\_\-\-\_\-init\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-attitude.\-\_\-\-\_\-init\-\_\-\-\_\- (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{pos\-\_\-files}
+\end{DoxyParamCaption}
+)}}\label{classswift__upload_1_1attitude_ac99f688772e96b5303f40adefa07e646}
+
+
+Definition at line 35 of file swift\-\_\-upload.\-py.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classswift__upload_1_1attitude_a393d23e7314de06fd487536ae42adf8c}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!compute\-\_\-interpolate\-\_\-position@{compute\-\_\-interpolate\-\_\-position}}
+\index{compute\-\_\-interpolate\-\_\-position@{compute\-\_\-interpolate\-\_\-position}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{compute\-\_\-interpolate\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-attitude.\-compute\-\_\-interpolate\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}}\label{classswift__upload_1_1attitude_a393d23e7314de06fd487536ae42adf8c}
+
+
+Definition at line 43 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_abd05d9be607987027b4e5670f53c5b17}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!interpolate\-\_\-position@{interpolate\-\_\-position}}
+\index{interpolate\-\_\-position@{interpolate\-\_\-position}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{interpolate\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}def swift\-\_\-upload.\-attitude.\-interpolate\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{event}
+\end{DoxyParamCaption}
+)}}\label{classswift__upload_1_1attitude_abd05d9be607987027b4e5670f53c5b17}
+
+
+Definition at line 71 of file swift\-\_\-upload.\-py.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classswift__upload_1_1attitude_a31fae6bcf3664084a8ff477d6b780e9e}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!attitude\-\_\-time@{attitude\-\_\-time}}
+\index{attitude\-\_\-time@{attitude\-\_\-time}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{attitude\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-attitude\-\_\-time}}\label{classswift__upload_1_1attitude_a31fae6bcf3664084a8ff477d6b780e9e}
+
+
+Definition at line 53 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a7eb9757c91199dd9a44246678daa1049}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!file\-\_\-locs@{file\-\_\-locs}}
+\index{file\-\_\-locs@{file\-\_\-locs}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{file\-\_\-locs}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-file\-\_\-locs}}\label{classswift__upload_1_1attitude_a7eb9757c91199dd9a44246678daa1049}
+
+
+Definition at line 38 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a5a86e47a33e8621d28b5eb4fd600ff6f}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!file\-\_\-num@{file\-\_\-num}}
+\index{file\-\_\-num@{file\-\_\-num}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{file\-\_\-num}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-file\-\_\-num}}\label{classswift__upload_1_1attitude_a5a86e47a33e8621d28b5eb4fd600ff6f}
+
+
+Definition at line 39 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_ac941b470c877ac9b1e9d6e5130fdd82e}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!files\-\_\-exhausted@{files\-\_\-exhausted}}
+\index{files\-\_\-exhausted@{files\-\_\-exhausted}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{files\-\_\-exhausted}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-files\-\_\-exhausted}}\label{classswift__upload_1_1attitude_ac941b470c877ac9b1e9d6e5130fdd82e}
+
+
+Definition at line 41 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a7604e09edcd1b292c656a937fb33d462}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!interp\-\_\-elevation@{interp\-\_\-elevation}}
+\index{interp\-\_\-elevation@{interp\-\_\-elevation}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{interp\-\_\-elevation}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-interp\-\_\-elevation}}\label{classswift__upload_1_1attitude_a7604e09edcd1b292c656a937fb33d462}
+
+
+Definition at line 59 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a6d512f1ccc9aef20f398c074c4fee60f}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!interp\-\_\-latitude@{interp\-\_\-latitude}}
+\index{interp\-\_\-latitude@{interp\-\_\-latitude}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{interp\-\_\-latitude}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-interp\-\_\-latitude}}\label{classswift__upload_1_1attitude_a6d512f1ccc9aef20f398c074c4fee60f}
+
+
+Definition at line 57 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_acc0cf2dc8573ea6cebf0e3fd83df6dd7}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!interp\-\_\-longitude@{interp\-\_\-longitude}}
+\index{interp\-\_\-longitude@{interp\-\_\-longitude}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{interp\-\_\-longitude}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-interp\-\_\-longitude}}\label{classswift__upload_1_1attitude_acc0cf2dc8573ea6cebf0e3fd83df6dd7}
+
+
+Definition at line 58 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a7e94e961a197f72b4ce146a86101e25b}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!invalid\-\_\-gaps@{invalid\-\_\-gaps}}
+\index{invalid\-\_\-gaps@{invalid\-\_\-gaps}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{invalid\-\_\-gaps}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-invalid\-\_\-gaps}}\label{classswift__upload_1_1attitude_a7e94e961a197f72b4ce146a86101e25b}
+
+
+Definition at line 69 of file swift\-\_\-upload.\-py.
+
+\hypertarget{classswift__upload_1_1attitude_a8644c4ef3043a6ed4173a22a158855c5}{\index{swift\-\_\-upload\-::attitude@{swift\-\_\-upload\-::attitude}!warning\-\_\-gaps@{warning\-\_\-gaps}}
+\index{warning\-\_\-gaps@{warning\-\_\-gaps}!swift_upload::attitude@{swift\-\_\-upload\-::attitude}}
+\subsubsection[{warning\-\_\-gaps}]{\setlength{\rightskip}{0pt plus 5cm}swift\-\_\-upload.\-attitude.\-warning\-\_\-gaps}}\label{classswift__upload_1_1attitude_a8644c4ef3043a6ed4173a22a158855c5}
+
+
+Definition at line 68 of file swift\-\_\-upload.\-py.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+amonpy/dbase/detector\-\_\-specific/\hyperlink{swift__upload_8py}{swift\-\_\-upload.\-py}\end{DoxyCompactItemize}
