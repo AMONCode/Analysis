@@ -83,6 +83,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">run_archival Namespace Reference</div>  </div>
@@ -94,32 +95,21 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
  executes an analysis on them to generate alerts.</pre>  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a020b34744fef770ee7c2d058e26329e1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a020b34744fef770ee7c2d058e26329e1">parse_command_line</a></td></tr>
+<tr class="separator:a020b34744fef770ee7c2d058e26329e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a4e34d883a21aad086411da12b9df04af"><td class="memItemLeft" align="right" valign="top">dictionary&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a4e34d883a21aad086411da12b9df04af">missing_requirements</a> = {}</td></tr>
+<tr class="separator:a4e34d883a21aad086411da12b9df04af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f433eaf745d43b1793399014f83b4d4"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a4f433eaf745d43b1793399014f83b4d4">required_arguments</a> = ['host','username','database','output_config']</td></tr>
+<tr class="separator:a4f433eaf745d43b1793399014f83b4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5770f98d6d8edce5553721e9cb3873fd"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a5770f98d6d8edce5553721e9cb3873fd">missing_args_str</a> = 'Missing the following required options:'</td></tr>
+<tr class="separator:a5770f98d6d8edce5553721e9cb3873fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81b9709cc3c8589bfc7ecd72c354cba6"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a81b9709cc3c8589bfc7ecd72c354cba6">Event</a> = event_def()</td></tr>
 <tr class="separator:a81b9709cc3c8589bfc7ecd72c354cba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad69d736434dc745a1e6b5ba5890edf45"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ad69d736434dc745a1e6b5ba5890edf45">filename</a> = sys.argv[1]</td></tr>
-<tr class="separator:ad69d736434dc745a1e6b5ba5890edf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dfbcbcaa557fe14b2d806be5becb9c8"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a7dfbcbcaa557fe14b2d806be5becb9c8">file</a> = open(<a class="el" href="../../d6/de1/namespacerun__archival.html#ad69d736434dc745a1e6b5ba5890edf45">filename</a>)</td></tr>
-<tr class="separator:a7dfbcbcaa557fe14b2d806be5becb9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d2168a41c4abe996b487a690446cea"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ab8d2168a41c4abe996b487a690446cea">line</a> = file.readline()</td></tr>
-<tr class="separator:ab8d2168a41c4abe996b487a690446cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76dda95c4c4434f57e40766fc2aff53c"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a> = ast.literal_eval(<a class="el" href="../../d6/de1/namespacerun__archival.html#ab8d2168a41c4abe996b487a690446cea">line</a>)</td></tr>
-<tr class="separator:a76dda95c4c4434f57e40766fc2aff53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5fa54210432cb72d27084b733c3cdc0"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ab5fa54210432cb72d27084b733c3cdc0">HostFancyName</a> = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['host']</td></tr>
-<tr class="separator:ab5fa54210432cb72d27084b733c3cdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3d0610b847435ac05cfa998baad6da1"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ad3d0610b847435ac05cfa998baad6da1">UserFancyName</a> = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['user']</td></tr>
-<tr class="separator:ad3d0610b847435ac05cfa998baad6da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbfa915ad2708566274573eae9d849ad"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#adbfa915ad2708566274573eae9d849ad">PasswordFancy</a> = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['password']</td></tr>
-<tr class="separator:adbfa915ad2708566274573eae9d849ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b6a8f18621f35aec3e99d318bca2898"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a4b6a8f18621f35aec3e99d318bca2898">DBFancyName</a> = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['database']</td></tr>
-<tr class="separator:a4b6a8f18621f35aec3e99d318bca2898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a">choices_conf</a></td></tr>
-<tr class="separator:aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ab6dc99642b199ed41dfc7ac9c88a92"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a> = 'Which <a class="el" href="../../d1/d95/classamonpy_1_1dbase_1_1db__classes_1_1_alert.html">Alert</a> configuration?'</td></tr>
-<tr class="separator:a8ab6dc99642b199ed41dfc7ac9c88a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95ebfc7a9f4c5fdcac7e606bd1c8b6af"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a95ebfc7a9f4c5fdcac7e606bd1c8b6af">result_dialog_conf</a> = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a">choices_conf</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td></tr>
-<tr class="separator:a95ebfc7a9f4c5fdcac7e606bd1c8b6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe42e5e247442fb2afd7c8aa5322cd5f"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#abe42e5e247442fb2afd7c8aa5322cd5f">config</a> = exAlertConfig()</td></tr>
 <tr class="separator:abe42e5e247442fb2afd7c8aa5322cd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a175f39c7d10885511c4623d3425db6ba"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a175f39c7d10885511c4623d3425db6ba">event_streams</a> = [0,1,7]</td></tr>
@@ -132,20 +122,12 @@ Variables</h2></td></tr>
 <tr class="separator:a1aa2ba0984af9e6525f66fb7d1f912d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18e24cc5c90db59c1cff4c0f69f82fa6"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a18e24cc5c90db59c1cff4c0f69f82fa6">choices_stream</a></td></tr>
 <tr class="separator:a18e24cc5c90db59c1cff4c0f69f82fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1783f56496cd7db6da799a46bff93794"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a1783f56496cd7db6da799a46bff93794">result_dialog_stream</a> = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a18e24cc5c90db59c1cff4c0f69f82fa6">choices_stream</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td></tr>
-<tr class="separator:a1783f56496cd7db6da799a46bff93794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8f3f0889be632da0acd346f3ec2d0ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ac8f3f0889be632da0acd346f3ec2d0ae">pvalue</a> = 0</td></tr>
-<tr class="separator:ac8f3f0889be632da0acd346f3ec2d0ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a345979c5efe939df4bbf314d62511433"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a345979c5efe939df4bbf314d62511433">thresh1</a> = '{'</td></tr>
 <tr class="separator:a345979c5efe939df4bbf314d62511433"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0af2b82ec84c97c5e9a4cffcec972c3"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#aa0af2b82ec84c97c5e9a4cffcec972c3">thresh2</a> = str(<a class="el" href="../../d6/de1/namespacerun__archival.html#a175f39c7d10885511c4623d3425db6ba">event_streams</a>[1])</td></tr>
 <tr class="separator:aa0af2b82ec84c97c5e9a4cffcec972c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59a2df7dced0835b40b789af0ee70d18"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a59a2df7dced0835b40b789af0ee70d18">thresh3</a> = str(<a class="el" href="../../d6/de1/namespacerun__archival.html#a175f39c7d10885511c4623d3425db6ba">event_streams</a>[2])</td></tr>
 <tr class="separator:a59a2df7dced0835b40b789af0ee70d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aba0598698cad93478f99a531838ef4"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a1aba0598698cad93478f99a531838ef4">choices_clust</a> = ['Fisher','New method (not supported yet)']</td></tr>
-<tr class="separator:a1aba0598698cad93478f99a531838ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a722e4f43ec0f9bfe74c6535f3ebe2f62"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a722e4f43ec0f9bfe74c6535f3ebe2f62">result_clust</a> = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a1aba0598698cad93478f99a531838ef4">choices_clust</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td></tr>
-<tr class="separator:a722e4f43ec0f9bfe74c6535f3ebe2f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad807127baa562a1a1f13c1c41dc9ff7c"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ad807127baa562a1a1f13c1c41dc9ff7c">TimeSlice</a> = timedelta.total_seconds(config.validStop - config.validStart)</td></tr>
 <tr class="separator:ad807127baa562a1a1f13c1c41dc9ff7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d4e2d27208c61f6d716aabecf14cb9"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a53d4e2d27208c61f6d716aabecf14cb9">TimeStart</a> = str(config.validStart)</td></tr>
@@ -164,10 +146,6 @@ Variables</h2></td></tr>
 <tr class="separator:af84da43386d4cf1664600fe963e0cc67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a589caa564ea001aef6438ad3603fb021"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a589caa564ea001aef6438ad3603fb021">alertlines</a> = db_populate_class.populate_alertline(<a class="el" href="../../d6/de1/namespacerun__archival.html#af84da43386d4cf1664600fe963e0cc67">alerts</a>)</td></tr>
 <tr class="separator:a589caa564ea001aef6438ad3603fb021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21a8dd8c60178165d7db340928c7db9b"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#a21a8dd8c60178165d7db340928c7db9b">choices</a></td></tr>
-<tr class="separator:a21a8dd8c60178165d7db340928c7db9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab722c99065f3217e62daaeec3f84e6b"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#aab722c99065f3217e62daaeec3f84e6b">result_dialog</a> = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a21a8dd8c60178165d7db340928c7db9b">choices</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td></tr>
-<tr class="separator:aab722c99065f3217e62daaeec3f84e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4dad5a97c86185353fedf0feefa562e"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/de1/namespacerun__archival.html#ab4dad5a97c86185353fedf0feefa562e">count</a></td></tr>
 <tr class="separator:ab4dad5a97c86185353fedf0feefa562e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -177,7 +155,25 @@ Variables</h2></td></tr>
  executes an analysis on them to generate alerts.</pre> <p>Works with the Enthought Canopy package management</p>
 <p>Example: &gt; python <a class="el" href="../../dc/dab/run__archival_8py.html">run_archival.py</a> <a class="el" href="../../db/da5/dbaccess_8txt.html">dbaccess.txt</a></p>
 <p>where <a class="el" href="../../db/da5/dbaccess_8txt.html">dbaccess.txt</a> contans a string in dictionary format, containing the information required to access the database </p>
-</div><h2 class="groupheader">Variable Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a020b34744fef770ee7c2d058e26329e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def run_archival.parse_command_line </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00048">48</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="a589caa564ea001aef6438ad3603fb021"></a>
 <div class="memitem">
 <div class="memproto">
@@ -188,7 +184,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00256">256</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00303">303</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -202,7 +198,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00245">245</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00280">280</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -218,53 +214,7 @@ Variables</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= multiprocessing.Process(target=analysis.anal,</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                    args=((server_p,client_p),config))</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00230">230</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a21a8dd8c60178165d7db340928c7db9b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.choices</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= [<span class="stringliteral">&#39;Do not write to DB&#39;</span>,<span class="stringliteral">&#39;Overwrite alert stream&#39;</span>,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;           <span class="stringliteral">&#39;Make new alert stream&#39;</span>, <span class="stringliteral">&#39;Cancel&#39;</span>]</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00263">263</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1aba0598698cad93478f99a531838ef4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.choices_clust = ['Fisher','New method (not supported yet)']</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00180">180</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.choices_conf</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= [<span class="stringliteral">&#39;Use test config&#39;</span>,<span class="stringliteral">&#39;Get config from DB&#39;</span>,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;              <span class="stringliteral">&#39;Create new config&#39;</span>,<span class="stringliteral">&#39;Cancel&#39;</span>]</div>
-</div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00075">75</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00265">265</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -278,9 +228,9 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= [<span class="stringliteral">&#39;IceCube only&#39;</span>,<span class="stringliteral">&#39;ANTARES only&#39;</span>, <span class="stringliteral">&#39;HAWC only&#39;</span>, <span class="stringliteral">&#39;IceCube + ANTARES&#39;</span>,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                    <span class="stringliteral">&#39;IceCube + HAWC&#39;</span>, <span class="stringliteral">&#39;ANTARES + HAWC&#39;</span>,<span class="stringliteral">&#39;All&#39;</span>, <span class="stringliteral">&#39;Cancel&#39;</span>]</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                    <span class="stringliteral">&#39;IceCube + HAWC&#39;</span>, <span class="stringliteral">&#39;ANTARES + HAWC&#39;</span>,<span class="stringliteral">&#39;IceCube + Swift&#39;</span>,<span class="stringliteral">&#39;All&#39;</span>, <span class="stringliteral">&#39;Cancel&#39;</span>]</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00110">110</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00154">154</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -294,7 +244,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00081">81</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00127">127</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -307,38 +257,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.alert_count(stream_num,<span class="stringliteral">&quot;alert&quot;</span>,HostFancyName,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                           UserFancyName,PasswordFancy,DBFancyName)</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.alert_count(stream_num,<span class="stringliteral">&quot;alert&quot;</span>,options.host,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                           options.username,options.password,options.database)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00273">273</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a76dda95c4c4434f57e40766fc2aff53c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.db = ast.literal_eval(<a class="el" href="../../d6/de1/namespacerun__archival.html#ab8d2168a41c4abe996b487a690446cea">line</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00059">59</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4b6a8f18621f35aec3e99d318bca2898"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.DBFancyName = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['database']</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00064">64</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00315">315</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -352,7 +274,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00049">49</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00122">122</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -366,7 +288,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00083">83</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00129">129</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -379,164 +301,52 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.read_event_timeslice_streams(event_streams, TimeStart,TimeSlice,HostFancyName,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                    UserFancyName,PasswordFancy,DBFancyName)</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.read_event_timeslice_streams(event_streams, TimeStart,TimeSlice,options.host,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                    options.username,options.password,options.database)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00218">218</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00253">253</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7dfbcbcaa557fe14b2d806be5becb9c8"></a>
+<a class="anchor" id="a5770f98d6d8edce5553721e9cb3873fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tuple run_archival.file = open(<a class="el" href="../../d6/de1/namespacerun__archival.html#ad69d736434dc745a1e6b5ba5890edf45">filename</a>)</td>
+          <td class="memname">string run_archival.missing_args_str = 'Missing the following required options:'</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00057">57</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00102">102</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad69d736434dc745a1e6b5ba5890edf45"></a>
+<a class="anchor" id="a4e34d883a21aad086411da12b9df04af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">string run_archival.filename = sys.argv[1]</td>
+          <td class="memname">dictionary run_archival.missing_requirements = {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00054">54</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00092">92</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5fa54210432cb72d27084b733c3cdc0"></a>
+<a class="anchor" id="a4f433eaf745d43b1793399014f83b4d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">list run_archival.HostFancyName = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['host']</td>
+          <td class="memname">list run_archival.required_arguments = ['host','username','database','output_config']</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00061">61</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8ab6dc99642b199ed41dfc7ac9c88a92"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">string run_archival.info = 'Which <a class="el" href="../../d1/d95/classamonpy_1_1dbase_1_1db__classes_1_1_alert.html">Alert</a> configuration?'</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00077">77</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab8d2168a41c4abe996b487a690446cea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.line = file.readline()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00058">58</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="adbfa915ad2708566274573eae9d849ad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.PasswordFancy = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['password']</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00063">63</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac8f3f0889be632da0acd346f3ec2d0ae"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.pvalue = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00143">143</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a722e4f43ec0f9bfe74c6535f3ebe2f62"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.result_clust = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a1aba0598698cad93478f99a531838ef4">choices_clust</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00181">181</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aab722c99065f3217e62daaeec3f84e6b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.result_dialog = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a21a8dd8c60178165d7db340928c7db9b">choices</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00266">266</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a95ebfc7a9f4c5fdcac7e606bd1c8b6af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.result_dialog_conf = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#aa8dcfb9c105b84ffc8ceb3c2cb4e6e4a">choices_conf</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00078">78</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a1783f56496cd7db6da799a46bff93794"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple run_archival.result_dialog_stream = dialog_choice.SelectChoice(<a class="el" href="../../d6/de1/namespacerun__archival.html#a18e24cc5c90db59c1cff4c0f69f82fa6">choices_stream</a>,<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>=<a class="el" href="../../d6/de1/namespacerun__archival.html#a8ab6dc99642b199ed41dfc7ac9c88a92">info</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00113">113</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00093">93</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -550,7 +360,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00088">88</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00134">134</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -563,10 +373,10 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.stream_count_alertconfig(HostFancyName,</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                          UserFancyName,PasswordFancy,DBFancyName)</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="code" href="../../d6/de1/namespacerun__archival.html">    1</a></span>&#160;= db_read.stream_count_alertconfig(options.host,</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                          options.username,options.password,options.database)</div>
 </div><!-- fragment -->
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00102">102</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00145">145</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -580,7 +390,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00087">87</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00133">133</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -594,7 +404,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00217">217</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00252">252</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -608,7 +418,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00220">220</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00255">255</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -622,7 +432,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00157">157</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00202">202</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -636,7 +446,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00160">160</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00204">204</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -650,7 +460,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00171">171</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00215">215</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -664,7 +474,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00214">214</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00249">249</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -678,7 +488,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00215">215</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00250">250</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
@@ -692,28 +502,14 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00216">216</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad3d0610b847435ac05cfa998baad6da1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list run_archival.UserFancyName = <a class="el" href="../../d6/de1/namespacerun__archival.html#a76dda95c4c4434f57e40766fc2aff53c">db</a>['user']</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00062">62</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
+<p>Definition at line <a class="el" href="../../dc/dab/run__archival_8py_source.html#l00251">251</a> of file <a class="el" href="../../dc/dab/run__archival_8py_source.html">run_archival.py</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 14 2014 18:38:33 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 25 2014 22:22:43 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

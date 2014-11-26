@@ -13,5 +13,6 @@ var searchData=
   ['alertservicemaker',['AlertServiceMaker',['../da/d44/classalertsend__plugin_1_1_alert_service_maker.html',1,'alertsend_plugin']]],
   ['altaz',['AltAz',['../d7/de6/classamonpy_1_1sim_1_1sidereal__m_1_1_alt_az.html',1,'amonpy::sim::sidereal_m']]],
   ['altaz',['AltAz',['../db/d88/classamonpy_1_1sim_1_1sidereal_1_1_alt_az.html',1,'amonpy::sim::sidereal']]],
-  ['analrt',['AnalRT',['../d7/dd8/classanalyser_1_1runanal_1_1_anal_r_t.html',1,'analyser::runanal']]]
+  ['analrt',['AnalRT',['../d7/dd8/classanalyser_1_1runanal_1_1_anal_r_t.html',1,'analyser::runanal']]],
+  ['attitude',['attitude',['../d5/d94/classswift__upload_1_1attitude.html',1,'swift_upload']]]
 ];

@@ -95,13 +95,13 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
  at the time that AMON server starts running.</pre> <p>It receives event stream number, event number and event revision from the AMON server in real-time (AMON server calls task function AnalRT.run every time a new events comes from the outside world) Upon reception of these three parameters, a new event is read from the DB and passed to the main analysis code using Python multiprocessing module.</p>
 <p>Works with the Enthought Canopy package management, RabittMQ server as a broker for messages and Celery allowing from transport of messages from AMON server to this worker program.</p>
 <p>To run (outside this directory called analizer):</p>
-<p>celery worker &ndash;app=analyser -l info</p>
+<p>celery worker &ndash;app=analyser &ndash;concurrency=1 -l info</p>
 <p>where <a class="el" href="../../db/da5/dbaccess_8txt.html">dbaccess.txt</a> contans a string in dictionary format, containing the information required to access the database</p>
 <p>Each alert will be saved to DB, and also written to XML file (in VOEvent format) to the directory /network/server_events. AMON client will send this events in the future to GCN and delete each xml fiel after it has been sent. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 14 2014 18:38:33 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 25 2014 22:22:44 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

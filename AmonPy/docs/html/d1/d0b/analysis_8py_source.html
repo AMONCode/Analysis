@@ -172,250 +172,642 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    new_alert.Nsigma = fcluster.Nsigma</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">#new_alert.Nsigma_2 = fcluster.Nsigma_2</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">#new_alert.Nsigma_3 = fcluster.Nsigma_3</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    new_alert.psi = fcluster.psi </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    new_alert.psi1 = fcluster.psi1</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    new_alert.psi2 = fcluster.psi2</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">#new_alert.psi3 = fcluster.psi2</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">#new_alert.events = [ev1,ev2]</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    new_alert.events = []</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">for</span> kk <span class="keywordflow">in</span> xrange(evlenght):</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        new_alert.events.append(evlist[kk])</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment"># to be loaded from config in the future                 </span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    new_alert.anastream=new_alert.stream</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    new_alert.anarev=0</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">return</span> new_alert</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">##</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"># </span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">#     False alarm density calculator (per sr per second)</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">#     </span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a">  100</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist, conf, fcluster):</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    far_den=0. </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    ev_len=len(evlist)</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">if</span> ev_len==2:</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        far_den=evlist[0].false_pos*evlist[1].false_pos*conf.deltaT*fcluster.sigmaQ * \</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                conf.cluster_thresh</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">elif</span> ev_len==3:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        far_den=0.5*evlist[0].false_pos*evlist[1].false_pos*evlist[2].false_pos * \</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                (conf.deltaT*fcluster.sigmaQ*conf.cluster_thresh)**2</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="comment"># generalize for 3+ events</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">pass</span> </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordflow">return</span> far_den  </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                                               </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">##</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"># </span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">#     Combined p-value calculator (dummy for now). </span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">#     Calculate p-value for time-clustering analysis only.</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">#     </span></div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9">  119</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist, conf, fcluster):</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    ev_len=len(evlist)</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="comment"># to this cluster</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="comment"># get the rate for an array of poisson processes</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="comment"># for all the streams used in the analyses</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="comment"># q: how to get bg rate at the best fit position for streams whose events are</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="comment"># not currently in the buffer?</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="comment"># for now 0=ic, 1 = antares,3=auger, 7=hawc</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    rates={<span class="stringliteral">&#39;0&#39;</span> : 0.0004438, <span class="stringliteral">&#39;1&#39;</span> :0.0001463, <span class="stringliteral">&#39;3&#39;</span>: 0.0012104, <span class="stringliteral">&#39;7&#39;</span>:0.0004119}</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    rate=0</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    streams_dict = ast.literal_eval(conf.N_thresh)</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    len_streams = len(streams_dict)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    streams=streams_dict.keys()</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">for</span> kk <span class="keywordflow">in</span> streams:</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        kk=str(kk)</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        rate+=rates[kk]</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="comment"># method bellow is not correct because all rates should be included in poisson process    </span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="comment">#for ii in xrange(ev_len):</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="comment">#    rate+=evlist[kk].false_pos</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="comment"># time-space window used in analysis</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    deltaT=conf.deltaT</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    deltaOmega=fcluster.sigmaQ*conf.cluster_thresh</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    expected = rate*deltaT*deltaOmega</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    pvalue = 1. - <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4" title="Poisson sum from 0 to obs-1. ">sum_poisson</a>(expected, ev_len)</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">if</span> pvalue &gt; 0. <span class="keywordflow">and</span> pvalue &lt;=1.:</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">return</span> pvalue</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&quot;WARNING: pvalue is wrong, returning 1&quot;</span>  </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordflow">return</span> 1  </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        </div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="comment">##</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="comment"># </span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment">#     Poisson sum from 0 to obs-1</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">#     </span></div>
-<div class="line"><a name="l00158"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4">  158</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4" title="Poisson sum from 0 to obs-1. ">sum_poisson</a>(expect,obs):</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    sum=0.</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">for</span> ii <span class="keywordflow">in</span> xrange(obs):</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        sum+=(expect**ii)*math.exp(-1.*expect)/math.factorial(ii)</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">return</span> sum        </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="comment">#return 1.</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment"># main analysis process</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">##</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment"># </span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="comment">#     Main analysis process, which is run as a server, accepting events</span></div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">#     from the parent code and returning alerts when requested. </span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment">#     </span></div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac5ddeedffb329f60b3860addbba83776">  172</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac5ddeedffb329f60b3860addbba83776" title="Main analysis process, which is run as a server, accepting events from the parent code and returning ...">anal</a>(pipe,config):</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    server,client = pipe</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    client.close()   <span class="comment"># close the client pipe on the server</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    latest = <a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#ae78b921654586e117c92fec127c99be1">datetime</a>(1900,1,1,0,0,0,0)</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    Nalerts = 0</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    Nalerts_tp = 0</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    alerts = []</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    alerts_tp = []</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment"># remove later</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    numreceived=0</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    id = -1 <span class="comment"># -1 no alerts, 0 first alert </span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="comment">#events=deque()</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    events=[]</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    inBuffer = <span class="keyword">False</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Config dT %d&quot;</span> % config.deltaT</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Buffer dT %d&quot;</span> % config.bufferT</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        </div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="comment"># look for incoming packet in the pipe</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordflow">try</span>:</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            ev=server.recv()</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordflow">except</span> EOFError:</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            <span class="keywordflow">break</span></div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="comment"># check to see if an AMON Event type was received </span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordflow">if</span> isinstance(ev,Event):</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            numreceived+=1</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            inBuffer = <span class="keyword">False</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&quot;I received %d events&quot;</span> % numreceived</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;            <span class="comment"># g.t. for some reason deque is not working in real-time setting; </span></div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            <span class="comment"># works only in archival setup </span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="comment"># add the new event to the buffer (or start buffer)</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <span class="comment"># buffer is in reverse temporal order</span></div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            <span class="comment">#try:</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;            <span class="comment">#    events.appendleft(ev)</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;            <span class="comment">#    print &quot;appended&quot;</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <span class="comment">#except:</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            <span class="comment">#    events = deque([ev])</span></div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <span class="comment">#    print &quot;dequed&quot;</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                       </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <span class="comment"># do not search or add event if it is already in the buffer</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            <span class="keywordflow">for</span> eve <span class="keywordflow">in</span> events:</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                <span class="keywordflow">if</span> ((ev.stream == eve.stream) <span class="keywordflow">and</span> (ev.id == eve.id) \</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                <span class="keywordflow">and</span> (ev.rev == eve.rev)):</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                    <span class="stringliteral">&quot;Event is already in the buffer. It will not be added to the buffer.&quot;</span></div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                    inBuffer = <span class="keyword">True</span></div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;             </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="comment">#</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="comment">#print inBuffer</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">if</span> (inBuffer==<span class="keyword">False</span>):</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                <span class="keywordflow">print</span> <span class="stringliteral">&quot;Adding event&quot;</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;                events+=[ev]        </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;            </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                <span class="keywordflow">print</span> <span class="stringliteral">&#39;lenght of buffer is %d&#39;</span> % len(events)</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="comment"># ensure that the new event didn&#39;t mess up the order of the buffer</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                <span class="keywordflow">if</span> (ev.datetime &lt; latest):</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;                    <span class="keywordflow">print</span> <span class="stringliteral">&#39;  reordering analysis buffer due to latent event&#39;</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;                    events = sorted(events,key=attrgetter(<span class="stringliteral">&#39;datetime&#39;</span>))</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;                <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                <span class="comment"># the new event is the latest event</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                    latest = ev.datetime</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">#new_alert.psi = fcluster.psi </span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment"># in case we decide to save angles between the events</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">#new_alert.psi=[]</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">#for kk in xrange(len(fcluster.psi)):</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="comment">#    new_alert.psi +=[fcluster.psi[kk]]</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">#new_alert.psi1 = fcluster.psi1</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">#new_alert.psi2 = fcluster.psi2</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">#new_alert.psi3 = fcluster.psi2</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="comment">#new_alert.events = [ev1,ev2]</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    new_alert.events = []</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordflow">for</span> kk <span class="keywordflow">in</span> xrange(evlenght):</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        new_alert.events.append(evlist[kk])</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="comment"># to be loaded from config in the future                 </span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    new_alert.anastream=new_alert.stream</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    new_alert.anarev=0</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">return</span> new_alert</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">#     Old false alarm density calculator (per sr per second), obsolete</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2354dd7fe7b31b5884dba6df4f126e17">  104</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2354dd7fe7b31b5884dba6df4f126e17" title="Old false alarm density calculator (per sr per second), obsolete. ">far_density_old</a>(evlist, conf, fcluster):</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    far_den=0. </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    ev_len=len(evlist)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">if</span> ev_len==2:</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        far_den=evlist[0].false_pos*evlist[1].false_pos*conf.deltaT* 2.*math.pi*( 1. - \</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                math.cos(math.radians(fcluster.sigmaQ * conf.cluster_thresh)))</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">elif</span> ev_len==3:</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        far_den=0.5*evlist[0].false_pos*evlist[1].false_pos*evlist[2].false_pos * \</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                (conf.deltaT*2.*math.pi*(1.-math.cos(math.radians(fcluster.sigmaQ*conf.cluster_thresh))))**2</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="comment"># generalize for 3+ events</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">pass</span> </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">return</span> far_den </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;     </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">#     False alarm density calculator (per sr per second)</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a">  122</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist, conf, fcluster):</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    far_den=0. </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    ev_len=len(evlist)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="comment">#print &quot;number of events in a multiplet %s&quot; % (ev_len,)</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="comment">#print &quot;space window in deg %s&quot; %(fcluster.sigmaQ,)</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    solid_angle = 2.*math.pi*(1. - math.cos(math.radians(fcluster.sigmaQ * conf.cluster_thresh)))</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="comment">#print &quot;solid angle %s&quot; % (solid_angle,)</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    spaceTimeWind = conf.deltaT * solid_angle</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="comment">#print &quot;serach window space-time %s&quot; % (spaceTimeWind, )</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    streamCurrent = evlist[0].stream </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    kkCurrent = 0</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    kk=1</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    event_dict={}</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    event_dict[str(streamCurrent)]=[evlist[0]]</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="comment"># dictionary of lists of events in the multiplet coming from the same streams</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="comment"># e.g. :if a triplet has 2 event from stream 0 and one from stream 1</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="comment">#       the dictionary would be {&#39;0&#39;: [ice_ev1, ice_ev2], &#39;1&#39;: [antares_ev1]}</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="comment">#       prob. of this triplet is prob_doublet*prob_singlet</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="comment">#       compared to the triplet from 3 different streams</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">#      where prob_triplet=prob_singlet1*prob_singlet2*prob_singlet3</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordflow">while</span> (kk &lt; ev_len):</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">if</span> (evlist[kk].stream ==streamCurrent):</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            event_dict[str(streamCurrent)].append(evlist[kk])</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;             </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                event_dict[str(evlist[kk].stream)].append(evlist[kk]) </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                streamCurrent = evlist[kk].stream</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            <span class="keywordflow">except</span>:</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                event_dict[str(evlist[kk].stream)] = [evlist[kk]]          </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                streamCurrent = evlist[kk].stream</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        kk+=1       </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="comment"># calculate rates (probab. per unit spacetime) for various of stream combination and</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="comment"># multiplets</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    poiss_prob = 1.</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> sorted(event_dict.keys()):</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        num_ev = len(event_dict[k]) </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        rate = 0.</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordflow">for</span> ll <span class="keywordflow">in</span> xrange(num_ev):</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            rate +=event_dict[k][ll].false_pos</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        rate = rate/float(num_ev)    </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        poiss_prob *=(<a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a15aaf8811c6831697225a9484df7e3cc" title="Poisson probability to observe obs number of events in a given stream. ">prob_poisson</a>(rate*spaceTimeWind,num_ev)) </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    far_den = poiss_prob/spaceTimeWind                   </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordflow">return</span> far_den                                                </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">#     Combined p-value calculator (dummy for now). </span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">#     Calculate p-value for time-clustering analysis only.</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9">  175</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist, conf, fcluster):</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    ev_len=len(evlist)</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="comment"># to this cluster</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="comment"># get the rate for an array of poisson processes</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="comment"># for all the streams used in the analyses</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment"># q: how to get bg rate at the best fit position for streams whose events are</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="comment"># not currently in the buffer?</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <span class="comment"># for now 0=ic, 1 = antares,3=auger, 7=hawc</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    rates={<span class="stringliteral">&#39;0&#39;</span> : 0.0004438, <span class="stringliteral">&#39;1&#39;</span> :0.0001463, <span class="stringliteral">&#39;3&#39;</span>: 0.0012104, <span class="stringliteral">&#39;7&#39;</span>:0.0004119}</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    rate=0</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    streams_dict = ast.literal_eval(conf.N_thresh)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    len_streams = len(streams_dict)</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    streams=streams_dict.keys()</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="comment"># changed on 09/15/2014 in order to run Swift</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="comment">#for kk in streams:</span></div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="comment">#kk=str(kk)</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="comment">#rate+=rates[kk]</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="comment"># method bellow is not correct because all rates should be included in poisson process    </span></div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keywordflow">for</span> ii <span class="keywordflow">in</span> xrange(ev_len):</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        rate+=evlist[ii].false_pos</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="comment"># time-space window used in analysis</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    deltaT=conf.deltaT</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    deltaOmega=fcluster.sigmaQ*conf.cluster_thresh</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    expected = rate*deltaT*deltaOmega</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    pvalue = 1. - <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4" title="Poisson sum from 0 to obs-1. ">sum_poisson</a>(expected, ev_len)</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    </div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordflow">if</span> pvalue &gt; 0. <span class="keywordflow">and</span> pvalue &lt;=1.:</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keywordflow">return</span> pvalue</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&quot;WARNING: pvalue is wrong, returning 1&quot;</span>  </div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="keywordflow">return</span> 1  </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        </div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment">#     Poisson sum from 0 to obs-1</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00216"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4">  216</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a0c73147a4fe2f1a9d854d225e4d6a8f4" title="Poisson sum from 0 to obs-1. ">sum_poisson</a>(expect,obs):</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    sum=0.</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">for</span> ii <span class="keywordflow">in</span> xrange(obs):</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        sum+=(expect**ii)*math.exp(-1.*expect)/math.factorial(ii)</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">return</span> sum        </div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">#return 1.</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">#     Poisson probability to observe obs number of events in a given stream</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00228"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a15aaf8811c6831697225a9484df7e3cc">  228</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a15aaf8811c6831697225a9484df7e3cc" title="Poisson probability to observe obs number of events in a given stream. ">prob_poisson</a>(expect,obs):</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    sum=0.</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    sum=(expect**obs)*math.exp(-1.*expect)/math.factorial(obs)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordflow">return</span> sum</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment"># used for late arrival events in real-time code, i.e. for events that our out of time buffer</span></div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <span class="comment">#clean up the buffer (assumes temporal order)</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                <span class="keywordflow">while</span> <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#aed5b550ff7cbb888d019157b065e2055" title="Calculator for measuring the duration of the event buffer, being held by the analysis server...">bufdur</a>(events) &gt; config.bufferT:</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                    <span class="stringliteral">&quot;cleaning buffer&quot;</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                    events.pop()</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            <span class="comment"># search the event buffer for *pairings* (v0.1)</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                Nev = len(events)</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <span class="comment">#jj = 1</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                jj=0</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                </div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                <span class="comment">#print Nev, jj, ev.id</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                    <span class="keywordflow">if</span> jj &gt;= Nev:</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                        <span class="keywordflow">break</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                </div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                <span class="comment"># assuming temporal order, continue loop until deltaT exceeded</span></div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                    dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                </div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                <span class="comment"># g.t. do not brake here since in case of late arrival our event will</span></div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                <span class="comment"># not be on the top of the buffer list</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                <span class="comment">#if dt &gt; config.deltaT:</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                <span class="comment">#    break</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                                </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                    <span class="keywordflow">if</span> ((dt &lt;= config.deltaT) <span class="keywordflow">and</span> (events.index(ev) !=jj)):</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                <span class="comment"># check if cluster distance is within threshold</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;                        f = <a class="code" href="../../df/d03/classamonpy_1_1anal_1_1cluster_1_1_fisher.html" title="Analysis class object that uses the Fisher PSF In particular, the Fisher PSF is axially symmetric wit...">cluster.Fisher</a>(events[jj],ev)</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;                        <span class="keywordflow">if</span> (f.Nsigma &lt;= config.cluster_thresh):</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                    <span class="comment"># calculate false alarm rate</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;                            evlist=[events[jj],ev]</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                            far = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist,config,f)</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                            pvalue = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist,config,f)</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                    <span class="comment"># create alert, with id next in list</span></div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                    <span class="comment">#id=Nalerts + Nalerts_tp</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                            id+=1</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                            rev = 0</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                            evlist = [events[jj],ev]</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                            new_alert = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac3eb2116d918592df6e34c1519604e35" title="Alert builder. ">build_alert</a>(config,id,rev,f,evlist,far, pvalue)</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                            Nalerts +=1             </div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;                            alerts +=[new_alert]</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                    <span class="comment">#if jj&gt;1: # look for triplets</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                            <span class="keywordflow">if</span> ((jj &gt; 1) <span class="keywordflow">and</span> (events.index(ev) !=jj-1) \</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                                 <span class="keywordflow">and</span> (abs(timedelta.total_seconds(events[jj-1].datetime-events[jj].datetime))&lt;config.deltaT)):</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                                f_tp = <a class="code" href="../../d4/ddb/classamonpy_1_1anal_1_1cluster_1_1_fisher__tp.html" title="Analysis class object that uses the Fisher PSF In particular, the Fisher PSF is axially symmetric wit...">cluster.Fisher_tp</a>(events[jj-1], events[jj], ev) </div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;                                <span class="keywordflow">if</span> ((f_tp.Nsigma &lt;= config.cluster_thresh) <span class="keywordflow">and</span> \</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                                   (f_tp.Nsigma_2 &lt;= config.cluster_thresh) <span class="keywordflow">and</span> \</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                                   (f_tp.Nsigma_3 &lt;= config.cluster_thresh)):</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                        <span class="comment"># create alert, with id next in list</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                                    evlist=[events[jj-1],events[jj],ev]</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                                    far = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist,config,f)</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                                    pvalue = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist,config,f)</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                        <span class="comment">#id=Nalerts + Nalerts_tp</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                                    id+=1</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                                    rev = 0</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                                    new_alert= <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac3eb2116d918592df6e34c1519604e35" title="Alert builder. ">build_alert</a>(config,id,rev,f_tp, evlist, far, pvalue)</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                                    Nalerts_tp +=1             </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                                    alerts +=[new_alert]</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                                                           </div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                    jj+=1</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;            <span class="comment">#print &#39;Found %s doublets&#39; % Nalerts</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;            <span class="comment">#print &#39;Found %s triplets&#39; % Nalerts_tp</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="comment"># check to see if client has requested alerts        </span></div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keywordflow">elif</span> (ev==<span class="stringliteral">&#39;get_alerts&#39;</span>):</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;Found %s doublets&#39;</span> % Nalerts</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;Found %s triplets&#39;</span> % Nalerts_tp</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <span class="keywordflow">if</span> len(alerts)==0:</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                server.send(<span class="stringliteral">&quot;Empty&quot;</span>) </div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordflow">else</span>: </div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                <span class="keywordflow">try</span>:    </div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                    server.send(alerts)</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                <span class="keywordflow">except</span>:</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                    server.send(<span class="stringliteral">&quot;Problem&quot;</span>)</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                        </div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            alerts=[]</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            Nalerts=0</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            Nalerts_tp=0</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <span class="comment">#print &quot;lenghts of alerts %s&quot; % (len(alerts),)</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="comment"># check to see if client has requested quit    </span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">elif</span> (ev==<span class="stringliteral">&#39;quit&#39;</span>):</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;            <span class="keywordflow">break</span></div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="comment"># check for invalid request </span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordflow">else</span>:</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;   Event sent to analysis.anal() not recognized&#39;</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            <span class="keywordflow">print</span> ev</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        </div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="comment"># shutdown</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">#     check if each pair of events within a cluster are separated by # of sigma &lt; clusterThreshold</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">#     return True if yes, False if not</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00239"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2a3fd9aa8e5f9edc4f43511300eeb856">  239</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2a3fd9aa8e5f9edc4f43511300eeb856" title="check if each pair of events within a cluster are separated by # of sigma &lt; clusterThreshold return T...">check_nsigma</a>(nsigma,cluster_th):</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    checkSigma = <span class="keyword">True</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordflow">for</span> kk_nsigma <span class="keywordflow">in</span> nsigma:</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="keywordflow">if</span> kk_nsigma &gt; cluster_th:</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            checkSigma = <span class="keyword">False</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keywordflow">return</span> checkSigma    </div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="comment">#     analyser to be called in real-time analysis in case of very late</span></div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="comment">#     arrival events (events out of time buffer)</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00251"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a88cd9165bdc7c263b5cdaa8ea1e573b0">  251</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a88cd9165bdc7c263b5cdaa8ea1e573b0" title="analyser to be called in real-time analysis in case of very late arrival events (events out of time b...">alerts_late</a>(events_rec, eve, config_rec, max_id):</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    Nalerts = 0</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    Nalerts_tp = 0</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    alerts = []</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    alerts_tp = []</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="comment"># remove later</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    numreceived=0</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    id = max_id <span class="comment">#max_id+1 is the first alert </span></div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="comment">#events=deque()</span></div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    events=events_rec</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    ev = eve <span class="comment"># the late arrival event</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="comment">#sort event</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    events = sorted(events,key=attrgetter(<span class="stringliteral">&#39;datetime&#39;</span>), reverse=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    config=config_rec</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Late arival event analysis (archival) started&quot;</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="keywordflow">print</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Config dT %d&quot;</span> % config.deltaT</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                        </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    Nevents = len(events)</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;               <span class="comment">#jj = 1</span></div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="comment">#jj=0</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    inBuffer = <span class="keyword">False</span></div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    alertCluster=<span class="keyword">False</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    evIndex=0</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        </div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">if</span> isinstance(ev,Event):</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="comment">#for jj in xrange(Nevents):             </span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="comment"># assuming temporal order, continue loop until deltaT exceeded</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <span class="keywordflow">for</span> eve <span class="keywordflow">in</span> events:</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            <span class="keywordflow">if</span> ((ev.stream == eve.stream) <span class="keywordflow">and</span> (ev.id == eve.id)):</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                <span class="keywordflow">if</span> (ev.rev &gt; eve.rev):</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Old event revision in the archival time slice, remove it.&quot;</span></div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                    events.pop(events.index(eve)) </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                <span class="keywordflow">elif</span> (ev.rev &lt; eve.rev):</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Old event revision arrived later than a newer one.&quot;</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                    <span class="keywordflow">print</span> <span class="stringliteral">&quot;No analysis for this obsolete event&quot;</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                    inBuffer==<span class="keyword">True</span> </div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                    <span class="comment">#ev = eve   # this is our real time event   </span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                    evIndex = events.index(eve)</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;           </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordflow">if</span> (inBuffer==<span class="keyword">False</span>):</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                               </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;            Nev = len(events)</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                </div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            jj=0</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                </div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                alertCluster = <span class="keyword">False</span></div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                    <span class="comment">#print Nev, jj, ev.id</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                <span class="keywordflow">if</span> ((evIndex==jj) <span class="keywordflow">and</span> (jj&lt; Nev-1)):</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                    jj+=1</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                    <span class="comment"># assuming temporal order, continue loop until deltaT exceeded</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                </div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                <span class="keywordflow">while</span> dt &gt; config.deltaT:</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    jj+=1</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                    <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                    <span class="keywordflow">elif</span> (evIndex !=jj):   </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                        dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                        jj+=1</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                        <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                            <span class="keywordflow">break</span> </div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                            dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))  </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                        </div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                    <span class="keywordflow">break</span>        </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                    </div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                    <span class="comment">#check for time clustering           </span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                <span class="keywordflow">if</span> ((dt &lt;= config.deltaT) <span class="keywordflow">and</span> (evIndex !=jj)): </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                        <span class="comment"># time clusters</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;                    list_time = [ev, events[jj]]</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;                        <span class="comment"># check if there are more events within the (dt&lt;t&lt;deltaT-dt)</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                        <span class="comment"># to form time cluster</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                    <span class="keywordflow">if</span> (evIndex !=jj+1):</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                        kk = jj+1</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                        kk = jj+2    </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                        </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                    <span class="keywordflow">if</span> kk&lt;Nev:</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                        </div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                        dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                        <span class="keywordflow">if</span> (kk &lt; evIndex):</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                            <span class="keywordflow">while</span> (dt2 &lt; dt):</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                                <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                                <span class="keywordflow">if</span> (evIndex!=kk):</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                                    list_time.append(events[kk])</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                                kk+=1</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                                <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                        <span class="keywordflow">elif</span> (kk &gt; evIndex <span class="keywordflow">and</span> jj &lt; evIndex):</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;                            <span class="keywordflow">while</span> (dt2 &lt; config.deltaT - dt):</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;                                <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;                                <span class="keywordflow">if</span> (evIndex!=kk):</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                                    list_time.append(events[kk])</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                                kk+=1</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                                <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                        <span class="keywordflow">elif</span> (kk &gt; evIndex <span class="keywordflow">and</span> jj &gt; evIndex):</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;                            <span class="keywordflow">while</span> (dt2 &lt; config.deltaT):</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;                                <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;                                <span class="keywordflow">if</span> (evIndex!=kk):</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;                                    list_time.append(events[kk])</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                                kk+=1</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;                                <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;                        <span class="keywordflow">elif</span> (kk == evIndex):</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;                            kk+=1 </div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;                            dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;                            <span class="keywordflow">while</span> (dt2 &lt; config.deltaT):</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                                <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;                                <span class="keywordflow">if</span> (evIndex!=kk):</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;                                    list_time.append(events[kk])</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;                                kk+=1</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;                                <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;                                    <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;                            <span class="keywordflow">break</span>         </div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;                                           </div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;                        <span class="comment">#print &quot;Lenght of time cluster is: %s&quot; % (len(list_time),)</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;                        </div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                        <span class="comment"># check space clustering for each multiplet from time cluster </span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;                        <span class="comment">#containing new event (ev) in it</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                    list_space=[ev]</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                    <span class="keywordflow">for</span> ll <span class="keywordflow">in</span> xrange (len(list_time)-1):</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                        list_space.append(list_time[ll+1])</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                            <span class="comment"># check fisher for list space      </span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                        <span class="comment"># check if cluster distance is within threshold</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;                        <span class="comment"># code FisherNew and new fNsigma check </span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;                        f = <a class="code" href="../../df/d03/classamonpy_1_1anal_1_1cluster_1_1_fisher.html" title="Analysis class object that uses the Fisher PSF In particular, the Fisher PSF is axially symmetric wit...">cluster.Fisher</a>(list_space)</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;                        Nsigma_check = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2a3fd9aa8e5f9edc4f43511300eeb856" title="check if each pair of events within a cluster are separated by # of sigma &lt; clusterThreshold return T...">check_nsigma</a>(f.Nsigma,config.cluster_thresh)</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;                        <span class="keywordflow">if</span> Nsigma_check:</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;                                <span class="comment"># calculate false alarm rate</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;                            evlist=list_space</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;                            far = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist,config,f)</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                            pvalue = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist,config,f)</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                            <span class="keywordflow">if</span> (alertCluster==<span class="keyword">True</span>):</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                                    <span class="comment"># higher multiplet found, remove lower multiplet</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;                                    <span class="comment"># no need to increase id, since it will be </span></div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;                                    <span class="comment"># taken from obsolete old multiplet </span></div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;                                <span class="keywordflow">print</span> <span class="stringliteral">&quot;higher multiplet found&quot;</span></div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;                                <span class="keywordflow">print</span> <span class="stringliteral">&quot;remove lower multiplet&quot;</span></div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                                alerts.pop() </div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;                                Nalerts-=1</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                            <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                                    <span class="comment"># this is the first multiplet, increase id    </span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                                id+=1</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                                alertCluster = <span class="keyword">True</span></div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                            rev = 0</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                                <span class="comment">#evlist = [events[jj],ev]</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                            new_alert = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac3eb2116d918592df6e34c1519604e35" title="Alert builder. ">build_alert</a>(config,id,rev,f,evlist,far, pvalue)</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;                            Nalerts +=1             </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;                            alerts +=[new_alert]</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;                            <span class="comment">#if jj&gt;1: # look for triplets</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;                            <span class="keywordflow">print</span> <span class="stringliteral">&quot;New alert&quot;</span></div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;                            <span class="keywordflow">print</span> <span class="stringliteral">&quot;With new event %s %s %s&quot;</span> % (ev.stream,ev.id,ev.rev )</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;                            <span class="keywordflow">print</span> <span class="stringliteral">&quot;With old event %s %s %s&quot;</span> % (events[jj].stream,events[jj].id,events[jj].rev )</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;                                                </div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;                jj+=1       </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;                </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&quot;No analysis, event revision is older than previously arived event&quot;</span>        </div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;                                </div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;        <span class="keywordflow">print</span> <span class="stringliteral">&quot;Not event&quot;</span>  </div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&#39;Found %s doublets&#39;</span> % Nalerts</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="comment">#print &#39;Found %s triplets&#39; % Nalerts_tp                                  </span></div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <span class="keywordflow">return</span> alerts        </div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;        </div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="comment"># shutdown    </span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment"># main analysis process</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="comment">##</span></div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;<span class="comment"># </span></div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">#     Main analysis process, which is run as a server, accepting events</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">#     from the parent code and returning alerts when requested. </span></div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">#     </span></div>
+<div class="line"><a name="l00442"></a><span class="lineno"><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac5ddeedffb329f60b3860addbba83776">  442</a></span>&#160;<span class="keyword">def </span><a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac5ddeedffb329f60b3860addbba83776" title="Main analysis process, which is run as a server, accepting events from the parent code and returning ...">anal</a>(pipe,config):</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    server,client = pipe</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;    client.close()   <span class="comment"># close the client pipe on the server</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    latest = <a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#ae78b921654586e117c92fec127c99be1">datetime</a>(1900,1,1,0,0,0,0)</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    Nalerts = 0</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    Nalerts_tp = 0</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    alerts = []</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    alerts_tp = []</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="comment"># remove later</span></div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    numreceived=0</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    id = -1 <span class="comment"># -1 no alerts, 0 first alert </span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="comment">#events=deque()</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    events=[]</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    inBuffer = <span class="keyword">False</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    eventLate = <span class="keyword">False</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;    eventAnalysed = <span class="keyword">False</span></div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;    alertCluster = <span class="keyword">False</span></div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    eveout = <a class="code" href="../../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#addf9b6ab76d93bfdebf988a2895ff34f">Event</a>(-1,-1,-1)</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Config dT %d&quot;</span> % config.deltaT</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="keywordflow">print</span> <span class="stringliteral">&quot;Buffer dT %d&quot;</span> % config.bufferT</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;        </div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        <span class="comment"># look for incoming packet in the pipe</span></div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;        <span class="keywordflow">try</span>:</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;            ev=server.recv()</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;        <span class="keywordflow">except</span> EOFError:</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;            <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;        <span class="comment"># check to see if an AMON Event type was received </span></div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        <span class="keywordflow">if</span> isinstance(ev,Event):</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;            numreceived+=1</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;            inBuffer = <span class="keyword">False</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;            eventAnalysed = <span class="keyword">False</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;            eventIn=ev</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;            eventLate = <span class="keyword">False</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;            alertCluster = <span class="keyword">False</span></div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;            </div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            <span class="comment">#print &quot;I received %d events&quot; % numreceived</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;            <span class="comment">#print &quot;with this date %s&quot; % ev.datetime</span></div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;            <span class="comment"># g.t. is not working in real-time setting; </span></div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;            <span class="comment"># works only in archival setup </span></div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;            <span class="comment"># add the new event to the buffer (or start buffer)</span></div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;            <span class="comment"># buffer is in reverse temporal order</span></div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;            <span class="comment">#try:</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;            <span class="comment">#    events.appendleft(ev)</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;            <span class="comment">#    print &quot;appended&quot;</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;            <span class="comment">#except:</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;            <span class="comment">#    events = deque([ev])</span></div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;            <span class="comment">#    print &quot;dequed&quot;</span></div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;                       </div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;            <span class="comment"># do not search or add event if it is already in the buffer</span></div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;            <span class="keywordflow">for</span> eve <span class="keywordflow">in</span> events:</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;                <span class="keywordflow">if</span> ((ev.stream == eve.stream) <span class="keywordflow">and</span> (ev.id == eve.id)):</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;                    <span class="keywordflow">if</span> (ev.rev == eve.rev):</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;                        <span class="keywordflow">print</span> <span class="stringliteral">&quot;Event is already in the buffer. It will not be added to the buffer.&quot;</span></div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;                        inBuffer = <span class="keyword">True</span></div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;                    <span class="keywordflow">elif</span> (ev.rev &lt; eve.rev):</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;                        <span class="keywordflow">print</span> <span class="stringliteral">&quot;Old event revision arrived later than a newer one.&quot;</span></div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;                        <span class="keywordflow">print</span> <span class="stringliteral">&quot;No analysis for this obsolete event&quot;</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;                        </div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;                        inBuffer = <span class="keyword">True</span></div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;                    <span class="keywordflow">else</span>:    </div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;                        <span class="keywordflow">print</span> <span class="stringliteral">&quot;Old event revision in the buffer, remove it.&quot;</span></div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;                        events.pop(events.index(eve))    </div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;                        </div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;             </div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;            <span class="comment">#</span></div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;            <span class="comment"># add the new event to the buffer (or start buffer)</span></div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            <span class="comment"># buffer is in reverse temporal order, so sorted afterward </span></div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;            <span class="keywordflow">if</span> (inBuffer==<span class="keyword">False</span>):</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;                events+=[ev]        </div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;                </div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;                <span class="comment">#print &#39;lenght of buffer is %d&#39; % len(events)</span></div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;                <span class="comment"># ensure that the new event didn&#39;t mess up the order of the buffer</span></div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;                <span class="keywordflow">if</span> (ev.datetime &lt; latest):</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;                    <span class="keywordflow">print</span> <span class="stringliteral">&#39;  reordering analysis buffer due to latent event&#39;</span></div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;                    events = sorted(events,key=attrgetter(<span class="stringliteral">&#39;datetime&#39;</span>),reverse=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;                <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;                <span class="comment"># the new event is the latest event</span></div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;                    latest = ev.datetime</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;                    events = sorted(events,key=attrgetter(<span class="stringliteral">&#39;datetime&#39;</span>),reverse=<span class="keyword">True</span>)</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;                    </div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;                <span class="comment">#clean up the buffer (assumes temporal order)</span></div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;                <span class="keywordflow">while</span> <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#aed5b550ff7cbb888d019157b065e2055" title="Calculator for measuring the duration of the event buffer, being held by the analysis server...">bufdur</a>(events) &gt; config.bufferT:</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;                    <span class="comment">#cleaning buffer, but first check if the new event</span></div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;                    <span class="comment"># is one that is late arrival i.e.out of time buffer as well</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;                    eveout=events.pop()</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;                    <span class="keywordflow">if</span> ((eveout.stream==ev.stream) <span class="keywordflow">and</span> (eveout.id==ev.id) <span class="keywordflow">and</span> (eveout.rev==ev.rev)):</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;                        <span class="comment">#alerts = alerts_late(eveout,config.deltaT)</span></div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;                        eventLate= <span class="keyword">True</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;                <span class="comment"># if new events is in time buffer </span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;                <span class="comment"># search the event buffer for *pairings* (v0.1)</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;                Nev = len(events)</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;                </div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;                <span class="comment"># do archival also if event is less or deltaT before end of the buffer</span></div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;                <span class="comment"># do it if buffer is long enough, otherwise every new event starting </span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;                <span class="comment"># from the first will be analysed by archival instead RL</span></div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;                 </div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;                <span class="comment">#if (bufdur(events) &gt; (config.bufferT - config.deltaT)):</span></div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;                <span class="comment">#    if (abs(timedelta.total_seconds(events[Nev-1].datetime-ev.datetime))</span></div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;                <span class="comment">#        &lt;=config.deltaT):</span></div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;                <span class="comment">#        eventLate= True     </span></div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;                </div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;               <span class="comment">#jj = 1</span></div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;                jj=0</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160;                </div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;                <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;                    AlertCluster = <span class="keyword">False</span></div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;                    <span class="comment">#print Nev, jj, ev.id</span></div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;                    <span class="keywordflow">if</span> (jj &gt;= Nev) <span class="keywordflow">or</span> (eventLate==<span class="keyword">True</span>):</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;                    <span class="keywordflow">if</span> ((events.index(ev)==jj) <span class="keywordflow">and</span> (jj&lt; Nev-1)):</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;                        jj+=1</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;                    <span class="comment"># assuming temporal order, continue loop until deltaT exceeded</span></div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;                    dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;                </div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;                    <span class="comment"># g.t. do not brake here since in case of late arrival our event will</span></div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;                    <span class="comment"># not be on the top of the buffer list</span></div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;                    <span class="comment"># add code for jj&lt; ev index and jj&gt; event index</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;                    <span class="keywordflow">while</span> dt &gt; config.deltaT:</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;                        jj+=1</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;                        <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;                            <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;                        <span class="keywordflow">elif</span> (events.index(ev) !=jj):   </div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;                            dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;                        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;                            jj+=1</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;                            <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;                                <span class="keywordflow">break</span> </div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;                            <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;                                dt = abs(timedelta.total_seconds(ev.datetime-events[jj].datetime))  </div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;                        </div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;                    <span class="keywordflow">if</span> (jj &gt;= Nev):</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;                        <span class="keywordflow">break</span>        </div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;                    </div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;                    <span class="comment">#check for time clustering           </span></div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;                    <span class="keywordflow">if</span> ((dt &lt;= config.deltaT) <span class="keywordflow">and</span> (events.index(ev) !=jj)): </div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;                        <span class="comment"># time clusters</span></div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;                        list_time = [ev, events[jj]]</div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;                        <span class="comment"># check if there are more events within the (dt&lt;t&lt;deltaT-dt)</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;                        <span class="comment"># to form time cluster</span></div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;                        <span class="keywordflow">if</span> (events.index(ev) !=jj+1):</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;                            kk = jj+1</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;                        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;                            kk = jj+2    </div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;                        </div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;                        <span class="keywordflow">if</span> kk&lt;Nev:</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;                        </div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;                            dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;                            <span class="keywordflow">if</span> (kk &lt; events.index(ev)):</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;                                <span class="keywordflow">while</span> (dt2 &lt; dt):</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;                                    <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;                                    <span class="keywordflow">if</span> (events.index(ev)!=kk):</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;                                        list_time.append(events[kk])</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;                                    kk+=1</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                                    <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;                            <span class="keywordflow">elif</span> (kk &gt; events.index(ev) <span class="keywordflow">and</span> jj &lt; events.index(ev)):</div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;                                <span class="keywordflow">while</span> (dt2 &lt; config.deltaT - dt):</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;                                    <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;                                    <span class="keywordflow">if</span> (events.index(ev)!=kk):</div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;                                        list_time.append(events[kk])</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;                                    kk+=1</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;                                    <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;                            <span class="keywordflow">elif</span> (kk &gt; events.index(ev) <span class="keywordflow">and</span> jj &gt; events.index(ev)):</div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;                                <span class="keywordflow">while</span> (dt2 &lt; config.deltaT):</div>
+<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;                                    <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;                                    <span class="keywordflow">if</span> (events.index(ev)!=kk):</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;                                        list_time.append(events[kk])</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;                                    kk+=1</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;                                    <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;                            <span class="keywordflow">elif</span> (kk == events.index(ev)):</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;                                kk+=1 </div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;                                dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;                                <span class="keywordflow">while</span> (dt2 &lt; config.deltaT):</div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;                                    <span class="keywordflow">if</span> kk &gt; Nev -1:</div>
+<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;                                    <span class="keywordflow">if</span> (events.index(ev)!=kk):</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;                                        list_time.append(events[kk])</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;                                        </div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;                                    kk+=1</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;                                    <span class="keywordflow">if</span> kk &gt;= Nev -1:</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;                                        <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;                                    dt2 = abs(timedelta.total_seconds(ev.datetime-events[kk].datetime))</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;                            <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;                                <span class="keywordflow">break</span>         </div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;                                           </div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;                        <span class="keywordflow">print</span> <span class="stringliteral">&quot;Lenght of time cluster is: %s&quot;</span> % (len(list_time),)</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;                        </div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;                        <span class="comment"># check space clustering for each multiplet from time cluster </span></div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;                        <span class="comment">#containing new event (ev) in it</span></div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;                        list_space=[ev]</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;                        <span class="keywordflow">for</span> ll <span class="keywordflow">in</span> xrange (len(list_time)-1):</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;                            list_space.append(list_time[ll+1])</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;                            <span class="comment"># check fisher for list space      </span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;                        <span class="comment"># check if cluster distance is within threshold</span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;                        <span class="comment"># code FisherNew and new fNsigma check </span></div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;                            f = <a class="code" href="../../df/d03/classamonpy_1_1anal_1_1cluster_1_1_fisher.html" title="Analysis class object that uses the Fisher PSF In particular, the Fisher PSF is axially symmetric wit...">cluster.Fisher</a>(list_space)</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;                            Nsigma_check = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a2a3fd9aa8e5f9edc4f43511300eeb856" title="check if each pair of events within a cluster are separated by # of sigma &lt; clusterThreshold return T...">check_nsigma</a>(f.Nsigma,config.cluster_thresh)</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;                            <span class="keywordflow">if</span> Nsigma_check:</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;                                <span class="comment"># calculate false alarm rate</span></div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;                                evlist=list_space</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;                                far = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8953e77d01e9caa5ca5e8e98307e400a" title="False alarm density calculator (per sr per second) ">far_density</a>(evlist,config,f)</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;                                pvalue = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#a8fc861e2886ffe84d31493cd2acc42a9" title="Combined p-value calculator (dummy for now). ">pvalue_calc</a>(evlist,config,f)</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;                                <span class="keywordflow">if</span> alertCluster==<span class="keyword">True</span>:</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;                                    <span class="comment"># higher multiplet found, remove lower multiplet</span></div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;                                    <span class="comment"># no need to increase id, since it will be </span></div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;                                    <span class="comment"># taken from obsolete old multiplet </span></div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;                                    <span class="keywordflow">print</span> <span class="stringliteral">&quot;higher multiplet found&quot;</span></div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;                                    <span class="keywordflow">print</span> <span class="stringliteral">&quot;remove lower multiplet&quot;</span></div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;                                    alerts.pop() </div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;                                    Nalerts-=1</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;                                <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;                                    <span class="comment"># this is the first multiplet, increase id    </span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;                                    id+=1</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;                                    AlertCluster = <span class="keyword">True</span></div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;                                rev = 0</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;                                <span class="comment">#evlist = [events[jj],ev]</span></div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;                                new_alert = <a class="code" href="../../da/dab/namespaceamonpy_1_1anal_1_1analysis.html#ac3eb2116d918592df6e34c1519604e35" title="Alert builder. ">build_alert</a>(config,id,rev,f,evlist,far, pvalue)</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;                                Nalerts +=1             </div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;                                alerts +=[new_alert]</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;                            <span class="comment">#if jj&gt;1: # look for triplets</span></div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;                                <span class="keywordflow">print</span> <span class="stringliteral">&quot;New alert&quot;</span></div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;                                <span class="keywordflow">print</span> <span class="stringliteral">&quot;With new event %s %s %s&quot;</span> % (ev.stream,ev.id,ev.rev )</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;                                <span class="keywordflow">print</span> <span class="stringliteral">&quot;With old event %s %s %s&quot;</span> % (events[jj].stream,events[jj].id,events[jj].rev )</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;                                                </div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;                    jj+=1</div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;                    <span class="comment">#print &#39;Found %s doublets&#39; % Nalerts</span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;                    <span class="comment">#print &#39;Found %s triplets&#39; % Nalerts_tp</span></div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;                    <span class="comment"># check to see if client has requested alerts        </span></div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        <span class="keywordflow">elif</span> (ev==<span class="stringliteral">&#39;get_alerts&#39;</span>):</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;Found %s alerts&#39;</span> % Nalerts</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;            <span class="comment">#print &#39;Found %s triplets&#39; % Nalerts_tp</span></div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;            <span class="keywordflow">if</span> (len(alerts))==0:</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;                <span class="keywordflow">if</span> (eventLate==<span class="keyword">False</span>):</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;                    server.send(<span class="stringliteral">&quot;Empty&quot;</span>) </div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;                <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;                    <span class="comment"># send the event out of time buffer so that archival analysis can be started</span></div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;                    server.send([eventLate,eventIn])    </div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;                </div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;            <span class="keywordflow">else</span>: </div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;                <span class="keywordflow">try</span>:    </div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;                    server.send(alerts)</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;                <span class="keywordflow">except</span>:</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;                    server.send(<span class="stringliteral">&quot;Problem&quot;</span>)</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;                        </div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;            alerts=[]</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;            Nalerts=0</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;            Nalerts_tp=0</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;            eventLate=<span class="keyword">False</span></div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;            inBuffer=<span class="keyword">False</span></div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;            alertCluster = <span class="keyword">False</span></div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;            <span class="comment">#print &quot;lenghts of alerts %s&quot; % (len(alerts),)</span></div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        <span class="comment"># check to see if client has requested quit    </span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;        <span class="keywordflow">elif</span> (ev==<span class="stringliteral">&#39;quit&#39;</span>):</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;            <span class="keywordflow">break</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;        <span class="comment"># check for invalid request </span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;        <span class="keywordflow">else</span>:</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            <span class="keywordflow">print</span> <span class="stringliteral">&#39;   Event sent to analysis.anal() not recognized&#39;</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            <span class="keywordflow">print</span> ev</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;        </div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;    <span class="comment"># shutdown</span></div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 14 2014 18:38:20 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 25 2014 22:22:30 for AmonPy by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

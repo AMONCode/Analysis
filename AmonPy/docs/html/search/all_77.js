@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['warning_5fgaps',['warning_gaps',['../d5/d94/classswift__upload_1_1attitude.html#a8644c4ef3043a6ed4173a22a158855c5',1,'swift_upload::attitude']]],
   ['warnings',['WARNINGS',['../d0/d00/db__build_8sql.html#a130401f26b798bc83d6bd014ad42afdc',1,'WARNINGS():&#160;db_build.sql'],['../d9/da7/db__mc__build_8sql.html#a130401f26b798bc83d6bd014ad42afdc',1,'WARNINGS():&#160;db_mc_build.sql']]],
   ['wherewhen_5fdef',['wherewhen_def',['../d7/de8/namespaceamonpy_1_1dbase_1_1db__classes.html#a17d82764a82f5d4057aa427d04a745cd',1,'amonpy.dbase.db_classes.wherewhen_def()'],['../d2/dc6/namespacenew__classes.html#a82b097ba07d11f2a7bf0a850e0043a70',1,'new_classes.wherewhen_def()']]],
   ['write_5falert',['write_alert',['../d9/d1f/namespaceamonpy_1_1dbase_1_1db__write.html#a457765d3f29d828a2bdfb1a20c4db202',1,'amonpy::dbase::db_write']]],
