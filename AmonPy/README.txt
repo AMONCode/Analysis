@@ -66,10 +66,10 @@ Amonpy
 AMON analysis software is in amonpy directory. README file there explains
 how to run the software. 
 
-Installation (i.e. only if this code is obtained via package distribution, rather than svn check out)
+Installation (i.e. only if this code is obtained via package distribution, rather than Git)
 ============
 
-Ignore text bellow if you have a developer distribution of the code from the AMON SVN respiratory.
+Ignore text bellow if you have a developer distribution of the code from the AMON Git repository.
 
 To install AMON package run:
 
