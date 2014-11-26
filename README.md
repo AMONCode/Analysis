@@ -2,4 +2,4 @@ Analysis
 ========
 
 AMON analysis code: AmonPy
-version: 1.3
+version: 1.4
