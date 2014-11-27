@@ -3,7 +3,7 @@
 from distutils.core import setup
     
 setup(name = "AmonPy", 
-      version = "1.0", 
+      version = "1.4", 
       description='AMON Analysis Code',
       author='Miles Smith, Gordana Tesic',
       author_email='mus44@psu.edu, gut10@psu.edu',
