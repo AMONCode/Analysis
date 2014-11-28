@@ -405,9 +405,9 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                             Nalerts +=1             
                             alerts +=[new_alert]
                             #if jj>1: # look for triplets
-                            print "New alert"
-                            print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
-                            print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
+                            #print "New alert"
+                            #print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
+                            #print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
                                                 
                 jj+=1       
                 
@@ -416,7 +416,7 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                                 
     else:
         print "Not event"  
-    print 'Found %s doublets' % Nalerts
+    print 'Found %s alerts' % Nalerts
     #print 'Found %s triplets' % Nalerts_tp                                  
     return alerts        
         
@@ -658,9 +658,9 @@ def anal(pipe,config):
                                 Nalerts +=1             
                                 alerts +=[new_alert]
                             #if jj>1: # look for triplets
-                                print "New alert"
-                                print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
-                                print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
+                                #print "New alert"
+                                #print "With new event %s %s %s" % (ev.stream,ev.id,ev.rev )
+                                #print "With old event %s %s %s" % (events[jj].stream,events[jj].id,events[jj].rev )
                                                 
                     jj+=1
                     #print 'Found %s doublets' % Nalerts
