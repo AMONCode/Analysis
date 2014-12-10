@@ -623,7 +623,7 @@ def anal(pipe,config):
                             else:
                                 break         
                                            
-                        print "Lenght of time cluster is: %s" % (len(list_time),)
+                        #print "Lenght of time cluster is: %s" % (len(list_time),)
                         
                         # check space clustering for each multiplet from time cluster 
                         #containing new event (ev) in it
