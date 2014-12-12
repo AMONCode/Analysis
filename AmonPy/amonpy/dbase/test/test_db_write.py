@@ -1,7 +1,7 @@
-import sys
-sys.path.append('../')
-sys.path.append('../../tools')
-sys.path.append('../../sim')
+import sys, os
+sys.path.append( os.path.abspath('..') )
+sys.path.append( os.path.abspath('../..') )
+sys.path.append( os.path.abspath('../../tools') )
 
 import db_write
 import unittest
