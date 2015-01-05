@@ -22,7 +22,7 @@ import os
 import getopt
 #import VOEvent
 #import Vutil
-import Vutil 
+import VOEventLib.Vutil as Vutil
 
 from datetime import datetime
 from amonpy.dbase.db_classes import *
