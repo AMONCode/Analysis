@@ -28,7 +28,7 @@ def parse_command_line():
         parser.add_argument("-u", "--username", metavar="username", help="Database username")
         parser.add_argument("-d", "--database", metavar="name", help="Name of database")
         parser.add_argument("-p", "--password-file", metavar="path", help="Path to ascii text file containing database password")
-        parser.add_argument("-v", "--verbose", --action="store_true", --help="Be verbose")
+        parser.add_argument("-v", "--verbose", action="store_true", help="Be verbose")
         return parser.parse_args()
 
 class attitude:
