@@ -13,37 +13,41 @@ from argparse import ArgumentParser
 import sys
 
 def parse_command_line():
-    parser = ArgumentParser()
-    parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files]")
-    parser.add_argument("--fits-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data', help="Path to fits files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data]")
-    parser.add_argument("--pvalue-file", default='pvalue_table.txt', help="Path to SNR to P-Value table [default: pvalue_table.txt]")
-    parser.add_argument("--scramble-timestamps", action="store_true", help="Use scrambled time stamps [default: False]")
-    parser.add_argument("-H", "--host", metavar="address", default='db.hpc.rcc.psu.edu', 
-            help="Database host address [default: db.hpc.rcc.psu.edu]")
-    # TODO Add feature to pull username from login information so that the
-    # username option is optional, similar to how MySQL is used from the command
-    # line
-    parser.add_argument("-u", "--username", metavar="username", help="Database username")
-    parser.add_argument("-d", "--database", metavar="name", help="Name of database")
-
-    return parser.parse_args()
+        parser = ArgumentParser()
+        parser.add_argument("--attitude-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files', help="Path to attitude files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/attitude_files/monthly_files]")
+        parser.add_argument("--fits-files", default='/usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data', help="Path to fits files directory [default: /usr/local/amon/data_storage/Swift_Sub_Sub/monthly_data]")
+        parser.add_argument("--pvalue-file", default='pvalue_table.txt', help="Path to SNR to P-Value table [default: pvalue_table.txt]")
+        parser.add_argument("--use-scrambled-timestamps", action="store_true", help="Use scrambled time stamps when uploading data to database[default: False]")
+        parser.add_argument("--scramble-timestamps", action="store_true", help="Scramble time stamps that are already in the database (does not reupload data from files) [default: False]")
+        parser.add_argument("--num-scram-events", default=0, help="Number of events to scramble; 0 means all of the events. Used for debugging. [default: 0]")
+        parser.add_argument("-H", "--host", metavar="address", default='db.hpc.rcc.psu.edu', 
+                help="Database host address [default: db.hpc.rcc.psu.edu]")
+        # TODO Add feature to pull username from login information so that the
+        # username option is optional, similar to how MySQL is used from the command
+        # line
+        parser.add_argument("-u", "--username", metavar="username", help="Database username")
+        parser.add_argument("-d", "--database", metavar="name", help="Name of database")
+        parser.add_argument("-p", "--password-file", metavar="path", help="Path to ascii text file containing database password")
+        parser.add_argument("-v", "--verbose", --action="store_true", --help="Be verbose")
+        return parser.parse_args()
 
 class attitude:
 	''' Class to interpolate latitude, longitude, and elevation values from data taken from Swift attitude files The relevant data from the attitude files are currently grouped in txt files with four columns, in this order: time, latitude, longitude, elevation
 	'''
-	def __init__(self,pos_files):
+	def __init__(self,pos_files, verbose):
 		# Store the list of files, as well as start counting which
 		# element in the list is currently being used. 
 		self.file_locs = pos_files 
 		self.file_num = 0
-		self.compute_interpolate_position()
+		self.compute_interpolate_position(verbose)
                 self.files_exhausted = False
 
-	def compute_interpolate_position(self):
+	def compute_interpolate_position(self,verbose):
 		# Opens the files, stores the information in lists, then
 		# creates interpolated class objects for latitude, longitude,
 		# and elevation
-		print 'Opening monthly attitude file %s' % self.file_locs[self.file_num]
+                if verbose:
+                        print 'Opening monthly attitude file %s' % self.file_locs[self.file_num]
 		monthly_data = open(self.file_locs[self.file_num],'r')
 		position_data = []
 		for row in monthly_data.readlines():
@@ -104,7 +108,7 @@ class attitude:
                         return self.interpolate_position(event)
 
 class observation:
-	'''
+        '''
 	Class to store all of the information needed by the MySQL database for a set of observations at a given time.
 	Information will be stored in tuples, and each observation in a given detection will have its own tuple element
 	i.e. if there are two observations at the same time, the time tuple will be a 2 element tuple of identical times
@@ -135,9 +139,7 @@ class observation:
 		# swift_custom_module to split into time stamp and msec
 		# components Currently set to use random time stamps
 		self.observation_time = row[data_list_arg['TIME']]
-                # TODO Add command line option to decide if using random time
-                # stamps or real ones
-                if options.scramble_timestamps:
+                if options.use_scrambled_timestamps:
                     self.time = swift.random_time_stamp(self.num_detection)
                 else:
                     self.time = (swift.met2day(self.observation_time)[0],) * self.num_detection
@@ -187,13 +189,14 @@ class observation:
 
 
 
-def get_swift_data(fits_file_loc, pvalue_interp_class, positions):
+def get_swift_data(fits_file_loc, pvalue_interp_class, positions,verbose):
 	'''
 	Obtain the swift data as a list of class objects
 	'''
 	# Open the fits file, and then find the location of the relevant
 	# columns
-        print 'Opening monthly fits file %s' % fits_file_loc
+        if verbose:
+                print 'Opening monthly fits file %s' % fits_file_loc
         fits_file = pyfits.open(fits_file_loc)[1]
 	data_list = ['SNR','TIME','RA_OBJ','DEC_OBJ','RA_CENT','DEC_CENT']
 	data_list_arg = {prop: fits_file.columns.names.index(prop) for prop in data_list}
@@ -204,7 +207,7 @@ def get_swift_data(fits_file_loc, pvalue_interp_class, positions):
 	# Get rid of detections with no valid SNR values
 	snr_events = [event for event in all_events if event.num_detection]
 
-	# Set event id for databases.  Should be noted that these event ids
+        # Set event id for databases.  Should be noted that these event ids
 	# will only be relative to each other, and a constant will need to be
 	# added before loading into the database
 	snr_events[0].set_pos_id(1, positions)
@@ -249,19 +252,69 @@ def db_load(snr_events, pw, options):
                 # python.
 		for i in xrange(len(snr_events)):
                         event_ids = tuple(event_id + id_start for event_id in snr_events[i].event_id)
-			mysql_event_statement = "INSERT INTO event(eventStreamConfig_stream, id, rev, time, time_msec, `Dec`, RA, sigmaR, pvalue, type, point_RA, `point_Dec`, \
-                                        longitude, latitude, elevation, psf_type, eventStreamConfig_rev) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-			event_data = zip(snr_events[i].stream_config, event_ids, snr_events[i].rev, snr_events[i].time, snr_events[i].time_msec, \
-                                        snr_events[i].dec_obj, snr_events[i].ra_obj, snr_events[i].sigma_r, snr_events[i].pvalue, snr_events[i].db_type, \
-                                        snr_events[i].ra_cent, snr_events[i].dec_cent, snr_events[i].longitude, snr_events[i].latitude, snr_events[i].elevation, \
-                                        snr_events[i].psf_type, snr_events[i].stream_rev)
-                        mysql_parameter_statement = "INSERT INTO parameter(name, value, units, event_eventStreamConfig_stream, event_id, event_rev) VALUES \
-                                        (%s, %s, %s, %s, %s, %s)"
-                        parameter_data = zip(('position_accuracy_warning',)*snr_events[i].num_detection, (snr_events[i].position_flag,)*snr_events[i].num_detection, \
-                                        ('no units',)*snr_events[i].num_detection, snr_events[i].stream_config, event_ids, snr_events[i].rev)
+                        mysql_event_statement = "INSERT INTO event(eventStreamConfig_stream, " +\
+                                "id, rev, time, time_msec, `Dec`, RA, sigmaR, pvalue, type, point_RA, "+\
+                                "`point_Dec`, longitude, latitude, elevation, psf_type, eventStreamConfig_rev) "+\
+                                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s)"
+			event_data = zip(snr_events[i].stream_config, event_ids, snr_events[i].rev, 
+                                snr_events[i].time, snr_events[i].time_msec, snr_events[i].dec_obj, 
+                                snr_events[i].ra_obj, snr_events[i].sigma_r, snr_events[i].pvalue, 
+                                snr_events[i].db_type, snr_events[i].ra_cent, snr_events[i].dec_cent, 
+                                snr_events[i].longitude, snr_events[i].latitude, snr_events[i].elevation, 
+                                snr_events[i].psf_type, snr_events[i].stream_rev)
+                        mysql_parameter_statement = "INSERT INTO parameter(name, value, units, event_eventStreamConfig_stream, " +\
+                                "event_id, event_rev) VALUES (%s, %s, %s, %s, %s, %s)"
+                        parameter_data = zip(('position_accuracy_warning',)*snr_events[i].num_detection, 
+                                (snr_events[i].position_flag,)*snr_events[i].num_detection, 
+                                ('no units',)*snr_events[i].num_detection, snr_events[i].stream_config, 
+                                event_ids, snr_events[i].rev)
 			cur.executemany(mysql_event_statement,event_data)
 			cur.executemany(mysql_parameter_statement,parameter_data)
 
+def db_update(pw, options):
+        '''
+        Scramble the time stamps in the database
+        '''
+
+        # Open the connection
+        if options.verbose:
+                print 'Entered update function'
+	con = mdb.connect(options.host,options.username,pw,options.database)
+	with con:
+                cur = con.cursor() 
+
+                # FIXME Currently assumes that there will be no break in Swift
+                # data, so that all events between min_id and max_id are Swift
+                # events
+                # Grab smallest and highest ids from Swift events
+                # min_id/max_id written as is to get an int from a tuple
+                min_id_find = cur.execute("SELECT MIN(id) FROM event WHERE eventStreamConfig_stream = 4;")
+                min_id = [int(id) for id in cur.fetchone()][0]
+                max_id_find = cur.execute("SELECT MAX(id) FROM event WHERE eventStreamConfig_stream = 4;")
+                max_id = [int(id) for id in cur.fetchone()][0]
+                if options.verbose:
+                        print 'min(id) = %d, max_id = %d' % (min_id, max_id)
+                if options.num_scram_events:
+                        max_id = min_id + int(options.num_scram_events)
+                scrambled_times = swift.random_time_stamp(1 + max_id - min_id)
+                id_range = range(min_id, max_id+1)
+                update_tuples = zip(id_range,scrambled_times)
+                mysql_temp_upload_statement = "INSERT INTO temp_table(id, time) VALUES(%s, %s);"
+                if options.verbose:
+                        print 'About to apply update to database'
+                cur.execute("CREATE TEMPORARY TABLE temp_table(id INT(11) PRIMARY KEY NOT NULL, time DATETIME NOT NULL);")
+                while update_tuples:
+                        update_tuples_chunk, update_tuples = update_tuples[:1000], update_tuples[1000:]
+                        cur.executemany(mysql_temp_upload_statement, update_tuples_chunk)
+                        con.commit()
+                if options.verbose:
+                        print 'Made temporary table, now going to update event table'
+                mysql_update_statement = "UPDATE event SET time = (" + \
+                        "SELECT time FROM temp_table " + \
+                        "WHERE id = event.id) " + \
+                        "WHERE id >= " + str(min_id) + \
+                        " AND id <= " + str(max_id) + ";"
+                cur.execute(mysql_update_statement)
 ###########################################################################################################
 ###													###
 ###						Main							###
@@ -272,18 +325,25 @@ def db_load(snr_events, pw, options):
 options=parse_command_line()
 
 # Get the MySQL database password
-pw = getpass.getpass('Database Password:')
+if not options.password_file:
+        pw = getpass.getpass('Database Password:')
+else:
+        pw_file = open(options.password_file,'r')
+        pw = pw_file.readlines()[0][:-1]
+        pw_file.close()
 
-#print sorted(glob.glob(options.attitude_files + '/attitude_month*'))
-# Get the files needed
-positions = attitude(sorted(glob.glob(options.attitude_files + '/attitude_month*')))
-pvalue_file_loc = options.pvalue_file
-fits_file_locations = sorted(glob.glob(options.fits_files + '/*'))
+if not options.scramble_timestamps:
+        # Get the files needed
+        positions = attitude(sorted(glob.glob(options.attitude_files + '/attitude_month*')), options.verbose)
+        pvalue_file_loc = options.pvalue_file
+        fits_file_locations = sorted(glob.glob(options.fits_files + '/*'))
 
-# Create the interpolated pvalue class to convert from SNR to pvalue
-pvalue_interp_class = interpolate_pvalue(pvalue_file_loc)
+        # Create the interpolated pvalue class to convert from SNR to pvalue
+        pvalue_interp_class = interpolate_pvalue(pvalue_file_loc)
 
-# Get the events from the fits files
-for fits_file in fits_file_locations:
-        snr_events = get_swift_data(fits_file, pvalue_interp_class, positions)
-        db_load(snr_events, pw, options)
+        # Get the events from the fits files
+        for fits_file in fits_file_locations:
+                snr_events = get_swift_data(fits_file, pvalue_interp_class, positions,options.verbose)
+                db_load(snr_events, pw, options)
+else:
+        db_update(pw,options) 
