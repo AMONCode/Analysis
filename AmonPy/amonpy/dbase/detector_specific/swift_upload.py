@@ -71,7 +71,7 @@ class attitude:
 		self.warning_gaps = [arg_gap for arg_gap, gap in enumerate(attitude_time_check) if gap >= 100]
 		self.invalid_gaps = [arg_gap for arg_gap in self.warning_gaps if attitude_time_check[arg_gap] >= 600]
 
-	def interpolate_position(self,event):
+	def interpolate_position(self,event,verbose):
 		# Attempt to interpolate the values of lat, long, and elev with
 		# observation time.  If observation time is before the attitude
 		# time window starts, set the values to None.  If it's after
@@ -102,10 +102,10 @@ class attitude:
 		except ValueError:
                         self.file_num += 1
                         try:
-                                self.compute_interpolate_position()
+                                self.compute_interpolate_position(verbose)
                         except IndexError:
                                 self.files_exhausted = True
-                        return self.interpolate_position(event)
+                        return self.interpolate_position(event,verbose)
 
 class observation:
         '''
@@ -172,7 +172,7 @@ class observation:
                 # be accurately computed, this flag will be triggered
                 self.position_flag = 0
 	
-	def set_pos_id(self, id_interval_start, positions):
+	def set_pos_id(self, id_interval_start, positions,verbose):
 		# Sets position and event_id attributes This event_id is only
 		# valid within the file that the events are coming from.  A
 		# constant (possibly 0) will be added to all event_id's before
@@ -182,7 +182,7 @@ class observation:
 
 		#Interpolate latitude, longitude, and elevation values
 		#self.latitude, self.longitude, self.elevation = positions.interpolate_position(self.observation_time,self.num_detection,self.event_id[0])
-		self.latitude, self.longitude, self.elevation = positions.interpolate_position(self)
+		self.latitude, self.longitude, self.elevation = positions.interpolate_position(self,verbose)
 
         def set_position_flag(self):
                 self.position_flag = 1
@@ -210,9 +210,9 @@ def get_swift_data(fits_file_loc, pvalue_interp_class, positions,verbose):
         # Set event id for databases.  Should be noted that these event ids
 	# will only be relative to each other, and a constant will need to be
 	# added before loading into the database
-	snr_events[0].set_pos_id(1, positions)
+	snr_events[0].set_pos_id(1, positions,verbose)
 	for num, event in enumerate(snr_events[1:]):
-		event.set_pos_id(snr_events[num].event_id[-1]+1, positions)
+		event.set_pos_id(snr_events[num].event_id[-1]+1, positions,verbose)
 	return snr_events
 
 def interpolate_pvalue(pvalue_file_loc): 
