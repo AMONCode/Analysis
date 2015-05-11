@@ -22,7 +22,7 @@ def alert_to_voevent(alert):
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
-    v.set_ivorn("ivo://amontest/test#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    v.set_ivorn("ivo://amon/test#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
     v.set_role("%s" % alert[0].type)
     v.set_Description("Report of some irrelevant information")
 
