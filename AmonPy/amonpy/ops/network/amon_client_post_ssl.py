@@ -40,10 +40,11 @@ def printResource(response):
     return finished
 
 def printError(failure):
-    d=Deferred()
-    d.addCallbacks(printNotSent)
-    print >>sys.stderr, failure
-    
+    #d=Deferred()
+    #d.addCallbacks(printNotSent)
+    #print >>sys.stderr, failure
+    print type(failure.value), failure
+    failure.value.reasons[0].printTraceback()
 def stop(result):
     reactor.stop()
     
@@ -132,7 +133,8 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                 #lenght_data=str(len(data))
                 #body = StringProducer(data)
                 body=FileBodyProducer(datafile)
-                length_data=body.length
+                # since twisted v.15 length is string 
+                length_data=str(body.length)
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'], 
                                             'Content-Lenght': [length_data],
