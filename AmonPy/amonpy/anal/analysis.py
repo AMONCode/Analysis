@@ -424,7 +424,7 @@ def alerts_late(events_rec, eve, config_rec, max_id):
 # main analysis process
 
 
-def anal(pipe,config):
+def anal(pipe,config,max_id):
     """
     Main analysis process, which is run as a server, accepting events
     from the parent code and returning alerts when requested. 
@@ -438,7 +438,8 @@ def anal(pipe,config):
     alerts_tp = []
     # remove later
     numreceived=0
-    id = -1 # -1 no alerts, 0 first alert 
+    #id = -1 # -1 no alerts, 0 first alert 
+    id=max_id # in case the server was restarted we need a new id from a DB provided by a parent code
     #events=deque()
     events=[]
     inBuffer = False
