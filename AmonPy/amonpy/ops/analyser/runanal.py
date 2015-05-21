@@ -88,11 +88,21 @@ class AnalRT(Task):
         self.event_streams = [0,1,7]  # testing streams
         self.stream_num = self.config.stream
         self.stream_num2 = self.archiv_config.stream
+        self.max_id=db_read.alert_max_id(self.stream_num,self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName) 
+            # sort the events!!1  
+        print                                   
+        print "MAX ALERT ID IN DATABASE IS"            
+        print self.max_id                                  
+        if (self.max_id==None):
+            self.max_id=-1
         print
         print ' STARTING ANALYSIS SERVER'
         (self.server_p,self.client_p) = multiprocessing.Pipe()
         self.anal_p = multiprocessing.Process(target=analysis.anal,
-                    args=((self.server_p,self.client_p),self.config))
+                    args=((self.server_p,self.client_p),self.config,self.max_id))
         self.anal_p.start()
     #@app.task(filter=task_method, name='analser.runanal.AnalRT.run')
     def run(self,evstream, evnumber,evrev):
