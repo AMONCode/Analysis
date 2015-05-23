@@ -186,6 +186,15 @@ class AnalRT(Task):
                         #                     self.DBFancyName)                         
                     if not (len(lines_db)==0): # alerts with these events were found in the past, check revisions
                         alert=alert_revision.check_old_alert_rev(lines_db, alert)
+                    else:
+                        # check alert number from DB
+                        maxid=db_read.alert_max_id(self.stream_num,self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName)
+                        if (maxid==None):
+                            maxid=-1                     
+                        alert.id=maxid+1    
                                  
                     #if not (len(lines_db_old)==0): # alerts with these events were found in the past, check revisions
                      #   alert=alert_revision.check_old_alert_rev2(lines_db_old, alert)
@@ -310,6 +319,15 @@ class AnalRT(Task):
                                              
                             if not (len(lines_db_ar)==0): # alerts with these events were found in the past, check revisions
                                 alert_ar=alert_revision.check_old_alert_rev(lines_db_ar, alert_ar)
+                            else:
+                                # check alert number from DB
+                                maxid=db_read.alert_max_id(self.stream_num,self.HostFancyName,
+                                             self.UserFancyName,
+                                             self.PasswordFancy,
+                                             self.DBFancyName)
+                                if (maxid==None):
+                                    maxid=-1                     
+                                alert.id=maxid+1    
                                 
                             alertlines=db_populate_class.populate_alertline([alert_ar])                                
                             db_write.write_alert(self.stream_num2,self.HostFancyName,
