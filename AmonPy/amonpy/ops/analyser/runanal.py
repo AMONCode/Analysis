@@ -30,7 +30,8 @@ from celery import Task
 #from celery.contrib.methods import task
 from celery.result import AsyncResult
 
-import sys
+import sys, shutil
+import subprocess
 sys.path.append('../')
 sys.path.append('../..')
 sys.path.append('../../tools')
@@ -224,6 +225,30 @@ class AnalRT(Task):
                 f1=open(fname, 'w+')
                 f1.write(xmlForm)
                 f1.close() 
+                """
+                        modified from 
+                        https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
+                        Send a voevent to a broker using the comet-sendvo publishing tool.
+                        Args:
+                        host (string): IP address or hostname of VOEvent broker.
+                        port (int): Port, default 8098.
+                        code this up!
+                        comment out code bellow if you do not have comet installed!
+                """
+                try:
+                    cmd = ['comet-sendvo']
+                    cmd.append('--file=' + fname)
+                            #cmd.append('--host=' + host)
+                            #cmd.append('--port=' + str(port))
+                            #subprocess.check_call(cmd, stdin=f1)
+                    subprocess.check_call(cmd)
+                except subprocess.CalledProcessError as e:
+                    print "Send VOevent alert failed"
+                            #logger.error("send_voevent failed")
+                    raise e
+                else:
+                    shutil.move(fname, self.alertDir+"/archive/")
+                            #shutil.move(fname, "archive/"+fname)
                                                                                    
             else:
                 print '   Invalid stream number'
@@ -346,7 +371,31 @@ class AnalRT(Task):
                         % (alerts_archive[0].stream, alerts_archive[0].id, alerts_archive[0].rev)
                         f1=open(fname, 'w+')
                         f1.write(xmlForm)
-                        f1.close() 
+                        f1.close()
+                        """
+                        modified from 
+                        https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
+                        Send a voevent to a broker using the comet-sendvo publishing tool.
+                        Args:
+                        host (string): IP address or hostname of VOEvent broker.
+                        port (int): Port, default 8098.
+                        code this up!
+                        comment out code bellow if you do not have comet installed!
+                        """
+                        try:
+                            cmd = ['comet-sendvo']
+                            cmd.append('--file=' + fname)
+                            #cmd.append('--host=' + host)
+                            #cmd.append('--port=' + str(port))
+                            #subprocess.check_call(cmd, stdin=f1)
+                            subprocess.check_call(cmd)
+                        except subprocess.CalledProcessError as e:
+                            print "Send VOevent alert failed"
+                            #logger.error("send_voevent failed")
+                            raise e
+                        else:
+                            shutil.move(fname, self.alertDir+"/archive/")
+                            #shutil.move(fname, "archive/"+fname) 
                                    
                     else:
                         print "Late event already analysed"
