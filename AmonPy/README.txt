@@ -26,11 +26,13 @@ The following python packages are required:
 
 * Celery
 
-* Twisted
+* Twisted (needed only for real-time analysis)
 
-* PyOpenSSL
+* PyOpenSSL (needed only for real-time analysis)
 
-* PyCrypto
+* PyCrypto (needed only for real-time analysis)
+
+* Comet (needed only for real-time analysis)
 
 Other
 -----
