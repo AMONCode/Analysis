@@ -40,19 +40,19 @@ def alert_to_voevent(alert):
     w = What()
 
     # params related to the event. None are in Groups.
-    p = Param(name="stream", ucd="meta.number", value="%s"% stream)
+    p = Param(name="stream", ucd="meta.number", dataType="int", value=str(stream))
     p.set_Description(["Analysis stream identification"])
     w.add_Param(p)
 
-    p = Param(name="id", ucd="meta.number", value="%s"% id)
+    p = Param(name="id", ucd="meta.number", dataType="int", value=str(id))
     p.set_Description(["Alert identification"])
     w.add_Param(p)
     
-    p = Param(name="rev", ucd="meta.number", value="%s"% rev)
+    p = Param(name="rev", ucd="meta.number", dataType="int", value=str(rev))
     p.set_Description(["Alert revision"])
     w.add_Param(p)
     
-    p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].nevents))
+    p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
     p.set_Description(["Number of events in the alert"])
     w.add_Param(p)
     
