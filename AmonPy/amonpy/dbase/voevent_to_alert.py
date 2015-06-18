@@ -29,14 +29,12 @@ Examples:
 import sys
 import os
 import getopt
-#import VOEvent
-import Vutil
+import VOEventLib.Vutil as Vutil
 
 
 from datetime import datetime
-#sys.path.append('../db_classes')
 
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 try:
     from cStringIO import StringIO

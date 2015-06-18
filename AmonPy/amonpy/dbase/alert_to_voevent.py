@@ -6,9 +6,7 @@ http://www.ivoa.net/Documents/latest/VOEvent.html
 """
 import sys
 
-sys.path.append('../db_classes')
-
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
