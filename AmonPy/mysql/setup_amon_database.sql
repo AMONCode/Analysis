@@ -2,18 +2,18 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `AMON_test2` ;
-CREATE SCHEMA IF NOT EXISTS `AMON_test2` DEFAULT CHARACTER SET latin1 ;
+DROP SCHEMA IF EXISTS `AMON_DATABASE_NAME` ;
+CREATE SCHEMA IF NOT EXISTS `AMON_DATABASE_NAME` DEFAULT CHARACTER SET latin1 ;
 SHOW WARNINGS;
-USE `AMON_test2` ;
+USE `AMON_DATABASE_NAME` ;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`alertConfig`
+-- Table `AMON_DATABASE_NAME`.`alertConfig`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`alertConfig` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`alertConfig` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`alertConfig` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`alertConfig` (
   `stream` INT NOT NULL ,
   `rev` INT NOT NULL ,
   `validStart` DATETIME NULL DEFAULT NULL ,
@@ -36,12 +36,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`alert`
+-- Table `AMON_DATABASE_NAME`.`alert`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`alert` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`alert` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`alert` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`alert` (
   `alertConfig_stream` INT NOT NULL ,
   `id` INT NOT NULL ,
   `rev` TINYINT NOT NULL COMMENT 'Revision, 0 preliminary, 1, 2 and so on for updates.' ,
@@ -64,7 +64,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`alert` (
   INDEX `fk_alert_alertConfig1_idx` (`alertConfig_stream` ASC, `alertConfig_rev` ASC) ,
   CONSTRAINT `fk_alert_alertConfig1`
     FOREIGN KEY (`alertConfig_stream` , `alertConfig_rev` )
-    REFERENCES `AMON_test2`.`alertConfig` (`stream` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alertConfig` (`stream` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -72,12 +72,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`eventStreamConfig`
+-- Table `AMON_DATABASE_NAME`.`eventStreamConfig`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`eventStreamConfig` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`eventStreamConfig` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`eventStreamConfig` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`eventStreamConfig` (
   `stream` INT NOT NULL ,
   `rev` INT NOT NULL ,
   `validStart` DATETIME NULL DEFAULT NULL ,
@@ -109,12 +109,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`event`
+-- Table `AMON_DATABASE_NAME`.`event`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`event` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`event` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`event` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`event` (
   `eventStreamConfig_stream` INT NOT NULL ,
   `id` INT NOT NULL COMMENT 'stream id number, set unsigned' ,
   `rev` SMALLINT NOT NULL COMMENT 'revision number, \\\\nTINY INTEGER (set unsigned to go to  fro 0-255)' ,
@@ -140,7 +140,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`event` (
   INDEX `fk_event_eventStreamConfig1_idx` (`eventStreamConfig_stream` ASC, `eventStreamConfig_rev` ASC) ,
   CONSTRAINT `fk_event_eventStreamConfig1`
     FOREIGN KEY (`eventStreamConfig_stream` , `eventStreamConfig_rev` )
-    REFERENCES `AMON_test2`.`eventStreamConfig` (`stream` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`eventStreamConfig` (`stream` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -148,12 +148,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`skyMapEvent`
+-- Table `AMON_DATABASE_NAME`.`skyMapEvent`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`skyMapEvent` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`skyMapEvent` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`skyMapEvent` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`skyMapEvent` (
   `Dec` FLOAT NOT NULL ,
   `RA` FLOAT NOT NULL ,
   `delta_Dec` FLOAT NULL DEFAULT NULL COMMENT 'pixel resolution' ,
@@ -168,7 +168,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`skyMapEvent` (
   INDEX `fk_skyMapEvent_event1_idx` (`event_eventStreamConfig_stream` ASC, `event_id` ASC, `event_rev` ASC) ,
   CONSTRAINT `fk_skyMapEvent_event1`
     FOREIGN KEY (`event_eventStreamConfig_stream` , `event_id` , `event_rev` )
-    REFERENCES `AMON_test2`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -176,12 +176,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`skyMapAlert`
+-- Table `AMON_DATABASE_NAME`.`skyMapAlert`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`skyMapAlert` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`skyMapAlert` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`skyMapAlert` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`skyMapAlert` (
   `Dec` FLOAT NOT NULL ,
   `RA` FLOAT NOT NULL ,
   `delta_Dec` FLOAT NULL DEFAULT NULL ,
@@ -196,7 +196,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`skyMapAlert` (
   INDEX `fk_skyMapAlert_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_skyMapAlert_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
-    REFERENCES `AMON_test2`.`alert` (`alertConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alert` (`alertConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -204,12 +204,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`messenger`
+-- Table `AMON_DATABASE_NAME`.`messenger`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`messenger` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`messenger` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`messenger` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`messenger` (
   `id` INT NOT NULL ,
   `messenger_type` CHAR(10) NULL ,
   PRIMARY KEY (`id`) )
@@ -218,12 +218,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`source`
+-- Table `AMON_DATABASE_NAME`.`source`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`source` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`source` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`source` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`source` (
   `id` INT NOT NULL ,
   `source_name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
@@ -232,12 +232,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`sourceModel`
+-- Table `AMON_DATABASE_NAME`.`sourceModel`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`sourceModel` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`sourceModel` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`sourceModel` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`sourceModel` (
   `id` INT NOT NULL ,
   `active` TINYINT(1) NULL ,
   `sp_index1` FLOAT NULL ,
@@ -253,12 +253,12 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`sourceModel` (
   INDEX `fk_sourceModel_source1_idx` (`source_id` ASC) ,
   CONSTRAINT `fk_sourceModel_messenger1`
     FOREIGN KEY (`messenger_id` )
-    REFERENCES `AMON_test2`.`messenger` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`messenger` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_sourceModel_source1`
     FOREIGN KEY (`source_id` )
-    REFERENCES `AMON_test2`.`source` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`source` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -266,12 +266,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`eventModel`
+-- Table `AMON_DATABASE_NAME`.`eventModel`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`eventModel` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`eventModel` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`eventModel` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`eventModel` (
   `significance` FLOAT NULL DEFAULT NULL ,
   `model_yield` FLOAT NULL DEFAULT NULL ,
   `eventStreamConfig_stream` INT NOT NULL ,
@@ -288,17 +288,17 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`eventModel` (
   INDEX `fk_eventModel_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_eventModel_eventStreamConfig1`
     FOREIGN KEY (`eventStreamConfig_stream` , `eventStreamConfig_rev` )
-    REFERENCES `AMON_test2`.`eventStreamConfig` (`stream` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`eventStreamConfig` (`stream` , `rev` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_eventModel_sourceModel1`
     FOREIGN KEY (`sourceModel_id` , `sourceModel_messenger_id` )
-    REFERENCES `AMON_test2`.`sourceModel` (`id` , `messenger_id` )
+    REFERENCES `AMON_DATABASE_NAME`.`sourceModel` (`id` , `messenger_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_eventModel_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
-    REFERENCES `AMON_test2`.`alert` (`alertConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alert` (`alertConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -306,12 +306,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`stream`
+-- Table `AMON_DATABASE_NAME`.`stream`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`stream` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`stream` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`stream` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`stream` (
   `id` INT NOT NULL ,
   `stream_name` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
@@ -320,12 +320,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`analysisConfig`
+-- Table `AMON_DATABASE_NAME`.`analysisConfig`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`analysisConfig` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`analysisConfig` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysisConfig` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`analysisConfig` (
   `stream_id` INT NOT NULL ,
   `rev` TINYINT NOT NULL ,
   `stream_merge_method` SET('setme') NULL ,
@@ -345,7 +345,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysisConfig` (
   INDEX `fk_alertConfig_stream1_idx` (`stream_id` ASC) ,
   CONSTRAINT `fk_alertConfig_stream1`
     FOREIGN KEY (`stream_id` )
-    REFERENCES `AMON_test2`.`stream` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`stream` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -353,12 +353,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`analysis`
+-- Table `AMON_DATABASE_NAME`.`analysis`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`analysis` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`analysis` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysis` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`analysis` (
   `alertTime` TIMESTAMP NULL ,
   `significance` FLOAT NULL DEFAULT NULL ,
   `analysisConfig_stream_id` INT NOT NULL ,
@@ -371,12 +371,12 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysis` (
   INDEX `fk_analysis_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_analysis_analysisConfig1`
     FOREIGN KEY (`analysisConfig_stream_id` , `analysisConfig_rev` )
-    REFERENCES `AMON_test2`.`analysisConfig` (`stream_id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`analysisConfig` (`stream_id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_analysis_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
-    REFERENCES `AMON_test2`.`alert` (`alertConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alert` (`alertConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -384,12 +384,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`recipient`
+-- Table `AMON_DATABASE_NAME`.`recipient`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`recipient` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`recipient` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`recipient` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`recipient` (
   `id` INT NOT NULL ,
   `name` VARCHAR(80) NULL ,
   `address` VARCHAR(100) NULL ,
@@ -400,12 +400,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`distribution`
+-- Table `AMON_DATABASE_NAME`.`distribution`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`distribution` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`distribution` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`distribution` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`distribution` (
   `ranking` FLOAT NULL COMMENT 'rank of the alert for a specific recipient.' ,
   `transmited` TIMESTAMP NULL ,
   `received` TIMESTAMP NULL ,
@@ -418,12 +418,12 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`distribution` (
   INDEX `fk_distribution_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_distribution_recipient1`
     FOREIGN KEY (`recipient_id` )
-    REFERENCES `AMON_test2`.`recipient` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`recipient` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_distribution_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
-    REFERENCES `AMON_test2`.`alert` (`alertConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alert` (`alertConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -431,12 +431,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`recipient_has_stream`
+-- Table `AMON_DATABASE_NAME`.`recipient_has_stream`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`recipient_has_stream` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`recipient_has_stream` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`recipient_has_stream` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`recipient_has_stream` (
   `recipient_id` INT NOT NULL ,
   `stream_id` INT NOT NULL ,
   `activation_date` TIMESTAMP NULL ,
@@ -445,12 +445,12 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`recipient_has_stream` (
   INDEX `fk_recipient_has_stream_recipient1_idx` (`recipient_id` ASC) ,
   CONSTRAINT `fk_recipient_has_stream_recipient1`
     FOREIGN KEY (`recipient_id` )
-    REFERENCES `AMON_test2`.`recipient` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`recipient` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_recipient_has_stream_stream1`
     FOREIGN KEY (`stream_id` )
-    REFERENCES `AMON_test2`.`stream` (`id` )
+    REFERENCES `AMON_DATABASE_NAME`.`stream` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -458,12 +458,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`follow_up`
+-- Table `AMON_DATABASE_NAME`.`follow_up`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`follow_up` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`follow_up` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`follow_up` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`follow_up` (
   `followup_status` SET('completed', 'rejected', 'in progress', 'comenced') NULL ,
   `start_time` TIMESTAMP NULL ,
   `stop_time` TIMESTAMP NULL ,
@@ -487,7 +487,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`follow_up` (
   PRIMARY KEY (`distribution_recipient_id`, `distribution_alert_alertConfig_stream`, `distribution_alert_id`, `distribution_alert_rev`) ,
   CONSTRAINT `fk_follow_up_distribution1`
     FOREIGN KEY (`distribution_recipient_id` , `distribution_alert_alertConfig_stream` , `distribution_alert_id` , `distribution_alert_rev` )
-    REFERENCES `AMON_test2`.`distribution` (`recipient_id` , `alert_alertConfig_stream` , `alert_id` , `alert_rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`distribution` (`recipient_id` , `alert_alertConfig_stream` , `alert_id` , `alert_rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -495,12 +495,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`analysisConfig_has_sourceModel`
+-- Table `AMON_DATABASE_NAME`.`analysisConfig_has_sourceModel`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`analysisConfig_has_sourceModel` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`analysisConfig_has_sourceModel` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysisConfig_has_sourceModel` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`analysisConfig_has_sourceModel` (
   `analysisConfig_stream_id` INT NOT NULL ,
   `analysisConfig_rev` TINYINT NOT NULL ,
   `sourceModel_id` INT NOT NULL ,
@@ -511,12 +511,12 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`analysisConfig_has_sourceModel` (
   INDEX `fk_analysisConfig_has_sourceModel_analysisConfig1_idx` (`analysisConfig_stream_id` ASC, `analysisConfig_rev` ASC) ,
   CONSTRAINT `fk_analysisConfig_has_sourceModel_analysisConfig1`
     FOREIGN KEY (`analysisConfig_stream_id` , `analysisConfig_rev` )
-    REFERENCES `AMON_test2`.`analysisConfig` (`stream_id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`analysisConfig` (`stream_id` , `rev` )
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_analysisConfig_has_sourceModel_sourceModel1`
     FOREIGN KEY (`sourceModel_id` , `sourceModel_messenger_id` )
-    REFERENCES `AMON_test2`.`sourceModel` (`id` , `messenger_id` )
+    REFERENCES `AMON_DATABASE_NAME`.`sourceModel` (`id` , `messenger_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -524,12 +524,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`parameter`
+-- Table `AMON_DATABASE_NAME`.`parameter`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`parameter` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`parameter` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`parameter` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`parameter` (
   `name` VARCHAR(50) NOT NULL COMMENT 'Name of the parameter, which could be \"energy\", Error2Radius, Kent_beta, etc. depending what is the event parameter' ,
   `value` FLOAT NULL ,
   `units` VARCHAR(45) NULL ,
@@ -540,7 +540,7 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`parameter` (
   INDEX `fk_parameter_event1_idx` (`event_eventStreamConfig_stream` ASC, `event_id` ASC, `event_rev` ASC) ,
   CONSTRAINT `fk_parameter_event1`
     FOREIGN KEY (`event_eventStreamConfig_stream` , `event_id` , `event_rev` )
-    REFERENCES `AMON_test2`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -548,12 +548,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `AMON_test2`.`alertLine`
+-- Table `AMON_DATABASE_NAME`.`alertLine`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `AMON_test2`.`alertLine` ;
+DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`alertLine` ;
 
 SHOW WARNINGS;
-CREATE  TABLE IF NOT EXISTS `AMON_test2`.`alertLine` (
+CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`alertLine` (
   `alert_alertConfig_stream` INT NOT NULL ,
   `alert_id` INT NOT NULL ,
   `alert_rev` TINYINT NOT NULL ,
@@ -565,18 +565,18 @@ CREATE  TABLE IF NOT EXISTS `AMON_test2`.`alertLine` (
   INDEX `fk_alert_has_event_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_alert_has_event_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
-    REFERENCES `AMON_test2`.`alert` (`alertConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`alert` (`alertConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_alert_has_event_event1`
     FOREIGN KEY (`event_eventStreamConfig_stream` , `event_id` , `event_rev` )
-    REFERENCES `AMON_test2`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
+    REFERENCES `AMON_DATABASE_NAME`.`event` (`eventStreamConfig_stream` , `id` , `rev` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
-USE `AMON_test2` ;
+USE `AMON_DATABASE_NAME` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
