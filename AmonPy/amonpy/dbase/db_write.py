@@ -12,14 +12,10 @@ import numpy
 
 from numpy import *
 
-sys.path.append('../tools')
-import convert_time
-from misctools import perc_done
-
-import db_classes
-
-#sys.path.append('../sim')
-#import basic_sim
+# amonpy imports
+from amonpy.tools import convert_time
+from amonpy.tools.misctools import perc_done
+from amonpy.dbase import db_classes
 
 
 def write_event_archive(real_archive, stream_num, host_name, user_name, passw_name, db_name, filename):
