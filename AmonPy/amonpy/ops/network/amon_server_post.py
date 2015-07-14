@@ -42,7 +42,7 @@ class EventPage(Resource):
     
     HostFancyName='localhost'
     UserFancyName='yourname'
-    PasswordFancy='yourhost'
+    PasswordFancy='yourpass'
     DBFancyName='AMON_test2'
     eventlist = []
     paramlist = []
@@ -97,13 +97,14 @@ class EventPage(Resource):
                             event[0].elevation,
                             event[0].psf_type,
                             0)) 
-                            
-            transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
-                           (evparam[0].name,
-                            evparam[0].value,
-                            evparam[0].units,
-                            evparam[0].event_eventStreamConfig_stream, 
-                            evparam[0].event_id,evparam[0].event_rev))
+            plenght=len(evparam)
+            for i in xrange(plenght):                
+                transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
+                           (evparam[i].name,
+                            evparam[i].value,
+                            evparam[i].units,
+                            evparam[i].event_eventStreamConfig_stream, 
+                            evparam[i].event_id,evparam[i].event_rev))
             return event                
                            
         def writeEventParam(event, evparam):
