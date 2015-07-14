@@ -41,7 +41,7 @@ def make_event(source, o=sys.stdout):
     '''
     # initialize Event and Parameter classes to be populated from this VOEvent
     event=[Event(1,1,0)]
-    evParam=[Parameter("energy",1,1,0)]
+    #evParam=[Parameter("energy",1,1,0)]
       
     v = Vutil.parse(source)
     """
@@ -122,24 +122,40 @@ def make_event(source, o=sys.stdout):
     groups = v.get_What().get_Group()
     #print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
     print
-    evParam[0].event_eventStreamConfig_stream = event[0].stream
-    evParam[0].event_id = event[0].id
-    evParam[0].event_rev = event[0].rev
+    #evParam[0].event_eventStreamConfig_stream = event[0].stream
+    #evParam[0].event_id = event[0].id
+    #evParam[0].event_rev = event[0].rev
+    # parameter class (array)
+    evParam=[]
     for g in groups:
         for p in g.get_Param():
+            #evParam=[Parameter("energy",1,1,0)]
             #print>>o, Vutil.htmlParam(g, p) 
             print p.get_name(), p.get_value(), " ", p.get_ucd(), " ", \
                                 p.get_unit(), " ", p.get_dataType()
+            evPar= Parameter(p.get_name(),1,1,0) 
+            evPar.event_eventStreamConfig_stream = event[0].stream
+            evPar.event_id = event[0].id
+            #evParam[0].event_rev = event[0].rev                  
             print
                         
             for d in p.get_Description(): print "DESCRIPTION" , str(d)
-            if p.get_name() in dir(evParam[0]):
-                if (p.get_name()=="stream" or p.get_name()=="id" or p.get_name()=="rev" or p.get_name()=="nevents"):
-                    setattr(evParam[0],p.get_name(), int(p.get_value()))
-                elif  (p.get_name()=="value"):
-                   setattr(evParam[0],p.get_name(), float(p.get_value())) 
-                else:
-                    setattr(evParam[0],p.get_name(), p.get_value())
+            #if p.get_name() in dir(evParam[0]):
+            #if (p.get_name()=="stream" or p.get_name()=="id" or p.get_name()=="rev" or p.get_name()=="nevents"):
+             #   setattr(evPar,p.get_name(), int(p.get_value()))
+                    #evPar.value=p.get_value()
+                    #evPar.units=p.get_unit()
+            #elif  (p.get_name()=="value"):
+             #   setattr(evPar,p.get_name(), float(p.get_value())) 
+            #elif  (p.get_name()=="unit"):
+             #   evPar.units=p.get_value()
+                #setattr(evPar,p.get_name(), float(p.get_value()))   
+            #else:
+             #   setattr(evPar,p.get_name(), p.get_value())
+            evPar.value= p.get_value()
+            evPar.units=p.get_unit()
+            evPar.forprint()
+            evParam.append(evPar)    
     print "PARAMETER"
     #evParam[0].forprint()       
 
