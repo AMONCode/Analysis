@@ -2,9 +2,9 @@
 Module to populate python classes that will be written into DB. 
 """
 import sys
-#sys.path.append('../tools')
-#import db_classes
-from db_classes import Alert, AlertLine
+
+# amonpy imports
+from amonpy.dbase.db_classes import Alert, AlertLine
 
 def populate_alertline(alerts):
     """

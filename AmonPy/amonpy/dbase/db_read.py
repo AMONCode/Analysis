@@ -20,11 +20,10 @@ import db_metadata
 
 from numpy import *
 
-sys.path.append('../tools')
-
-import convert_time
-import db_classes
-from db_classes import event_def
+# amonpy imports
+from amonpy.tools import convert_time
+from amonpy.dbase import db_classes
+from amonpy.dbase.db_classes import event_def
 
 # build the simplest version of the Event class
 #Event = event_def()

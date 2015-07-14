@@ -1,27 +1,17 @@
 First create new user for AMON:
 
 $ mysql -u root -p [-h hostname]
-> CREATE USER 'amonusername'@'localhost' IDENTIFIED BY 'yourpassword';
-(Replace 'localhost' with 'hostname' if MySQL is not running on
-you local machine)
+> CREATE USER '<AMONUSERNAME>'@'localhost' IDENTIFIED BY '<PASSWORD>';
 
-Then create AMON DBs and grant access for AMON user:
-> CREATE DATABASE AMON_test1;
-> CREATE DATABASE AMON_test2;
-> GRANT ALL ON AMON_test1.* TO 'amonusername'@'localhost';
-> GRANT ALL ON AMON_test2.* TO 'amonusername'@'localhost';
+(Replace 'localhost' with 'hostname' if MySQL is not running on you local
+machine)
 
-There are 2 SQL scripts:
+Then you can create databases by doing:
 
-1) db_build.sql is a script that creates AMON_test1 database for archival data
+$ ./create_db.sh <DATABASE> <AMONUSERNAME>
 
-2) db_mc_build.sql is a script that creates AMON_test2 database for MC data
+You will need to set up two databases for testing: AMON_test1 and AMON_test2
 
-To run the SQL scripts, use:
-
-mysql -u amonusername [-h hostname] -p AMON_test1 < db_build.sql
-mysql -u amonusername [-h hostname] -p AMON_test2 < db_mc_build.sql
-(You can drop -h if host is localhost)
-
-Attention: by running these two scripts on db.hpc.rcc.psu.edu you will erase current AMON
-databases. Use these scripts to create databases on your own machine (i.e. localhost).
+Attention: by running this on db.hpc.rcc.psu.edu you will erase current AMON
+databases. Use these scripts to create databases on your own machine (i.e.
+localhost).

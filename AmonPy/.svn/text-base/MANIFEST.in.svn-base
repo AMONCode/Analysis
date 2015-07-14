@@ -1,6 +1,0 @@
-include *.txt, *.sql, *.png, *
-recursive-include amonpy/ops *.txt *.py *
-recursive-include amonpy *.txt *.py *
-recursive-include mysql *.sql *.txt *
-recursive-include data *
-recursive-include docs *

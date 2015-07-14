@@ -7,7 +7,6 @@ setup(name = "AmonPy",
       description='AMON Analysis Code',
       author='Miles Smith, Gordana Tesic',
       author_email='mus44@psu.edu, gut10@psu.edu',
-      py_modules = [],
-      package_dir = {'': 'amonpy'},
-      packages =['anal', 'dbase', 'ops', 'sim', 'tools'],
-      scripts = ['amonpy/ops/run_archival.py', 'amonpy/ops/run_basic_sim.py'],)
+      packages = ['amonpy', 'amonpy.anal', 'amonpy.dbase',  'amonpy.sim', 'amonpy.tools'],
+      scripts = ['amonpy/ops/run_archival.py', 'amonpy/ops/run_basic_sim.py'],
+      )

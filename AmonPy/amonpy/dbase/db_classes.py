@@ -7,11 +7,11 @@ made to enable use of python features
 from numpy import *
 from operator import itemgetter, attrgetter
 from datetime import datetime, timedelta
-from sys import path
-path.append("../sim")
 import random
 import ast
-import sim.sidereal_m as sidereal
+
+# amonpy imports
+from amonpy.sim import sidereal_m as sidereal
 
 
 # ******************* BEGIN event class definition **********************
