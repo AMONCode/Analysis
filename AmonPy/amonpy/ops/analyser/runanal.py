@@ -46,6 +46,7 @@ import amonpy.dbase.db_read as db_read
 import amonpy.dbase.db_write as db_write
 import amonpy.dbase.db_delete as db_delete
 import amonpy.dbase.alert_to_voevent as alert_to_voevent
+import amonpy.dbase.hesealert_to_voevent as hesealert_to_voevent
 import amonpy.anal.analysis as analysis
 import amonpy.anal.alert_revision as alert_revision
 #import dialog_choice
@@ -74,11 +75,11 @@ class AnalRT(Task):
 #class AnalRT(object):
     def __init__(self):
         self.Event = event_def()
-        self.HostFancyName='localhost'
+        self.HostFancyName='yourhost'
         self.UserFancyName='yourname'
         self.PasswordFancy='yourpass'
-        self.DBFancyName='AMON_test2'
-        self.alertDir = '/Users/Goci/work/AMON/AmonPy/amonpy/ops/network/alerts'
+        self.DBFancyName='your db name'
+        self.alertDir = '/AmonPy/amonpy/ops/network/alerts/'
 
         # get the Alert Stream config
         print
@@ -111,13 +112,55 @@ class AnalRT(Task):
         self.Event.id     = evnumber
         self.Event.rev    = evrev
         eventInAlertLine = False
-        
+        eventHESE = False
         t1 = time()
         
         events=db_read.read_event_single(evstream,evnumber,evrev,self.HostFancyName,
                                         self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
+        params=db_read.read_parameters(evstream,evnumber,evrev,self.HostFancyName,
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
+        
         t2 = time()
         print '   Read time: %.2f seconds' % float(t2-t1)
+        print ' lenght of parameters %s' % len(params) 
+        if (len(params)>0): 
+            for i in range(len(params)):
+                # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
+                if (params[i].name=='qtot'):   
+                    eventHESE=True
+
+        if (eventHESE==True):
+            # send HESE events directly to GCN first
+            xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params) 
+            fname=self.alertDir + 'amon_hese_%s_%s_%s.xml' \
+                % (events.stream, events.id, events.rev)
+            f1=open(fname, 'w+')
+            f1.write(xmlForm)
+            f1.close() 
+            """
+                        modified from 
+                        https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
+                        Send a voevent to a broker using the comet-sendvo publishing tool.
+                        Args:
+                        host (string): IP address or hostname of VOEvent broker.
+                        port (int): Port, default 8098.
+                        code this up!
+                        comment out code bellow if you do not have comet installed!
+            """
+            try:
+                cmd = ['comet-sendvo']
+                cmd.append('--file=' + fname)
+                #cmd.append('--host=' + host)
+                #cmd.append('--port=' + str(port))
+                #subprocess.check_call(cmd, stdin=f1)
+                subprocess.check_call(cmd)
+            except subprocess.CalledProcessError as e:
+                print "Send HESE VOevent alert failed"
+                       #logger.error("send_voevent failed")
+                raise e
+            else:
+                shutil.move(fname, self.alertDir+"archive/")
+ 
         #events.forprint()
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
@@ -247,7 +290,7 @@ class AnalRT(Task):
                             #logger.error("send_voevent failed")
                     raise e
                 else:
-                    shutil.move(fname, self.alertDir+"/archive/")
+                    shutil.move(fname, self.alertDir+"archive/")
                             #shutil.move(fname, "archive/"+fname)
                                                                                    
             else:
@@ -394,7 +437,7 @@ class AnalRT(Task):
                             #logger.error("send_voevent failed")
                             raise e
                         else:
-                            shutil.move(fname, self.alertDir+"/archive/")
+                            shutil.move(fname, self.alertDir+"archive/")
                             #shutil.move(fname, "archive/"+fname) 
                                    
                     else:
