@@ -20,6 +20,8 @@ import db_metadata
 
 from numpy import *
 
+sys.path.append('../tools')
+
 # amonpy imports
 from amonpy.tools import convert_time
 from amonpy.dbase import db_classes
@@ -854,6 +856,61 @@ def read_parameter_single(event_name,event_stream, event_num, event_rev, host_na
     return eventSingle  
 
 
+def read_parameters(event_stream, event_num, event_rev, host_name, user_name, passw_name, db_name):
+    """ Read a given event from the DB. Input event stream name (char), event ID (int)
+        event_Rev (int), host name, user name, password and DB name. """
+
+    #eventSingle=db_classes.Parameter(event_name,event_stream, event_num, event_rev)
+    # initiate list with dummy parameters, remove it later
+    eventList=[db_classes.Parameter("energy",0, 0, 0)]      
+    con = mdb.connect(host_name, user_name, passw_name, db_name)    
+    cur = con.cursor()
+    
+    #if (eventSingle._Event__lock == False):
+    
+    try:
+        print "Try to connect to DB: %s %s %s" % (event_stream, event_num, event_rev)
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('parameter', cur) 
+        num_columns=len(r[1])
+        print "Connected"
+        print 'Number of columns in the table %d' %  num_columns
+        print
+        print 'Column names:'
+        print
+    
+        for ii in xrange(num_columns):
+            print r[1][ii][0]
+        print
+        
+        cur.execute("""SELECT * FROM parameter WHERE event_eventStreamConfig_stream = %s AND
+                    event_id = %s AND event_rev = %s""", (event_stream, event_num, event_rev))
+                       
+        numrows=int(cur.rowcount)
+        evPars=[]
+        for i in range(numrows):
+            row = cur.fetchone()
+            #eventSingle=db_classes.Parameter(row[0],event_stream,event_num,event_rev)
+            eventList[i].name       =  row[0]      
+            eventList[i].event_eventStreamConfig_stream     =  event_stream   # defined by input
+            eventList[i].event_id         =  event_num       # defined by input
+            eventList[i].event_rev        =  event_rev      # defined by input
+            eventList[i].value     =  row[1]
+            eventList[i].units     =  row[2]
+            eventList+=[db_classes.Parameter("energy",0, 0, 0)]
+            #evPars.append(eventSingle)
+        cur.close()
+        con.close()
+    except mdb.Error, e:
+        print 'Exception %s' %e
+        con.rollback() 
+        #print "Event %s %s %s failed to be read." % event_stream, event_num, event_rev
+        cur.close()
+        con.close()
+    eventList.pop()  # remove the last dummy event
+    print "   %d rows read from the database" % len(eventList)
+    return eventList  
+   
 def read_parameter_interval(stream_name,id_start,id_stop,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of parameters from the DB.
