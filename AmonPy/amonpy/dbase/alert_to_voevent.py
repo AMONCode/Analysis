@@ -20,9 +20,17 @@ def alert_to_voevent(alert):
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
-    v.set_ivorn("ivo://amon/test#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    if (alert[0].triggering==2):
+        v.set_ivorn("ivo://amon/icecube_coinc#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    else:
+        v.set_ivorn("ivo://amon/multi_mesg#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    
     v.set_role("%s" % alert[0].type)
-    v.set_Description("Report of some irrelevant information")
+    if (alert[0].triggering==2):
+        v.set_Description("Report of the IceCube neutrino multiplet")
+    else:
+        v.set_Description("Report of the multimessenger multiplets") 
+    
 
     w = Who()
     datenow1=str(datenow)

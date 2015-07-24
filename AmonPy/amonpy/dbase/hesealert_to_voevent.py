@@ -14,7 +14,7 @@ from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
 def hesealert_to_voevent(alert, params):
-    stream=2
+    stream=1
     id = alert[0].id
     rev=alert[0].rev
     
@@ -35,7 +35,7 @@ def hesealert_to_voevent(alert, params):
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
-    v.set_ivorn("ivo://amon/hesetest#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    v.set_ivorn("ivo://amon/icecube_hese#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
     v.set_role("%s" % alert[0].type)
     v.set_Description("Report of IceCube HESE neutrino alert")
 
