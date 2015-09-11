@@ -8,8 +8,8 @@ import sys
 from datetime import datetime, timedelta
 from numpy import array, dot, math
 from math import *
-sys.path.append('../tools')
-from convert_celest import *
+#sys.path.append('../tools')
+from amonpy.tools.convert_celest import *
 import itertools 
 
 class Fisher_doublet(object):
