@@ -9,7 +9,7 @@
     Works with the Enthought Canopy package management
 
     Example: > python run_archival.py dbaccess.txt
-
+### this does not work, need to enter values on your own
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
 """
@@ -257,12 +257,19 @@ print '   Read time: %.2f seconds' % float(t2-t1)
 # put events in temporal order, oldest events first
 events = sorted(events,key=attrgetter('datetime'))
 
+
+
+MAX_ID = db_read.alert_max_id(config.stream, options.host, options.username, options.password, options.database)
+
+if MAX_ID == None:
+    MAX_ID = -1
+
 # start analysis server process
 print
 print ' STARTING ANALYSIS SERVER'
 (server_p,client_p) = multiprocessing.Pipe()
 anal_p = multiprocessing.Process(target=analysis.anal,
-                    args=((server_p,client_p),config))
+                    args=((server_p,client_p),config, MAX_ID))
 anal_p.start()
 
 # send events to the analysis process, send the oldest events first
