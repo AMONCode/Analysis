@@ -142,11 +142,13 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                 d = agent.request('POST', host, headers, bodyProducer=body)
                 # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
-                shutil.move(path+oldest, path+"archive/"+oldest)
+                #shutil.move(path+oldest, path+"archive/"+oldest)
                 #datafile.close()
                 #print "Event %s sent" % (oldest,)
             except (RuntimeError, TypeError, NameError,AttributeError, Exception):
                 log.msg("Error parsing file %s " % (oldest,))
+            else:
+                shutil.move(path+oldest, path+"archive/"+oldest)        
             
         else:
             pass
