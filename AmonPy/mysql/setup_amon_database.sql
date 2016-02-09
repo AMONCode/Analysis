@@ -531,7 +531,7 @@ DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`parameter` ;
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`parameter` (
   `name` VARCHAR(50) NOT NULL COMMENT 'Name of the parameter, which could be \"energy\", Error2Radius, Kent_beta, etc. depending what is the event parameter' ,
-  `value` FLOAT NULL ,
+  `value` DOUBLE NULL ,
   `units` VARCHAR(45) NULL ,
   `event_eventStreamConfig_stream` INT NOT NULL ,
   `event_id` BIGINT NOT NULL ,
