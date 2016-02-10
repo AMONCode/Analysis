@@ -126,10 +126,13 @@ class AnalRT(Task):
         if (len(params)>0): 
             for i in range(len(params)):
                 # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
-                if (params[i].name=='qtot'):   
+                if (params[i].name=='signal_trackness'):   
                     eventHESE=True
-
-        if (eventHESE==True):
+                    signal_t = params[i].value
+                    print 'Signal trackenss %.2f' % signal_t
+        
+        # note: change signal_t to 0.1 after unblinding
+        if ((eventHESE==True) and (signal_t >= 0.)):
             # send HESE events directly to GCN first
             xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params) 
             fname=self.alertDir + 'amon_hese_%s_%s_%s.xml' \
