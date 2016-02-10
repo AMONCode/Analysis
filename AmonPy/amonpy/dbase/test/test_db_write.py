@@ -22,6 +22,7 @@ class TestDBWrite(unittest.TestCase):
         self.DBFancyName='AMON_test1'
         self.DBFancyNameMC='AMON_test2'
         self.StreamFancyName=0
+        self.StreamFancyName2=[10,11,12,13] # IceCube HESE, HE, doublets and HE
         self.AlertStreamFancyName=1
         self.StreamFancyNameMC=[0,1,3,7]  # IceCube is 0
         self.StreamAlertConfig=[1]
@@ -55,6 +56,26 @@ class TestDBWrite(unittest.TestCase):
         print 'Testing write_event_config module MC'
         db_write.write_event_config(self.StreamFancyNameMC,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.SimConfig)
+        
+    def testWriteConfigHESE(self):
+        print 'Testing write_event_config module for HESE'
+        db_write.write_event_config_archive(self.StreamFancyName2[0],self.HostFancyName,
+        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
+        
+    def testWriteConfigDoublet(self):
+        print 'Testing write_event_config module for doublets'
+        db_write.write_event_config_archive(self.StreamFancyName2[1],self.HostFancyName,
+        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
+        
+    def testWriteConfigEHE(self):
+        print 'Testing write_event_config module for EHE'
+        db_write.write_event_config_archive(self.StreamFancyName2[2],self.HostFancyName,
+        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
+        
+    def testWriteConfigHE(self):
+        print 'Testing write_event_config module for HE'
+        db_write.write_event_config_archive(self.StreamFancyName2[3],self.HostFancyName,
+        self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)    
     
             
     def testWriteEventArchive(self):
