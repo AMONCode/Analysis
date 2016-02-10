@@ -204,6 +204,7 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
 def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_name):
     """
     Write into eventStreamConfig table for the archival data.
+    Stream 0 = singlets (subthreshol), 10 = HESE, 11 doublets, 12 EHE, 13 HE
     """
     con = mdb.connect(host_name, user_name, passw_name, db_name)    
     cur = con.cursor()
@@ -222,6 +223,22 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             con.rollback()
         
         con.close()
+        
+    elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13)):
+        obs_name='IceCube'
+        try:
+            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2016-02-01 00:00:00', 
+            '2026-01-01 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
+            con.commit()
+        except mdb.Error, e:
+            print 'Exception %s' %e
+            print 'Something went wrong, no data are written.'
+            con.rollback()
+        
+        con.close()    
 
     elif stream_num==4:
         obs_name='Swift'
