@@ -5,6 +5,7 @@ See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
 import sys
+import random
 
 sys.path.append('../db_classes')
 
@@ -20,22 +21,26 @@ def hesealert_to_voevent(alert, params):
     
     for i in range(len(params)):
         #if (params[i].name== 'qtot'):
-
+        if (params[i].name== 'event_id'):
+            event_id=int(params[i].value)
+        if (params[i].name== 'run_id'):
+            run_id=int(params[i].value)
         if (params[i].name== 'causalqtot'):
             charge=params[i].value
-        if (params[i].name== 'signalness'):
-            signalness=params[i].value
-        if (params[i].name== 'llh_ratio'):
-            if (params[i].value < 0.):
-                hesetype="cascade"
-            else:
-                hesetype="track"
+        if (params[i].name== 'signal_trackness'):
+            signal_trackness=params[i].value
+       # if (params[i].name== 'llh_ratio'):
+       #     if (params[i].value < 0.):
+       #         hesetype="cascade"
+       #     else:
+        #        hesetype="track"
 
     datenow=datetime.now()
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
-    v.set_ivorn("ivo://amon/icecube_hese#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    #v.set_ivorn("ivo://amon/icecube_hese#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+    v.set_ivorn("ivo://amon/icecube_hese#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_' + str(rev))
     v.set_role("%s" % alert[0].type)
     v.set_Description("Report of IceCube HESE neutrino alert")
 
@@ -58,14 +63,23 @@ def hesealert_to_voevent(alert, params):
     w.add_Param(p)
 
     p = Param(name="id", ucd="meta.number",dataType="int", value=str(id))
-    p.set_Description(["Alert identification"])
+    p.set_Description(["Alert identification, combination of run_id and event_id"])
+    w.add_Param(p)
+
+    p = Param(name="event_id", ucd="meta.number",dataType="int", value=str(event_id))
+    p.set_Description(["Event id within a given run"])
+    w.add_Param(p)
+
+    p = Param(name="run_id", ucd="meta.number",dataType="int", value=str(run_id))
+    p.set_Description(["Run id"])
     w.add_Param(p)
     
     p = Param(name="rev", ucd="meta.number",dataType="int", value=str(rev))
     p.set_Description(["Alert revision"])
     w.add_Param(p)
     
-    p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
+    #p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
+    p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(1))
     p.set_Description(["Number of events in the alert"])
     w.add_Param(p)
     
@@ -77,24 +91,32 @@ def hesealert_to_voevent(alert, params):
     p.set_Description(["Uncertainty of the time window"])
     w.add_Param(p)
 
-    p = Param(name="charge", ucd="phys.charge", unit="pe", dataType="float",  value=str(charge))
+    #p = Param(name="charge", ucd="phys.charge", unit="pe", dataType="float",  value=str(charge))
+    p = Param(name="charge", ucd="phys.charge", unit="pe", dataType="float",  value=str(1510))
     p.set_Description(["Total neutrino event charge in units of photoelectrons (pe)"])
     w.add_Param(p)
 
-    p = Param(name="signalness", ucd="stat.probability", unit=" ", dataType="float",  value=str(signalness))
-    p.set_Description(["Probability of neutrino event being signal"])
-    w.add_Param(p)
+    #p = Param(name="signal_trackenss", ucd="stat.probability", unit=" ", dataType="float",  value=str(signal_trackness))
+    #p = Param(name="signalness", ucd="stat.probability", unit=" ", dataType="float",  value=str(0.5))
+    #p.set_Description(["Probability of neutrino event being signal i.e. astrophysical neutrino"])
+    #w.add_Param(p)
  
-    p = Param(name="hesetype", ucd="", unit=" ", dataType="string",  value=str(hesetype))
-    p.set_Description(["Track-like or cascade-like HESE neutrino"])
-    w.add_Param(p)   
+    p = Param(name="signal_trackness", ucd="stat.probability", unit=" ", dataType="float",  value=str(0.1))
+    p.set_Description(["Probability of an astrophysical neutrino event being a track-like event. If >=0.1, a given event is a signal track-like event, if <0.1 event could be either track-like or shower-like."])
+    w.add_Param(p)
+    #p = Param(name="hesetype", ucd="", unit=" ", dataType="string",  value=str(hesetype))
+    #p = Param(name="hesetype", ucd="", unit=" ", dataType="string",  value=str(0))
+    #p.set_Description(["Track-like or cascade-like HESE neutrino"])
+    #w.add_Param(p)   
 
-    p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
-    p.set_Description(["False positive rate"])
+    # p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
+    p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(0))
+    p.set_Description(["False positive rate, a value of zero means not available"])
     w.add_Param(p) 
  
-    p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
-    p.set_Description(["Pvalue for the alert"])
+    #p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
+    p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(0))
+    p.set_Description(["Pvalue for the alert, a value of zero means not available"])
     w.add_Param(p)
 
     v.set_What(w)
@@ -114,14 +136,14 @@ def hesealert_to_voevent(alert, params):
      
     if ww: v.set_WhereWhen(ww)
     #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
-   # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
+    # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
     obs=ObsDataLocation()
     obsloc=ObservatoryLocation()
     astro2=AstroCoordSystem("UTC-GEOD-TOPO")
     astro3=AstroCoords("UTC-GEOD-TOPO")
-    value3=Value3(0.0000,-90.00,0)
-    pos1=Position3D("deg-deg-m","longitude", "latitude", "elevation",value3)
-    astro3.set_Position3D(pos1)
+    #value3=Value3(0.0000,-90.00,0)
+    #pos1=Position3D("deg-deg-m","longitude", "latitude", "elevation",value3)
+    #astro3.set_Position3D(pos1)
     obsloc.set_AstroCoordSystem(astro2)
     obsloc.set_AstroCoords(astro3)
     obs.set_ObservatoryLocation(obsloc)
@@ -129,8 +151,15 @@ def hesealert_to_voevent(alert, params):
     astro4=AstroCoordSystem("UTC-ICRS-TOPO")
     astro5=AstroCoords("UTC-ICRS-TOPO")
     time2=alert[0].datetime
-    value2=Value2(alert[0].RA,alert[0].dec)
-    pos2=Position2D("deg-deg", "RA","Dec",value2, alert[0].sigmaR)
+    #value2=Value2(alert[0].RA,alert[0].dec)
+    #value2=Value2(alert[0].RA,-5.00)
+    # change the line bellow when alerts are unblinded
+    #value2=Value2(alert[0].RA,alert[0].dec)
+    value2=Value2(random.uniform(0.00,359.99),random.uniform(0.00,-90.00))
+    #pos2=Position2D("deg-deg", "RA","Dec",value2, alert[0].sigmaR)
+    pos2=Position2D("deg-deg", "RA","Dec",value2, 1.0)
+    # change the line above after unblinding
+     
     astro5.set_Position2D(pos2)
     #error2=Error2Radius(alert[0].sigmaR)
     #astro5.set_Error2Radius()
