@@ -71,29 +71,31 @@ def read_event_single(event_stream, event_num, event_rev, host_name, user_name, 
                        
        
         row = cur.fetchone()
-        
-        eventSingle.stream     =  event_stream   # defined by input
-        eventSingle.id         =  event_num       # defined by input
-        eventSingle.rev        =  event_rev      # defined by input
-        eventSingle.datetime      =  row[3]
-        eventSingle.datetime +=datetime.timedelta(microseconds=row[4]) # add microseconds     
-        eventSingle.dec        =  row[5]   
-        eventSingle.RA         = row[6]
-        eventSingle.sigmaR   = row[7]         
-        eventSingle.nevents   = row[8]        
-        eventSingle.deltaT   =  row[9]       
-        eventSingle.sigmaT   =  row[10]       
-        eventSingle.false_pos  =  row[11]      
-        eventSingle.pvalue  =  row[12]      
-        eventSingle.type       = row[13] 
-        eventSingle.point_RA   = row[14]       
-        eventSingle.point_dec  =  row[15]  
-        eventSingle.longitude       =  row[16]      
-        eventSingle.latitude       =  row[17]
-        eventSingle.elevation       =  row[18]
-        eventSingle.psf_type          =row[19]
-        eventSingle.configstream     = row[20]
-        #eventSingle._Event__lock=True
+        if row is not None:        
+            eventSingle.stream     =  event_stream   # defined by input
+            eventSingle.id         =  event_num       # defined by input
+            eventSingle.rev        =  event_rev      # defined by input
+            eventSingle.datetime      =  row[3]
+            eventSingle.datetime +=datetime.timedelta(microseconds=row[4]) # add microseconds     
+            eventSingle.dec        =  row[5]   
+            eventSingle.RA         = row[6]
+            eventSingle.sigmaR   = row[7]         
+            eventSingle.nevents   = row[8]        
+            eventSingle.deltaT   =  row[9]       
+            eventSingle.sigmaT   =  row[10]       
+            eventSingle.false_pos  =  row[11]      
+            eventSingle.pvalue  =  row[12]      
+            eventSingle.type       = row[13] 
+            eventSingle.point_RA   = row[14]       
+            eventSingle.point_dec  =  row[15]  
+            eventSingle.longitude       =  row[16]      
+            eventSingle.latitude       =  row[17]
+            eventSingle.elevation       =  row[18]
+            eventSingle.psf_type          =row[19]
+            eventSingle.configstream     = row[20]
+            #eventSingle._Event__lock=True
+        else:
+            eventSingle=None
         cur.close()
         con.close()
     except mdb.Error, e:
@@ -102,7 +104,7 @@ def read_event_single(event_stream, event_num, event_rev, host_name, user_name, 
         #print "Event %s %s %s failed to be read." % event_stream, event_num, event_rev
         cur.close()
         con.close()
-        
+        eventSingle=None        
     return eventSingle  
 
 

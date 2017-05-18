@@ -148,8 +148,8 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
             except (RuntimeError, TypeError, NameError,AttributeError, Exception):
                 log.msg("Error parsing file %s " % (oldest,))
             else:
-                shutil.move(path+oldest, path+"archive/"+oldest)        
-            
+                #shutil.move(path+oldest, path+"archive/"+oldest)        
+                print "ping db"
         else:
             pass
     else:

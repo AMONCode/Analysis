@@ -204,7 +204,9 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
 def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_name):
     """
     Write into eventStreamConfig table for the archival data.
-    Stream 0 = singlets (subthreshol), 10 = HESE, 11 doublets, 12 EHE, 13 HE
+    Stream 0 = singlets (subthreshol), 10 = HESE, 11 EHE, 12 MASTER OFU, 13 ASAS-SN OFU, 14 LCGOT, 15 PTF
+    Stream 4 = Swift,
+    Stream 5 = FACT
     """
     con = mdb.connect(host_name, user_name, passw_name, db_name)    
     cur = con.cursor()
@@ -224,7 +226,7 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
         
         con.close()
         
-    elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13)):
+    elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13) or (stream_num==14) or (stream_num==15)):
         obs_name='IceCube'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
@@ -255,8 +257,25 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             con.rollback()
     
         con.close()
+
+    elif stream_num==5:
+        obs_name='FACT'
+        try:
+            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
+            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
+            con.commit()
+        except mdb.Error, e:
+            print 'Exception %s' %e
+            print 'Something went wrong, no data are written.'
+            con.rollback()
+
+        con.close()
+
     else:
-        print "Not ready for other streams. Only IceCube and Swift for now."
+        print "Not ready for other streams. Only IceCube, Swift, and FACT for now."
         con.close()
         cur.close()
 

@@ -13,20 +13,20 @@ from VOEventLib.Vutil import *
 
 def alert_to_voevent(alert):
     stream=alert[0].stream
-    id = alert[0].id
+    amon_id = alert[0].id
     rev=alert[0].rev
     
     datenow=datetime.now()
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
-    if (alert[0].triggering==2):
+    if (alert[0].trigger==2):
         v.set_ivorn("ivo://amon/icecube_coinc#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
     else:
         v.set_ivorn("ivo://amon/multi_mesg#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
     
     v.set_role("%s" % alert[0].type)
-    if (alert[0].triggering==2):
+    if (alert[0].trigger==2):
         v.set_Description("Report of the IceCube neutrino multiplet")
     else:
         v.set_Description("Report of the multimessenger multiplets") 
@@ -50,7 +50,7 @@ def alert_to_voevent(alert):
     p.set_Description(["Analysis stream identification"])
     w.add_Param(p)
 
-    p = Param(name="id", ucd="meta.number", dataType="int", value=str(id))
+    p = Param(name="amon_id", ucd="meta.number", dataType="int", value=str(amon_id))
     p.set_Description(["Alert identification"])
     w.add_Param(p)
     
@@ -133,6 +133,8 @@ def alert_to_voevent(alert):
     time_1=Time("s")
     time2=str(alert[0].datetime)
     time2_2=time2[0:10]+"T"+time2[11:]
+    
+    #time2_2=time2[0:10]+"T"+time2[11:]
     time3=TimeInstant(time2_2)
     time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)

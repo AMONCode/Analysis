@@ -46,7 +46,7 @@ class ClientPostServiceMaker(object):
     def makeService(self, options):
         #check directory with events for an oldest file
         # do it every 5 second using TimerService     
-        loop_service = TimerService(10.0, check_for_files, options['hostport'], options['epath'],
+        loop_service = TimerService(18000.0, check_for_files, options['hostport'], options['epath'],
                         options['kfile'], options['cfile'])
         loop_service.startService()
         return loop_service

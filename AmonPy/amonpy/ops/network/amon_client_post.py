@@ -109,15 +109,15 @@ def check_for_files(hostport, eventpath):
                 #body = StringProducer(data)
                 
                 body=FileBodyProducer(datafile)
-                length_data=body.length
+                length_data=str(body.length)
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'], 
-                                            'Content-Lenght': [length_data],
+                                            'Content-Length': [length_data],
                                             'Content-Name':[oldest]})
                 d = agent.request('POST', host, headers, bodyProducer=body)
                 # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
-                shutil.move(path+oldest, path+"archive/"+oldest)
+                #shutil.move(path+oldest, path+"archive/"+oldest)
                 #datafile.close()
                 #print "Event %s sent" % (oldest,)
             except:

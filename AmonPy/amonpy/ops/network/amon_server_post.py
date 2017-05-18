@@ -11,7 +11,8 @@ from twisted.web.resource import Resource
 from twisted.web.server import Site, NOT_DONE_YET
 from twisted.enterprise import adbapi
 
-import cgi, os, getopt, sys
+import cgi, os, getopt, sys, shutil
+import ConfigParser, netrc
 from datetime import datetime, timedelta
 from time import time
 
@@ -39,11 +40,15 @@ class EventPage(Resource):
     # initiate celery task that will send message to analysis server 
     # about new incoming event
     #n=AnalRT()
-    
-    HostFancyName='localhost'
-    UserFancyName='yourname'
-    PasswordFancy='yourpass'
-    DBFancyName='AMON_test2'
+    config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
+    Config = ConfigParser.ConfigParser()
+    Config.read(config_fname)
+    HostFancyName=Config.get('database', 'host_name')
+    nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
+    nrc = netrc.netrc(nrc_path)
+    UserFancyName=nrc.hosts[HostFancyName][0]
+    PasswordFancy=nrc.hosts[HostFancyName][2]
+    DBFancyName = Config.get('database', 'realtime_dbname')
     eventlist = []
     paramlist = []
     microsec = 0.
@@ -74,12 +79,13 @@ class EventPage(Resource):
                     #print 'microseconds %d' % microsec
             else:
                 microsec=0.0
-                      
+            event_timefull=event[0].datetime
+            event_time = event_timefull.replace(microsecond=0)          
             transaction.execute("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
                             %s,%s,%s,%s,%s,%s,%s,%s,%s)""",(event[0].stream,
                             event[0].id,
                             event[0].rev,
-                            event[0].datetime, 
+                            event_time, 
                             microsec, 
                             event[0].dec,
                             event[0].RA, 
@@ -159,10 +165,12 @@ class EventPage(Resource):
         event  = evpar[0]
         evParam = evpar[1]
         event[0].forprint()
-        evParam[0].forprint()
         
-        os.remove(path+"server_tmp_events/"+fname)
-
+        if not (evParam==[]):
+            evParam[0].forprint()
+        
+        #os.remove(path+"server_tmp_events/"+fname)
+        shutil.move(path+"server_tmp_events/"+fname, path+"server_archive_events/"+fname)
         #t1 = time()                                                                
                   
         #write event to DB (does it in a separate thread)

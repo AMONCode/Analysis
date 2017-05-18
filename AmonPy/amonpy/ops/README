@@ -34,7 +34,7 @@ This folder contains scripts to be run by user.
         
     iii) Cd to network directory and start the AMON server:
     
-        twistd -l server.log --pidfile server.pid serverpost --port 8000 --iface localhost
+        twistd -l server.log --pidfile server.pid serverpost --port 8080 --iface localhost
         
     iv) Start the AMON client to simulate observatories sending VOEvents to AMON server
         in real-time:

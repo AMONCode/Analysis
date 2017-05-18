@@ -54,12 +54,12 @@ def make_event(source, o=sys.stdout):
     len_sname=len(streamname)
     count, count1= 0, 0
     count2=0
-    count=streamname.index('/')
-    streamname2=streamname[count+1:]
-    count1=1+count+streamname2.index('/')
-    streamname3=streamname[count1+1:]
-    count2=1+count1+streamname3.index('/')
-    event[0].stream = int(streamname[count1+1:count2])
+    #count=streamname.index('/')
+    #streamname2=streamname[count+1:]
+    #count1=1+count+streamname2.index('/')
+    #streamname3=streamname[count1+1:]
+    #count2=1+count1+streamname3.index('/')
+    #event[0].stream = int(streamname[count1+1:count2])
     #print "STREAM NAME %s" % event[0].stream 
     #print
     event[0].configstream= 0 # change later to get revision from eventConfigTable event[0].stream     
@@ -136,7 +136,7 @@ def make_event(source, o=sys.stdout):
             evPar= Parameter(p.get_name(),1,1,0) 
             evPar.event_eventStreamConfig_stream = event[0].stream
             evPar.event_id = event[0].id
-            #evParam[0].event_rev = event[0].rev                  
+            evPar.event_rev = event[0].rev                  
             print
                         
             for d in p.get_Description(): print "DESCRIPTION" , str(d)
@@ -161,7 +161,7 @@ def make_event(source, o=sys.stdout):
 
     #print>>o, 'WHEREWHEN'
     #print
-    wwd = Vutil.whereWhenDict(v)
+    wwd = Vutil.getWhereWhen(v)
     if wwd:
         """
         print>>o, 'Observatory     %s' % wwd['observatory']
@@ -172,7 +172,7 @@ def make_event(source, o=sys.stdout):
         print>>o, 'Dec %s' % wwd['latitude']
         print>>o, 'Pos error %s ' % wwd['posError']
         """
-        event[0].sigmaR=wwd['posError']
+        event[0].sigmaR=wwd['positionalError']
         timeevent=wwd['time']
         year=int(timeevent[0:4])
         month=int(timeevent[5:7])
@@ -183,6 +183,7 @@ def make_event(source, o=sys.stdout):
         milisec=int(timeevent[20:])
         
         event[0].datetime=datetime(year,month,day,hour,minute,second,milisec)
+        
         event[0].RA=wwd['longitude']
         event[0].dec=wwd['latitude']
         

@@ -47,15 +47,19 @@ import amonpy.dbase.db_write as db_write
 import amonpy.dbase.db_delete as db_delete
 import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.dbase.hesealert_to_voevent as hesealert_to_voevent
+import amonpy.dbase.ehealert_to_voevent as ehealert_to_voevent
+import amonpy.dbase.ofualert_to_voevent as ofualert_to_voevent
 import amonpy.anal.analysis as analysis
 import amonpy.anal.alert_revision as alert_revision
 #import dialog_choice
 #import input_text_window
+import amonpy.dbase.email_alerts as email_alerts
 
 # 3rd party modules
 from time import time
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
+import ConfigParser, netrc
 #import wx
 import multiprocessing
 import ast
@@ -75,13 +79,18 @@ class AnalRT(Task):
 #class AnalRT(object):
     def __init__(self):
         self.Event = event_def()
-        self.HostFancyName='yourhost'
-        self.UserFancyName='yourname'
-        self.PasswordFancy='yourpass'
-        self.DBFancyName='your db name'
-        self.alertDir = '/AmonPy/amonpy/ops/network/alerts/'
-
-        # get the Alert Stream config
+        config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
+        Config = ConfigParser.ConfigParser()
+        Config.read(config_fname)
+        self.HostFancyName = Config.get('database', 'host_name')
+        nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
+        nrc = netrc.netrc(nrc_path)
+        
+        self.UserFancyName = nrc.hosts[self.HostFancyName][0]
+        self.PasswordFancy = nrc.hosts[self.HostFancyName][2]
+        self.DBFancyName = Config.get('database', 'realtime_dbname')
+        self.alertDir = Config.get('dirs', 'alertdir')
+        
         print
         print ' USING TEST ALERT CONFIG'
         self.config = exAlertConfig()
@@ -101,6 +110,11 @@ class AnalRT(Task):
         if (self.max_id==None):
             self.max_id=-1
         print
+        # to prevent sendinf IceCube's EHE and HESE if they overlap
+        #self.run_check=0
+        #self.event_check=0
+        #self.rev_check=0
+        #self.sendAlert=True
         print ' STARTING ANALYSIS SERVER'
         (self.server_p,self.client_p) = multiprocessing.Pipe()
         self.anal_p = multiprocessing.Process(target=analysis.anal,
@@ -113,6 +127,15 @@ class AnalRT(Task):
         self.Event.rev    = evrev
         eventInAlertLine = False
         eventHESE = False
+        signal_t = 0.
+        hese_charge=0.
+        # For check if EHE and HESE are the same run num and event num
+        #run_id=0
+        #event_id=0
+        #rev_id=0
+        
+        alertDuplicate=False # for HESE and EHE overalp
+                
         t1 = time()
         
         events=db_read.read_event_single(evstream,evnumber,evrev,self.HostFancyName,
@@ -130,16 +153,52 @@ class AnalRT(Task):
                     eventHESE=True
                     signal_t = params[i].value
                     print 'Signal trackenss %.2f' % signal_t
-        
+                if (params[i].name=='causalqtot'):
+                    hese_charge=params[i].value
+                if (params[i].name=='run_id'):
+                    run_id=params[i].value
+                if (params[i].name=='event_id'):
+                    event_id=params[i].value
         # note: change signal_t to 0.1 after unblinding
+        # check if EHE and HESE are duplicates of each other
+        if (events.stream==10):
+            events_duplicate=db_read.read_event_single(11,evnumber,evrev,self.HostFancyName,
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)
+            if events_duplicate is None:
+                alertDuplicate=False
+            else:
+                alertDuplicate=True
+            print "alert duplicate"
+            print alertDuplicate
+        if (events.stream==11):
+            events_duplicate=db_read.read_event_single(10,evnumber,evrev,self.HostFancyName,
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)
+            if events_duplicate is None:
+                alertDuplicate=False
+            else:
+                alertDuplicate=True
+            print "alert duplicate"
+            print alertDuplicate
+        #if ((events.stream==10) or (events.stream==11)):
+            #if ((run_id==self.run_check) and (event_id==self.event_check) and (events.rev==self.rev_check)):
+            #    self.sendAlert=False
+            #    self.run_check=run_id
+            #    self.event_check=event_id
+            #    self.rev_check=events.rev
+            #else:
+            #    self.sendAlert=True
+        #else: 
+            #self.sendAlert=True       
         if ((eventHESE==True) and (signal_t >= 0.)):
             # send HESE events directly to GCN first
-            xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params) 
+            xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate) 
             fname=self.alertDir + 'amon_hese_%s_%s_%s.xml' \
                 % (events.stream, events.id, events.rev)
             f1=open(fname, 'w+')
             f1.write(xmlForm)
-            f1.close() 
+            f1.close()
+
+            email_alerts.alert_email([events],params)
             """
                         modified from 
                         https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
@@ -150,20 +209,59 @@ class AnalRT(Task):
                         code this up!
                         comment out code bellow if you do not have comet installed!
             """
-            try:
-                cmd = ['comet-sendvo']
-                cmd.append('--file=' + fname)
-                #cmd.append('--host=' + host)
-                #cmd.append('--port=' + str(port))
-                #subprocess.check_call(cmd, stdin=f1)
-                subprocess.check_call(cmd)
-            except subprocess.CalledProcessError as e:
-                print "Send HESE VOevent alert failed"
+            if ((eventHESE==True) and (signal_t >= 0.1) and (hese_charge>=6000.)):
+                try:
+                    #cmd = ['comet-sendvo']
+                    #cmd.append('--file=' + fname)
+                    # just for dev to prevent sending hese both from dev and pro machine
+                    print "uncoment this if used on production"
+                    #subprocess.check_call(cmd)
+                except subprocess.CalledProcessError as e:
+                    print "Send HESE VOevent alert failed"
                        #logger.error("send_voevent failed")
+                    raise e
+                else:
+                    shutil.move(fname, self.alertDir+"archive/")
+        if (events.stream==11):
+            xmlForm=ehealert_to_voevent.ehealert_to_voevent([events],params, alertDuplicate)
+            fname=self.alertDir + 'amon_icecube_ehe_%s_%s_%s.xml' \
+                % (events.stream, events.id, events.rev)
+            f1=open(fname, 'w+')
+            f1.write(xmlForm)
+            f1.close()
+    
+            email_alerts.alert_email([events],params)
+
+            if (events.type=="test"):
+                try:
+                    print "EHE sent to GCN"
+                    #cmd = ['comet-sendvo']
+                    #cmd.append('--file=' + fname)
+                    #subprocess.check_call(cmd)
+                except subprocess.CalledProcessError as e:
+                    print "Send IceCube EHE VOevent alert failed"
+                    #logger.error("send_voevent failed")
+                    raise e
+                else:
+                    shutil.move(fname, self.alertDir+"archive/")
+        if ((events.stream==12) or (events.stream==13) or (events.stream==14) or (events.stream==15)):
+            xmlForm=ofualert_to_voevent.ofualert_to_voevent([events],params)
+            fname=self.alertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
+                % (events.stream, events.id, events.rev)
+            f1=open(fname, 'w+')
+            f1.write(xmlForm)
+            f1.close()
+            try:
+                print "OFU created"
+                #cmd = ['comet-sendvo']
+                #cmd.append('--file=' + fname)
+                #subprocess.check_call(cmd)
+            except subprocess.CalledProcessError as e:
+                print "Send IceCube OFU VOevent alert failed"
+                #logger.error("send_voevent failed")
                 raise e
             else:
                 shutil.move(fname, self.alertDir+"archive/")
- 
         #events.forprint()
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
@@ -172,7 +270,8 @@ class AnalRT(Task):
         t1 = time()
         #for ev in events:
             #self.client_p.send(ev)
-        if isinstance(events,Event):    
+        # do not analyse OFU for now, not approved by IceCube to use in analysis 
+        if (isinstance(events,Event) and (events.stream!=12) and (events.stream!=13) and (events.stream!=14) and (events.stream!=15)) :    
             self.client_p.send(events)
         else:
             print "NOT EVENT"
@@ -282,12 +381,10 @@ class AnalRT(Task):
                         comment out code bellow if you do not have comet installed!
                 """
                 try:
-                    cmd = ['comet-sendvo']
-                    cmd.append('--file=' + fname)
-                            #cmd.append('--host=' + host)
-                            #cmd.append('--port=' + str(port))
-                            #subprocess.check_call(cmd, stdin=f1)
-                    subprocess.check_call(cmd)
+                    print "alert created"
+                    #cmd = ['comet-sendvo']
+                    #cmd.append('--file=' + fname)
+                    #subprocess.check_call(cmd)
                 except subprocess.CalledProcessError as e:
                     print "Send VOevent alert failed"
                             #logger.error("send_voevent failed")
@@ -429,12 +526,10 @@ class AnalRT(Task):
                         comment out code bellow if you do not have comet installed!
                         """
                         try:
-                            cmd = ['comet-sendvo']
-                            cmd.append('--file=' + fname)
-                            #cmd.append('--host=' + host)
-                            #cmd.append('--port=' + str(port))
-                            #subprocess.check_call(cmd, stdin=f1)
-                            subprocess.check_call(cmd)
+                            print "AMON alert created"
+                            #cmd = ['comet-sendvo']
+                            #cmd.append('--file=' + fname)
+                            #subprocess.check_call(cmd)
                         except subprocess.CalledProcessError as e:
                             print "Send VOevent alert failed"
                             #logger.error("send_voevent failed")
