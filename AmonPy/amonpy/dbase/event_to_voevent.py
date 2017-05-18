@@ -26,7 +26,7 @@ def event_to_voevent(alert, parameter):
        aux_unit+=[param.units]
        aux_name+=[param.name]
         
-    datenow=datetime.now()
+    datenow=datetime.utcnow()
     
     if (stream==0): 
         obsname="IceCube"
@@ -37,6 +37,8 @@ def event_to_voevent(alert, parameter):
         obsname="ANTARES"
     elif (stream==3):
         obsname="Auger"  
+    elif (stream==5):
+        obsname="FACT"
     elif (stream==7):
         obsname="HAWK"
     else:

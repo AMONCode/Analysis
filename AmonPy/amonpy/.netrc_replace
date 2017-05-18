@@ -1,0 +1,13 @@
+machine db_host_name
+login db user name
+password db password
+
+machine gmail
+login gmail login
+password gmail password
+
+machine hese_ehe_gmail
+login gmail login
+password gmail password
+
+
