@@ -13,9 +13,9 @@ def alert_email(alert, params):
     config_fname = '../amon.ini'
     Config = ConfigParser.ConfigParser()
     Config.read(config_fname)
-    ehe_hese_emails = Config.get('mailing_list', 'ehe_hese')
-    sub_emails = Config.get('mailing_list', 'sub_ehe_hese')
-    nrc_fname = Config.get('dirs', 'amonpydir')
+    ehe_hese_emails = eval(Config.get('mailing_list', 'ehe_hese'))
+    sub_emails = eval(Config.get('mailing_list', 'sub_ehe_hese'))
+    nrc_fname = Config.get('dirs', 'amonpydir') + '.netrc'
     nrc = netrc.netrc(nrc_fname)
     stream = alert[0].stream
 
