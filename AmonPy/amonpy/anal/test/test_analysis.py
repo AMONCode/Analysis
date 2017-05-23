@@ -1,27 +1,19 @@
 #test_analysis.py
 """
 @package test_analysis
-Module for testing analysis modules. 
+Module for testing analysis modules.
 """
 import sys
-sys.path.append('../')
-sys.path.append('../tools')
-sys.path.append('../dbase')
-sys.path.append('../anal')
-from time import time
-import db_read
-import cluster
-from db_classes import Alert, exAlertConfig
-import db_write
-import db_delete
-
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
 from numpy import array, where, math
-
-
 from multiprocessing import Pipe, Process
-from analysis import anal
+from time import time
+
+from amonpy.dbase import db_read, db_write, db_delete
+from amonpy.anal import cluster
+from amonpy.dbase.db_classes import Alert, exAlertConfig
+from amonpy.anal.analysis import anal
 
 
 def test_anal():
@@ -43,7 +35,7 @@ def test_anal():
                                     UserFancyName,PasswordFancy,DBFancyName)
     t2 = time()
     print
-    print len(events), 'events have been read from the database' 
+    print len(events), 'events have been read from the database'
     print 'read time (s): ', t2-t1
     print
 
@@ -64,19 +56,19 @@ def test_anal():
 
     #loop over the list of events, calling analysis for each
     for ev in events:
-  
+
         client.send(ev)
         #new_alerts = (client.recv())
         #if len(new_alerts) !=0:
         #    alerts += new_alerts
-        
+
     client.send('get_alerts')
     alerts = client.recv()
-    
+
     t2 = time()
     print
     print '*** Alert generation complete***'
-    print '    Time taken (sec): ', t2 -t1 
+    print '    Time taken (sec): ', t2 -t1
     print '    No. of alerts generated: ', len(alerts)
     print
 
@@ -87,4 +79,4 @@ def test_anal():
 
 
 if __name__ == "__main__":
-    test_anal()   
+    test_anal()
