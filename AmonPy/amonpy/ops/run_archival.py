@@ -13,29 +13,8 @@
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
 """
-from __future__ import absolute_import
-import sys
-from optparse import OptionParser
-from argparse import ArgumentParser
-sys.path.append('../')
-sys.path.append('../..')
-sys.path.append('../tools')
-sys.path.append('../dbase')
-sys.path.append('../anal')
-
-# AmonPy modules:
-from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
-from amonpy.dbase.db_classes import Event
-import amonpy.dbase.db_populate_class as db_populate_class
-import amonpy.dbase.db_read as db_read
-import amonpy.dbase.db_write  as db_write
-import amonpy.dbase.db_delete as db_delete
-import amonpy.anal.analysis as analysis
-
-import dialog_choice
-import input_text_window
-
 # 3rd party modules
+from __future__ import absolute_import
 from time import time
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
@@ -43,6 +22,20 @@ import wx
 import multiprocessing
 import ast
 import getpass
+import sys
+from optparse import OptionParser
+from argparse import ArgumentParser
+
+# AmonPy modules:
+from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
+from amonpy.dbase.db_classes import Event
+import amonpy.dbase.db_populate_class
+import amonpy.dbase.db_read
+import amonpy.dbase.db_write
+import amonpy.dbase.db_delete
+import amonpy.anal.analysis
+from amonpy.tools import dialog_choice
+from amonpy.tools import input_text_window
 
 def parse_command_line():
        #TODO Make usage part of help menu better
@@ -67,21 +60,21 @@ def parse_command_line():
 
        new_config_options_group=parser.add_argument_group("options required if invoking --use-new-config")
        #TODO Determine a method of handling stream config and cluster method to replace the number input method
-       new_config_options_group.add_argument("-s", "--stream-config", metavar="int", type=int, 
+       new_config_options_group.add_argument("-s", "--stream-config", metavar="int", type=int,
                      help="Stream configuration, 1=IceCube only,2=ANTARES only,3=HAWC only, 4=Swift only, \
                      5=IceCube + ANTARES,6=IceCube + HAWC,7=ANTARES + HAWC,8=IceCube + Swift,9=All")
-       new_config_options_group.add_argument("-P", "--pvalue", metavar="float", type=float, default=0.0, 
+       new_config_options_group.add_argument("-P", "--pvalue", metavar="float", type=float, default=0.0,
                      help="P-Value threshold level, 0.0 means no threshold [default: 0.0]")
-       new_config_options_group.add_argument("-n", "--num-events-thresh", metavar="int", type=int, 
+       new_config_options_group.add_argument("-n", "--num-events-thresh", metavar="int", type=int,
                      help="Number of events threshold level; each detector in stream-config needs 1 int, \
                                    and in the order listed.  e.g. if steam-config=4, to use a num thresh of\
                                    2 for IceCube and 7 for ANTARES, -n would take 2 7 as its input", nargs='*')
        #TODO Take default setting off of --cluster-method once more options are added
-       new_config_options_group.add_argument("-c", "--cluster-method", metavar="int", type=int, default=1, 
+       new_config_options_group.add_argument("-c", "--cluster-method", metavar="int", type=int, default=1,
                      help="Analysis cluster method, 1=Fisher (no other methods supported yet)")
        new_config_options_group.add_argument("-t", "--time-window", metavar="float", type=float, help="Search time window")
        new_config_options_group.add_argument("--cluster-threshold", metavar="float", type=float, help="Cluster threshold (# of sigma)")
-       
+
        return parser.parse_args()
 
 options=parse_command_line()
@@ -100,7 +93,7 @@ for arg in required_arguments:
 if missing_requirements:
        missing_args_str = 'Missing the following required options:'
        for arg in missing_requirements['missing']:
-             missing_args_str += ' --' + arg.replace('_','-') 
+             missing_args_str += ' --' + arg.replace('_','-')
        missing_args_str += '; see --help for more information'
        raise RuntimeError(missing_args_str)
 
@@ -118,7 +111,7 @@ if options.verbose:
                      + str(options.username) + '\npassword: <hidden>\ndatabase: ' + str(options.database)
 
 # Create the most generic Event class
-Event = event_def()
+Event = event_def()  
 
 if options.use_test_config:
        if options.verbose:
@@ -127,7 +120,7 @@ if options.use_test_config:
        config.forprint()
        event_streams = [0,1,7]
 if options.use_db_config:
-       # add code that asks for analysis stream, 
+       # add code that asks for analysis stream,
        # add a code that choses always the latest revision
        stream_num=1
        rev=0
@@ -148,7 +141,7 @@ if options.use_new_config:
        if options.verbose:
               print "Latest stream number is %s\n The next free stream number is %s" % (stream_count, stream_num)
 
-       rev = 0  
+       rev = 0
        config = AlertConfig2(stream_num, rev)
        choices_stream=['IceCube only','ANTARES only', 'HAWC only', 'IceCube + ANTARES',
                     'IceCube + HAWC', 'ANTARES + HAWC','IceCube + Swift','All', 'Cancel']
@@ -160,8 +153,8 @@ if options.use_new_config:
               config.participating      = 2**1
               event_streams +=[1]
        elif options.stream_config == 3:
-              config.participating      = 2**7 
-              event_streams +=[7] 
+              config.participating      = 2**7
+              event_streams +=[7]
        elif options.stream_config == 4:
               config.participating      = 2**4
               event_streams +=[4]
@@ -182,9 +175,9 @@ if options.use_new_config:
               event_streams.extend([0,1,7])
        else:
               raise RuntimeError('Either no stream config or an invalid stream config specified, see --help for more information')
-       #far = 0    
-       #info = 'Enter FAR density [sr^-1s^-1](0 means no FAR used)'                           
-       #far= input_text_window.SelectChoice(info=info).result 
+       #far = 0
+       #info = 'Enter FAR density [sr^-1s^-1](0 means no FAR used)'
+       #far= input_text_window.SelectChoice(info=info).result
        #config.false_pos = float(far)
        config.p_thresh = options.pvalue
 
@@ -192,7 +185,7 @@ if options.use_new_config:
               if len(options.num_events_thresh) > 1:
                      print 'More number thresholds input than config streams chosen, using first number in list (%d)' % \
                                    options.num_events_thresh[0]
-              config.N_thresh='{' + str(event_streams[0]) + ':' + str(options.num_events_thresh[0]) + '}' 
+              config.N_thresh='{' + str(event_streams[0]) + ':' + str(options.num_events_thresh[0]) + '}'
 
        elif (options.stream_config == 5) or (options.stream_config == 6) or (options.stream_config == 7) or (options.stream_config == 8):
               if len(options.num_events_thresh) > 2:
@@ -212,9 +205,9 @@ if options.use_new_config:
               thresh2= str(event_streams[1]) + ':' + \
                             str(options.num_events_thresh[1]) + ', '
               thresh3= str(event_streams[2]) + ':' + \
-                            str(options.num_events_thresh[2]) + '}'  
-              config.N_thresh = thresh1 + thresh2 + thresh3                   
-       #config.N_thresh = '{0:1,1:1,7:1}' 
+                            str(options.num_events_thresh[2]) + '}'
+              config.N_thresh = thresh1 + thresh2 + thresh3
+       #config.N_thresh = '{0:1,1:1,7:1}'
        config.deltaT             = options.time_window
        config.bufferT            = 1000.0   # Not in orininal AlertConfig class, but DB supports it
        if options.cluster_method == 1:
@@ -227,18 +220,18 @@ if options.use_new_config:
        config.psf_paramDesc1     = 'N/A'
        config.psf_paramDesc2     = 'N/A'
        config.psf_paramDesc3     = 'N/A'
-       config.skymap_val1Desc    = 'N/A'                
+       config.skymap_val1Desc    = 'N/A'
        config.skymap_val2Desc    = 'N/A'
        config.skymap_val3Desc    = 'N/A'
        config.validStart         = datetime(2008,6,4,9,20,13,0)
        config.validStop          = datetime(2009,5,20,3,12,53,0)
-       config.R_thresh           = 0.0    
-                               
-       config.forprint() 
-       print 
+       config.R_thresh           = 0.0
+
+       config.forprint()
+       print
        print 'Writing configuration to database'
        db_write.write_alert_config([stream_num],options.host,
-                     options.username,options.password,options.database, [config])   
+                     options.username,options.password,options.database, [config])
 if (not options.use_test_config) & (not options.use_db_config) & (not options.use_new_config):
        raise RuntimeError('No Alert configuration specified, see --help for more information')
 
@@ -301,35 +294,35 @@ elif(alerts == 'Empty' or alerts == 'Problem'):
 else:
     print alerts
     print "No alerts, exiting."
-    sys.exit(0)  
+    sys.exit(0)
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
 #if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
-    alertlines=db_populate_class.populate_alertline(alerts)  
-    print '   %d alertlines generated' % len(alertlines) 
+    alertlines=db_populate_class.populate_alertline(alerts)
+    print '   %d alertlines generated' % len(alertlines)
     print ' ANALYSIS COMPLETE'
 
 
 # identify what to do with alerts
     if options.output_config==1:
-        print ' QUIT: Analysis results will NOT be written to DB' 
+        print ' QUIT: Analysis results will NOT be written to DB'
     elif options.output_config==2:
         print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
         if (stream_num !=0):    # don't take any action for stream zero
             print "   Checking if arhival alerts are already in DB."
             count=db_read.alert_count(stream_num,"alert",options.host,
-                           options.username,options.password,options.database) 
-            print '   Number of rows to be deleted: %d' % count                 
+                           options.username,options.password,options.database)
+            print '   Number of rows to be deleted: %d' % count
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
-                   options.host,options.username,options.password,options.database)  
+                   options.host,options.username,options.password,options.database)
                 db_delete.delete_alert_stream(stream_num,options.host,
                 options.username,options.password,options.database)
             db_write.write_alert(stream_num,options.host,options.username,
                options.password,options.database,alerts)
             db_write.write_alertline(options.host,options.username,
-                options.password, options.database,alertlines)                         
+                options.password, options.database,alertlines)
         else:
             print '   Invalid stream number'
             print '   Only streams >= 1 allowed for archival analysis'
@@ -338,23 +331,23 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
         if (stream_num !=0):    # don't take any action for stream zero
             print "   Checking if arhival alerts are already in DB."
             count=db_read.alert_count(stream_num,"alert",options.host,
-                           options.username,options.password,options.database) 
-            print '   Number of rows to be deleted: %d' % count                 
+                           options.username,options.password,options.database)
+            print '   Number of rows to be deleted: %d' % count
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
-                   options.host,options.username,options.password,options.database)  
+                   options.host,options.username,options.password,options.database)
                 db_delete.delete_alert_stream(stream_num,options.host,
                     options.username,options.password,options.database)
             db_write.write_alert(stream_num,options.host,options.username,
                options.password,options.database,alerts)
             db_write.write_alertline(options.host,options.username,
-                options.password, options.database,alertlines)                         
+                options.password, options.database,alertlines)
         else:
             print '   Invalid stream number'
             print '   Only streams >= 1 allowed for archival analysis'
     else:
        raise RuntimeError("Not sure what to do with alerts, see --help for more details")
-    
+
 else:
     print "Last event"
     alerts[1].forprint()
