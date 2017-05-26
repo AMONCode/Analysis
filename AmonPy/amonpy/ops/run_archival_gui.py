@@ -15,11 +15,6 @@
 """
 from __future__ import absolute_import
 import sys
-sys.path.append('../')
-sys.path.append('../..')
-sys.path.append('../tools')
-sys.path.append('../dbase')
-sys.path.append('../anal')
 
 # AmonPy modules:
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
@@ -48,7 +43,7 @@ print ' **** EXECUTING run_archival.py ****'
 Event = event_def()
 
 # Get the database access information
-# which should be passed as an initial argument 
+# which should be passed as an initial argument
 try:
     filename = sys.argv[1]
 except:
@@ -81,7 +76,7 @@ if result_dialog_conf==choices_conf[0]:
     config.forprint()
     event_streams = [0,1,7]
 if result_dialog_conf==choices_conf[1]:
-    # add code that asks for analysis stream, 
+    # add code that asks for analysis stream,
     # add a code that choses always the latest revision
     stream_num=1
     rev=0
@@ -97,19 +92,19 @@ if result_dialog_conf==choices_conf[2]:
     print 'User-generated AlertConfig'
     print
     print 'Checking the highest taken analysis stream number from database...'
-    print 
+    print
     stream_count=db_read.stream_count_alertconfig(HostFancyName,
                           UserFancyName,PasswordFancy,DBFancyName)
     print "Latest stream number is %s" % stream_count
     print
     stream_num = stream_count + 1
     print "The next free stream number is %s" % stream_num
-    rev = 0  
+    rev = 0
     config = AlertConfig2(stream_num, rev)
     choices_stream=['IceCube only','ANTARES only', 'HAWC only', 'IceCube + ANTARES',
                     'IceCube + HAWC', 'ANTARES + HAWC','All', 'Cancel']
     info = 'Which stream configuration?'
-    result_dialog_stream = dialog_choice.SelectChoice(choices_stream,info=info).result 
+    result_dialog_stream = dialog_choice.SelectChoice(choices_stream,info=info).result
     event_streams = []
     if result_dialog_stream ==choices_stream[0]:
         config.participating      = 2**0
@@ -118,8 +113,8 @@ if result_dialog_conf==choices_conf[2]:
         config.participating      = 2**1
         event_streams +=[1]
     elif result_dialog_stream ==choices_stream[2]:
-        config.participating      = 2**7 
-        event_streams +=[7] 
+        config.participating      = 2**7
+        event_streams +=[7]
     elif result_dialog_stream ==choices_stream[3]:
         config.participating      = 2**0 + 2**1
         event_streams.extend([0,1])
@@ -128,34 +123,34 @@ if result_dialog_conf==choices_conf[2]:
         config.participating      = 2**0 + 2**7
     elif result_dialog_stream ==choices_stream[5]:
         event_streams.extend([1,7])
-        config.participating      = 2**1 + 2**7 
+        config.participating      = 2**1 + 2**7
     elif result_dialog_stream ==choices_stream[6]:
-        config.participating      = 2**0 + 2**1 + 2**7 
+        config.participating      = 2**0 + 2**1 + 2**7
         event_streams.extend([0,1,7])
     else:
         print 'User requested cancelation.'
-        sys.exit(0) 
-    #far = 0    
-    #info = 'Enter FAR density [sr^-1s^-1](0 means no FAR used)'                           
-    #far= input_text_window.SelectChoice(info=info).result 
+        sys.exit(0)
+    #far = 0
+    #info = 'Enter FAR density [sr^-1s^-1](0 means no FAR used)'
+    #far= input_text_window.SelectChoice(info=info).result
     #config.false_pos = float(far)
     pvalue = 0 # p-value threshold 0, means not used
-    info = 'Enter p-value threshod (not used yet)'                           
-    pvalue= input_text_window.SelectChoice(info=info).result 
+    info = 'Enter p-value threshod (not used yet)'
+    pvalue= input_text_window.SelectChoice(info=info).result
     config.p_thresh = float(pvalue)
     info = 'Number threshold for events'
     if (result_dialog_stream ==choices_stream[0]) or \
        (result_dialog_stream ==choices_stream[1]) or \
        (result_dialog_stream ==choices_stream[2]):
         config.N_thresh='{' + str(event_streams[0]) + ':' + \
-                         str(input_text_window.SelectChoice(info=info).result) + '}' 
+                         str(input_text_window.SelectChoice(info=info).result) + '}'
     elif (result_dialog_stream ==choices_stream[3]) or \
        (result_dialog_stream ==choices_stream[4]) or \
        (result_dialog_stream ==choices_stream[5]):
         info = 'Number threshold for 1st stream'
         thresh1='{' + str(event_streams[0]) + ':' + \
                          str(input_text_window.SelectChoice(info=info).result) + ', '
-        info = 'Number threshold for 2nd stream'                 
+        info = 'Number threshold for 2nd stream'
         thresh2= str(event_streams[1]) + ':' + \
                          str(input_text_window.SelectChoice(info=info).result) + '}'
         config.N_thresh = thresh1 + thresh2
@@ -163,19 +158,19 @@ if result_dialog_conf==choices_conf[2]:
         info = 'Number threshold for 1st stream'
         thresh1='{' + str(event_streams[0]) + ':' + \
                          str(input_text_window.SelectChoice(info=info).result) + ', '
-        info = 'Number threshold for 2nd stream'                 
+        info = 'Number threshold for 2nd stream'
         thresh2= str(event_streams[1]) + ':' + \
                          str(input_text_window.SelectChoice(info=info).result) + ', '
-        info = 'Number threshold for 3nd stream'                  
+        info = 'Number threshold for 3nd stream'
         thresh3= str(event_streams[2]) + ':' + \
-                         str(input_text_window.SelectChoice(info=info).result) + '}'  
-        config.N_thresh = thresh1 + thresh2 + thresh3                   
-    #config.N_thresh = '{0:1,1:1,7:1}' 
-    info = 'Search time window' 
+                         str(input_text_window.SelectChoice(info=info).result) + '}'
+        config.N_thresh = thresh1 + thresh2 + thresh3
+    #config.N_thresh = '{0:1,1:1,7:1}'
+    info = 'Search time window'
     config.deltaT             = float(input_text_window.SelectChoice(info=info).result)
     config.bufferT            = 1000.0   # Not in orininal AlertConfig class, but DB supports it
     info = 'Analysis cluster method'
-    #config.cluster_method     = 'Fisher'  
+    #config.cluster_method     = 'Fisher'
     choices_clust=['Fisher','New method (not supported yet)']
     result_clust = dialog_choice.SelectChoice(choices_clust,info=info).result
     if result_clust == choices_clust[0]:
@@ -183,26 +178,26 @@ if result_dialog_conf==choices_conf[2]:
     else:
         print
         print 'Unsupported method requested'
-        print 'Analysis will use Fisher (default)' 
-        config.cluster_method = 'Fisher'   
+        print 'Analysis will use Fisher (default)'
+        config.cluster_method = 'Fisher'
     info = 'Cluster threshold (# of sigma)'
-    config.cluster_thresh      =  float(input_text_window.SelectChoice(info=info).result)  
+    config.cluster_thresh      =  float(input_text_window.SelectChoice(info=info).result)
     config.sens_thresh        = 'N/A'
     config.psf_paramDesc1     = 'N/A'
     config.psf_paramDesc2     = 'N/A'
     config.psf_paramDesc3     = 'N/A'
-    config.skymap_val1Desc    = 'N/A'                
+    config.skymap_val1Desc    = 'N/A'
     config.skymap_val2Desc    = 'N/A'
     config.skymap_val3Desc    = 'N/A'
     config.validStart         = datetime(2012,1,1,0,0,0,0)
     config.validStop          = datetime(2013,1,1,0,0,0,0)
-    config.R_thresh           = 0.0    
-                               
-    config.forprint() 
-    print 
+    config.R_thresh           = 0.0
+
+    config.forprint()
+    print
     print 'Writing configuration to database'
     db_write.write_alert_config([stream_num],HostFancyName,
-                           UserFancyName,PasswordFancy,DBFancyName, [config])   
+                           UserFancyName,PasswordFancy,DBFancyName, [config])
 if result_dialog_conf==choices_conf[3]:
     print ' QUIT: User requested'
     sys.exit(0)
@@ -259,13 +254,13 @@ elif(alerts == 'Empty' or alerts == 'Problem'):
 else:
     print alerts
     print "No alerts, exiting."
-    sys.exit(0)  
+    sys.exit(0)
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
 #if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
-    alertlines=db_populate_class.populate_alertline(alerts)  
-    print '   %d alertlines generated' % len(alertlines) 
+    alertlines=db_populate_class.populate_alertline(alerts)
+    print '   %d alertlines generated' % len(alertlines)
     print ' ANALYSIS COMPLETE'
 
 
@@ -276,23 +271,23 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
     info = 'What would you like to do with the alerts?'
     result_dialog = dialog_choice.SelectChoice(choices,info=info).result
     if result_dialog==choices[0]:
-        print ' QUIT: Analysis results will NOT be written to DB' 
+        print ' QUIT: Analysis results will NOT be written to DB'
     elif result_dialog==choices[1]:
         print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
         if (stream_num !=0):    # don't take any action for stream zero
             print "   Checking if arhival alerts are already in DB."
             count=db_read.alert_count(stream_num,"alert",HostFancyName,
-                           UserFancyName,PasswordFancy,DBFancyName) 
-            print '   Number of rows to be deleted: %d' % count                 
+                           UserFancyName,PasswordFancy,DBFancyName)
+            print '   Number of rows to be deleted: %d' % count
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
-                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 db_delete.delete_alert_stream(stream_num,HostFancyName,
                 UserFancyName,PasswordFancy,DBFancyName)
             db_write.write_alert(stream_num,HostFancyName,UserFancyName,
                PasswordFancy,DBFancyName,alerts)
             db_write.write_alertline(HostFancyName,UserFancyName,
-                PasswordFancy, DBFancyName,alertlines)                         
+                PasswordFancy, DBFancyName,alertlines)
         else:
             print '   Invalid stream number'
             print '   Only streams >= 1 allowed for archival analysis'
@@ -301,24 +296,24 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
         if (stream_num !=0):    # don't take any action for stream zero
             print "   Checking if arhival alerts are already in DB."
             count=db_read.alert_count(stream_num,"alert",HostFancyName,
-                           UserFancyName,PasswordFancy,DBFancyName) 
-            print '   Number of rows to be deleted: %d' % count                 
+                           UserFancyName,PasswordFancy,DBFancyName)
+            print '   Number of rows to be deleted: %d' % count
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
-                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+                   HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 db_delete.delete_alert_stream(stream_num,HostFancyName,
                     UserFancyName,PasswordFancy,DBFancyName)
             db_write.write_alert(stream_num,HostFancyName,UserFancyName,
                PasswordFancy,DBFancyName,alerts)
             db_write.write_alertline(HostFancyName,UserFancyName,
-                PasswordFancy, DBFancyName,alertlines)                         
+                PasswordFancy, DBFancyName,alertlines)
         else:
             print '   Invalid stream number'
             print '   Only streams >= 1 allowed for archival analysis'
     else:
         print ' QUIT: User request'
         sys.exit(0)
-    
+
 else:
     print "Last event"
     alerts[1].forprint()
