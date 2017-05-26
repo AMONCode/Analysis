@@ -16,16 +16,6 @@ import ConfigParser, netrc
 from datetime import datetime, timedelta
 from time import time
 
-# path = "twisted/"
-# sys.path.append('../')
-# sys.path.append('../../')
-# sys.path.append('../../../')
-# sys.path.append("../../../tools")
-# sys.path.append("../../dbase")
-# sys.path.append("../../sim")
-# sys.path.append("../../tools")
-# sys.path.append("../../ops")
-
 from amonpy.dbase.db_classes import Event
 import amonpy.dbase.db_write as db_write
 import amonpy.dbase.voevent_to_event as voevent_to_event
