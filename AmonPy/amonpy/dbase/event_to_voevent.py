@@ -8,27 +8,27 @@ import sys
 from datetime import datetime, timedelta
 
 #sys.path.append('../dbase')
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
 def event_to_voevent(alert, parameter):
-    stream=alert[0].stream 
+    stream=alert[0].stream
     id = alert[0].id
     rev=alert[0].rev
     aux_value = []
     aux_unit = []
     aux_name = []
-    
+
     for param in parameter:
        aux_value+=[param.value]
        aux_unit+=[param.units]
        aux_name+=[param.name]
-        
+
     datenow=datetime.utcnow()
-    
-    if (stream==0): 
+
+    if (stream==0):
         obsname="IceCube"
         #long=0.0000
         #lat=-90.00
@@ -36,15 +36,15 @@ def event_to_voevent(alert, parameter):
     elif (stream==1):
         obsname="ANTARES"
     elif (stream==3):
-        obsname="Auger"  
+        obsname="Auger"
     elif (stream==5):
         obsname="FACT"
     elif (stream==7):
         obsname="HAWK"
     else:
         print "No stream valid stream number"
-        sys.exit(0)    
-        
+        sys.exit(0)
+
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
@@ -65,31 +65,31 @@ def event_to_voevent(alert, parameter):
 
     ############ What ############################
     w = What()
-        
+
     #p = Param(name="time", ucd="meta.number", unit=" ", dataType="string",  value=str(alert[0].datetime))
     #p.set_Description(["Number of events"])
     #w.add_Param(p)
-    
+
     p = Param(name="stream", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].stream))
     p.set_Description(["Stream number"])
     w.add_Param(p)
-    
+
     p = Param(name="id", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].id))
     p.set_Description(["Id number"])
     w.add_Param(p)
-    
+
     p = Param(name="rev", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].rev))
     p.set_Description(["Revision number"])
     w.add_Param(p)
-    
+
     p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="float",  value=str(alert[0].nevents))
     p.set_Description(["Number of events"])
     w.add_Param(p)
-    
+
     p = Param(name="deltaT", ucd="time.duration", unit="s", dataType="float",  value=str(alert[0].deltaT))
     p.set_Description(["Time window of the burst"])
     w.add_Param(p)
-    
+
     p = Param(name="sigmaT", ucd="time", unit="s", dataType="float",  value=str(alert[0].sigmaT))
     p.set_Description(["Uncertainty of the time window"])
     w.add_Param(p)
@@ -97,34 +97,34 @@ def event_to_voevent(alert, parameter):
     p = Param(name="false_pos", ucd="stat.probability", unit="s-1.sr-1 ", dataType="float",  value=str(alert[0].false_pos))
     p.set_Description(["False positive rate"])
     w.add_Param(p)
-    
+
     p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
     p.set_Description(["Pvalue"])
     w.add_Param(p)
-    
+
     p = Param(name="point_RA", ucd="os.eq.ra", unit="deg", dataType="float",  value=str(alert[0].point_RA))
     p.set_Description(["Pointing RA"])
     w.add_Param(p)
-    
+
     p = Param(name="point_dec", ucd="os.eq.dec", unit="deg", dataType="float",  value=str(alert[0].point_dec))
     p.set_Description(["Pointing Dec"])
     w.add_Param(p)
-    
+
     p = Param(name="psf_type", ucd="meta.code.multip", unit=" ", dataType="string",  value=str(alert[0].psf_type))
     p.set_Description(["Type of psf (skymap, fisher, kent, king)"])
     w.add_Param(p)
-    
+
     # A Group of Params
     g = Group(name="aux_params")
     for ii in xrange(len(parameter)):
         p = Param(name="%s" % str(aux_name[ii]), ucd="phys.energy", unit="%s" % str(aux_unit[ii]),
                   dataType="float", value="%s" % str(aux_value[ii]))
         g.add_Param(p)
-    
+
     w.add_Group(g)
-    
+
     v.set_What(w)
-    
+
     ############ Wherewhen ############################
     wwd = {'observatory':     obsname,
            'coord_system':    'UTC-GEOD-TOPO',
@@ -135,10 +135,10 @@ def event_to_voevent(alert, parameter):
            'latitude':        alert[0].dec,
            'positionalError': alert[0].sigmaR,
     }
-    
+
     ww = makeWhereWhen(wwd)
-    
-    
+
+
     if ww: v.set_WhereWhen(ww)
     #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
    # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
@@ -166,7 +166,7 @@ def event_to_voevent(alert, parameter):
     time3=TimeInstant(time2_2)
     time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)
-    
+
     observation.set_AstroCoordSystem(astro4)
     observation.set_AstroCoords(astro5)
     obs.set_ObservationLocation(observation)
@@ -191,7 +191,7 @@ def event_to_voevent(alert, parameter):
     #s = stringVOEvent(v, schemaURL)
     #print s
     ############ output the event ############################
-    xml = stringVOEvent(v, 
+    xml = stringVOEvent(v,
     schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
     #print xml
     return xml
@@ -204,21 +204,18 @@ if __name__ == "__main__":
     alert[0].RA=200.0603169
     alert[0].dec=45.3116578
     alert[0].sigmaR=0.77
-    alert[0].nevents   =  1    
-    alert[0].deltaT    =  0.0 
+    alert[0].nevents   =  1
+    alert[0].deltaT    =  0.0
     alert[0].false_pos =  0.00213
     alert[0].point_RA  =  0.0
     alert[0].point_dec  =  0.0
-    alert[0].pvalue    =  0.09200 
-    alert[0].psf_type    =  'fisher' 
-    alert[0].sigmaT    =  0.0 
-    alert[0].datetime = datetime.now() 
-    alert[0].forprint()         
-    
+    alert[0].pvalue    =  0.09200
+    alert[0].psf_type    =  'fisher'
+    alert[0].sigmaT    =  0.0
+    alert[0].datetime = datetime.now()
+    alert[0].forprint()
+
     xml1=event_to_voevent(alert,parameter)
     print xml1
     f1=open('./icecube_test.xml', 'w+')
     f1.write(xml1)
-   
-    
-    

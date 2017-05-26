@@ -7,9 +7,9 @@ http://www.ivoa.net/Documents/latest/VOEvent.html
 import sys
 import random
 
-sys.path.append('../db_classes')
+# sys.path.append('../db_classes')
 
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
@@ -30,8 +30,8 @@ def ofualert_to_voevent(alert, params):
         if (params[i].name== 'signal_trackness'):
             signal_trackness=params[i].value
         if (params[i].name== 'src_error_90'):
-            src_error_90=params[i].value    
-            
+            src_error_90=params[i].value
+
        # if (params[i].name== 'llh_ratio'):
        #     if (params[i].value < 0.):
        #         hesetype="cascade"
@@ -43,7 +43,7 @@ def ofualert_to_voevent(alert, params):
             src_error_50=params[i].value
         if (params[i].name== 'src_error90'):
             src_error_90=params[i].value
-     
+
     datenow=datetime.utcnow()
     ############ VOEvent header ############################
 
@@ -63,7 +63,7 @@ def ofualert_to_voevent(alert, params):
     if (alert[0].type=='observation'):
         v.set_Description("Report of IceCube coincidence neutrino alert")
     else:
-        v.set_Description("Report of IceCube coincidence test alert")    
+        v.set_Description("Report of IceCube coincidence test alert")
 
     w = Who()
     datenow1=str(datenow)
@@ -102,23 +102,23 @@ def ofualert_to_voevent(alert, params):
     p = Param(name="rev", ucd="meta.number",dataType="int", value=str(rev))
     p.set_Description(["Alert revision"])
     w.add_Param(p)
-    
+
     p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
     #p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(1))
     p.set_Description(["Number of events in the alert"])
     w.add_Param(p)
-    
+
     p = Param(name="deltaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].deltaT))
     p.set_Description(["Time window of the burst"])
     w.add_Param(p)
-    
+
     p = Param(name="sigmaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].sigmaT))
     p.set_Description(["Uncertainty of the time window"])
     w.add_Param(p)
     """
     if ((signal_trackness>=0.1) and (charge>=6000.)):
         p = Param(name="charge", ucd="phys.charge", unit="pe", dataType="float",  value=str(charge))
-    else:    
+    else:
         p = Param(name="charge", ucd="phys.charge", unit="pe", dataType="float",  value=str(1510))
     p.set_Description(["Total neutrino event charge in units of photoelectrons (pe)"])
     w.add_Param(p)
@@ -133,24 +133,24 @@ def ofualert_to_voevent(alert, params):
     #p = Param(name="hesetype", ucd="", unit=" ", dataType="string",  value=str(hesetype))
     #p = Param(name="hesetype", ucd="", unit=" ", dataType="string",  value=str(0))
     #p.set_Description(["Track-like or cascade-like HESE neutrino"])
-    #w.add_Param(p)   
+    #w.add_Param(p)
     """
-    if ((signal_trackness>=0.1) and (charge>=6000.)): 
-        p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90)) 
+    if ((signal_trackness>=0.1) and (charge>=6000.)):
+        p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90))
     else:
         p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(5.))
     p.set_Description(["Angular error of the source (90% containment)"])
-    w.add_Param(p) 
+    w.add_Param(p)
     """
     #p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
     p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90))
     p.set_Description(["Angular error of the source (90% containment)"])
-    w.add_Param(p)    
+    w.add_Param(p)
 
     p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(0))
     p.set_Description(["False positive rate, a value of zero means not available"])
-    w.add_Param(p) 
- 
+    w.add_Param(p)
+
     #p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
     p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(0))
     p.set_Description(["Pvalue for the alert, a value of zero means not available"])
@@ -160,23 +160,23 @@ def ofualert_to_voevent(alert, params):
     #p = Param(name="observing", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].observing))
     p.set_Description(["Observatories observing given part og the sky: 0 means IceCube"])
     w.add_Param(p)
-    
+
     p = Param(name="trigger", ucd="meta.number", unit=" ", dataType="int",  value=str(1))
     #p = Param(name="trigger", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].trigger))
     p.set_Description(["Observatories triggering: 1 means IceCube triggered"])
     w.add_Param(p)
-        
+
     #p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
     #p.set_Description(["Pvalue for the alert"])
     #w.add_Param(p)
-    
+
     #p = Param(name="skymap", ucd="meta.code.multip", unit=" ", dataType="string",  value="False")
     #p = Param(name="skymap", ucd="meta.code.multip", unit=" ", dataType="string",  value=str(alert[0].skymap))
     #p.set_Description(["Skymap or no skymap assotiated with the alert"])
     #w.add_Param(p)
- 
+
     v.set_What(w)
-    
+
     ############ Wherewhen ############################
     wwd = {'observatory':     'IceCube',
            'coord_system':    'UTC-GEOD-TOPO',
@@ -189,7 +189,7 @@ def ofualert_to_voevent(alert, params):
 
     ww = makeWhereWhen(wwd)
     if ww: v.set_WhereWhen(ww)
-     
+
     if ww: v.set_WhereWhen(ww)
     #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
     # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
@@ -209,33 +209,33 @@ def ofualert_to_voevent(alert, params):
     time2=alert[0].datetime
     #value2=Value2(alert[0].RA,alert[0].dec)
     #value2=Value2(alert[0].RA,-5.00)
-    
+
     value2=Value2(alert[0].RA,alert[0].dec)
     #pos2=Position2D("deg-deg", "RA","Dec",value2, alert[0].sigmaR)
     pos2=Position2D("deg-deg", "RA","Dec",value2, src_error_50)
     astro5.set_Position2D(pos2)
     #error2=Error2Radius(alert[0].sigmaR)
     #astro5.set_Error2Radius()
-    
-    
+
+
     time_1=Time("s")
     time2=str(alert[0].datetime)
     time2_2=time2[0:10]+"T"+time2[11:]
     time3=TimeInstant(time2_2)
     time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)
-    
+
     observation.set_AstroCoordSystem(astro4)
     observation.set_AstroCoords(astro5)
     obs.set_ObservationLocation(observation)
     ww.set_ObsDataLocation(obs)
     #ww.add_TimeInstant(time3)
-    v.set_WhereWhen(ww) 
-    
-   
+    v.set_WhereWhen(ww)
+
+
     ############ output the event ############################
-       
-    xml = stringVOEvent(v, 
+
+    xml = stringVOEvent(v,
     schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
     #print xml
     return xml
@@ -246,6 +246,3 @@ if __name__ == "__main__":
     print xml1
     f1=open('./test_alert.xml', 'w+')
     f1.write(xml1)
-   
-    
-    
