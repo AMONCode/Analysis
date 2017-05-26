@@ -14,8 +14,8 @@ setup(name = "AmonPy",
                   'amonpy/tools',
                   'amonpy/ops',
                   'amonpy/ops/analyser',
-                  'amonpy/ops/analyser/network',
-                  'amonpy/ops/analyser/network/scripts'
+                  'amonpy/ops/network/',
+                  'amonpy/ops/network/scripts'
                  ],
       scripts = ['amonpy/ops/run_archival.py', 'amonpy/ops/run_basic_sim.py'],
       )
