@@ -19,7 +19,7 @@ from operator import itemgetter, attrgetter
 
 from amonpy.dbase.db_classes import *
 from amonpy.sim import sidereal_m as sidereal
-from amonpy.sim import inject_coinbcident
+from amonpy.sim import inject_coincident
 
 def basic_sim(conf,revisions):
     results = []
