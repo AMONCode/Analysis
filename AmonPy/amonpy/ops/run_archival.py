@@ -29,11 +29,8 @@ from argparse import ArgumentParser
 # AmonPy modules:
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, event_def, AlertConfig2
 from amonpy.dbase.db_classes import Event
-import amonpy.dbase.db_populate_class
-import amonpy.dbase.db_read
-import amonpy.dbase.db_write
-import amonpy.dbase.db_delete
-import amonpy.anal.analysis
+from amonpy.dbase import db_populate_class, db_read, db_write, db_delete
+from amonpy.anal import analysis
 from amonpy.tools import dialog_choice
 from amonpy.tools import input_text_window
 
@@ -111,7 +108,7 @@ if options.verbose:
                      + str(options.username) + '\npassword: <hidden>\ndatabase: ' + str(options.database)
 
 # Create the most generic Event class
-Event = event_def()  
+Event = event_def()
 
 if options.use_test_config:
        if options.verbose:
