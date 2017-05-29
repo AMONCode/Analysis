@@ -1202,6 +1202,7 @@ def rev_count(stream_name, host_name, user_name, passw_name, db_name):
         con.commit()
         row = cur.fetchone()
         count = row[0]
+        print count
         cur.close()
         con.close()
     except mdb.Error, e:
