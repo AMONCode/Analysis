@@ -2,10 +2,10 @@ import sys, os
 # sys.path.append( os.path.abspath('..') )
 # sys.path.append( os.path.abspath('../..') )
 # sys.path.append( os.path.abspath('../../tools') )
-
-import amonpy.dbase.db_write
 import unittest
+
 from amonpy.dbase.db_classes import *
+from amonpy.dbase import db_write
 """@package test_db_write
 Unit tests for db_write module.
 """
