@@ -32,11 +32,6 @@ from celery.result import AsyncResult
 
 import sys, shutil
 import subprocess
-# sys.path.append('../')
-# sys.path.append('../..')
-# sys.path.append('../../tools')
-# sys.path.append('../../dbase')
-# sys.path.append('../../anal')
 
 # AmonPy modules:
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, exAlertArchivConfig, event_def, AlertConfig2
