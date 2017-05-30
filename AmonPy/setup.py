@@ -18,6 +18,7 @@ setup(name = "AmonPy",
                  ],
       scripts = ['amonpy/ops/run_archival.py',
                  'amonpy/ops/run_basic_sim.py',
-                 'bin/amon_test_db_write'
+                 'bin/amon_test_db_write',
+                 'bin/amon_create_db'
                 ],
       )
