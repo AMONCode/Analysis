@@ -1,8 +1,14 @@
 #!/bin/bash
 #
-# USAGE: ./create_db.sh <DATABASE> <USER>
+USAGE="amon_create_db <DATABASE> <USER>"
 #
 # You will be prompted for your password
 #
+
+if [ "$1" == "-h" ] ; then
+    echo $USAGE
+    exit 1
+fi
+
 
 mysql -u $2 -h localhost -p -e "CREATE DATABASE $1;" && sed "s@AMON_DATABASE_NAME@$1@g" $AMONPY/mysql/setup_amon_database.sql |  mysql -u $2 -h localhost -p $1
