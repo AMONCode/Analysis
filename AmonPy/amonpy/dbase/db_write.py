@@ -8,8 +8,7 @@ import time
 import datetime
 import math
 import string
-#import numpy
-from numpy import *
+import numpy as np
 
 # amonpy imports
 from amonpy.tools import convert_time
