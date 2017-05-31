@@ -5,7 +5,7 @@ from celery import Celery
 app = Celery('analyser',
              broker='amqp://',
              backend='amqp://',
-             include=['analyser.runanal'])
+             include=['amonpy.ops.analyser.runanal'])
 
 # Optional configuration, see the application user guide.
 app.conf.update(
