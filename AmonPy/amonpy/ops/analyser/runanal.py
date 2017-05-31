@@ -2,24 +2,24 @@
     This is a top level task that gets initialized
     at the time that AMON server starts running.
     It receives event stream number, event number and event revision
-    from the AMON server in real-time (AMON server calls task function 
+    from the AMON server in real-time (AMON server calls task function
     AnalRT.run every time a new events comes from the outside world)
     Upon reception of these three parameters, a new event is read from the DB
-    and passed to the main analysis code using Python multiprocessing module.  
+    and passed to the main analysis code using Python multiprocessing module.
 
     Works with the Enthought Canopy package management, RabittMQ server as a broker
-    for messages and Celery allowing from transport of messages from AMON server to 
+    for messages and Celery allowing from transport of messages from AMON server to
     this worker program.
 
     To run (outside this directory called analizer):
-    
+
     celery worker --app=analyser --concurrency=1 -l info
 
     where dbaccess.txt contans a string in dictionary format,
     containing the information required to access the database
-    
-    Each alert will be saved to DB, and also written to XML file (in VOEvent format) 
-    to the directory /network/server_events. AMON client will send this events in the future 
+
+    Each alert will be saved to DB, and also written to XML file (in VOEvent format)
+    to the directory /network/server_events. AMON client will send this events in the future
     to GCN and delete each xml fiel after it has been sent.
 """
 from __future__ import absolute_import
@@ -32,11 +32,6 @@ from celery.result import AsyncResult
 
 import sys, shutil
 import subprocess
-sys.path.append('../')
-sys.path.append('../..')
-sys.path.append('../../tools')
-sys.path.append('../../dbase')
-sys.path.append('../../anal')
 
 # AmonPy modules:
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, exAlertArchivConfig, event_def, AlertConfig2
@@ -64,8 +59,8 @@ import ConfigParser, netrc
 import multiprocessing
 import ast
 
-print
-print ' **** EXECUTING runanal.py ****'
+# print
+# print ' **** EXECUTING runanal.py ****'
 
 # Create the most generic Event class
 @app.task
@@ -74,7 +69,7 @@ def error_handler(uuid):
     exc = myresult.get(propagate=False)
     print('Task {0} raised exception: {1!r}\n{2!r}'.format(
           uuid, exc, myresult.traceback))
-          
+
 class AnalRT(Task):
 #class AnalRT(object):
     def __init__(self):
@@ -85,12 +80,12 @@ class AnalRT(Task):
         self.HostFancyName = Config.get('database', 'host_name')
         nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
         nrc = netrc.netrc(nrc_path)
-        
+
         self.UserFancyName = nrc.hosts[self.HostFancyName][0]
         self.PasswordFancy = nrc.hosts[self.HostFancyName][2]
         self.DBFancyName = Config.get('database', 'realtime_dbname')
         self.alertDir = Config.get('dirs', 'alertdir')
-        
+
         print
         print ' USING TEST ALERT CONFIG'
         self.config = exAlertConfig()
@@ -102,11 +97,11 @@ class AnalRT(Task):
         self.max_id=db_read.alert_max_id(self.stream_num,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
-                                             self.DBFancyName) 
-            # sort the events!!1  
-        print                                   
-        print "MAX ALERT ID IN DATABASE IS"            
-        print self.max_id                                  
+                                             self.DBFancyName)
+            # sort the events!!1
+        print
+        print "MAX ALERT ID IN DATABASE IS"
+        print self.max_id
         if (self.max_id==None):
             self.max_id=-1
         print
@@ -133,23 +128,23 @@ class AnalRT(Task):
         #run_id=0
         #event_id=0
         #rev_id=0
-        
+
         alertDuplicate=False # for HESE and EHE overalp
-                
+
         t1 = time()
-        
+
         events=db_read.read_event_single(evstream,evnumber,evrev,self.HostFancyName,
-                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)
         params=db_read.read_parameters(evstream,evnumber,evrev,self.HostFancyName,
-                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)                                    
-        
+                                        self.UserFancyName,self.PasswordFancy,self.DBFancyName)
+
         t2 = time()
         print '   Read time: %.2f seconds' % float(t2-t1)
-        print ' lenght of parameters %s' % len(params) 
-        if (len(params)>0): 
+        print ' lenght of parameters %s' % len(params)
+        if (len(params)>0):
             for i in range(len(params)):
                 # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
-                if (params[i].name=='signal_trackness'):   
+                if (params[i].name=='signal_trackness'):
                     eventHESE=True
                     signal_t = params[i].value
                     print 'Signal trackenss %.2f' % signal_t
@@ -187,11 +182,11 @@ class AnalRT(Task):
             #    self.rev_check=events.rev
             #else:
             #    self.sendAlert=True
-        #else: 
-            #self.sendAlert=True       
+        #else:
+            #self.sendAlert=True
         if ((eventHESE==True) and (signal_t >= 0.)):
             # send HESE events directly to GCN first
-            xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate) 
+            xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate)
             fname=self.alertDir + 'amon_hese_%s_%s_%s.xml' \
                 % (events.stream, events.id, events.rev)
             f1=open(fname, 'w+')
@@ -200,7 +195,7 @@ class AnalRT(Task):
 
             email_alerts.alert_email([events],params)
             """
-                        modified from 
+                        modified from
                         https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
                         Send a voevent to a broker using the comet-sendvo publishing tool.
                         Args:
@@ -229,7 +224,7 @@ class AnalRT(Task):
             f1=open(fname, 'w+')
             f1.write(xmlForm)
             f1.close()
-    
+
             email_alerts.alert_email([events],params)
 
             if (events.type=="test"):
@@ -270,12 +265,12 @@ class AnalRT(Task):
         t1 = time()
         #for ev in events:
             #self.client_p.send(ev)
-        # do not analyse OFU for now, not approved by IceCube to use in analysis 
-        if (isinstance(events,Event) and (events.stream!=12) and (events.stream!=13) and (events.stream!=14) and (events.stream!=15)) :    
+        # do not analyse OFU for now, not approved by IceCube to use in analysis
+        if (isinstance(events,Event) and (events.stream!=12) and (events.stream!=13) and (events.stream!=14) and (events.stream!=15)) :
             self.client_p.send(events)
         else:
             print "NOT EVENT"
-                
+
         t2 = time()
         print '   Analysis time: %.2f seconds' % float(t2-t1)
         # get the stored alerts
@@ -286,36 +281,36 @@ class AnalRT(Task):
         #print '   %d alerts'     % len(alerts)
         t2 = time()
         print '   Retrieval time: %.2f seconds' % float(t2-t1)
-        
+
         # analysis done, close the pipe
         #server_p.close()
         #client_p.close()
         #print '   Analysis server closed'
-        
+
         # write alerts to DB if any
         if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
             # populate alertline class
             #alerts[0].forprint()
-            #alertlines=db_populate_class.populate_alertline(alerts)  
-            #print '   %d alertlines generated' % len(alertlines) 
+            #alertlines=db_populate_class.populate_alertline(alerts)
+            #print '   %d alertlines generated' % len(alertlines)
             print ' ANALYSIS COMPLETE'
-        
+
             print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
-            # modify it later to append to database, not to rewrite    
+            # modify it later to append to database, not to rewrite
             if (self.stream_num !=0):    # don't take any action for stream zero in testing phase
-                
+
                 for alert in alerts:
                     streams=[] # for case where old alerts are with current event (just diff rev)
                     ids=[]  # for case where old alerts are with current event (just diff rev)
                     streams_old=[] # for case where old alerts are without current event
                     ids_old=[] # for case where old alerts are without current event
                     alertIdChange=False
-                    # check to see if older alerts with these events existed 
+                    # check to see if older alerts with these events existed
                     num_events=len(alert.events)
                     for j in xrange(num_events):
                         streams+=[alert.events[j].stream]
                         ids+=[alert.events[j].id]
-                        if not ((alert.events[j].stream == events.stream) and 
+                        if not ((alert.events[j].stream == events.stream) and
                             (alert.events[j].id == events.id) and
                             (alert.events[j].rev == events.rev)):
                              streams_old+=[alert.events[j].stream]
@@ -329,7 +324,7 @@ class AnalRT(Task):
                      #                        self.HostFancyName,
                       #                       self.UserFancyName,
                        #                      self.PasswordFancy,
-                        #                     self.DBFancyName)                         
+                        #                     self.DBFancyName)
                     if not (len(lines_db)==0): # alerts with these events were found in the past, check revisions
                         alert=alert_revision.check_old_alert_rev(lines_db, alert)
                     else:
@@ -339,9 +334,9 @@ class AnalRT(Task):
                                              self.PasswordFancy,
                                              self.DBFancyName)
                         if (maxid==None):
-                            maxid=-1                     
-                        alert.id=maxid+1    
-                                 
+                            maxid=-1
+                        alert.id=maxid+1
+
                     #if not (len(lines_db_old)==0): # alerts with these events were found in the past, check revisions
                      #   alert=alert_revision.check_old_alert_rev2(lines_db_old, alert)
                     alertlines=db_populate_class.populate_alertline([alert])
@@ -351,27 +346,27 @@ class AnalRT(Task):
                                              self.DBFancyName,[alert])
                     db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
-                                                      self.PasswordFancy, 
-                                                      self.DBFancyName,alertlines)                         
-                #alertlines=db_populate_class.populate_alertline(alerts)                               
+                                                      self.PasswordFancy,
+                                                      self.DBFancyName,alertlines)
+                #alertlines=db_populate_class.populate_alertline(alerts)
                 #db_write.write_alert(self.stream_num,self.HostFancyName,
                  #                            self.UserFancyName,
                   #                           self.PasswordFancy,
                    #                          self.DBFancyName,alerts)
                 #db_write.write_alertline(self.HostFancyName,
                  #                                     self.UserFancyName,
-                  #                                    self.PasswordFancy, 
-                   #                                   self.DBFancyName,alertlines) 
-                    # write alert to the directory from where AMON client will read it and delete 
+                  #                                    self.PasswordFancy,
+                   #                                   self.DBFancyName,alertlines)
+                    # write alert to the directory from where AMON client will read it and delete
                     # it after sending it to GCN in the future
-                xmlForm=alert_to_voevent.alert_to_voevent(alerts) 
+                xmlForm=alert_to_voevent.alert_to_voevent(alerts)
                 fname=self.alertDir + 'amon_%s_%s_%s.xml' \
                     % (alerts[0].stream, alerts[0].id, alerts[0].rev)
                 f1=open(fname, 'w+')
                 f1.write(xmlForm)
-                f1.close() 
+                f1.close()
                 """
-                        modified from 
+                        modified from
                         https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
                         Send a voevent to a broker using the comet-sendvo publishing tool.
                         Args:
@@ -392,14 +387,14 @@ class AnalRT(Task):
                 else:
                     shutil.move(fname, self.alertDir+"archive/")
                             #shutil.move(fname, "archive/"+fname)
-                                                                                   
+
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
-            return "%d alerts found" % (len(alerts),) 
+            return "%d alerts found" % (len(alerts),)
         elif(alerts[0] ==True):
-            # call archival analysis for a very late arrival event that is outside of time 
-            # buffer 
+            # call archival analysis for a very late arrival event that is outside of time
+            # buffer
             print "Call archival"
             #print "True or false, true is correct"
             #print alerts[0]
@@ -417,38 +412,38 @@ class AnalRT(Task):
             max_id=db_read.alert_max_id(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
-                                             self.DBFancyName) 
-            # sort the events!!1                                 
+                                             self.DBFancyName)
+            # sort the events!!1
             print "max_id is"
-            print max_id                                  
+            print max_id
             if (max_id==None):
-                max_id=-1                                 
-            # code the function bellow in module analysis                                                       
+                max_id=-1
+            # code the function bellow in module analysis
             alerts_archive = analysis.alerts_late(events,alerts[1],self.archiv_config, max_id)
             if (len(alerts_archive)!=0):
-                #alertlines=db_populate_class.populate_alertline(alerts_archive)  
-                #print '   %d alertlines generated' % len(alertlines) 
+                #alertlines=db_populate_class.populate_alertline(alerts_archive)
+                #print '   %d alertlines generated' % len(alertlines)
                 print ' ARCHIVAL ANALYSIS COMPLETE'
-        
+
                 print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
-                   
+
                 if (self.stream_num2 !=0):    # don't take any action for stream zero in testing phase
-                   
+
                     # first check if that archival alert is already in DB
                     # this is important since out of buffer event can be analysed twice
                     # in case that another late event in coincidence gets written in DB
-                    # simultaneously while we are reading a given timeslice. The second late event will be 
+                    # simultaneously while we are reading a given timeslice. The second late event will be
                     # read within this time slice in same cases before an information about it
                     # being written is passed to this module via
-                    # as a regular incoming event.  
-                    # It will be analysed 2nd time when 
-                    # celery delivers message to this module about it being written to DB. 
-                    # This never happens for real real-time events since they are not 
-                    # read from DB using time-slice, but passed one-by-one to this module, 
-                    # and read one-by-one from DB. After that they are kept in time buffer 
+                    # as a regular incoming event.
+                    # It will be analysed 2nd time when
+                    # celery delivers message to this module about it being written to DB.
+                    # This never happens for real real-time events since they are not
+                    # read from DB using time-slice, but passed one-by-one to this module,
+                    # and read one-by-one from DB. After that they are kept in time buffer
                     # and never read as a time-slice bunch from DB.
-                    
-                    # 
+
+                    #
                     try:
                         # check if late arrival event with same (id, rev, and stream) has already being analysed and contributed to alers
                         # in rare cases when it could be read from a timeslice around a previous late arrival
@@ -457,24 +452,24 @@ class AnalRT(Task):
                                              [alerts[1].rev],self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
-                                             self.DBFancyName) 
+                                             self.DBFancyName)
                     except:
                         print "Alert line cannot be read, probably not written yet"
-                        alertlines_written = [] 
+                        alertlines_written = []
                     # check if this out-of-buffer event was already analysed in case in close-in time arrival
                     # with another out-of-buffer event
-                    
-                    if not ((len(alertlines_written)>0) and (alertlines_written[0].stream_event==alerts[1].stream) and 
+
+                    if not ((len(alertlines_written)>0) and (alertlines_written[0].stream_event==alerts[1].stream) and
                              (alertlines_written[0].id_event==alerts[1].id) and
-                             (alertlines_written[0].rev_event==alerts[1].rev)): 
+                             (alertlines_written[0].rev_event==alerts[1].rev)):
                         # the same event was not analysed, what about an event with diff. revision
-                        
-                        
+
+
                         for alert_ar in alerts_archive:
                             streams_ar=[]
                             ids_ar=[]
                             alertIdChangeAr=False
-                            # check to see if older alerts with these events existed 
+                            # check to see if older alerts with these events existed
                             num_events_ar=len(alert_ar.events)
                             for j in xrange(num_events_ar):
                                 streams_ar+=[alert_ar.events[j].stream]
@@ -484,7 +479,7 @@ class AnalRT(Task):
                                                                        self.UserFancyName,
                                                                        self.PasswordFancy,
                                                                        self.DBFancyName)
-                                             
+
                             if not (len(lines_db_ar)==0): # alerts with these events were found in the past, check revisions
                                 alert_ar=alert_revision.check_old_alert_rev(lines_db_ar, alert_ar)
                             else:
@@ -494,29 +489,29 @@ class AnalRT(Task):
                                              self.PasswordFancy,
                                              self.DBFancyName)
                                 if (maxid==None):
-                                    maxid=-1                     
-                                alert.id=maxid+1    
-                                
-                            alertlines=db_populate_class.populate_alertline([alert_ar])                                
+                                    maxid=-1
+                                alert.id=maxid+1
+
+                            alertlines=db_populate_class.populate_alertline([alert_ar])
                             db_write.write_alert(self.stream_num2,self.HostFancyName,
                                              self.UserFancyName,
                                              self.PasswordFancy,
                                              self.DBFancyName,[alert_ar])
                             db_write.write_alertline(self.HostFancyName,
                                                       self.UserFancyName,
-                                                      self.PasswordFancy, 
-                                                      self.DBFancyName,alertlines) 
-                                                      
-                        # write alert to the directory from where AMON client will read it and delete 
+                                                      self.PasswordFancy,
+                                                      self.DBFancyName,alertlines)
+
+                        # write alert to the directory from where AMON client will read it and delete
                         # it after sending it to GCN in the future
-                        xmlForm=alert_to_voevent.alert_to_voevent(alerts_archive) 
+                        xmlForm=alert_to_voevent.alert_to_voevent(alerts_archive)
                         fname=self.alertDir + 'amon_%s_%s_%s.xml' \
                         % (alerts_archive[0].stream, alerts_archive[0].id, alerts_archive[0].rev)
                         f1=open(fname, 'w+')
                         f1.write(xmlForm)
                         f1.close()
                         """
-                        modified from 
+                        modified from
                         https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
                         Send a voevent to a broker using the comet-sendvo publishing tool.
                         Args:
@@ -536,19 +531,19 @@ class AnalRT(Task):
                             raise e
                         else:
                             shutil.move(fname, self.alertDir+"archive/")
-                            #shutil.move(fname, "archive/"+fname) 
-                                   
+                            #shutil.move(fname, "archive/"+fname)
+
                     else:
                         print "Late event already analysed"
-                        alerts_archive=[]                                                                  
+                        alerts_archive=[]
                 else:
                     print '   Invalid stream number'
                     print '   Only streams >= 1 allowed for testing analysis'
-            if len(alerts_archive)!=0:       
-                return "%d alerts found" % (len(alerts_archive),)  
+            if len(alerts_archive)!=0:
+                return "%d alerts found" % (len(alerts_archive),)
             else:
-                return "No alerts" 
-              
+                return "No alerts"
+
         else:
             return "No alerts"
 """
@@ -559,23 +554,23 @@ choices = ['Do not write to DB','Overwrite alert stream',
 info = 'What would you like to do with the alerts?'
 result_dialog = dialog_choice.SelectChoice(choices,info=info).result
 if result_dialog==choices[0]:
-    print ' QUIT: Analysis results will NOT be written to DB' 
+    print ' QUIT: Analysis results will NOT be written to DB'
 elif result_dialog==choices[1]:
     print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
     if (stream_num !=0):    # don't take any action for stream zero
         print "   Checking if arhival alerts are already in DB."
         count=db_read.alert_count(stream_num,"alert",HostFancyName,
-                           UserFancyName,PasswordFancy,DBFancyName) 
-        print '   Number of rows to be deleted: %d' % count                 
+                           UserFancyName,PasswordFancy,DBFancyName)
+        print '   Number of rows to be deleted: %d' % count
         if (count > 0):
             db_delete.delete_alertline_stream_by_alert(stream_num,
-               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
             db_delete.delete_alert_stream(stream_num,HostFancyName,
                UserFancyName,PasswordFancy,DBFancyName)
         db_write.write_alert(stream_num,HostFancyName,UserFancyName,
            PasswordFancy,DBFancyName,alerts)
         db_write.write_alertline(HostFancyName,UserFancyName,
-            PasswordFancy, DBFancyName,alertlines)                         
+            PasswordFancy, DBFancyName,alertlines)
     else:
         print '   Invalid stream number'
         print '   Only streams >= 1 allowed for archival analysis'
@@ -584,24 +579,24 @@ elif result_dialog==choices[2]:
     if (stream_num !=0):    # don't take any action for stream zero
         print "   Checking if arhival alerts are already in DB."
         count=db_read.alert_count(stream_num,"alert",HostFancyName,
-                           UserFancyName,PasswordFancy,DBFancyName) 
-        print '   Number of rows to be deleted: %d' % count                 
+                           UserFancyName,PasswordFancy,DBFancyName)
+        print '   Number of rows to be deleted: %d' % count
         if (count > 0):
             db_delete.delete_alertline_stream_by_alert(stream_num,
-               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)  
+               HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
             db_delete.delete_alert_stream(stream_num,HostFancyName,
                UserFancyName,PasswordFancy,DBFancyName)
         db_write.write_alert(stream_num,HostFancyName,UserFancyName,
            PasswordFancy,DBFancyName,alerts)
         db_write.write_alertline(HostFancyName,UserFancyName,
-            PasswordFancy, DBFancyName,alertlines)                         
+            PasswordFancy, DBFancyName,alertlines)
     else:
         print '   Invalid stream number'
         print '   Only streams >= 1 allowed for archival analysis'
 else:
     print ' QUIT: User request'
     sys.exit(0)
-    
+
 
 print
 print ' **** END run_archival.py ****'

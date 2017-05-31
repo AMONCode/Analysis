@@ -1,13 +1,13 @@
 import sys
 
-sys.path.append('../db_classes')
+# sys.path.append('../db_classes')
 
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 import smtplib
 from email.mime.text import MIMEText
 import netrc, ConfigParser
-#import yowsup_run as yowsup_run 
+#import yowsup_run as yowsup_run
 
 def alert_email(alert, params):
     config_fname = '../amon.ini'
@@ -40,16 +40,16 @@ def alert_email(alert, params):
         ra = alert[0].RA
         dec = alert[0].dec
         content = 'HESE_charge = '+str(charge)+'\n'+'HESE_signal_trackness = '+str(signal_trackness)+'\n'+'HESE_ra = '+str(ra)+'\n'+'HESE_dec = '+str(dec)+'\n'+'HESE_event_time = '+str(dateutc)+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'+'HESE_angular_error_50 = '+str(src_error_50)+'\n'+'HESE_angular_error_90 = '+str(src_error_90)+'\n'
-        
+
         title_msg = 'Test from Dev machine: HESE'
         if ((charge>=6000.0) and (signal_trackness>=0.1)):
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
             TO = ehe_hese_emails
-        else: 
+        else:
             FROM = nrc.hosts['gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['gmail'][2]
-            TO = sub_emails 
+            TO = sub_emails
     if (stream==11):
         for i in range(len(params)):
             if (params[i].name== 'event_id'):
@@ -60,20 +60,20 @@ def alert_email(alert, params):
                 signalness=params[i].value
             if (params[i].name== 'src_error'):
                 src_error_50=params[i].value
-      
+
         time2=str(alert[0].datetime)
         dateutc=time2[0:10]+"T"+time2[11:]
 
         ra = alert[0].RA
         dec = alert[0].dec
         content = 'EHE_signalness = '+str(signalness)+'\n'+'EHE_ra = '+str(ra)+'\n'+'EHE_dec = '+str(dec)+'\n'+'EHE_event_time = '+str(dateutc)+'\n'+'EHE_run_id = '+str(run_id)+'\n'+'EHE_event_id = '+str(event_id)+'\n'+'EHE_angular_error_50 = '+str(src_error_50)+'\n'
-        
+
         title_msg = 'Test from Dev machine: EHE'
         if alert[0].type=="observation":
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
             TO = ehe_hese_emails
-        else: 
+        else:
             FROM = nrc.hosts['gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['gmail'][2]
             TO = sub_emails
@@ -93,9 +93,7 @@ def alert_email(alert, params):
     server.login(FROM, PASS)
     server.sendmail(FROM, TO, message)
     server.quit()
-    
+
     #content_whatsapp = 'HESE_event_time = '+str(dateutc)+'; HESE_event_id = '+str(event_id)+'; HESE_charge = '+str(charge)+'; HESE_ra = '+str(ra)+'; HESE_dec = '+str(dec)+'; HESE_signal_trackness = '+str(signal_trackness)+'; HESE_angular_error_50 = 1.6 deg (50% containment)'+'; HESE_angular_error_90 = 8.9 deg (90% containment)'
     #yowsup_run.send_message("18143804192",content)
     #yowsup_run.send_message("18147699477",content)
-
-

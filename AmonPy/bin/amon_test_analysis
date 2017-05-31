@@ -1,4 +1,5 @@
-#test_analysis.py
+#!/usr/bin/env python
+
 """
 @package test_analysis
 Module for testing analysis modules.
