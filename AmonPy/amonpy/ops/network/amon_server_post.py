@@ -43,6 +43,8 @@ class EventPage(Resource):
     paramlist = []
     microsec = 0.
     counter = 1
+    #path = 'twisted/'
+
 
     print "Event page is %d" % counter
     dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
@@ -57,6 +59,7 @@ class EventPage(Resource):
     ana=AnalRT()
 
     def render_POST(self, request):
+        path = 'twisted/'
 
         def _writeEventParam(transaction, event, evparam):
             # this will run in a separate thread, allowing us to use series of queries
@@ -160,6 +163,7 @@ class EventPage(Resource):
             evParam[0].forprint()
 
         #os.remove(path+"server_tmp_events/"+fname)
+        #path = 'twisted'
         shutil.move(path+"server_tmp_events/"+fname, path+"server_archive_events/"+fname)
         #t1 = time()
 

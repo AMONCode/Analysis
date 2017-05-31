@@ -23,7 +23,7 @@
     to GCN and delete each xml fiel after it has been sent.
 """
 from __future__ import absolute_import
-from analyser.celery import app
+from amonpy.ops.analyser.celery import app
 from celery import Task
 #from celery import current_app
 #from celery.contrib.methods import task_method
@@ -44,8 +44,9 @@ import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.dbase.hesealert_to_voevent as hesealert_to_voevent
 import amonpy.dbase.ehealert_to_voevent as ehealert_to_voevent
 import amonpy.dbase.ofualert_to_voevent as ofualert_to_voevent
-import amonpy.anal.analysis as analysis
-import amonpy.anal.alert_revision as alert_revision
+#from amonpy.anal.analysis import anal, 
+from amonpy.anal import analysis
+from amonpy.anal import alert_revision
 #import dialog_choice
 #import input_text_window
 import amonpy.dbase.email_alerts as email_alerts
