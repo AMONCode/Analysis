@@ -20,7 +20,7 @@ from amonpy.dbase.db_classes import Event
 import amonpy.dbase.db_write as db_write
 import amonpy.dbase.voevent_to_event as voevent_to_event
 
-from analyser.runanal import *
+from amonpy.ops.analyser.runanal import *
 
 class EventPage(Resource):
     isLeaf = True
