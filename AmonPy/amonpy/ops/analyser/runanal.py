@@ -86,6 +86,7 @@ class AnalRT(Task):
         self.PasswordFancy = nrc.hosts[self.HostFancyName][2]
         self.DBFancyName = Config.get('database', 'realtime_dbname')
         self.alertDir = Config.get('dirs', 'alertdir')
+	self.prodMachine = Config.get('machine', 'prod')
 
         print
         print ' USING TEST ALERT CONFIG'
@@ -185,7 +186,8 @@ class AnalRT(Task):
             #    self.sendAlert=True
         #else:
             #self.sendAlert=True
-        if ((eventHESE==True) and (signal_t >= 0.)):
+
+        if ((eventHESE==True) and (signal_t >= 0.1) and (hese_charge>=6000.)):
             # send HESE events directly to GCN first
             xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate)
             fname=self.alertDir + 'amon_hese_%s_%s_%s.xml' \
@@ -193,8 +195,6 @@ class AnalRT(Task):
             f1=open(fname, 'w+')
             f1.write(xmlForm)
             f1.close()
-
-            email_alerts.alert_email([events],params)
             """
                         modified from
                         https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
@@ -205,59 +205,70 @@ class AnalRT(Task):
                         code this up!
                         comment out code bellow if you do not have comet installed!
             """
-            if ((eventHESE==True) and (signal_t >= 0.1) and (hese_charge>=6000.)):
+            if (self.prodMachine==True):
                 try:
-                    #cmd = ['comet-sendvo']
-                    #cmd.append('--file=' + fname)
+                    cmd = ['comet-sendvo']
+                    cmd.append('--file=' + fname)
                     # just for dev to prevent sending hese both from dev and pro machine
                     print "uncoment this if used on production"
-                    #subprocess.check_call(cmd)
+                    subprocess.check_call(cmd)
                 except subprocess.CalledProcessError as e:
                     print "Send HESE VOevent alert failed"
-                       #logger.error("send_voevent failed")
-                    raise e
-                else:
-                    shutil.move(fname, self.alertDir+"archive/")
-        if (events.stream==11):
-            xmlForm=ehealert_to_voevent.ehealert_to_voevent([events],params, alertDuplicate)
-            fname=self.alertDir + 'amon_icecube_ehe_%s_%s_%s.xml' \
-                % (events.stream, events.id, events.rev)
-            f1=open(fname, 'w+')
-            f1.write(xmlForm)
-            f1.close()
-
-            email_alerts.alert_email([events],params)
-
-            if (events.type=="test"):
-                try:
-                    print "EHE sent to GCN"
-                    #cmd = ['comet-sendvo']
-                    #cmd.append('--file=' + fname)
-                    #subprocess.check_call(cmd)
-                except subprocess.CalledProcessError as e:
-                    print "Send IceCube EHE VOevent alert failed"
                     #logger.error("send_voevent failed")
                     raise e
                 else:
                     shutil.move(fname, self.alertDir+"archive/")
-        if ((events.stream==12) or (events.stream==13) or (events.stream==14) or (events.stream==15)):
-            xmlForm=ofualert_to_voevent.ofualert_to_voevent([events],params)
-            fname=self.alertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
-                % (events.stream, events.id, events.rev)
-            f1=open(fname, 'w+')
-            f1.write(xmlForm)
-            f1.close()
-            try:
-                print "OFU created"
-                #cmd = ['comet-sendvo']
-                #cmd.append('--file=' + fname)
-                #subprocess.check_call(cmd)
-            except subprocess.CalledProcessError as e:
-                print "Send IceCube OFU VOevent alert failed"
-                #logger.error("send_voevent failed")
-                raise e
             else:
                 shutil.move(fname, self.alertDir+"archive/")
+        if (eventHESE==True):
+            email_alerts.alert_email([events],params)
+
+        if (events.stream==11):
+            if (events.type=="observation"):
+                xmlForm=ehealert_to_voevent.ehealert_to_voevent([events],params, alertDuplicate)
+                fname=self.alertDir + 'amon_icecube_ehe_%s_%s_%s.xml' \
+                    % (events.stream, events.id, events.rev)
+                f1=open(fname, 'w+')
+                f1.write(xmlForm)
+                f1.close()
+                if (self.prodMachine == True):
+                    try:
+                        print "EHE sent to GCN"
+                        cmd = ['comet-sendvo']
+                        cmd.append('--file=' + fname)
+                        subprocess.check_call(cmd)
+                    except subprocess.CalledProcessError as e:
+                        print "Send IceCube EHE VOevent alert failed"
+                        #logger.error("send_voevent failed")
+                        raise e
+                    else:
+                        shutil.move(fname, self.alertDir+"archive/")
+                else:
+                    shutil.move(fname, self.alerDir+"archive/")
+            email_alerts.alert_email([events],params)
+
+        if ((events.stream==12) or (events.stream==13) or (events.stream==14) or (events.stream==15)):
+            if (events.type == "observation"):
+                xmlForm=ofualert_to_voevent.ofualert_to_voevent([events],params)
+                fname=self.alertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
+                    % (events.stream, events.id, events.rev)
+                f1=open(fname, 'w+')
+                f1.write(xmlForm)
+                f1.close()
+                if (self.prodMachine == True):
+                    try:
+                        print "OFU created"
+                        cmd = ['comet-sendvo']
+                        cmd.append('--file=' + fname)
+                        subprocess.check_call(cmd)
+                    except subprocess.CalledProcessError as e:
+                        print "Send IceCube OFU VOevent alert failed"
+                        #logger.error("send_voevent failed")
+                        raise e
+                    else:
+                        shutil.move(fname, self.alertDir+"archive/")
+                else:
+                    shutil.move(fname, self.alertDir+"archive/")
         #events.forprint()
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
@@ -268,7 +279,8 @@ class AnalRT(Task):
             #self.client_p.send(ev)
         # do not analyse OFU for now, not approved by IceCube to use in analysis
         if (isinstance(events,Event) and (events.stream!=12) and (events.stream!=13) and (events.stream!=14) and (events.stream!=15)) :
-            self.client_p.send(events)
+            #self.client_p.send(events)
+            print "NOT DOING ANALYSIS FOR NOW"
         else:
             print "NOT EVENT"
 
@@ -376,19 +388,21 @@ class AnalRT(Task):
                         code this up!
                         comment out code bellow if you do not have comet installed!
                 """
-                try:
-                    print "alert created"
-                    #cmd = ['comet-sendvo']
-                    #cmd.append('--file=' + fname)
-                    #subprocess.check_call(cmd)
-                except subprocess.CalledProcessError as e:
-                    print "Send VOevent alert failed"
-                            #logger.error("send_voevent failed")
-                    raise e
-                else:
-                    shutil.move(fname, self.alertDir+"archive/")
+                if (self.prodMachine==True):
+                    try:
+                        print "alert created"
+                        cmd = ['comet-sendvo']
+                        cmd.append('--file=' + fname)
+                        subprocess.check_call(cmd)
+                    except subprocess.CalledProcessError as e:
+                        print "Send VOevent alert failed"
+                        #logger.error("send_voevent failed")
+                        raise e
+                    else:
+                        shutil.move(fname, self.alertDir+"archive/")
                             #shutil.move(fname, "archive/"+fname)
-
+                else:
+                    shutil.move(fname, self.alertDir+"archive/") 
             else:
                 print '   Invalid stream number'
                 print '   Only streams >= 1 allowed for testing analysis'
@@ -521,19 +535,21 @@ class AnalRT(Task):
                         code this up!
                         comment out code bellow if you do not have comet installed!
                         """
-                        try:
-                            print "AMON alert created"
-                            #cmd = ['comet-sendvo']
-                            #cmd.append('--file=' + fname)
-                            #subprocess.check_call(cmd)
-                        except subprocess.CalledProcessError as e:
-                            print "Send VOevent alert failed"
-                            #logger.error("send_voevent failed")
-                            raise e
+                        if (self.prodMachine==True):
+                            try:
+                                print "AMON alert created"
+                                cmd = ['comet-sendvo']
+                                cmd.append('--file=' + fname)
+                                subprocess.check_call(cmd)
+                            except subprocess.CalledProcessError as e:
+                                print "Send VOevent alert failed"
+                                #logger.error("send_voevent failed")
+                                raise e
+                            else:
+                                shutil.move(fname, self.alertDir+"archive/")
+                                #shutil.move(fname, "archive/"+fname)
                         else:
-                            shutil.move(fname, self.alertDir+"archive/")
-                            #shutil.move(fname, "archive/"+fname)
-
+                            shutl.move(fname, self.alertDir+"archive/")
                     else:
                         print "Late event already analysed"
                         alerts_archive=[]
