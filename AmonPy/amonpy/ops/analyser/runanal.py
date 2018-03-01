@@ -59,6 +59,7 @@ import ConfigParser, netrc
 #import wx
 import multiprocessing
 import ast
+import os
 
 # print
 # print ' **** EXECUTING runanal.py ****'
@@ -86,7 +87,7 @@ class AnalRT(Task):
         self.PasswordFancy = nrc.hosts[self.HostFancyName][2]
         self.DBFancyName = Config.get('database', 'realtime_dbname')
         self.alertDir = Config.get('dirs', 'alertdir')
-	self.prodMachine = Config.get('machine', 'prod')
+	self.prodMachine = eval(Config.get('machine', 'prod'))
 
         print
         print ' USING TEST ALERT CONFIG'
