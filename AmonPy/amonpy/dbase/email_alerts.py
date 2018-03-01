@@ -15,6 +15,7 @@ def alert_email(alert, params):
     Config.read(config_fname)
     ehe_hese_emails = eval(Config.get('mailing_list', 'ehe_hese'))
     sub_emails = eval(Config.get('mailing_list', 'sub_ehe_hese'))
+    sub_cut_emails = eval(Config.get('mailing_list', 'sub_cut_ehe_hese'))
     nrc_fname = Config.get('dirs', 'amonpydir') + '.netrc'
     prodMachine = Config.get('machine', 'prod')
     nrc = netrc.netrc(nrc_fname)
@@ -50,6 +51,10 @@ def alert_email(alert, params):
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
             TO = ehe_hese_emails
+        elif charge>=3000.0:
+            FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+            PASS = nrc.hosts['gmail'][2]
+            TO = sub_cut_emails
         else:
             FROM = nrc.hosts['gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['gmail'][2]
@@ -80,6 +85,10 @@ def alert_email(alert, params):
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
             TO = ehe_hese_emails
+        elif signalness >= .001:
+            FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+            PASS = nrc.hosts['gmail'][2]
+            TO = sub_cut_emails
         else:
             FROM = nrc.hosts['gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['gmail'][2]
