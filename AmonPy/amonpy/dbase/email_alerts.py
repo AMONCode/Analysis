@@ -17,7 +17,7 @@ def alert_email(alert, params):
     sub_emails = eval(Config.get('mailing_list', 'sub_ehe_hese'))
     sub_cut_emails = eval(Config.get('mailing_list', 'sub_cut_ehe_hese'))
     nrc_fname = Config.get('dirs', 'amonpydir') + '.netrc'
-    prodMachine = Config.get('machine', 'prod')
+    prodMachine = eval(Config.get('machine', 'prod'))
     nrc = netrc.netrc(nrc_fname)
     stream = alert[0].stream
 
@@ -43,7 +43,7 @@ def alert_email(alert, params):
         dec = alert[0].dec
         content = 'HESE_charge = '+str(charge)+'\n'+'HESE_signal_trackness = '+str(signal_trackness)+'\n'+'HESE_ra = '+str(ra)+'\n'+'HESE_dec = '+str(dec)+'\n'+'HESE_event_time = '+str(dateutc)+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'+'HESE_angular_error_50 = '+str(src_error_50)+'\n'+'HESE_angular_error_90 = '+str(src_error_90)+'\n'
 
-	if prodMachine:
+	if prodMachine==True:
            title_msg = 'HESE event'
         else: 
            title_msg = 'Test from Dev machine: HESE'
@@ -77,7 +77,7 @@ def alert_email(alert, params):
         dec = alert[0].dec
         content = 'EHE_signalness = '+str(signalness)+'\n'+'EHE_ra = '+str(ra)+'\n'+'EHE_dec = '+str(dec)+'\n'+'EHE_event_time = '+str(dateutc)+'\n'+'EHE_run_id = '+str(run_id)+'\n'+'EHE_event_id = '+str(event_id)+'\n'+'EHE_angular_error_50 = '+str(src_error_50)+'\n'
 
-	if prodMachine:
+	if prodMachine==True:
            title_msg = 'EHE event'
         else: 
            title_msg = 'Test from Dev machine: EHE'
