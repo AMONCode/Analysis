@@ -16,6 +16,7 @@ def alert_email(alert, params):
     ehe_hese_emails = eval(Config.get('mailing_list', 'ehe_hese'))
     sub_emails = eval(Config.get('mailing_list', 'sub_ehe_hese'))
     nrc_fname = Config.get('dirs', 'amonpydir') + '.netrc'
+    prodMachine = Config.get('machine', 'prod')
     nrc = netrc.netrc(nrc_fname)
     stream = alert[0].stream
 
@@ -41,7 +42,10 @@ def alert_email(alert, params):
         dec = alert[0].dec
         content = 'HESE_charge = '+str(charge)+'\n'+'HESE_signal_trackness = '+str(signal_trackness)+'\n'+'HESE_ra = '+str(ra)+'\n'+'HESE_dec = '+str(dec)+'\n'+'HESE_event_time = '+str(dateutc)+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'+'HESE_angular_error_50 = '+str(src_error_50)+'\n'+'HESE_angular_error_90 = '+str(src_error_90)+'\n'
 
-        title_msg = 'Test from Dev machine: HESE'
+	if prodMachine:
+           title_msg = 'HESE event'
+        else: 
+           title_msg = 'Test from Dev machine: HESE'
         if ((charge>=6000.0) and (signal_trackness>=0.1)):
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
@@ -68,7 +72,10 @@ def alert_email(alert, params):
         dec = alert[0].dec
         content = 'EHE_signalness = '+str(signalness)+'\n'+'EHE_ra = '+str(ra)+'\n'+'EHE_dec = '+str(dec)+'\n'+'EHE_event_time = '+str(dateutc)+'\n'+'EHE_run_id = '+str(run_id)+'\n'+'EHE_event_id = '+str(event_id)+'\n'+'EHE_angular_error_50 = '+str(src_error_50)+'\n'
 
-        title_msg = 'Test from Dev machine: EHE'
+	if prodMachine:
+           title_msg = 'EHE event'
+        else: 
+           title_msg = 'Test from Dev machine: EHE'
         if alert[0].type=="observation":
             FROM = nrc.hosts['hese_ehe_gmail'][0] + '@gmail.com'
             PASS = nrc.hosts['hese_ehe_gmail'][2]
