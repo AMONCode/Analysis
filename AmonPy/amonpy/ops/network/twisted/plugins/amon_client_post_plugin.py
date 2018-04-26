@@ -45,7 +45,7 @@ class ClientPostServiceMaker(object):
         #check directory with events for an oldest file
         # do it every 0.1 second using TimerService 
         # set it to 10 sec to simulate real-time data arriving at AMON   
-        loop_service = TimerService(7200.0, check_for_files, options['hostport'], options['epath'])
+        loop_service = TimerService(5.0, check_for_files, options['hostport'], options['epath'])
         loop_service.startService()
         return loop_service
         

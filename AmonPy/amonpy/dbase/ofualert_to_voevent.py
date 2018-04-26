@@ -19,25 +19,7 @@ def ofualert_to_voevent(alert, params):
     amon_id = alert[0].id
     rev=alert[0].rev
     substream = alert[0].stream
-    """for i in range(len(params)):
-        #if (params[i].name== 'qtot'):
-        if (params[i].name== 'event_id'):
-            event_id=int(params[i].value)
-        if (params[i].name== 'run_id'):
-            run_id=int(params[i].value)
-        if (params[i].name== 'causalqtot'):
-            charge=params[i].value
-        if (params[i].name== 'signal_trackness'):
-            signal_trackness=params[i].value
-        if (params[i].name== 'src_error_90'):
-            src_error_90=params[i].value
-
-       # if (params[i].name== 'llh_ratio'):
-       #     if (params[i].value < 0.):
-       #         hesetype="cascade"
-       #     else:
-        #        hesetype="track"
-    """
+    
     for i in range(len(params)):
         if (params[i].name== 'src_error'):
             src_error_50=params[i].value
@@ -45,6 +27,7 @@ def ofualert_to_voevent(alert, params):
             src_error_90=params[i].value
 
     datenow=datetime.utcnow()
+
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")

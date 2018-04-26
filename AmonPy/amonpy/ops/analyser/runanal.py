@@ -44,6 +44,7 @@ import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.dbase.hesealert_to_voevent as hesealert_to_voevent
 import amonpy.dbase.ehealert_to_voevent as ehealert_to_voevent
 import amonpy.dbase.ofualert_to_voevent as ofualert_to_voevent
+import amonpy.dbase.ofualert_to_voevent as gfualert_to_voevent
 #from amonpy.anal.analysis import anal, 
 from amonpy.anal import analysis
 from amonpy.anal import alert_revision
@@ -168,6 +169,7 @@ class AnalRT(Task):
                 alertDuplicate=True
             print "alert duplicate"
             print alertDuplicate
+
         if (events.stream==11):
             events_duplicate=db_read.read_event_single(10,evnumber,evrev,self.HostFancyName,
                                         self.UserFancyName,self.PasswordFancy,self.DBFancyName)
@@ -270,6 +272,30 @@ class AnalRT(Task):
                         shutil.move(fname, self.alertDir+"archive/")
                 else:
                     shutil.move(fname, self.alertDir+"archive/")
+
+        if ((events.stream==16) or (events.stream==17) or (events.stream==18) or (events.stream==19) or (events.stream==20)):
+            if (events.type == "observation"):
+                xmlForm=gfualert_to_voevent.gfualert_to_voevent([events],params)
+                fname=self.alertDir + 'amon_icecube_source_flare_%s_%s_%s.xml' \
+                    % (events.stream, events.id, events.rev)
+                f1=open(fname, 'w+')
+                f1.write(xmlForm)
+                f1.close()
+                if (self.prodMachine == True):
+                    try:
+                        print "GFU created"
+                        cmd = ['comet-sendvo']
+                        cmd.append('--file=' + fname)
+                        subprocess.check_call(cmd)
+                    except subprocess.CalledProcessError as e:
+                        print "Send IceCube GFU VOevent alert failed"
+                        #logger.error("send_voevent failed")
+                        raise e
+                    else:
+                        shutil.move(fname, self.alertDir+"archive/")
+                else:
+                    shutil.move(fname, self.alertDir+"archive/")
+
         #events.forprint()
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
