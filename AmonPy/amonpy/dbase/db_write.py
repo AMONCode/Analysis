@@ -202,7 +202,7 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
 def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_name):
     """
     Write into eventStreamConfig table for the archival data.
-    Stream 0 = singlets (subthreshol), 10 = HESE, 11 EHE, 12 MASTER OFU, 13 ASAS-SN OFU, 14 LCGOT, 15 PTF
+    Stream 0 = singlets (subthreshol), 10 = HESE, 11 EHE, 12 MASTER OFU, 13 ASAS-SN OFU, 14 LCGOT OFU, 15 PTF OFU, 16 MAGIC GFU, 17 GFU, 18 GFU, 19 GFU, 20 GFU
     Stream 4 = Swift,
     Stream 5 = FACT
     """
@@ -223,8 +223,9 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             con.rollback()
 
         con.close()
-
-    elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13) or (stream_num==14) or (stream_num==15)):
+    
+    #elif ((stream_num>=10) and (stream_num<=20)):
+    elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13) or (stream_num==14) or (stream_num==15) or (stream_num==16) or (stream_num==17) or (stream_num==18) or (stream_num==19) or (stream_num==20)):
         obs_name='IceCube'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,

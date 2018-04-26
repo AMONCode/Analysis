@@ -113,3 +113,38 @@ def alert_email(alert, params):
     #content_whatsapp = 'HESE_event_time = '+str(dateutc)+'; HESE_event_id = '+str(event_id)+'; HESE_charge = '+str(charge)+'; HESE_ra = '+str(ra)+'; HESE_dec = '+str(dec)+'; HESE_signal_trackness = '+str(signal_trackness)+'; HESE_angular_error_50 = 1.6 deg (50% containment)'+'; HESE_angular_error_90 = 8.9 deg (90% containment)'
     #yowsup_run.send_message("18143804192",content)
     #yowsup_run.send_message("18147699477",content)
+
+def alert_email_content(alert,content,title_msg):
+    #nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
+    #nrc = netrc.netrc(nrc_fname)
+    config_fname = '../amon.ini'
+    Config = ConfigParser.ConfigParser()
+    Config.read(config_fname)
+    nrc_fname = Config.get('dirs', 'amonpydir') + '.netrc'
+    prodMachine = eval(Config.get('machine', 'prod'))
+    nrc = netrc.netrc(nrc_fname)
+
+    if alert[0].type == "observation":
+        FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+        PASS = nrc.hosts['gmail'][2]
+        TO = emails
+    else:
+        FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+        PASS = nrc.hosts['gmail'][2]
+        TO = ['hgayala@psu.edu']
+
+    SERVER = 'smtp.gmail.com'
+    PORT = 587
+    msg = MIMEText(content)
+    msg['Subject'] = title_msg
+    msg['From'] = FROM
+    msg['To'] = ", ".join(TO)
+    message = msg.as_string()
+
+    server = smtplib.SMTP(SERVER, PORT)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login(FROM, PASS)
+    server.sendmail(FROM, TO, message)
+    server.quit()
