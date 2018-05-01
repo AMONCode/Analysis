@@ -30,7 +30,7 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
         if stream_num==0:
 #            a1,a2,a3,a4,a5,a6 =loadtxt('../../../data/icecube/IC40/IceCube-40',
 #                                       unpack=True, usecols=[0,1,2,3,4,8])
-            a1,a2,a3,a4,a5 =loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
+            a1,a2,a3,a4,a5 =np.loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
 
 # write miliseconds in delta T column
 
@@ -165,7 +165,7 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
 #           a1,a2,a3,a4,a5,a6 =loadtxt('../../data/icecube/IC-40/IC40_finalPS_Public_NoPoles.txt',
 #                                       unpack=True, usecols=[0,1,2,3,4,8])
 
-            a1,a2,a3,a4,a5 =loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
+            a1,a2,a3,a4,a5 =np.loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
 
             NEVENTS=len(a1)
             print 'Number of events in the file: %d' % NEVENTS
@@ -263,6 +263,22 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
             %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
             '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
+            con.commit()
+        except mdb.Error, e:
+            print 'Exception %s' %e
+            print 'Something went wrong, no data are written.'
+            con.rollback()
+
+        con.close()
+
+    elif ((stream_num==7) or (stream_num==8)):
+        obs_name='HAWC'
+        try:
+            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2015-01-01 00:00:00',
+            '2020-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
