@@ -1,0 +1,5 @@
+#!/usr/bin/python
+from amonpy.dbase import db_modify
+
+cur = db_modify.connect()
+db_modify.add_row(cur, "analysisConfig")

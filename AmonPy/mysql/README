@@ -1,0 +1,17 @@
+First create new user for AMON:
+
+$ mysql -u root -p [-h hostname]
+> CREATE USER '<AMONUSERNAME>'@'localhost' IDENTIFIED BY '<PASSWORD>';
+
+(Replace 'localhost' with 'hostname' if MySQL is not running on you local
+machine)
+
+Then you can create databases by doing:
+
+$ ./create_db.sh <DATABASE> <AMONUSERNAME>
+
+You will need to set up two databases for testing: AMON_test1 and AMON_test2
+
+Attention: by running this on db.hpc.rcc.psu.edu you will erase current AMON
+databases. Use these scripts to create databases on your own machine (i.e.
+localhost).
