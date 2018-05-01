@@ -7,8 +7,6 @@ http://www.ivoa.net/Documents/latest/VOEvent.html
 import sys
 import random
 
-# sys.path.append('../db_classes')
-
 from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
@@ -19,7 +17,7 @@ def ofualert_to_voevent(alert, params):
     amon_id = alert[0].id
     rev=alert[0].rev
     substream = alert[0].stream
-    
+
     for i in range(len(params)):
         if (params[i].name== 'src_error'):
             src_error_50=params[i].value
@@ -27,7 +25,6 @@ def ofualert_to_voevent(alert, params):
             src_error_90=params[i].value
 
     datenow=datetime.utcnow()
-
     ############ VOEvent header ############################
 
     v = VOEvent.VOEvent(version="2.0")
