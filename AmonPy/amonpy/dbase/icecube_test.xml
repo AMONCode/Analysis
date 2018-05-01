@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<voe:VOEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
+xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0 http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd"
+ version="2.0" role="test" ivorn="ivo://0/test#1">
+    <Who>
+        <AuthorIVORN>ivo://IceCube</AuthorIVORN>
+        <Date>2013-10-23T23:59:09.260113</Date>
+    </Who>
+    <What>
+        <Param name="nevents" dataType="float" value="1" ucd="meta.number" unit=" ">
+            <Description>Number of events</Description>
+        </Param>
+        <Param name="deltaT" dataType="float" value="0.0" ucd="time.duration" unit="s">
+            <Description>Time window of the burst</Description>
+        </Param>
+        <Param name="sigmaT" dataType="float" value="0.0" ucd="time" unit="s">
+            <Description>Uncertainty of the time window</Description>
+        </Param>
+        <Param name="false_pos" dataType="float" value="0.00213" ucd="stat.probability" unit="s-1.sr-1 ">
+            <Description>False positive rate</Description>
+        </Param>
+        <Param name="pvalue" dataType="float" value="0.092" ucd="stat.probability" unit=" ">
+            <Description>Pvalue</Description>
+        </Param>
+        <Param name="point_RA" dataType="float" value="0.0" ucd="os.eq.ra" unit="deg">
+            <Description>Pointing RA</Description>
+        </Param>
+        <Param name="point_dec" dataType="float" value="0.0" ucd="os.eq.dec" unit="deg">
+            <Description>Pointing Dec</Description>
+        </Param>
+        <Param name="psf_type" dataType="string" value="fisher" ucd="meta.code.multip" unit=" ">
+            <Description>Type of psf (skymap, fisher, kent, king)</Description>
+        </Param>
+        <Group name="aux_params">
+            <Param name="energy" dataType="float" value="5.545" ucd="phys.energy" unit="TeV"/>
+            <Param name="kent_beta" dataType="float" value="0.05" ucd="instr.det.psf" unit=" "/>
+            <Param name="kent_phi0" dataType="float" value="22.7" ucd="instr.det.psf" unit="deg"/>
+        </Group>
+    </What>
+    <WhereWhen>
+        <ObsDataLocation>
+            <ObservatoryLocation>
+                <AstroCoordSystem id="UTC-GEOD-TOPO"/>
+                <AstroCoords coord_system_id="UTC-GEOD-TOPO">
+                    <Position3D unit="deg-deg-m">
+                        <Name1>longitude</Name1>
+                        <Name2>latitude</Name2>
+                        <Name3>elevation</Name3>
+                        <Value3>
+                            <C1>0.000000</C1>
+                            <C2>-90.000000</C2>
+                            <C3>2835.000000</C3>
+                        </Value3>
+                    </Position3D>
+                </AstroCoords>
+            </ObservatoryLocation>
+            <ObservationLocation>
+                <AstroCoordSystem id="UTC-ICRS-TOPO"/>
+                <AstroCoords coord_system_id="UTC-ICRS-TOPO">
+                    <Time unit="s">
+                        <TimeInstant>
+                            <ISOTime>2013-10-23T23:59:09.259846</ISOTime>
+                        </TimeInstant>
+                    </Time>
+                    <Position2D unit="deg-deg">
+                        <Name1>RA</Name1>
+                        <Name2>Dec</Name2>
+                        <Value2>
+                            <C1>200.060317</C1>
+                            <C2>45.311658</C2>
+                        </Value2>
+                        <Error2Radius>0.770000</Error2Radius>
+                    </Position2D>
+                </AstroCoords>
+            </ObservationLocation>
+        </ObsDataLocation>
+    </WhereWhen>
+    <Description>Report of some test event information</Description>
+</voe:VOEvent>
+
