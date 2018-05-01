@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 
 #sys.path.append('../dbase')
 from amonpy.dbase.db_classes import *
+from amonpy.analyses import amon_streams
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
@@ -28,22 +29,23 @@ def event_to_voevent(alert, parameter):
 
     datenow=datetime.utcnow()
 
-    if (stream==0):
-        obsname="IceCube"
-        #long=0.0000
-        #lat=-90.00
-        #elev=2835
-    elif (stream==1):
-        obsname="ANTARES"
-    elif (stream==3):
-        obsname="Auger"
-    elif (stream==5):
-        obsname="FACT"
-    elif (stream==7):
-        obsname="HAWK"
-    else:
-        print "No stream valid stream number"
-        sys.exit(0)
+    obsname = amon_streams.inv_streams[stream]
+    # if (stream==0):
+    #     obsname="IceCube"
+    #     #long=0.0000
+    #     #lat=-90.00
+    #     #elev=2835
+    # elif (stream==1):
+    #     obsname="ANTARES"
+    # elif (stream==3):
+    #     obsname="Auger"
+    # elif (stream==5):
+    #     obsname="FACT"
+    # elif (stream==7):
+    #     obsname="HAWC"
+    # else:
+    #     print "No stream valid stream number"
+    #     sys.exit(0)
 
     ############ VOEvent header ############################
 
@@ -199,7 +201,7 @@ def event_to_voevent(alert, parameter):
 
 if __name__ == "__main__":
     alert=[Event(0,1,0)]
-    parameter = [Paremeter("energy",0,1,0)]
+    parameter = [Parameter("energy",0,1,0)]
     alert[0].type='test'
     alert[0].RA=200.0603169
     alert[0].dec=45.3116578
