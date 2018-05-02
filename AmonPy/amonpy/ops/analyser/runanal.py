@@ -6,7 +6,6 @@
     AnalRT.run every time a new events comes from the outside world)
     Upon reception of these three parameters, a new event is read from the DB
     and passed to the main analysis code using Python multiprocessing module.
-
     Works with the Enthought Canopy package management, RabittMQ server as a broker
     for messages and Celery allowing from transport of messages from AMON server to
     this worker program.
@@ -44,7 +43,7 @@ import amonpy.dbase.alert_to_voevent as alert_to_voevent
 import amonpy.dbase.hesealert_to_voevent as hesealert_to_voevent
 import amonpy.dbase.ehealert_to_voevent as ehealert_to_voevent
 import amonpy.dbase.ofualert_to_voevent as ofualert_to_voevent
-import amonpy.dbase.ofualert_to_voevent as gfualert_to_voevent
+import amonpy.dbase.gfualert_to_voevent as gfualert_to_voevent
 #from amonpy.anal.analysis import anal, 
 from amonpy.anal import analysis
 from amonpy.anal import alert_revision
@@ -88,7 +87,7 @@ class AnalRT(Task):
         self.PasswordFancy = nrc.hosts[self.HostFancyName][2]
         self.DBFancyName = Config.get('database', 'realtime_dbname')
         self.alertDir = Config.get('dirs', 'alertdir')
-	self.prodMachine = eval(Config.get('machine', 'prod'))
+        self.prodMachine = eval(Config.get('machine', 'prod'))
 
         print
         print ' USING TEST ALERT CONFIG'
