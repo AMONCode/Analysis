@@ -123,7 +123,7 @@ class TestDBWrite(unittest.TestCase):
 
 
     def testWriteAlertConfigArchive(self):
-        print 'Testing write_alert_config module, MC, late arival'
+        print 'Testing write_alert_config module, MC, late arrival'
         db_write.write_alert_config(self.StreamAlertConfig2,self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.AlertConfigSingle2)
 
