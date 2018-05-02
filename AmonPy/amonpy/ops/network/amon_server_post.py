@@ -21,6 +21,7 @@ import amonpy.dbase.db_write as db_write
 import amonpy.dbase.voevent_to_event as voevent_to_event
 
 from amonpy.ops.analyser.runanal import *
+from amonpy.tools.config import AMON_CONFIG
 
 class EventPage(Resource):
     isLeaf = True
@@ -33,18 +34,16 @@ class EventPage(Resource):
     config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
     Config = ConfigParser.ConfigParser()
     Config.read(config_fname)
-    HostFancyName=Config.get('database', 'host_name')
+    HostFancyName=AMON_CONFIG.get('database', 'host_name')#Config.get('database', 'host_name')
     nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
     nrc = netrc.netrc(nrc_path)
     UserFancyName=nrc.hosts[HostFancyName][0]
     PasswordFancy=nrc.hosts[HostFancyName][2]
-    DBFancyName = Config.get('database', 'realtime_dbname')
+    DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
     eventlist = []
     paramlist = []
     microsec = 0.
     counter = 1
-    #path = 'twisted/'
-
 
     print "Event page is %d" % counter
     dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
@@ -59,8 +58,7 @@ class EventPage(Resource):
     ana=AnalRT()
 
     def render_POST(self, request):
-        path = 'twisted/'
-
+        path = AMON_CONFIG.get('dirs','serverdir') #add path to server
         def _writeEventParam(transaction, event, evparam):
             # this will run in a separate thread, allowing us to use series of queries
             # without blocking the rest of the code
@@ -163,7 +161,6 @@ class EventPage(Resource):
             evParam[0].forprint()
 
         #os.remove(path+"server_tmp_events/"+fname)
-        #path = 'twisted'
         shutil.move(path+"server_tmp_events/"+fname, path+"server_archive_events/"+fname)
         #t1 = time()
 
