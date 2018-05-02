@@ -31,6 +31,8 @@ This folder contains scripts to be run by user.
         --concurrency=1 -l info 
         
         kill the process by kill `cat celery.pid`
+
+        celery -A server multi start Def ICHWC ICSWF --loglevel=info -Q:1 default -Q:2 ic_hawc -Q:3 ic_swift --concurrency=1
         
     iii) Cd to network directory and start the AMON server:
     
