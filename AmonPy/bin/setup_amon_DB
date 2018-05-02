@@ -1,0 +1,32 @@
+#!/usr/bin/python
+from amonpy.dbase import db_write
+from amonpy.analyses.ICHAWC import *
+from amonpy.analyses.ICSwift import *
+from amonpy.analyses.amon_streams import streams, alert_streams
+import ConfigParser, netrc
+
+# DB configuration
+config_fname = '/Users/hugo/Software/Analysis/AmonPy/amonpy/amon.ini'
+Config = ConfigParser.ConfigParser()
+Config.read(config_fname)
+HostFancyName = Config.get('database', 'host_name')
+nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
+nrc = netrc.netrc(nrc_path)
+
+UserFancyName = nrc.hosts[HostFancyName][0]
+PasswordFancy = nrc.hosts[HostFancyName][2]
+DBFancyName = Config.get('database', 'realtime_dbname')
+
+
+for key, value in streams.iteritems():
+    print "Setting event configuration for: ",key
+    db_write.write_event_config_archive(value,HostFancyName,
+        UserFancyName, PasswordFancy, DBFancyName)
+
+analysisStream = []
+for key,value in alert_streams.iteritems():
+    print "Setting alert configuration for: ",key
+    analysisStream.append(value)
+
+db_write.write_alert_config(analysisStream,HostFancyName,
+    UserFancyName,PasswordFancy,DBFancyName,analysis)
