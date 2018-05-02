@@ -11,10 +11,10 @@ import amonpy.dbase.db_read as db_read
 from amonpy.dbase.db_classes import Event, Parameter
 import amonpy.dbase.event_to_voevent as event_to_voevent
 
-HostFancyName='localhost'
-UserFancyName='root'
-PasswordFancy='***REMOVED***'
-DBFancyName='AMON_test2'
+HostFancyName=''
+UserFancyName=''
+PasswordFancy=''
+DBFancyName=''
 
 event_streams = [0,1,3,7]
 
