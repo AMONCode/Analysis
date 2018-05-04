@@ -81,7 +81,7 @@ def ic_gfu(new_event=None):
     print ' lenght of parameters %s' % len(params)
     if (events.type == "observation"):
         xmlForm=gfualert_to_voevent.gfualert_to_voevent([events],params)
-        fname=self.alertDir + 'amon_icecube_sf_%s_%s_%s.xml' \
+        fname=self.alertDir + 'amon_icecube_source_flare_%s_%s_%s.xml' \
             % (events.stream, events.id, events.rev)
         f1=open(fname, 'w+')
         f1.write(xmlForm)

@@ -130,19 +130,20 @@ def ic_hese_ehe(new_event=None):
         print alertDuplicate
 
     ##########################################
-    if ((eventHESE==True) and (signal_t >= 0.)):
+    #if ((eventHESE==True) and (signal_t >= 0.)):
         # send HESE events directly to GCN first
-        xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate)
-        fname=os.path.join(AlertDir,'amon_hese_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
-        f1=open(fname, 'w+')
-        f1.write(xmlForm)
-        f1.close()
+    #    xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate)
+    #    fname=os.path.join(AlertDir,'amon_hese_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
+    #    f1=open(fname, 'w+')
+    #    f1.write(xmlForm)
+    #    f1.close()
 
 
         #email_alerts.alert_email([events],params)
-        content = 'HESE_charge = '+str(hese_charge)+'\n'+'HESE_signal_trackness = '+str(signal_t)+'\n'+'HESE_ra = '+str(events.RA)+'\n'+'HESE_dec = '+str(events.dec)+'\n'+'HESE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'
-        title = 'Test from Dev machine: HESE'
-        email_alerts.alert_email_content([events],content,title)
+    #    content = 'HESE_charge = '+str(hese_charge)+'\n'+'HESE_signal_trackness = '+str(signal_t)+'\n'+'HESE_ra = '+str(events.RA)+'\n'+'HESE_dec = '+str(events.dec)+'\n'+'HESE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'
+    #    title = 'Test from Dev machine: HESE'
+    #    email_alerts.alert_email_content([events],content,title)
+    ##########################################
     """
                 modified from
                 https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
@@ -154,6 +155,15 @@ def ic_hese_ehe(new_event=None):
                 comment out code bellow if you do not have comet installed!
     """
     if ((eventHESE==True) and (signal_t >= 0.1) and (hese_charge>=6000.)):
+        # send HESE events directly to GCN first
+        xmlForm=hesealert_to_voevent.hesealert_to_voevent([events],params,alertDuplicate)
+        fname=os.path.join(AlertDir,'amon_hese_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
+        f1=open(fname, 'w+')
+        f1.write(xmlForm)
+        f1.close()
+        content = 'HESE_charge = '+str(hese_charge)+'\n'+'HESE_signal_trackness = '+str(signal_t)+'\n'+'HESE_ra = '+str(events.RA)+'\n'+'HESE_dec = '+str(events.dec)+'\n'+'HESE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'
+        title = 'Test from Dev machine: HESE'
+        email_alerts.alert_email_content([events],content,title)
         if (events.type=="observation") and (prodMachine is True):
             try:
                 cmd = ['comet-sendvo']
@@ -169,6 +179,8 @@ def ic_hese_ehe(new_event=None):
                 shutil.move(fname, os.path.join(AlertDir,"archive/"))
         else:
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
+    if (eventHESE==True):
+            email_alerts.alert_email([events],params)
 
     ############################################
     if (events.stream==streams["IC-EHE"]):
@@ -195,3 +207,4 @@ def ic_hese_ehe(new_event=None):
         content = 'EHE_signalness = '+str(signalness)+'\n'+'EHE_ra = '+str(events.RA)+'\n'+'EHE_dec = '+str(events.dec)+'\n'+'EHE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'EHE_run_id = '+str(run_id)+'\n'+'EHE_event_id = '+str(event_id)+'\n'
         title = 'Test from Dev machine: EHE'
         email_alerts.alert_email_content([events],content,title)
+        email_alerts.alert_email([events],params)
