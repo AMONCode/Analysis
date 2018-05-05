@@ -484,9 +484,9 @@ def ic_hawc(new_event=None):
                         logger.error("send_voevent failed")
                         raise e
                     else:
-                        shutil.move(fname, os.path.join(AlertDir,"archive/",fname))
+                        shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 else:
-                    shutil.move(fname, os.path.join(AlertDir,"archive/",fname))
+                    shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
 
 
 
