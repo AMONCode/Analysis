@@ -445,8 +445,9 @@ def ic_hawc(new_event=None):
             alerts.append(new_alert)
             idnum = idnum+1
             # if new alert crosses threshold send email_alerts and GCN
-            fname=os.path.join(AlertDir,'amon_ic-hawc_%s_%s_%s.xml'%(new_alert.stream, new_alert.id, new_alert.rev))
-            f1=open(fname, 'w+')
+            fname='amon_ic-hawc_%s_%s_%s.xml'%(new_alert.stream, new_alert.id, new_alert.rev)
+            filen=os.path.join(AlertDir,fname)
+            f1=open(filen, 'w+')
             xmlForm=alert_to_voevent([new_alert])
             f1.write(xmlForm)
             f1.close()
@@ -474,7 +475,7 @@ def ic_hawc(new_event=None):
                 if (prodMachine == True):
                     try:
                         cmd = ['comet-sendvo']
-                        cmd.append('--file=' + fname)
+                        cmd.append('--file=' + filen)
                         # just for dev to prevent sending hese both from dev and pro machine
                         #print "uncoment this if used on production"
                         subprocess.check_call(cmd)
@@ -483,9 +484,9 @@ def ic_hawc(new_event=None):
                         logger.error("send_voevent failed")
                         raise e
                     else:
-                        shutil.move(fname, os.path.join(AlertDir,"archive/"))
+                        shutil.move(fname, os.path.join(AlertDir,"archive/",fname))
                 else:
-                    shutil.move(fname, os.path.join(AlertDir,"archive/"))
+                    shutil.move(fname, os.path.join(AlertDir,"archive/",fname))
 
 
 
