@@ -175,7 +175,7 @@ def totalpHEN(events):
     val=1
     N=len(events)
     if N==2:
-        return val
+        return val*ev[1][-1]
     else:
         for i in range(1,N):
             val*=ev[i][-1]
