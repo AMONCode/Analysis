@@ -33,7 +33,7 @@ class AMONInstall(install):
             cp.set("database", "realtime_dbname", "AMON_test2")#str(uuid.uuid5(uuid.NAMESPACE_URL ,"%s://%s/realtime" % (socket.gethostname(), self.prefix))))
             cp.set("database", "host_name", "localhost")
             cp.set("database", "username", "root")
-            cp.set("database", "password", "***REMOVED***")
+            cp.set("database", "password", "apasswordword")
             #cp.set("dirs", "alertdir", "%s/amon_alerts" % self.prefix)
             cp.set("dirs", "alertdir", "/path/to/amon_alerts")
             cp.set("dirs", "amonpydir","/path/to/amonpy")
