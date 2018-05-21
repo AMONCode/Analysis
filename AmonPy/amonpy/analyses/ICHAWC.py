@@ -164,9 +164,9 @@ Rdn = np.load(filename).item()
 def pHEN(sinDec,fprd):
     costh=-1*sinDec #IC's zenith is close to -90deg declination
     if costh>0.13917: #82 zenith
-        R = np.power(10,Rdn(sinDec,0.0))
+        R = np.power(10,Rdn(costh,0.0))
     elif costh<=0.13917:
-        R = np.power(10,Rup(sinDec,2.0))
+        R = np.power(10,Rup(costh,2.0))
     if fprd==0: return 1.0
     if fprd/R > 1.0: return 1.0
     else: return fprd/R
