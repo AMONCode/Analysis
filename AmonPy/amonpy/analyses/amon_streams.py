@@ -33,6 +33,7 @@ alert_streams = {
             "OFU-Alerts":5,
             "GFU-Alerts":6,
             "HWC-GRBlike-Alerts":7,
+            "Antares-Fermi":8,
 }
 
 inv_alert_streams = dict(map(reversed,alert_streams.items()))

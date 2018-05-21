@@ -13,6 +13,7 @@ def alert_email(alert, params):
     #config_fname = '../amon.ini'
     #Config = ConfigParser.ConfigParser()
     #Config.read(config_fname)
+    emails = ['hgayala@psu.edu']
     ehe_hese_emails = eval(AMON_CONFIG.get('mailing_list','ehe_hese')) #eval(Config.get('mailing_list', 'ehe_hese'))
     sub_emails = eval(AMON_CONFIG.get('mailing_list','sub_ehe_hese'))
     sub_cut_emails = eval(AMON_CONFIG.get('mailing_list','sub_cut_ehe_hese'))

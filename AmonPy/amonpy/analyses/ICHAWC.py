@@ -163,9 +163,9 @@ filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
 Rdn = np.load(filename).item()
 def pHEN(sinDec,fprd):
     costh=-1*sinDec #IC's zenith is close to -90deg declination
-    if costh>0.139:
+    if costh>0.13917: #82 zenith
         R = np.power(10,Rdn(sinDec,0.0))
-    elif costh<=0.139:
+    elif costh<=0.13917:
         R = np.power(10,Rup(sinDec,2.0))
     if fprd==0: return 1.0
     if fprd/R > 1.0: return 1.0
