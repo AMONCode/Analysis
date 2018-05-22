@@ -118,6 +118,7 @@ def alert_email(alert, params):
 def alert_email_content(alert,content,title_msg):
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
     nrc = netrc.netrc(nrc_fname)
+    emails = ['hgayala@psu.edu']
 
     if alert[0].type == "observation":
         FROM = nrc.hosts['gmail'][0] + '@gmail.com'
