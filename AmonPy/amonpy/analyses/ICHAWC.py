@@ -135,28 +135,6 @@ def pSpace(llh):
         return 1.-f(llh)
 
 # Calculation of the p_value of IC.
-# cdf_saf=[]
-# data_saf = np.load('/Users/hugo/Software/Analysis/AmonPy/amonpy/analyses/CDF_SAF.npz')
-# #data_saf = np.load('/storage/home/hza53/Software/Analysis/AmonPy/amonpy/analyses/CDF_SAF.npz')
-# for item in data_saf.iteritems():
-#     cdf_saf.append(item[1])
-# n_saf = cdf_saf[0]
-# b_saf = cdf_saf[1]
-# b_saf_centers = b_saf[:-1] + 0.5*(b_saf[1:] - b_saf[:-1])
-# f_saf = interp1d(b_saf_centers,n_saf)
-# def pHEN(SAF):
-#     x=np.log10(SAF)
-#     if x < b_saf_centers[0]:
-#         y=1.
-#         print "Neutrino: WARNING x below range"
-#     elif x> b_saf_centers[-1]:
-#         y=1.-f_saf(b_saf_centers[-2])
-#         print "Neutrino: WARNING x above range"
-#     else:
-#         y=1.-f_saf(x)
-#     if y<0:
-#         print y
-#     return y
 filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
 Rup = np.load(filename).item()
 filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
@@ -175,10 +153,10 @@ def totalpHEN(events):
     val=1
     N=len(events)
     if N==2:
-        return val*ev[1][-1]
+        return val*events[1][-1]
     else:
         for i in range(1,N):
-            val*=ev[i][-1]
+            val*=events[i][-1]
         return val
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
@@ -354,7 +332,13 @@ def coincAnalysisHWC(new_event):
             print "Pos: %0.2f,%0.2f,%0.2f,%0.2f,%0.2f,%0.2f,%0.2e "%(ra2,dec2,sigR,muR,lamR,e.sigmaR,fprd)
 
             psfIC = probSigIC(sigR,muR,lamR)
-            datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), probBkgIC(np.sin(np.deg2rad(dec2))),pHEN(np.sin(np.deg2rad(dec2)),fprd)])
+            bkgIC = np.cos(np.deg2rad(dec2))*probBkgIC(np.sin(np.deg2rad(dec2)))
+            #sinDec = np.sin(np.deg2rad(dec2))
+            #cosTh = -1*sinDec
+            #sinTh = np.sqrt(1-cosTh**2)
+            #bkgIC = -1*sinTh*probBkgIC(cosTh)
+            pvalIC = pHEN(np.sin(np.deg2rad(dec2))
+            datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC,fprd)])
 
     alldatalist.append(datalist)
 
