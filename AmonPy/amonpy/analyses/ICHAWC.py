@@ -338,7 +338,7 @@ def coincAnalysisHWC(new_event):
             #cosTh = -1*sinDec
             #sinTh = np.sqrt(1-cosTh**2)
             #bkgIC = -1*sinTh*probBkgIC(cosTh)
-            pvalIC = pHEN(np.sin(np.deg2rad(dec2))
+            pvalIC = pHEN(np.sin(np.deg2rad(dec2)))
             datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC,fprd)])
 
     alldatalist.append(datalist)
