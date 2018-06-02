@@ -243,8 +243,7 @@ def maximizeLLH(all_events):
                 return coincs
         res = list(solution.x)
         stderr = 0.
-        pcluster=pNuCluster(ev)
-        phwc = ev[0][-1]
+
 
         if solution.success:
             for part in ev:
@@ -255,6 +254,8 @@ def maximizeLLH(all_events):
             stderr = np.sqrt(1/stderr)
             #print stderr
             print "Number of neutrinos: %d"%(len(ev)-1)
+            pcluster=pNuCluster(ev)
+            phwc = ev[0][-1]
             pspace = pSpace(-1*solution.fun)
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
@@ -338,8 +339,8 @@ def coincAnalysisHWC(new_event):
             #cosTh = -1*sinDec
             #sinTh = np.sqrt(1-cosTh**2)
             #bkgIC = -1*sinTh*probBkgIC(cosTh)
-            pvalIC = pHEN(np.sin(np.deg2rad(dec2)))
-            datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC,fprd])
+            pvalIC = pHEN(np.sin(np.deg2rad(dec2)),fprd)
+            datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC])
 
     alldatalist.append(datalist)
 
