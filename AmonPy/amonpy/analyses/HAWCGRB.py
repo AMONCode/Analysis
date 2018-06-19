@@ -91,8 +91,14 @@ def hawc_burst(new_event=None):
 
     if (events.type == "observation") and (false_pos<1.0e3):
 
-
-        xmlForm=alert_to_voevent([events])
+        new_alert = Alert(config.stream,idnum+1,config.rev)
+        new_alert.dec = dec
+        new_alert.RA = ra
+        new_alert.sigmaR = poserr
+        new_alert.pvalue = events.p_value
+        new_alert.false_pos = false_pos
+        new_alert.observing = config.stream
+        xmlForm=alert_to_voevent([new_alert])
         fname=self.alertDir + 'amon_hawc_burst_%s_%s_%s.xml' \
             % (events.stream, events.id, events.rev)
         f1=open(fname, 'w+')

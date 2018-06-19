@@ -160,7 +160,7 @@ def totalpHEN(events):
         return val
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
-filename = os.path.join(AmonPyDir,'analyses/newCDF_Chi2_200.npz')
+filename = os.path.join(AmonPyDir,'analyses/newCDF_newChi2_200.npz')
 cdfChi2 = np.load(filename)
 
 CDF = [] #dummy variable
@@ -259,9 +259,9 @@ def maximizeLLH(all_events):
             pspace = pSpace(-1*solution.fun)
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
-            pchi2 = pChi2(chi2) #The p-value of the chi2 distribution
+            #pchi2 = pChi2(chi2) #The p-value of the chi2 distribution
 
-            coincs.append([solution.x[0],solution.x[1],stderr,pchi2,chi2,len(ev),ev])#,pcluster,hwcsigma,ev])
+            coincs.append([solution.x[0],solution.x[1],stderr,chi2,len(ev)-1,ev])#,pcluster,hwcsigma,ev])
     return coincs
 
 def coincAnalysisHWC(new_event):
@@ -401,14 +401,14 @@ def ic_hawc(new_event=None):
 
         #[solution.x[0],solution.x[1],stderr,-1*solution.fun,len(ev)-1,ev])
         for r in result:
-            pvalue = r[3]
+            #pvalue = r[3]
             dec = r[0]
             ra = r[1]
             sigmaR = r[2]
-            chi2 = r[4]
-            nev = r[5]
+            chi2 = r[3]
+            nev = r[4]
             #print line
-            nuEvents = r[6][1:]
+            nuEvents = r[5][1:]
             alertTime = []
 
             for j in nuEvents:
@@ -422,11 +422,17 @@ def ic_hawc(new_event=None):
             new_alert.dec = dec
             new_alert.RA = ra
             new_alert.sigmaR = sigmaR
-            new_alert.pvalue = pvalue
-            new_alert.false_pos = np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
+            new_alert.nevents = nev  #Number of neutrinos
+            ## Tranform the chi2 value from different degrees of freedom to a just probabilites.
+            ## This will make a better comparison between different coincident events
+            ddof = nev*2 + 6
+            pvalChi2 = 1.0 - stats.chi2.cdf(chi2,ddof)
+            newchi2 = -np.log10(pvalChi2)
+            new_alert.pvalue = pChi2(newchi2)
+            new_alert.false_pos = np.power(10,-0.67755675*chi2 + 5.50359854)#np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
             new_alert.datetime = datetime(alertTime[0].year,alertTime[0].month,alertTime[0].day,hours,minutes,seconds) #datetime.now() #do an average of the IC neutrinos?
             new_alert.observing = config.stream
-            new_alert.nevents = nev  #Number of neutrinos
+
             new_alert.type = 'test'
             alerts.append(new_alert)
             idnum = idnum+1
@@ -450,7 +456,7 @@ def ic_hawc(new_event=None):
 
             #if chi2 > 65.94: # ~1 per year
             #if chi2 > 53.7: # ~1 per month
-            if chi2 > 36.9: # ~1 per day FOR TESTING
+            if chi2 > 4.3#36.9: # ~1 per day FOR TESTING
             #if chi2 > 11.0: # R TESTING
                 title='AMON IC-HAWC alert'
                 email_alerts.alert_email_content([new_alert],content,title)
