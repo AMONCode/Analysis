@@ -456,7 +456,7 @@ def ic_hawc(new_event=None):
 
             #if chi2 > 65.94: # ~1 per year
             #if chi2 > 53.7: # ~1 per month
-            if chi2 > 4.3#36.9: # ~1 per day FOR TESTING
+            if chi2 > 4.3:#36.9: # ~1 per day FOR TESTING
             #if chi2 > 11.0: # R TESTING
                 title='AMON IC-HAWC alert'
                 email_alerts.alert_email_content([new_alert],content,title)
