@@ -232,7 +232,7 @@ def tloglh_time(dec,ra,events):
     if len(events) > 2:
         T=0.
         for i in range(1,len(events)-1) :
-            for j in range(i+1,len(eve9j9j9j9jnts)) :
+            for j in range(i+1,len(events)) :
                 # adding temporal term (T is a normlization factor that can be modified to match spatial terms)
                 T += np.log(events[0][4]*3600.) - np.log(abs(((events[j][5]-events[i][5])).seconds))
         val+=T
