@@ -137,10 +137,10 @@ def pSpace(llh):
         return 1.-f(llh)
 
 # Calculation of the p_value of IC.
-# filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
-# Rup = np.load(filename).item()
-# filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
-# Rdn = np.load(filename).item()
+filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
+Rup = np.load(filename).item()
+filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
+Rdn = np.load(filename).item()
 # def pHEN(sinDec,fprd):
 #     costh=-1*sinDec #IC's zenith is close to -90deg declination
 #     if costh>0.13917: #82 zenith
