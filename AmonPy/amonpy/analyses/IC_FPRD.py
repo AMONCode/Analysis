@@ -1,19 +1,19 @@
 import numpy as np
 
 class FPRD(object):
-
+    
     '''
     to use this:
-
+    
     fname = 'Where FPRD npz file is'
     fprd_obj = FPRD(fname=fname)
-
+    
     # get the p-value with already known fprd_value
-
+    
     pval = fprd_obj.get_pval(cos_zen, fprd=fprd_value)
-
+    
     # get B(r_IC)
-
+    
     B_IC = fprd_obj.get_B_spat(cos_zen)
     '''
 
@@ -31,7 +31,7 @@ class FPRD(object):
             print "Trying to make remake interpolator with grid points"
 
             from scipy import interpolate
-
+            
             up_intp = interpolate.LinearNDInterpolator(npz_file['up_grid_points'],\
                                             npz_file['up_log10fprds'])
 
@@ -65,7 +65,7 @@ class FPRD(object):
     def get_fprd(self, cos_zen, y, adj_bdt=True):
 
         if np.rad2deg(np.arccos(cos_zen)) > 82.:
-
+            
             if y < 0:
                 y = 1.
 
