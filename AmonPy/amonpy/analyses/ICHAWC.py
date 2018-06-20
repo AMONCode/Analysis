@@ -75,7 +75,7 @@ def probSigHAWC(spc,sigma):
 
 ##IC PDFs for spatial null hypotheses
 ## The alternative  is given by an interpolator for each event.
-icfprdFile = os.path.join(AmonPyDir,'analyses/FPRD_info.npz')
+icfprdFile = np.load(os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
 icbkg_interp = icfprdFile['B_spat_interp'].item()
 def probBkgIC(cosTh):
     b = icbkg_interp(cosTh)/4.8434e-5 #constant is normalization factor
