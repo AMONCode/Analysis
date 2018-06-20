@@ -63,32 +63,34 @@ def ic_hawc_config():
 hwcBkgfile = os.path.join(AmonPyDir,'analyses/hawc_bkg_intp.npy')
 hwcBkg = np.load(hwcBkgfile).item()
 def probBkgHAWC(dec):
-    #zenith = 50.
-    #A = 0.5 * (special.erf(zenith/(np.sqrt(2)*23.55)) - special.erf(-zenith/(np.sqrt(2)*23.55)))
-    #The 2 pi is from the uniform distribution in RA
-    #return A*exp(-(dec-18.98)**2/(2*23.55**2))/(sqrt(2*np.pi*np.deg2rad(23.55)**2) * 2*np.pi)
     if dec<-25.: return 0.00619
     if dec>64: return 0.00619
     return hwcBkg(dec)*180./(np.pi*2*np.pi)
 
 def probSigHAWC(spc,sigma):
-    #psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(np.sqrt(2*np.pi)*(np.deg2rad(sigma)))
     psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(2*np.pi*(np.deg2rad(sigma)**2))
     return psf
 
 
 ##IC PDFs for spatial null hypotheses
 ## The alternative  is given by an interpolator for each event.
-def probBkgIC(sinDec):
-    x=sinDec
-    #numbers obtained from archival data after doing a fit
-    a=1.035595
-    x0=-0.117645
-    g1 = 0.81984
-    g2 = 1.655227
-    y = a*(1/np.pi) * ((g1/2)/((x-x0)**2 + (g1**2/4))) * ((x-x0)<0)
-    y+= (a*g2/g1)*((1/np.pi) * ((g2/2)/((x-x0)**2 + (g2**2/4))) ) * ((x-x0)>=0)
-    return y*np.pi/(180.*360.)# units of deg^2, SigPSF is given in deg^2 #/(2*np.pi)
+icfprdFile = os.path.join(AmonPyDir,'analyses/FPRD_info.npz')
+icbkg_interp = icfprdFile['B_spat_interp'].item()
+def probBkgIC(cosTh):
+    b = icbkg_interp(cosTh)/4.8434e-5 #constant is normalization factor
+    b = b*(np.pi/(180.*360.))
+    return b
+
+# def probBkgIC(sinDec):
+#     x=sinDec
+#     #numbers obtained from archival data after doing a fit
+#     a=1.035595
+#     x0=-0.117645
+#     g1 = 0.81984
+#     g2 = 1.655227
+#     y = a*(1/np.pi) * ((g1/2)/((x-x0)**2 + (g1**2/4))) * ((x-x0)<0)
+#     y+= (a*g2/g1)*((1/np.pi) * ((g2/2)/((x-x0)**2 + (g2**2/4))) ) * ((x-x0)>=0)
+#     return y*np.pi/(180.*360.)# units of deg^2, SigPSF is given in deg^2 #/(2*np.pi)
 
 def probSigIC(sigR,muR,lamR):
     if lamR==-1:
@@ -98,7 +100,6 @@ def probSigIC(sigR,muR,lamR):
     return psf #in deg^2
 
 def probSigIC2(spc,sigma):
-    #psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(np.sqrt(2*np.pi)*(np.deg2rad(sigma)))
     psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(2*np.pi*sigma**2)
     return psf #in deg^2
 
@@ -135,19 +136,27 @@ def pSpace(llh):
         return 1.-f(llh)
 
 # Calculation of the p_value of IC.
-filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
-Rup = np.load(filename).item()
-filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
-Rdn = np.load(filename).item()
-def pHEN(sinDec,fprd):
-    costh=-1*sinDec #IC's zenith is close to -90deg declination
-    if costh>0.13917: #82 zenith
-        R = np.power(10,Rdn(costh,0.0))
-    elif costh<=0.13917:
-        R = np.power(10,Rup(costh,2.0))
-    if fprd==0: return 1.0
-    if fprd/R > 1.0: return 1.0
-    else: return fprd/R
+# filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
+# Rup = np.load(filename).item()
+# filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
+# Rdn = np.load(filename).item()
+# def pHEN(sinDec,fprd):
+#     costh=-1*sinDec #IC's zenith is close to -90deg declination
+#     if costh>0.13917: #82 zenith
+#         R = np.power(10,Rdn(costh,0.0))
+#     elif costh<=0.13917:
+#         R = np.power(10,Rup(costh,2.0))
+#     if fprd==0: return 1.0
+#     if fprd/R > 1.0: return 1.0
+#     else: return fprd/R
+
+fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
+def pHEN(cosTh,fprd):
+    pval=fprd_obj.get_pval(cosTh,fprd=fprd)
+    if pval>1.0:
+        return 1.0
+    else:
+        return pval
 
 def totalpHEN(events):
     val=1
@@ -222,7 +231,7 @@ def tloglh_time(dec,ra,events):
     if len(events) > 2:
         T=0.
         for i in range(1,len(events)-1) :
-            for j in range(i+1,len(events)) :
+            for j in range(i+1,len(eve9j9j9j9jnts)) :
                 # adding temporal term (T is a normlization factor that can be modified to match spatial terms)
                 T += np.log(events[0][4]*3600.) - np.log(abs(((events[j][5]-events[i][5])).seconds))
         val+=T
@@ -334,12 +343,13 @@ def coincAnalysisHWC(new_event):
             print "Pos: %0.2f,%0.2f,%0.2f,%0.2f,%0.2f,%0.2f,%0.2e "%(ra2,dec2,sigR,muR,lamR,e.sigmaR,fprd)
 
             psfIC = probSigIC(sigR,muR,lamR)
-            bkgIC = np.cos(np.deg2rad(dec2))*probBkgIC(np.sin(np.deg2rad(dec2)))
-            #sinDec = np.sin(np.deg2rad(dec2))
-            #cosTh = -1*sinDec
-            #sinTh = np.sqrt(1-cosTh**2)
-            #bkgIC = -1*sinTh*probBkgIC(cosTh)
-            pvalIC = pHEN(np.sin(np.deg2rad(dec2)),fprd)
+            #bkgIC = np.cos(np.deg2rad(dec2))*probBkgIC(np.sin(np.deg2rad(dec2)))
+            sinDec = np.sin(np.deg2rad(dec2))
+            cosTh = -1*sinDec
+            sinTh = np.sqrt(1-cosTh**2)
+            bkgIC = np.abs(-1*sinTh*probBkgIC(cosTh))
+            #pvalIC = pHEN(np.sin(np.deg2rad(dec2)),fprd)
+            pvalIC = pHEN(cosTh,fprd)
             datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC])
 
     alldatalist.append(datalist)
