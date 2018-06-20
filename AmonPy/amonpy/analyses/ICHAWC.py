@@ -315,7 +315,7 @@ def coincAnalysisHWC(new_event):
             poserr2 = e.sigmaR #If version is 0, this value will be used.
             param = db_read.read_parameters(e.stream,e.id,e.rev,HostFancyName,
                                             UserFancyName,PasswordFancy,DBFancyName)
-            fprd = 0.0                                
+            fprd = 0.0
             for p in param:
                 if p.name == 'signalness': fprd = p.value #sigacc = p.value ## Temporal solution to the FPRD
                 else: sigacc = 1.0
@@ -329,7 +329,8 @@ def coincAnalysisHWC(new_event):
                 else: energy = 1000 #1 TeV?
 
             #The next lines will be deleted after the false_pos has values in the realtime stream
-            #fprd = e.false_pos  #TEMPORAL SOLUTION FOR FPRD (Currently is the value of signalness)
+            if e.false_pos != 0.0:
+                fprd = e.false_pos  #TEMPORAL SOLUTION FOR FPRD (Currently is the value of signalness)
             if fprd ==0.:
                 cosz = np.sin(np.deg2rad(dec2)) #cos(zenith)=sin(Dec) for IC since the zenith = -90deg in dec
                 if cosz <0.13:
