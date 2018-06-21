@@ -59,6 +59,9 @@ def hawc_burst(new_event=None):
                                        UserFancyName,
                                        PasswordFancy,
                                        DBFancyName)
+
+    config = hawc_burst_config()
+                         
     if max_id is None:
         idnum = 0
     else:
