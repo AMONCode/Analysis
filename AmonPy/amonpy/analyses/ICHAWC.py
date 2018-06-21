@@ -464,7 +464,7 @@ def ic_hawc(new_event=None):
             print 'HAWC Rise Time: ',new_event.datetime
             #print 'HAWC Set Time: ',datetime(pd.to_datetime(new_event.datetime)) + timedelta(seconds=r[0][4])
             content = 'Alert ID: %d Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f, P-value: %0.3e, Chi2: %0.2f, FAR: %0.3e yr^-1, NEvents: %d'%(idnum,ra,dec,
-                    sigmaR,new_alert.pvalue,chi2,new_alert.false_pos,nev)
+                    sigmaR,new_alert.pvalue,newchi2,new_alert.false_pos,nev)
             print content
 
             #if chi2 > 65.94: # ~1 per year
