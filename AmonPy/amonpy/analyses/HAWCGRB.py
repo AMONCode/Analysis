@@ -34,7 +34,7 @@ def hawc_burst_config():
     stream = alert_streams['HWC-GRBlike-Alerts']
     rev = 0
     config = AlertConfig2(stream,rev)
-    config.participating  = alert_streams['HWC-GRBlike-Alerts']#2**streams['IC-HESE'] + 2**streams['IC-EHE'] # index of event streams
+    config.participating  = alert_streams['HWC-GRBlike-Alerts'] # index of event streams
     config.deltaT         = 10.00 #80000.0 #100.0               # seconds
     config.bufferT        = 86400.00 #1000.0 86400 24 h buffer             # seconds
     config.cluster_method = 'Fisher'            # function to be called
@@ -61,7 +61,7 @@ def hawc_burst(new_event=None):
                                        DBFancyName)
 
     config = hawc_burst_config()
-                         
+
     if max_id is None:
         idnum = 0
     else:
@@ -98,7 +98,7 @@ def hawc_burst(new_event=None):
         new_alert.dec = dec
         new_alert.RA = ra
         new_alert.sigmaR = poserr
-        new_alert.pvalue = events.p_value
+        new_alert.pvalue = events.pvalue
         new_alert.false_pos = false_pos
         new_alert.observing = config.stream
         xmlForm=alert_to_voevent([new_alert])
