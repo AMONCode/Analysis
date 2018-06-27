@@ -102,9 +102,8 @@ def hawc_burst(new_event=None):
         new_alert.false_pos = false_pos
         new_alert.observing = config.stream
         xmlForm=alert_to_voevent([new_alert])
-        fname=self.alertDir + 'amon_hawc_burst_%s_%s_%s.xml' \
-            % (events.stream, events.id, events.rev)
-        f1=open(fname, 'w+')
+        fname= 'amon_hawc_burst_%s_%s_%s.xml'%(events.stream, events.id, events.rev)
+        f1=open(os.path.join(AlertDir,fname), 'w+')
         f1.write(xmlForm)
         f1.close()
 

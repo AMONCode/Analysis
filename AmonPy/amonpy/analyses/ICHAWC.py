@@ -439,7 +439,7 @@ def ic_hawc(new_event=None):
             ## Tranform the chi2 value from different degrees of freedom to a just probabilites.
             ## This will make a better comparison between different coincident events
             ddof = nev*2 + 6
-            pvalChi2 = 1.0 - stats.chi2.cdf(chi2,ddof)
+            pvalChi2 = stats.chi2.sf(chi2,ddof)
             newchi2 = -np.log10(pvalChi2)
             new_alert.pvalue = pChi2(newchi2)
             new_alert.false_pos = np.power(10,-0.67755675*chi2 + 5.50359854)#np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
