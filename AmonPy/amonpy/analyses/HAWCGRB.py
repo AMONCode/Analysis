@@ -28,6 +28,9 @@ UserFancyName = AMON_CONFIG.get('database','username')#nrc.hosts[HostFancyName][
 PasswordFancy = AMON_CONFIG.get('database','password')#nrc.hosts[HostFancyName][2]
 DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
 
+prodMachine = eval(AMON_CONFIG.get('machine','prod'))
+
+
 def hawc_burst_config():
     """ Returns a HAWC Burst AlertConfig object
     """
@@ -107,7 +110,7 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        if (self.prodMachine == True):
+        if (prodMachine == True):
             try:
                 print "HAWC Burst created"
                 cmd = ['comet-sendvo']
