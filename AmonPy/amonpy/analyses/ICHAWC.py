@@ -112,8 +112,7 @@ def pNuCluster(events):
         return val
     else:
         lmb = 0.0066887 * events[0][4]*3600.*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
-        for i in range(0,N-1) :
-            val = val - np.exp(-lmb)*(lmb)**i/np.math.factorial(i)
+        val = stats.poisson.sf(N-2,lmb)
     return val
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz

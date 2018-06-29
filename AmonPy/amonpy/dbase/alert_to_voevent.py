@@ -15,7 +15,7 @@ def alert_to_voevent(alert):
     stream=alert[0].stream
     amon_id = alert[0].id
     rev=alert[0].rev
-    
+
     datenow=datetime.now()
     ############ VOEvent header ############################
 
@@ -24,21 +24,21 @@ def alert_to_voevent(alert):
         v.set_ivorn("ivo://amon/icecube_coinc#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
     else:
         v.set_ivorn("ivo://amon/multi_mesg#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
-    
+
     v.set_role("%s" % alert[0].type)
     if (alert[0].trigger==2):
         v.set_Description("Report of the IceCube neutrino multiplet")
     else:
-        v.set_Description("Report of the multimessenger multiplets") 
-    
+        v.set_Description("Report of the multimessenger multiplets")
+
 
     w = Who()
     datenow1=str(datenow)
     datenow2=datenow1[0:10]+"T"+datenow1[11:]
     w.set_Date(str(datenow2))
     a = Author()
-    a.add_contactName("Gordana Tesic, Miles Smith")
-    a.add_contactEmail('gut10@psu.edu, mus44@psu.edu')
+    a.add_contactName("Hugo Ayala")
+    a.add_contactEmail('hgayala@psu.edu')
     w.set_Author(a)
     v.set_Who(w)
 
@@ -53,19 +53,19 @@ def alert_to_voevent(alert):
     p = Param(name="amon_id", ucd="meta.number", dataType="int", value=str(amon_id))
     p.set_Description(["Alert identification"])
     w.add_Param(p)
-    
+
     p = Param(name="rev", ucd="meta.number", dataType="int", value=str(rev))
     p.set_Description(["Alert revision"])
     w.add_Param(p)
-    
+
     p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
     p.set_Description(["Number of events in the alert"])
     w.add_Param(p)
-    
+
     p = Param(name="deltaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].deltaT))
     p.set_Description(["Time window of the burst"])
     w.add_Param(p)
-    
+
     p = Param(name="sigmaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].sigmaT))
     p.set_Description(["Uncertainty of the time window"])
     w.add_Param(p)
@@ -73,26 +73,26 @@ def alert_to_voevent(alert):
     p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
     p.set_Description(["False positive rate"])
     w.add_Param(p)
-    
+
     p = Param(name="observing", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].observing))
     p.set_Description(["Observatories observing given part og the sky"])
     w.add_Param(p)
-    
+
     p = Param(name="trigger", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].trigger))
     p.set_Description(["Observatories triggering"])
     w.add_Param(p)
-        
+
     p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
     p.set_Description(["Pvalue for the alert"])
     w.add_Param(p)
-    
+
     p = Param(name="skymap", ucd="meta.code.multip", unit=" ", dataType="string",  value=str(alert[0].skymap))
     p.set_Description(["Skymap or no skymap assotiated with the alert"])
     w.add_Param(p)
-    
-    
+
+
     v.set_What(w)
-    
+
     ############ Wherewhen ############################
     wwd = {'observatory':     'AMON',
            'coord_system':    'UTC-GEOD-TOPO',
@@ -105,7 +105,7 @@ def alert_to_voevent(alert):
 
     ww = makeWhereWhen(wwd)
     if ww: v.set_WhereWhen(ww)
-     
+
     if ww: v.set_WhereWhen(ww)
     #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
    # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
@@ -128,28 +128,28 @@ def alert_to_voevent(alert):
     astro5.set_Position2D(pos2)
     #error2=Error2Radius(alert[0].sigmaR)
     #astro5.set_Error2Radius()
-    
-    
+
+
     time_1=Time("s")
     time2=str(alert[0].datetime)
     time2_2=time2[0:10]+"T"+time2[11:]
-    
+
     #time2_2=time2[0:10]+"T"+time2[11:]
     time3=TimeInstant(time2_2)
     time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)
-    
+
     observation.set_AstroCoordSystem(astro4)
     observation.set_AstroCoords(astro5)
     obs.set_ObservationLocation(observation)
     ww.set_ObsDataLocation(obs)
     #ww.add_TimeInstant(time3)
-    v.set_WhereWhen(ww) 
-    
-   
+    v.set_WhereWhen(ww)
+
+
     ############ output the event ############################
-       
-    xml = stringVOEvent(v, 
+
+    xml = stringVOEvent(v,
     schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
     #print xml
     return xml
@@ -160,6 +160,3 @@ if __name__ == "__main__":
     print xml1
     f1=open('./test_alert.xml', 'w+')
     f1.write(xml1)
-   
-    
-    
