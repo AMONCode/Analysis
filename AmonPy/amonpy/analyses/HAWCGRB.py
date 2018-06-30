@@ -121,6 +121,6 @@ def hawc_burst(new_event=None):
                 #logger.error("send_voevent failed")
                 raise e
             else:
-                shutil.move(fname, os.path.join(AlertDir,"archive/"))
+                shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
         else:
-            shutil.move(fname, os.path.join(AlertDir,"archive/"))
+            shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))

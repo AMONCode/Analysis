@@ -21,9 +21,9 @@ def alert_to_voevent(alert):
 
     v = VOEvent.VOEvent(version="2.0")
     if (alert[0].trigger==2):
-        v.set_ivorn("ivo://amon/icecube_coinc#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+        v.set_ivorn("ivo://amon/icecube_coinc#%s" % str(stream)+'_'+str(amon_id)+'_' + str(rev))
     else:
-        v.set_ivorn("ivo://amon/multi_mesg#%s" % str(stream)+'_'+str(id)+'_' + str(rev))
+        v.set_ivorn("ivo://amon/multi_mesg#%s" % str(stream)+'_'+str(amon_id)+'_' + str(rev))
 
     v.set_role("%s" % alert[0].type)
     if (alert[0].trigger==2):
