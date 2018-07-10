@@ -441,7 +441,7 @@ def ic_hawc(new_event=None):
             pvalChi2 = stats.chi2.sf(chi2,ddof)
             newchi2 = -np.log10(pvalChi2)
             new_alert.pvalue = pChi2(newchi2)
-            new_alert.false_pos = np.power(10,-0.67755675*chi2 + 5.50359854)#np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
+            new_alert.false_pos = np.power(10,-0.67755675*newchi2 + 5.50359854)#np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
             new_alert.datetime = datetime(alertTime[0].year,alertTime[0].month,alertTime[0].day,hours,minutes,seconds) #datetime.now() #do an average of the IC neutrinos?
             new_alert.observing = config.stream
 
