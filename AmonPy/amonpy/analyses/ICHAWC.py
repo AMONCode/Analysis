@@ -1,6 +1,6 @@
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
-from amonpy.dbase.alert_to_voevent import alert_to_voevent
+from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams
 from amonpy.tools.IC_PSF import *
@@ -447,9 +447,16 @@ def ic_hawc(new_event=None):
             fname='amon_ic-hawc_%s_%s_%s.xml'%(new_alert.stream, new_alert.id, new_alert.rev)
             filen=os.path.join(AlertDir,fname)
             f1=open(filen, 'w+')
-            xmlForm=alert_to_voevent([new_alert])
+
+            #Create Alert xml file
+            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu multimessenger coincidence')
+            someparams = VOAlert.MakeDefaultParams([new_alert])
+            VOAlert.WhatVOEvent(someparams)
+            VOAlert.MakeWhereWhen([new_alert])
+            xmlForm=VOAlert.writeXML()#alert_to_voevent([new_alert])
             f1.write(xmlForm)
             f1.close()
+
             content = 'Times: '
             print content
             print 'Time of Alert: ',new_alert.datetime
