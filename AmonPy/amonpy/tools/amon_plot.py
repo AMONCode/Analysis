@@ -1,5 +1,5 @@
 #amon_plot.py
-"""@package amon_plot 
+"""@package amon_plot
     This code is a collection of plotting modules
     designed for analyzing AMON data
     Imput key plot number and stream number (default 1, 0)
@@ -7,26 +7,25 @@
     key=2 : plot a skypmap for the events in a given stream
     other keys: not supported yet
     stream=0 : IceCube
-    stream=1 : ANTARES 
+    stream=1 : ANTARES
     stream=3 : Auger
     stream=7 : HAWC
-   
+
     Insert your parameters in the code instead of these:
-    
+
     HostFancyName='db.hpc.rcc.psu.edu'
     UserFancyName='username'
-    PasswordFancy='password' 
+    PasswordFancy='password'
     DBFancyName  ='AMON_test2'
-    
+
 """
 
 import sys
-sys.path.append('../dbase')
-import db_read
+from amonpy.dbase import db_read
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
 from time import time
-from numpy import *
+import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 
@@ -50,7 +49,7 @@ TimeStop  = str(stop)
 # set up the database connection, enter your username and password
 HostFancyName='db.hpc.rcc.psu.edu'
 UserFancyName='username'
-PasswordFancy='password' 
+PasswordFancy='password'
 DBFancyName  ='AMON_test2'
 
 # read events from the database
@@ -59,7 +58,7 @@ events=db_read.read_event_timeslice(TimeStart,TimeSlice,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 t2 = time()
 print
-print len(events), 'events have been read from the database' 
+print len(events), 'events have been read from the database'
 print 'read time (s): ', t2-t1
 print
 
@@ -78,10 +77,10 @@ if (key & 2**kk):
     for event in events:
         if (event.stream==EventStream):
             eventSelect+=[event]
-    NeventsStream=len(eventSelect)       
+    NeventsStream=len(eventSelect)
     deltaT=[timedelta.total_seconds(eventSelect[ii+1].datetime \
-            -eventSelect[ii].datetime) for ii in xrange(NeventsStream-1)]        
-            
+            -eventSelect[ii].datetime) for ii in xrange(NeventsStream-1)]
+
     print 'Number of events selected:', NeventsStream
     bins = [ii for ii in xrange(1001)]
     plt.hist(deltaT,bins=bins)
@@ -96,16 +95,16 @@ if (key & 2**kk):
     plt.show() # for some reason I needed to do this twice on isis
     junk= raw_input('hit any key to continue')
     print ''
-    
+
 
 kk=1
 if (key & 2**kk):
     print 'Creating plot type: ', kk
     list_RA=[]
     list_Dec=[]
-                                  
+
     for event in events:
-        x=str(event.datetime) 
+        x=str(event.datetime)
         pos=x.index(".")
         x=x[0:pos]
         t=datetime.strptime(x, "%Y-%m-%d %H:%M:%S")
@@ -123,19 +122,19 @@ if (key & 2**kk):
    #m.fillcontinents(color='#cc9966',lake_color='#99ffff')
     m.scatter(x,y,3,marker='o',color='k')
     plt.title('Locations of events for stream')
-        
+
     plt.show()
     # add code here
 
     junk= raw_input('hit any key to continue')
-    print ''    
+    print ''
 
 kk=2
 if (key & 2**kk):
     print 'Creating plot type: ', kk
 
     # add code here
-    
+
     junk= raw_input('hit any key to continue')
     print ''
 
@@ -144,7 +143,7 @@ if (key & 2**kk):
     print 'Creating plot type: ', kk
 
     # add code here
-    
+
     junk= raw_input('hit any key to continue')
     print ''
 
@@ -154,9 +153,6 @@ if (key & 2**kk):
     print 'Creating plot type: ', kk
 
     # add code here
-    
+
     junk= raw_input('hit any key to continue')
     print ''
-
-
-    
