@@ -18,6 +18,7 @@ class Alert2VOEvent(object):
         rev = alert[0].rev
         self.voevent = VOEvent.VOEvent(version="2.0")
         self.voevent.set_ivorn("ivo://amon/%s#%s_%s_%s"%(str(ivorn),str(stream),str(amon_id),str(rev)))
+        self.voevent.set_role("%s" % alert[0].type)
         self.voevent.set_Description(str(description))
         a = Author()
         a.add_contactName(name)
@@ -27,7 +28,7 @@ class Alert2VOEvent(object):
         w=Who()
         w.set_Date(d1)
         w.set_Author(a)
-        self.voevent.Who(w)
+        self.voevent.set_Who(w)
 
     def WhatVOEvent(self,voeventparams):
         #CREATE FIRST HE DEFAULT AND EXTRA PARAMETERS
