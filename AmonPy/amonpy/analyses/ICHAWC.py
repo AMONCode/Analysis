@@ -5,12 +5,15 @@ import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams
 from amonpy.tools.IC_PSF import *
 from amonpy.tools.IC_FPRD import *
+from amonpy.tools.angularsep import spcang
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
 
+
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
+
 
 import numpy as np
 import pandas as pd
@@ -187,14 +190,6 @@ def pChi2(chi2):
         return 1.-f2(xo[-1])
     else:
         return 1.-f2(chi2)
-
-#Angular separation of two angles in the sphere
-def spcang(ra1,ra2,dec1,dec2):
-    dec1 = np.deg2rad(dec1)
-    dec2 = np.deg2rad(dec2)
-    DeltaRA = np.deg2rad(ra1-ra2)
-    sep = np.arccos(np.cos(dec1)*np.cos(dec2)*np.cos(DeltaRA) + np.sin(dec1)*np.sin(dec2))
-    return np.rad2deg(sep)
 
 # Define an initial space log-likelihood for each event (dec and ra are coordinates of the source position)
 #def loglh(dec1,ra1,dec,ra,sigma1,bkgterm):
