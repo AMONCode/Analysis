@@ -135,7 +135,7 @@ class Alert2VOEvent(object):
         observation.set_AstroCoordSystem(astro4)
         observation.set_AstroCoords(astro5)
         obs.set_ObservationLocation(observation)
-        wwd.set_ObsDataLocation(obs)
+        ww.set_ObsDataLocation(obs)
         self.voevent.set_WhereWhen(ww)
 
     def writeXML(self):
