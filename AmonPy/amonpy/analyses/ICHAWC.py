@@ -3,8 +3,8 @@ from amonpy.dbase import db_read, db_write
 from amonpy.dbase.alert_to_voevent import alert_to_voevent
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams
-from amonpy.analyses.IC_PSF import *
-from amonpy.analyses.IC_FPRD import *
+from amonpy.tools.IC_PSF import *
+from amonpy.tools.IC_FPRD import *
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
