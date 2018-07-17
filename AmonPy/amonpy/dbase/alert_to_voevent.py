@@ -31,7 +31,7 @@ class Alert2VOEvent(object):
         self.voevent.set_Who(w)
 
     def WhatVOEvent(self,voeventparams):
-        #CREATE FIRST HE DEFAULT AND EXTRA PARAMETERS
+        #CREATE FIRST THE DEFAULT AND EXTRA PARAMETERS
         w = What()
         if len(voeventparams)==0:
             print "need list of Parameters for voevent"
@@ -106,8 +106,8 @@ class Alert2VOEvent(object):
                'latitude':        alert[0].dec,
                'positionalError': alert[0].sigmaR,
         }
-
-        if ww: v.set_WhereWhen(ww)  #What does this do?
+        ww = makeWhereWhen(wwd)
+        if ww: self.voevent.set_WhereWhen(wwd)  #What does this do?
 
         obs=ObsDataLocation()
         obsloc=ObservatoryLocation()
@@ -135,7 +135,7 @@ class Alert2VOEvent(object):
         observation.set_AstroCoordSystem(astro4)
         observation.set_AstroCoords(astro5)
         obs.set_ObservationLocation(observation)
-        ww.set_ObsDataLocation(obs)
+        wwd.set_ObsDataLocation(obs)
         self.voevent.set_WhereWhen(ww)
 
     def writeXML(self):
