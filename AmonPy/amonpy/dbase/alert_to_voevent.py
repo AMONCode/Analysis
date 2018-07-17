@@ -32,6 +32,7 @@ class Alert2VOEvent(object):
         self.voevent.Who(w)
 
     def WhatVOEvent(self,voeventparams):
+        #CREATE FIRST HE DEFAULT AND EXTRA PARAMETERS
         w = What()
         if len(voeventparams)==0:
             print "need list of Parameters for voevent"
@@ -40,7 +41,10 @@ class Alert2VOEvent(object):
             w.add_Param(i)
         self.voevent.set_What(w)
 
-    def MakeDefaultParams(self,params):
+    def MakeDefaultParams(self,alert):
+        stream = alert[0].stream
+        amon_id = alert[0].id
+        rev = alert[0].rev
         paramlist = []
         # params related to the event. None are in Groups.
         p = Param(name="stream", ucd="meta.number", dataType="int", value=str(stream))
@@ -93,6 +97,57 @@ class Alert2VOEvent(object):
         p=Param(name=str(name), ucd=str(unit), dataType=str(datatype), value=str(value))
         p.set_Description([str(description)])
         return p
+
+    def MakeWhereWhen(self,alert):
+        wwd = {'observatory':     'AMON',
+               'coord_system':    'UTC-GEOD-TOPO',
+               'time':            alert[0].datetime,
+               'timeError':       0.000001,
+               'longitude':       alert[0].RA,
+               'latitude':        alert[0].dec,
+               'positionalError': alert[0].sigmaR,
+        }
+
+        if ww: v.set_WhereWhen(ww)  #What does this do?
+
+        obs=ObsDataLocation()
+        obsloc=ObservatoryLocation()
+        astro2=AstroCoordSystem("UTC-GEOD-TOPO")
+        astro3=AstroCoords("UTC-GEOD-TOPO")
+        obsloc.set_AstroCoordSystem(astro2)
+        obsloc.set_AstroCoords(astro3)
+        obs.set_ObservatoryLocation(obsloc)
+        observation=ObservationLocation()
+        astro4=AstroCoordSystem("UTC-ICRS-TOPO")
+        astro5=AstroCoords("UTC-ICRS-TOPO")
+        time2=alert[0].datetime
+        value2=Value2(alert[0].RA,alert[0].dec)
+        pos2=Position2D("deg-deg", "RA","Dec",value2, alert[0].sigmaR)
+        astro5.set_Position2D(pos2)
+
+        time_1=Time("s")
+        time2=str(alert[0].datetime)
+        time2_2=time2[0:10]+"T"+time2[11:]
+
+        time3=TimeInstant(time2_2)
+        time_1.set_TimeInstant(time3)
+        astro5.set_Time(time_1)
+
+        observation.set_AstroCoordSystem(astro4)
+        observation.set_AstroCoords(astro5)
+        obs.set_ObservationLocation(observation)
+        ww.set_ObsDataLocation(obs)
+        self.voevent.set_WhereWhen(ww)
+
+    def writeXML(self):
+        if self.voevent is not None:
+            xml = stringVOEvent(self.voevent,
+                                schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
+            return xml
+        else:
+            print "xml not written. Need to fill the information first"
+
+
 
 def alert_to_voevent(alert):
     stream=alert[0].stream
@@ -189,7 +244,7 @@ def alert_to_voevent(alert):
     ww = makeWhereWhen(wwd)
     if ww: v.set_WhereWhen(ww)
 
-    if ww: v.set_WhereWhen(ww)
+    #if ww: v.set_WhereWhen(ww)
     #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
    # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
     obs=ObsDataLocation()
