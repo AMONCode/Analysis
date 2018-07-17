@@ -31,14 +31,63 @@ class Alert2VOEvent(object):
         w.set_Author(a)
         self.voevent.Who(w)
 
-    def WhatVOEvent(self,params):
+    def WhatVOEvent(self,voeventparams):
         w = What()
-        if len(params)==0:
+        if len(voeventparams)==0:
             print "need list of Parameters for voevent"
             return 0
-        for i in params:
+        for i in voeventparams:
             w.add_Param(i)
         self.voevent.set_What(w)
+
+    def MakeDefaultParams(self,params):
+        paramlist = []
+        # params related to the event. None are in Groups.
+        p = Param(name="stream", ucd="meta.number", dataType="int", value=str(stream))
+        p.set_Description(["Analysis stream identification"])
+        paramlist.append(p)
+
+        p = Param(name="amon_id", ucd="meta.number", dataType="int", value=str(amon_id))
+        p.set_Description(["Alert identification"])
+        paramlist.append(p)
+
+        p = Param(name="rev", ucd="meta.number", dataType="int", value=str(rev))
+        p.set_Description(["Alert revision"])
+        paramlist.append(p)
+
+        p = Param(name="nevents", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].nevents))
+        p.set_Description(["Number of events in the alert"])
+        paramlist.append(p)
+
+        p = Param(name="deltaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].deltaT))
+        p.set_Description(["Time window of the burst"])
+        paramlist.append(p)
+
+        p = Param(name="sigmaT", ucd="time.timeduration", unit="s", dataType="float",  value=str(alert[0].sigmaT))
+        p.set_Description(["Uncertainty of the time window"])
+        paramlist.append(p)
+
+        p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
+        p.set_Description(["False positive rate"])
+        paramlist.append(p)
+
+        p = Param(name="observing", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].observing))
+        p.set_Description(["Observatories observing given part og the sky"])
+        paramlist.append(p)
+
+        p = Param(name="trigger", ucd="meta.number", unit=" ", dataType="int",  value=str(alert[0].trigger))
+        p.set_Description(["Observatories triggering"])
+        paramlist.append(p)
+
+        p = Param(name="pvalue", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].pvalue))
+        p.set_Description(["Pvalue for the alert"])
+        paramlist.append(p)
+
+        p = Param(name="skymap", ucd="meta.code.multip", unit=" ", dataType="string",  value=str(alert[0].skymap))
+        p.set_Description(["Skymap or no skymap assotiated with the alert"])
+        paramlist.append(p)
+
+        return paramlist
 
     def MakeParam(self,name,unit,datatype,value,description):
         p=Param(name=str(name), ucd=str(unit), dataType=str(datatype), value=str(value))
