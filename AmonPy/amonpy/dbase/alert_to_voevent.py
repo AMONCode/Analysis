@@ -11,6 +11,40 @@ from amonpy.dbase.db_classes import *
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
+class Alert2VOEvent(object):
+    def __init__(self,alert,ivorn,description):
+        stream = alert[0].stream
+        amon_id = alert[0].id
+        rev = alert[0].rev
+        self.voevent = VOEvent.VOEvent(version="2.0")
+        self.voevent.set_ivorn("ivo://amon/%s#%s_%s_%s"%(str(ivorn),str(stream),str(amon_id),str(rev)))
+        self.voevent.set_Description(str(description))
+
+    def WhoVOEvent(self,name,email):
+        a = Author()
+        a.add_contactName(name)
+        a.add_contactEmail(email)
+        datenow=str(datetime.now())
+        d1 = datenow[0:10]+"T"+datenow[11:]
+        w=Who()
+        w.set_Date(d1)
+        w.set_Author(a)
+        self.voevent.Who(w)
+
+    def WhatVOEvent(self,params):
+        w = What()
+        if len(params)==0:
+            print "need list of Parameters for voevent"
+            return 0
+        for i in params:
+            w.add_Param(i)
+        self.voevent.set_What(w)
+
+    def MakeParam(self,name,unit,datatype,value,description):
+        p=Param(name=str(name), ucd=str(unit), dataType=str(datatype), value=str(value))
+        p.set_Description([str(description)])
+        return p
+
 def alert_to_voevent(alert):
     stream=alert[0].stream
     amon_id = alert[0].id

@@ -3,7 +3,7 @@
 """@package calc_fov
     This is a top level script to run basic
     simulations for triggering observatories.
-    
+
     It also injects a doublet of events that will form a triplet
     with a randomly chosen simulated event i.e. fake signal triplet
 
@@ -17,23 +17,15 @@
     0, 1, 3 and 7 (IceCube, ANTARES, Auger and HAWC)
 """
 import sys
-sys.path.append("../sim")
-#sys.path.append("../tools")
-sys.path.append("../dbase")
 
-#from basic_sim import * 
 from time import time
-from db_classes import *
+from amonpy.dbase.db_classes import *
+from amonpy.dbase import db_write, db_delete, db_read
+from amonpy.sim import basic_sim, basic_sim_fov
 import random
-import db_write
-import basic_sim_fov
-#import inject_signal
-import db_delete
-import db_read
-#from dbase import db_read
-#from db_read import *
+
 import wx
-import dialog_choice
+from amonpy.tools import dialog_choice
 import ast
 
 # Get the database access information
@@ -87,18 +79,18 @@ streams_alert=[1]
 
 
 if result_dialog==choices[0]:
-    print 'Simulations will not be written to DB' 
+    print 'Simulations will not be written to DB'
     results=basic_sim_fov.signal_inject(conf,revisions)
-elif result_dialog==choices[1]: 
+elif result_dialog==choices[1]:
     print 'Overwriting event streams in the DB'
-    results=basic_sim_fov.signal_inject(conf, revisions) 
+    results=basic_sim_fov.signal_inject(conf, revisions)
     for i in xrange(len(streams)):
         print '...stream number %d' % streams[i]
         k=streams[i]
         db_delete.delete_alertline_stream_by_event(streams[i],HostFancyName,
-                            UserFancyName,PasswordFancy,DBFancyName)  
+                            UserFancyName,PasswordFancy,DBFancyName)
         #db_delete.delete_alert_stream(streams[i],HostFancyName,
-         #                   UserFancyName,PasswordFancy,DBFancyName)    
+         #                   UserFancyName,PasswordFancy,DBFancyName)
         db_delete.delete_event_stream(streams[i],HostFancyName,
                             UserFancyName,PasswordFancy,DBFancyName)
 
@@ -106,11 +98,11 @@ elif result_dialog==choices[1]:
         print '...stream number %d' % streams_alert[j]
         db_delete.delete_alert_stream(streams_alert[j],HostFancyName,
                             UserFancyName,PasswordFancy,DBFancyName)
-        
+
     db_write.write_event(1,HostFancyName,UserFancyName,
-                            PasswordFancy,DBFancyName, results)    
-elif result_dialog==choices[2]: 
-    print 'Simulations will be appended to DB'  
+                            PasswordFancy,DBFancyName, results)
+elif result_dialog==choices[2]:
+    print 'Simulations will be appended to DB'
     print
     print 'Check if the database is for MC'
     if not (DBFancyName=='AMON_test2'):
@@ -118,16 +110,16 @@ elif result_dialog==choices[2]:
         sys.exit(0)
     else:
         for ii in xrange(num_streams):
-            revisions[ii]=db_read.rev_count(streams[ii],HostFancyName, UserFancyName,PasswordFancy,DBFancyName) 
+            revisions[ii]=db_read.rev_count(streams[ii],HostFancyName, UserFancyName,PasswordFancy,DBFancyName)
         #print rev_count(streams[0],HostFancyName, UserFancyName,
-                                                  #PasswordFancy,DBFancyName)  
+                                                  #PasswordFancy,DBFancyName)
             print "Max revision for stream %s is %s" % (streams[ii], revisions[ii])
             revisions[ii]+=1
             print "New revision for stream %s is %s" % (streams[ii], revisions[ii])
-        results=basic_sim_fov.signal_inject(conf,revisions) 
+        results=basic_sim_fov.signal_inject(conf,revisions)
         db_write.write_event(1,HostFancyName,UserFancyName,
-                            PasswordFancy,DBFancyName, results)   
-        #sys.exit(0)                      
+                            PasswordFancy,DBFancyName, results)
+        #sys.exit(0)
     #print 'This option is not supported yet, terminating.'
     #sys.exit(0)
     # need to:
@@ -137,4 +129,3 @@ elif result_dialog==choices[2]:
 else:
     print 'Terminating'
     sys.exit(0)
-
