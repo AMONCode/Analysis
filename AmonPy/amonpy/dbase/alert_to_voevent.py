@@ -12,15 +12,13 @@ from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
 class Alert2VOEvent(object):
-    def __init__(self,alert,ivorn,description):
+    def __init__(self,alert,ivorn,description,name="Hugo Ayala",email="hgayala@psu.edu"):
         stream = alert[0].stream
         amon_id = alert[0].id
         rev = alert[0].rev
         self.voevent = VOEvent.VOEvent(version="2.0")
         self.voevent.set_ivorn("ivo://amon/%s#%s_%s_%s"%(str(ivorn),str(stream),str(amon_id),str(rev)))
         self.voevent.set_Description(str(description))
-
-    def WhoVOEvent(self,name,email):
         a = Author()
         a.add_contactName(name)
         a.add_contactEmail(email)
