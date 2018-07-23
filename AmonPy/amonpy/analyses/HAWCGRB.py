@@ -1,6 +1,6 @@
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
-from amonpy.dbase.alert_to_voevent import alert_to_voevent
+from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams
 
@@ -104,8 +104,18 @@ def hawc_burst(new_event=None):
         new_alert.pvalue = events.pvalue
         new_alert.false_pos = false_pos
         new_alert.observing = config.stream
-        xmlForm=alert_to_voevent([new_alert])
+        if (prodMachine == True):
+            new_alert.type = 'observation'
+        else:
+            new_alert.type = 'test'
+
+        #xmlForm=alert_to_voevent([new_alert])
         fname= 'amon_hawc_burst_%s_%s_%s.xml'%(events.stream, events.id, events.rev)
+        VOAlert = Alert2VOEvent([new_alert],'hawc_burstlike','Alert from HAWC Burst Monitoring')
+        alertparams = VOAlert.MakeDefaultParams([new_alert])
+        VOAlert.WhatVOEvent(alertparams)
+        VOAlert.MakeWhereWhen([new_alert])
+        xmlForm = VOAlert.writeXML()
         f1=open(os.path.join(AlertDir,fname), 'w+')
         f1.write(xmlForm)
         f1.close()
