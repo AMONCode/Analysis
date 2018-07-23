@@ -440,7 +440,7 @@ def ic_hawc(new_event=None):
             new_alert.datetime = datetime(alertTime[0].year,alertTime[0].month,alertTime[0].day,hours,minutes,seconds) #datetime.now() #do an average of the IC neutrinos?
             new_alert.observing = config.stream
 
-            if (prodMachine=True):
+            if (prodMachine==True):
                 new_alert.type='observation'
             else:
                 new_alert.type = 'test'
