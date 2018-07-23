@@ -2,5 +2,5 @@ Analysis
 ========
 
 AMON analysis code: AmonPy
-version: 1.5
+version: 1.6
 
