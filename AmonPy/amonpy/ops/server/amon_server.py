@@ -47,6 +47,7 @@ from amonpy.analyses.HAWCGRB import *
 
 @app.task
 def error_handler(uuid):
+    """Function to handle possible errors with celery workers"""
     myresult = AsyncResult(uuid)
     exc = myresult.get(propagate=False)
     print('Task {0} raised exception: {1!r}\n{2!r}'.format(
@@ -54,6 +55,9 @@ def error_handler(uuid):
 
 
 class EventManager(Resource):
+    """
+    Class to handle upcoming events from twisted server application
+    """
     isLeaf = True
 
     print 'Configuring AMON Databases'
@@ -103,6 +107,7 @@ class EventManager(Resource):
         latest.append(datetime(1900,1,1,0,0,0,0))
 
     def render_POST(self,request):
+            """ Main function where events are written to DB, then send to celery workers. """
             path = AMON_CONFIG.get('dirs','serverdir')
             #path = "/Users/hugo/AMON/Test_new_server/"
             #path = "/storage/home/hza53/work/AMON/Test_server/"

@@ -39,7 +39,8 @@ DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('databas
 
 # Alert configuration
 def ic_hawc_config():
-    """ Returns an ICHAWC AlertConfig object
+    """
+    Returns an ICHAWC AlertConfig object
     """
     stream = alert_streams['IC-HAWC']
     rev = 0
@@ -67,11 +68,13 @@ def ic_hawc_config():
 hwcBkgfile = os.path.join(AmonPyDir,'analyses/hawc_bkg_intp.npy')
 hwcBkg = np.load(hwcBkgfile).item()
 def probBkgHAWC(dec):
+    """Spatial Bkg PDF for a HAWC hotspot. Based on data """
     if dec<-25.: return 0.00619
     if dec>64: return 0.00619
     return hwcBkg(dec)*180./(np.pi*2*np.pi)
 
 def probSigHAWC(spc,sigma):
+    """Spatial Signal PDF for a HAWC hotspot. Assumes a gaussian function over the sphere. """
     psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(2*np.pi*(np.deg2rad(sigma)**2))
     return psf
 
@@ -81,6 +84,7 @@ def probSigHAWC(spc,sigma):
 icfprdFile = np.load(os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
 icbkg_interp = icfprdFile['B_spat_interp'].item()
 def probBkgIC(cosTh):
+    """Spatial Bkg PDF for a IceCube neutrino. Based on simulation"""
     b = icbkg_interp(cosTh)/4.8434e-5 #constant is normalization factor
     b = b*(np.pi/(180.*360.))
     return b
@@ -97,6 +101,7 @@ def probBkgIC(cosTh):
 #     return y*np.pi/(180.*360.)# units of deg^2, SigPSF is given in deg^2 #/(2*np.pi)
 
 def probSigIC(sigR,muR,lamR):
+    """Spatial Signal PDF for a IceCube neutrino. Based on simulation"""
     if lamR==-1:
         psf = log_norm_func2(sigR,muR)
     else:
@@ -104,11 +109,17 @@ def probSigIC(sigR,muR,lamR):
     return psf #in deg^2
 
 def probSigIC2(spc,sigma):
+    """Spatial Signal PDF for a IceCube neutrino. Assumes gaussian function over the sphere"""
     psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(2*np.pi*sigma**2)
     return psf #in deg^2
 
 # Probability of more than 2 neutrino given that we see one neutrino
 def pNuCluster(events):
+    """
+    Function to calculate the probabiliyt of observing 2 or more neutrinos
+    after one is already observed. Returns 1 if there's only one neutrino in
+    the list.
+    """
     val=1
     N=len(events)-1
     if N==1:
@@ -155,6 +166,7 @@ Rdn = np.load(filename).item()
 
 fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
 def pHEN(cosTh,fprd):
+    """Function to get the pvalue of an IceCube event"""
     pval=fprd_obj.get_pval(cosTh,fprd=fprd)
     if pval>1.0:
         return 1.0
@@ -162,6 +174,7 @@ def pHEN(cosTh,fprd):
         return pval
 
 def totalpHEN(events):
+    """Function that combines the p-values of all IceCube events."""
     val=1
     N=len(events)
     if N==2:
@@ -235,6 +248,7 @@ def tloglh_time(dec,ra,events):
 
 
 def maximizeLLH(all_events):
+
     coincs=[]
     for ev in all_events:
         try:
@@ -269,6 +283,10 @@ def maximizeLLH(all_events):
     return coincs
 
 def coincAnalysisHWC(new_event):
+    """
+    This function receives a HAWC event and looks for any IceCube events according to the Spatial
+    and Time constraints.
+    """
 
     new_param = db_read.read_parameters(new_event.stream,new_event.id,new_event.rev,HostFancyName,
                                         UserFancyName,PasswordFancy,DBFancyName)
@@ -381,7 +399,10 @@ def coincAnalysisIC(new_event):
 
 @app.task(ignore_result=True)
 def ic_hawc(new_event=None):
-
+    """
+    This is the celery task, which receives a new event from the server and prepares the event to
+    be analyzed.
+    """
     max_id = db_read.alert_max_id(alert_streams['IC-HAWC'],HostFancyName,
                                        UserFancyName,
                                        PasswordFancy,

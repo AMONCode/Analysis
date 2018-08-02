@@ -1,4 +1,5 @@
-# Streams for AMON
+# ID numbers for the different datasets
+# Notice that some observatories have different streams
 
 streams = {
             "IC-Singlet" : 0,
@@ -25,6 +26,9 @@ streams = {
 
 inv_streams = dict(map(reversed,streams.items()))
 
+# Number for the alert streams for the different
+# correlation analyses
+
 alert_streams = {
             "IC-HAWC":1,
             "IC-Swift":2,
@@ -37,3 +41,17 @@ alert_streams = {
 }
 
 inv_alert_streams = dict(map(reversed,alert_streams.items()))
+
+# ID number for the streams used in GCN/TAN
+gcn_streams = {
+            "IC-HAWC":1,
+            "IC-Swift":2,
+            "IC-HESE-EHE":3,
+            "IC-Fermi":4,
+            "OFU-Alerts":5,
+            "GFU-Alerts":6,
+            "HWC-GRBlike-Alerts":7,
+            "Antares-Fermi":8,
+}
+
+inv_gcn_streams = dict(map(reversed,gcn_streams.items()))
