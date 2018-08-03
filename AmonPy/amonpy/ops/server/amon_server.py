@@ -25,7 +25,7 @@ from amonpy.dbase.db_classes import Event
 from amonpy.dbase import db_write, db_read, db_delete
 from amonpy.dbase import voevent_to_event
 
-from amonpy.analyses.amon_streams import streams
+from amonpy.analyses.amon_streams import streams, inv_streams,alert_streams,inv_alert_streams
 
 #from amonpy.anal import analysis
 #from amonpy.anal import alert_revision
@@ -107,7 +107,7 @@ class EventManager(Resource):
         latest.append(datetime(1900,1,1,0,0,0,0))
 
     def render_POST(self,request):
-            """ Main function where events are written to DB, then send to celery workers. """
+            """ Main function where events are written to DB, then send to celery workers."""
             path = AMON_CONFIG.get('dirs','serverdir')
             #path = "/Users/hugo/AMON/Test_new_server/"
             #path = "/storage/home/hza53/work/AMON/Test_server/"
@@ -174,6 +174,7 @@ class EventManager(Resource):
 
                 #print len(EventManager.eventBuffers)
                 #print EventManager.analyses
+                print 'Event stream: ',inv_streams[evt[0].stream]
                 for i in xrange(len(EventManager.eventBuffers)):
                     if evt[0].stream in EventManager.eventBuffers[i].event_streams:
 
@@ -181,9 +182,10 @@ class EventManager(Resource):
                         try:
                             evt[0].datetime = evt[0].datetime.strftime("%Y-%m-%dT%H:%M:%S.%f")
                         except AttributeError:
+                            print 'Something bad happened'
                             pass
-                        print 'Send celery task'
 
+                        print 'Send to celery task'
                         globals()[EventManager.analyses[i][-1]].apply_async((jsonpickle.encode(evt[0]),),
                         link_error=error_handler.s(),
                         queue=EventManager.analyses[i][-1])
