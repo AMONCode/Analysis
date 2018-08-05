@@ -66,6 +66,8 @@ def ic_hawc_config():
 ### Functions for the coincidence analysis
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'analyses/hawc_bkg_intp.npy')
+#hwcBkgfile = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/hawc/hawc_bkg_intp.npy')
+
 hwcBkg = np.load(hwcBkgfile).item()
 def probBkgHAWC(dec):
     """Spatial Bkg PDF for a HAWC hotspot. Based on data """
@@ -131,8 +133,8 @@ def pNuCluster(events):
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_LLH_200yr.npz')
-cdfLLH =  np.load(filename) #How to store it in amonpy?
-#cdfLLH =  np.load('/storage/home/hza53/Software/Analysis/AmonPy/amonpy/analyses/CDF_LLH_100yr.npz')
+#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/hawc/CDF_LLH.npz')
+cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
 for item in cdfLLH.iteritems():
     CDF.append(item[1])
@@ -151,20 +153,14 @@ def pSpace(llh):
 
 # Calculation of the p_value of IC.
 filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
+#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
 Rup = np.load(filename).item()
 filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
+#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_down_intp_bwp01.npy')
 Rdn = np.load(filename).item()
-# def pHEN(sinDec,fprd):
-#     costh=-1*sinDec #IC's zenith is close to -90deg declination
-#     if costh>0.13917: #82 zenith
-#         R = np.power(10,Rdn(costh,0.0))
-#     elif costh<=0.13917:
-#         R = np.power(10,Rup(costh,2.0))
-#     if fprd==0: return 1.0
-#     if fprd/R > 1.0: return 1.0
-#     else: return fprd/R
 
 fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
+#fprd_obj=FPRD(fname=os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/FPRD_info.npz'))
 def pHEN(cosTh,fprd):
     """Function to get the pvalue of an IceCube event"""
     pval=fprd_obj.get_pval(cosTh,fprd=fprd)
@@ -186,6 +182,7 @@ def totalpHEN(events):
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_newChi2_200.npz')
+#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_down_intp_bwp01.npy')
 cdfChi2 = np.load(filename)
 
 CDF = [] #dummy variable
