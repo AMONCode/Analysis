@@ -12,9 +12,9 @@ from amonpy.tools.fermifunctions import geterr
 from amonpy.tools.config import AMON_CONFIG as configs
 
 
-user=configs.get('databases','username')
-host=configs.get('databases','host_name')
-password=configs.get('databases','password')
+user=configs.get('database','username')
+host=configs.get('database','host_name')
+password=configs.get('database','password')
 dbname=configs.get('databases','realtime_dbname')
 
 dpath=configs.get('dirs','fermidata')
