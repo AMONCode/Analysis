@@ -10,10 +10,10 @@ import MySQLdb as mdb
 from amonpy.tools.fermifunctions import distsph,spang,berring,getgridtrack,getlam,lam2prob,tsep,numul
 from amonpy.tools.config import AMON_CONFIG as configs
 
-user=configs.get('databases','username')
-host=configs.get('databases','host_name')
-password=configs.get('databases','password')
-dbname=configs.get('databases','realtime_dbname')
+user=configs.get('database','username')
+host=configs.get('database','host_name')
+password=configs.get('database','password')
+dbname=configs.get('database','realtime_dbname')
 
 dpath=configs.get('dirs','fermidata')
 
