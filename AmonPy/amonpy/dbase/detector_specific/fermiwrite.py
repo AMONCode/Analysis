@@ -213,10 +213,10 @@ if cflag==False: #if no new files were downloaded, script should exit here
     
 #now we open the fermi data and filter it by energy, zenith, time, etc
 
-raw=pf.open(ph0)
+raw=pf.open(dpath+ph0)
 data0=raw[1].data
 raw.close()
-raw=pf.open(ph1)
+raw=pf.open(dpath+ph1)
 data1=raw[1].data
 
 data=np.concatenate((data0,data1))
