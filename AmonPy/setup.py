@@ -53,9 +53,9 @@ class AMONInstall(install):
                               answer = raw_input("%s : %s = [%s]" % (section, k, v)).strip()
                               if answer != "":
                                     cp.set(section, k, answer)
-                with open("amonpy/amon.ini", "w") as f:
-                    cp.write(f)
-                install.run(self)
+                  with open("amonpy/amon.ini", "w") as f:
+                        cp.write(f)
+                  install.run(self)
 
             if raw_input("Do you wish to setup the database? (Y/N): ").upper() == "Y":
                   print "root login for the mysql server..."
