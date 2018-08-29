@@ -38,6 +38,7 @@ class AMONInstall(install):
             cp.set("dirs", "alertdir", "/path/to/amon_alerts")
             cp.set("dirs", "amonpydir","/path/to/amonpy")
             cp.set("dirs", "serverdir","/path/to/server")
+            cp.set("dirs", "datadir","/path/to/amon/data")
             cp.set("machine", "prod", False)
             cp.set("mailing_list", "sub_cut_ehe_hese", "fixme@notreal.org")
             cp.set("mailing_list", "sub_ehe_hese", "fixme@notreal.org")
@@ -52,6 +53,10 @@ class AMONInstall(install):
                               answer = raw_input("%s : %s = [%s]" % (section, k, v)).strip()
                               if answer != "":
                                     cp.set(section, k, answer)
+                with open("amonpy/amon.ini", "w") as f:
+                    cp.write(f)
+                install.run(self)
+
             if raw_input("Do you wish to setup the database? (Y/N): ").upper() == "Y":
                   print "root login for the mysql server..."
                   u,h,p = cp.get("database", "username"), cp.get("database", "host_name"), cp.get("database", "password")
@@ -62,16 +67,13 @@ class AMONInstall(install):
                   subprocess.check_call(["mysql", "-u", "root", "-p", "-h", h, "-e", "use mysql; CREATE USER IF NOT EXISTS '%s'@'%s' IDENTIFIED BY '%s'; GRANT ALL PRIVILEGES ON `%s` . * TO '%s'@'%s'; GRANT ALL PRIVILEGES ON `%s` . * TO '%s'@'%s';" % (u,h,p,d1,u,h,d2,u,h) ])
             # these are tied to the code install
             #cp.set("dirs", "amonpydir", "fixme")
-            with open("amonpy/amon.ini", "w") as f:
-                  cp.write(f)
-            install.run(self)
 
 setup(name = "AmonPy",
       version = "1.4.0",
       description='AMON Analysis Code',
       long_description=long_description,
-      author='Miles Smith, Gordana Tesic',
-      author_email='mus44@psu.edu, gut10@psu.edu',
+      author='Hugo Ayala, Jimmy DeLauney, Colin Turley',
+      author_email='hgayala@psu.edu, jjd330@psu.edu, cft114@psu.edu',
 
       license='FIXME',
       cmdclass = {'install': AMONInstall},
