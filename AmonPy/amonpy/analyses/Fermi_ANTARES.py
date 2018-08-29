@@ -7,7 +7,7 @@ from astropy.time import Time
 import os
 import MySQLdb as mdb
 #os.chdir('/storage/home/cft114/fermicron')
-from fermifunctions import distsph,spang,berring,getgridtrack,getlam,lam2prob,tsep,numul
+from amonpy.tools.fermifunctions import distsph,spang,berring,getgridtrack,getlam,lam2prob,tsep,numul
 from amonpy.tools.config import AMON_CONFIG as configs
 
 user=configs.get('databases','username')
