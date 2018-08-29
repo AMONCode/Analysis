@@ -102,7 +102,7 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
     
     #connect to db and put these into database
 
-    db=mdb.connect(user=user,host=host,passwd=password,db='AMON_test')
+    db=mdb.connect(user=user,host=host,passwd=password,db=dbname)
     c=db.cursor()
        
     c.executemany("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
