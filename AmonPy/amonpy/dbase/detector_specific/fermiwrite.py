@@ -238,10 +238,10 @@ con=data['CONVERSION_TYPE'].astype(int)
 err=np.degrees(geterr(energy,acos,con))
 
 #open satellite file to get satellite position information
-raw=pf.open('latsc0.fits')
+raw=pf.open(dpath+sc0)
 scdat0=raw[1].data
 raw.close()
-raw=pf.open('latsc1.fits')
+raw=pf.open(dpath+sc1)
 scdat1=raw[1].data
 raw.close()
 
