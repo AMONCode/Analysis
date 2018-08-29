@@ -122,7 +122,7 @@ def hawc_burst(new_event=None):
 
         if (prodMachine == True):
             try:
-                print "HAWC Burst created"
+                print "HAWC Burst Alert"
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + fname)
                 subprocess.check_call(cmd)
