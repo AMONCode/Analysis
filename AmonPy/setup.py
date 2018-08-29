@@ -38,7 +38,7 @@ class AMONInstall(install):
             cp.set("dirs", "alertdir", "/path/to/amon_alerts")
             cp.set("dirs", "amonpydir","/path/to/amonpy")
             cp.set("dirs", "serverdir","/path/to/server")
-            cp.set("dirs", "datadir","/path/to/amon/data")
+            #cp.set("dirs", "datadir","/path/to/amon/data")
             cp.set("machine", "prod", False)
             cp.set("mailing_list", "sub_cut_ehe_hese", "fixme@notreal.org")
             cp.set("mailing_list", "sub_ehe_hese", "fixme@notreal.org")
