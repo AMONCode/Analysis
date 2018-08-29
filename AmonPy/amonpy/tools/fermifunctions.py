@@ -8,7 +8,8 @@ from itertools import combinations
 
 from amonpy.tools.config import AMON_CONFIG as configs
 
-dpath=configs.get('dirs','fermidata') #path to location of some critical fermi files
+#dpath=configs.get('dirs','fermidata') #path to location of some critical fermi files
+dpath=configs.get('dirs','amonpydir')
 
 """
     Rebuild of the FermiPSF.py code originally by Michael Toomey <mwt5345@psu.edu>
@@ -17,7 +18,7 @@ dpath=configs.get('dirs','fermidata') #path to location of some critical fermi f
     Last Author: C. F. Turley <cft114@psu.edu.
     Group: The Astrophysical Multimessenger Observatory Network
     Last Modifed: 7 August, 2018
-    
+
     Aditional useful function also added for fermi-neutrino coincidence analyses
 """
 
@@ -201,9 +202,9 @@ def S_p(E,con):
     #    raise ValueError('Something went wrong. Conversion must be 0 [Front] or 1 [Back].')
     # Determine scale parameters
     first=c0[con]*(E/100.0)**(-B)
-    sec=(first**2+c1[con]**2)**(0.5) 
+    sec=(first**2+c1[con]**2)**(0.5)
     return sec
-    
+
 def xdef(theta,E,con):
     #theta must be in radians
     dv=theta
@@ -213,7 +214,7 @@ def xdef(theta,E,con):
 def king(x,sig,gam):
     pref=(1-1/gam)/(2*np.pi*(sig**2))
     body=(1+1/(2*gam)*(x/sig)**2)
-    
+
     return pref*body**(-gam)
 
 
@@ -236,29 +237,29 @@ def psf(e,theta,acos,con):
     st=stail[con,tb,eb]
     gc=gcore[con,tb,eb]
     gt=gtail[con,tb,eb]
-    nt=ntail[con,tb,eb]  
+    nt=ntail[con,tb,eb]
     # convert theta into the scaled deviation, x
     x=xdef(theta,e,con)
     # want psf in terms of probability per square degree, so need to convert sigmas from x to degrees
     sp=S_p(e,con)
-    
-    #core king function    
+
+    #core king function
     prefc=(1-1/gc)/(2*np.pi*(np.degrees(sc*sp)**2))
     bodyc=(1+1/(2*gc)*(x/sc)**2)**(-gc)
-    
+
     #tail king function
     preft=(1-1/gt)/(2*np.pi*(np.degrees(st*sp)**2))
     bodyt=(1+1/(2*gt)*(x/st)**2)**(-gt)
-    
+
     #normalization of the two
     fc=1/(1+nt*(st/sc)**2)
-    
+
     #combine
-    
+
     return fc*prefc*bodyc+(1-fc)*preft*bodyt
-    
-    
-    
+
+
+
     # Put these parameters into the twokings function
     #return twokings(x,sc,st,gc,gt,nt)
 
@@ -307,42 +308,42 @@ def onesig(eb,tb,con):
     x0=0
     x1=1
     mid=(x0+x1)*0.5
-    
+
     final=1-np.e**(-0.5)
-    
-      
+
+
     n=0
     while n<30:
         i0=xint(x0,eb,tb,con)
         i1=xint(x1,eb,tb,con)
-    
-    
+
+
         if i1<final:
 
             dif=x1-x0
             x0+=dif
             x1+=dif
             i0=xint(x0,eb,tb,con)
-            i1=xint(x1,eb,tb,con) 
-        
+            i1=xint(x1,eb,tb,con)
+
         if i0<final<i1:
 
             mid=(x0+x1)*0.5
             imid=xint(mid,eb,tb,con)
-            
+
             if imid<final:
                 x0=mid
 
-            
+
             if imid>final:
                 x1=mid
 
         n+=1
-        
+
     if xint(mid,eb,tb,con) < final-0.1:
         print eb,tb,con
-    
-        
+
+
     return mid
 
 '''
@@ -361,20 +362,20 @@ while con<2:
     con+=1
 #arraysig now contains the one-sigma radius of the psf for all energy,theta,con bins
 #it does break down for some small energies (less than 100 MeV, which will not matter for analysis as we cut all photons below 100 MeV)
-  
+
 '''
 
 def geterr(e,acos,con):
     #returns effective one-sigma error radius in radians (converts err array to radians, conversion is energy dependent)
     eb=np.digitize(e,ebins)
     tb=np.digitize(acos,tbins)
-    
+
     rad=err[con,tb,eb]
     sp=S_p(e,con)
-    
+
     return rad*sp
-    
-    
+
+
 
 
 
@@ -389,7 +390,7 @@ def getvals(e,acos,con):
     gt=gtail[con,tb,eb]
     nt=ntail[con,tb,eb]
     fc=1/(1+nt*(st/sc)**2)
-    
+
     return sc,st,gc,gt,fc
 
 def getsig(e,acos,con):
@@ -398,8 +399,8 @@ def getsig(e,acos,con):
     sc=score[con,tb,eb]
     sp=S_p(e,con)
     return np.degrees(sc*sp)
-   
-    
+
+
 #now we define other useful functions for the fermi analysis
 
 def tsep(ictime,phtime,closeone,sep,sameness=False):
@@ -431,7 +432,7 @@ def tsep(ictime,phtime,closeone,sep,sameness=False):
                         closeone[ccc,0]=n
                         closeone[ccc,1]=m
                         ccc+=1
-                    
+
             if first==0:
                 start=m
             m+=1
@@ -442,36 +443,36 @@ def numul(nutime,nura,nudec):
     #given neutrino time, ra, dec, returns a list where
     #each element is a list of all neutrinos forming a multiplet
     #Multiplicity can be arbitrarily high, but rarely exceeds 3
-    
+
     base=np.zeros((len(nutime)*100,2),dtype=long)
     evil=tsep(nutime,nutime,base,1/86.4,sameness=True)
     dsts=distsph(nura[evil[:,0]],nudec[evil[:,0]],nura[evil[:,1]],nudec[evil[:,1]])
-    
+
     good=evil[np.where(dsts<np.radians(5))]
-    
+
     unu,nuind=np.unique(good[:,0],return_index=True)
     junk=[]
     higher=[]
     counter=0
     while counter<len(unu):
-        
+
         nu=unu[counter]
         b=np.argwhere(good[:,0]==nu)
         inds=np.unique(good[b[:,0],1])
-        
+
         #now check for higher multiplicities
         #first we push all doublets into list
         ccq=0
         while ccq<len(inds):
             junk.append([nu,inds[ccq]]) #each doublet
-            
+
             ccq+=1
-            
+
         if len(inds)>1: #pull all multiplicities higher than 2
             higher.append(nu)
         counter+=1
-        
-    
+
+
     #now loop through the list of multiplicities higher than 2
     #itteratively get all higher multiplicities
     mul=2
@@ -482,7 +483,7 @@ def numul(nutime,nura,nudec):
             nu=higher[aaq]
             b=np.argwhere(good[:,0]==nu)
             inds=np.unique(good[b[:,0],1])
-            combs=list(combinations(inds,mul))  
+            combs=list(combinations(inds,mul))
             #combs is a list of combinations of the indices
             # we then need to see if each combination exists
             # in the list of lower-multiplicity indices
@@ -530,7 +531,7 @@ def spang(ra1,dec1,ra2,dec2):
 
     top=np.cos(a)-np.cos(b)*np.cos(c)
     bot=np.sin(b)*np.sin(c)
-    
+
     #safety in event that bot=0 (one particle at pole or both at same place)
     a=np.argwhere(bot==0)
     if type(a)==type(bot):
@@ -538,17 +539,17 @@ def spang(ra1,dec1,ra2,dec2):
     else:
         if bot==0:
             bot=1
-    
+
     frac=top/bot
     #now add a safety if the angle should be 0 or 180
-    #due to round off, the value of frac can be slightly larger than 1, causing an error 
+    #due to round off, the value of frac can be slightly larger than 1, causing an error
 
     frac=np.clip(frac,-1,1)
-    
+
     ang=np.arccos(frac)
-    
+
     test=ra2-ra1
-      
+
     a=np.argwhere(test<0)
     #safety for input of an array vs input of a float/int
     if type(a)==type(test):
@@ -556,8 +557,8 @@ def spang(ra1,dec1,ra2,dec2):
     else:
         if test<0:
             ang=-ang
-    
-    
+
+
     return ang,c
 
 def berring(ra,dec,dst,ang):
@@ -566,11 +567,11 @@ def berring(ra,dec,dst,ang):
 
     a=np.sin(dec)*np.cos(dst)+np.cos(dec)*np.sin(dst)*np.cos(ang)
     dec2=np.arcsin(a)
-    
+
     a=np.sin(ang)*np.sin(dst)*np.cos(dec)
     b=np.cos(dst)-np.sin(dec)*np.sin(dec2)
     ra2=ra+np.arctan2(a,b)
-    
+
     return ra2%(2*np.pi),dec2 #need final RA to be between 0,2pi
 
 def icpsf(theta,sigma):
@@ -586,7 +587,7 @@ def mkmap(RA,DEC,N):
     #dec=np.clip(dec,1,np.pi)
     inds = hp.ang2pix(Nside, dec.astype(float), ra.astype(float))
     return inds
-    
+
 def intem(lon1,lat1,lon2,lat2,dp):
     #find point distance dp from lat1,lon1
     #angles are measured in radians
@@ -608,7 +609,8 @@ def intem(lon1,lat1,lon2,lat2,dp):
         return lon,lat
 
 #create antares PSFs
-trackdata=np.loadtxt(dpath+'trackpsfhist.txt') #import the data
+
+trackdata=np.loadtxt(os.path.join(dpath,"data/fermi_lat",'trackpsfhist.txt')) #import the data
 binval=trackdata[:,0]/0.4234567
 bincenter=10**trackdata[:,1] #location of bin center
 psfinterp=interpolate.interp1d(bincenter,binval,fill_value='extrapolate')
@@ -621,42 +623,42 @@ def getgrid(centerx,centery,extent,count,nuerr,x,y,e,acos,c):
     #input center coords, extent, point density, and list of photon parameters
     #returns x/y grids and grid of distances/psf values
     #psf grid is given in log space to avoid underflows (happens for grb case, makes psf zero everywhere)
-    temp=np.linspace(-extent,extent,count) 
+    temp=np.linspace(-extent,extent,count)
     #make grid centered at neutrino
     xg,yg=np.meshgrid(temp+centerx,temp+centery,sparse=True)
-    
+
     #create holder for coordinate grid
     zholder=np.zeros((len(x)+1,count,count))
     #same for psf results
     rholder=np.zeros((len(x)+1,count,count))
-    
+
     #last pane of grid holds neutrino data
     zholder[-1]=np.hypot(xg,yg)
     rholder[-1]=icpsf(zholder[-1],nuerr)
-    
+
     n=0
     while n<len(x):
         zholder[n]=np.hypot(xg-x[n],yg-y[n]) #photon distances
         rholder[n]=psf(e[n],zholder[n],acos[n],c[n])  #photon psf
         n+=1
     return xg,yg,np.log(rholder),zholder #can get divide by zero errors, do not affect code
-    
+
 def getgridtrack(centerx,centery,extent,count,nux,nuy,x,y,e,acos,c):
     #centerx,centery tell center of grid we will create
     #extent tells how far it goes, while count tells how many points there are in each direction
-    
+
     temp=np.linspace(-extent,extent,count)
     #for single neutrino, nu is at origin
     #for multi-neutrino, average neutrino position is the origin
-    
+
     xg,yg=np.meshgrid(temp+centerx,temp+centery,sparse=True)
-    
+
     zholderph=np.zeros((len(x),count,count)) #grid to hold photon distances
     rholderph=np.zeros((len(x),count,count)) #grid to hold photon psf results
-    
+
     zholdernu=np.zeros((len(nux),count,count)) #grid to hold neutrino distances
     rholdernu=np.zeros((len(nux),count,count)) #grid to hold neutrino psf results
-    
+
     #now loop through each pane to fill in the grid
     n=0
     while n<len(x):
@@ -668,7 +670,7 @@ def getgridtrack(centerx,centery,extent,count,nux,nuy,x,y,e,acos,c):
         zholdernu[m]=np.hypot(xg-nux[m],yg-nuy[m]) #neutrino distance
         rholdernu[m]=trackpsf(np.degrees(zholdernu[m])) #neutrino psf
         m+=1
-    
+
     return xg,yg,np.log(rholderph),np.log(rholdernu),zholderph,zholdernu
 
 
@@ -682,7 +684,7 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
     gridfinalph=np.sum(rholderph,axis=0)
     gridfinalnu=np.sum(rholdernu,axis=0)
     gridfinal=gridfinalph+gridfinalnu
-    
+
     mx1=np.argmax(gridfinal)
     i1=mx1//len(gridfinal)
     i2=mx1%len(gridfinal)
@@ -693,15 +695,15 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
         edge=1
     else:
         edge=0
-  
+
     cx1=xg1[0,i2]
     cy1=yg1[i1,0]
     vals=rholderph[:,i1,i2] #log psf values of each photon
     psfa=gridfinal[i1,i2] #value of log of psf product
     #now calculate 1-sigma error radius to coincidence
-    
+
     space=(np.max(yg1)-np.min(yg1))/(len(yg1)-1)
-    
+
     offset=1
     difholder=np.zeros(4)
     while np.min(difholder)==0:
@@ -718,14 +720,14 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
                 difholder[1]=offset
         else:
             difholder[1]=1000
-            
+
         if i2+offset<len(gridfinal):
             up2=gridfinal[i1,i2+offset]
             if up2-psfa<(-0.5) and difholder[2]==0:
                 difholder[2]=offset
         else:
             difholder[2]=1000
-            
+
         if i2-offset>0:
             down2=gridfinal[i1,i2-offset]
             if down2-psfa<(-0.5) and difholder[3]==0:
@@ -733,7 +735,7 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
         else:
             difholder[3]=1000
         offset+=1
-        
+
 
     griderr=space*np.average(difholder[np.where(difholder<1000)])
 
@@ -744,49 +746,36 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
     ra,dec=berring(ra,dec,dst,ang) #coincidence location
     nph=len(vals) #number of photons
     nnu=len(rholdernu) #number of neutrinos
-    
+
     timetotal=np.concatenate((phtime,nutime))
     tavg=np.average(timetotal) #central time of coincidence
     deltat=np.max(timetotal)-np.min(timetotal) #temporal width of coincidence
     sigmat=np.std(timetotal) #error on average timestamp
 
-    
-    
-    
+
+
+
     nutdif=np.clip(a=abs(tavg-nutime),a_min=1/864.0,a_max=None) #time term difference
     phtdif=np.clip(a=abs(tavg-phtime),a_min=1/864.0,a_max=None)
-    
-    nutterm=np.log(1/(nutdif*864)) 
+
+    nutterm=np.log(1/(nutdif*864))
     phtterm=np.log(1/(phtdif*864))
-    
+
     hpind=mkmap(ra,dec,8)
     eb=np.digitize(energy,ebin)-1
     tb=np.digitize(acos,[0.5,1])
-    
+
     bkgval=np.log(phbkg[tb,eb,hpind])
 
     lam=2*(psfa+stirling(nnu)+stirling(nph)-np.sum(bkgval)+np.sum(nutterm)+np.sum(phtterm))+np.sum(np.log(nuprob/(1-nuprob)))
     return lam,vals,ra,dec,griderr,tavg,deltat,sigmat,edge,cx1,cy1
 
 
-raw=np.loadtxt(dpath+'lambinhist.txt')
+raw=np.loadtxt(os.path.join(dpath,"data/fermi_lat",'lambinhist.txt'))
 bins=raw[:,0]
-vals=raw[:,1] 
+vals=raw[:,1]
 sila=interpolate.interp1d(bins,(1-vals),fill_value='extrapolate')
 normer=float(sila(11.7075))#one per year threshold
 def lam2prob(lam):
     #this will take a lambda and return an event rate in events above that lambda per second
     return sila(lam)/(normer*31556952) #larger lambda means smaller frequency
-
-
-
-
-
-
-
-
-
-
-
-
-

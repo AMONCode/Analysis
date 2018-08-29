@@ -17,7 +17,8 @@ host=configs.get('database','host_name')
 password=configs.get('database','password')
 dbname=configs.get('database','realtime_dbname')
 
-dpath=configs.get('dirs','fermidata')
+#dpath=configs.get('dirs','fermidata')
+dpath=configs.get('dirs','amonpydir')
 
 
 def downloader(url,name):
@@ -48,7 +49,7 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
     elevation (spacecraft altitude in meters)
     psf type (hardset to 'king')
     eventstreamconfigrev (hardset to 1)
-    
+
     aux parameter table (three total per event)
     first three columns are unique on each file
     name=energy     name=inclination        name=conversion
@@ -66,10 +67,10 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
     m=0
     while n<len(time): #set up loop through photon events
         ts=time[n] #time of current photon event
-        
+
         while ts>stop[m]: #increments window if we are too early
             m+=1
-            
+
         if start[m]<ts<stop[m]:
             #continue if event is in window
 
@@ -79,44 +80,44 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
             salt=alt[m]
             scra=raz[m]
             scdec=decz[m]
-            
+
             totality=timedelta(seconds=(ts-450000000))+base #convert fermi seconds to datetime
             lessec=totality.replace(microsecond=0) #rounded to nearest second
             msec=int(1000*(totality-lessec).total_seconds()) #miliseconds in integer form
-            
-            
-            
+
+
+
             #follows order shown in comment above
             events.append(
             [23,flagid[n],1,lessec,msec,dec[n],ra[n],err[n],1,0,0.00001, #last entry: sigmat
              0,0,'observation',scra,scdec,slon,slat,salt,'king',0]
             )
-            
-            
+
+
             param.append(['energy',energy[n],'MeV',23,flagid[n],1])
             param.append(['inclination',inc[n],'degrees',23,flagid[n],1])
             param.append(['conversion',con[n],'boolean',23,flagid[n],1])
-            
+
         n+=1
-    
-    
+
+
     #connect to db and put these into database
 
     db=mdb.connect(user=user,host=host,passwd=password,db=dbname)
     c=db.cursor()
-       
+
     c.executemany("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
     %s,%s,%s,%s,%s,%s,%s,%s,%s)""", events)
     db.commit()
-    
+
     c.executemany("""INSERT INTO parameter VALUES(%s,%s,%s,%s,%s,%s)""",param)
     db.commit()
-    
+
     db.close()
-        
+
 
     return events
-    
+
 
 #get current fermi week
 base=datetime(2016,01,28) #date/time of start of week 400
@@ -151,72 +152,73 @@ i0=int(u0.info().values()[0]) #size of last week's photon file
 i1=int(u1.info().values()[0]) #size of this week's photon file
 
 #define file name for downloaded files
-ph0='latphoton0.fits'
-ph1='latphoton1.fits'
-sc0='latsc0.fits'
-sc1='latsc1.fits'
+
+ph0=os.path.join(dpath,'data/fermi_lat','latphoton0.fits')
+ph1=os.path.join(dpath,'data/fermi_lat','latphoton1.fits')
+sc0=os.path.join(dpath,'data/fermi_lat','latsc0.fits')
+sc1=os.path.join(dpath,'data/fermi_lat','latsc1.fits')
 
 #now check cached photon files to see if the size has changed
 
 #create flag to determine when analysis should proceed
 cflag=False
 
-ex0=os.path.isfile(dpath+ph0) #check if last week's file exists
+ex0=os.path.isfile(ph0) #check if last week's file exists
 if ex0==True: #if file exists
-    
-    temp0=os.path.getsize(dpath+ph0) # length of cached photon file
-    
+
+    temp0=os.path.getsize(ph0) # length of cached photon file
+
     if temp0!=i0: #if length of last week has changed
-        downloader(phurl+phname0,dpath+ph0)
-        downloader(scurl+scname0,dpath+sc0)
+        downloader(phurl+phname0,ph0)
+        downloader(scurl+scname0,sc0)
         cflag=True #set flag to true so we know to write later
-    
+
 else: # if last week's file does not exist
-    downloader(phurl+phname0,dpath+ph0)
-    downloader(scurl+scname0,dpath+sc0)
+    downloader(phurl+phname0,ph0)
+    downloader(scurl+scname0,sc0)
     cflag=True
 
-ex1=os.path.isfile(dpath+ph1) #check if this week's file exists
+ex1=os.path.isfile(ph1) #check if this week's file exists
 if ex1==True: #if file exists
-    
-    temp1=os.path.getsize(dpath+ph1) # length of cached photon file
-    
+
+    temp1=os.path.getsize(ph1) # length of cached photon file
+
     if temp1!=i1: #if length of this week has changed
-        downloader(phurl+phname1,dpath+ph1)
-        downloader(scurl+scname1,dpath+sc1)
+        downloader(phurl+phname1,ph1)
+        downloader(scurl+scname1,sc1)
         cflag=True #set flag to true so we know to write later
-    
+
 else: # if this week's file does not exist
-    downloader(phurl+phname1,dpath+ph1)
-    downloader(scurl+scname1,dpath+sc1)
+    downloader(phurl+phname1,ph1)
+    downloader(scurl+scname1,sc1)
     cflag=True
-    
-    
+
+
 #now double check to make sure all files exist
 
-if os.path.isfile(dpath+ph0)==0: #nonexistance condition
-    downloader(phurl+phname0,dpath+ph0) #if it does not exist, download it
-    
-if os.path.isfile(dpath+ph1)==0: #nonexistance condition
-    downloader(phurl+phname1,dpath+ph1)
-    
-if os.path.isfile(dpath+sc0)==0: #nonexistance condition
-    downloader(scurl+scname0,dpath+sc0)
-    
-if os.path.isfile(dpath+sc1)==0: #nonexistance condition
-    downloader(scurl+scname1,dpath+sc1)
+if os.path.isfile(ph0)==0: #nonexistance condition
+    downloader(phurl+phname0,ph0) #if it does not exist, download it
+
+if os.path.isfile(ph1)==0: #nonexistance condition
+    downloader(phurl+phname1,ph1)
+
+if os.path.isfile(sc0)==0: #nonexistance condition
+    downloader(scurl+scname0,sc0)
+
+if os.path.isfile(sc1)==0: #nonexistance condition
+    downloader(scurl+scname1,sc1)
 
 
 if cflag==False: #if no new files were downloaded, script should exit here
     print "nothing new, we're done here"
     sys.exit()
-    
+
 #now we open the fermi data and filter it by energy, zenith, time, etc
 
-raw=pf.open(dpath+ph0)
+raw=pf.open(ph0)
 data0=raw[1].data
 raw.close()
-raw=pf.open(dpath+ph1)
+raw=pf.open(ph1)
 data1=raw[1].data
 
 data=np.concatenate((data0,data1))
@@ -238,10 +240,10 @@ con=data['CONVERSION_TYPE'].astype(int)
 err=np.degrees(geterr(energy,acos,con))
 
 #open satellite file to get satellite position information
-raw=pf.open(dpath+sc0)
+raw=pf.open(sc0)
 scdat0=raw[1].data
 raw.close()
-raw=pf.open(dpath+sc1)
+raw=pf.open(sc1)
 scdat1=raw[1].data
 raw.close()
 
@@ -323,13 +325,3 @@ while n+dn<len(time):
     print n
 #now write the last chunk (or only chunk if fewer than 10000 events)
 block=fermiwrite(user,password,host,time[n:],flagid[n:],ra[n:],dec[n:],energy[n:],inc[n:],con[n:],start,stop,raz,decz,lat,lon,alt)
-
-
-
-
-
-
-
-
-
-
