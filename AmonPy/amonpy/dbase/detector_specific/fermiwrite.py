@@ -15,7 +15,7 @@ from amonpy.tools.config import AMON_CONFIG as configs
 user=configs.get('database','username')
 host=configs.get('database','host_name')
 password=configs.get('database','password')
-dbname=configs.get('databases','realtime_dbname')
+dbname=configs.get('database','realtime_dbname')
 
 dpath=configs.get('dirs','fermidata')
 
