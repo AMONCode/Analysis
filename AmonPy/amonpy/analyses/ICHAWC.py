@@ -84,7 +84,7 @@ def probSigHAWC(spc,sigma):
 
 ##IC PDFs for spatial null hypotheses
 ## The alternative  is given by an interpolator for each event.
-icfprdFile = np.load(os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
+icfprdFile = np.load(os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'))
 icbkg_interp = icfprdFile['B_spat_interp'].item()
 def probBkgIC(cosTh):
     """Spatial Bkg PDF for a IceCube neutrino. Based on simulation"""
