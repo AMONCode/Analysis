@@ -3,13 +3,14 @@ from amonpy.dbase import db_read, db_write
 from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams
+
 from amonpy.tools.IC_PSF import *
 from amonpy.tools.IC_FPRD import *
 from amonpy.tools.angularsep import spcang
+from amonpy.tools.config import AMON_CONFIG
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
-
 
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
@@ -19,7 +20,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import netrc, jsonpickle, os
-from amonpy.tools.config import AMON_CONFIG
+
 
 import scipy as sc
 from scipy import optimize, stats, special
@@ -133,7 +134,7 @@ def pNuCluster(events):
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_LLH_200yr.npz')
-#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/hawc/CDF_LLH.npz')
+#filename = os.path.join(AmonPyDir,'data/hawc/CDF_LLH.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
 for item in cdfLLH.iteritems():
@@ -152,15 +153,15 @@ def pSpace(llh):
         return 1.-f(llh)
 
 # Calculation of the p_value of IC.
-filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
-#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
+#filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
+filename = os.path.join(AmonPyDir,'data/icecube/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
 Rup = np.load(filename).item()
-filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
-#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_down_intp_bwp01.npy')
+#filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
+filename = os.path.join(AmonPyDir,'data/icecube/log10fprd_down_intp_bwp01.npy')
 Rdn = np.load(filename).item()
 
-fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
-#fprd_obj=FPRD(fname=os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/FPRD_info.npz'))
+#fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
+fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'))
 def pHEN(cosTh,fprd):
     """Function to get the pvalue of an IceCube event"""
     pval=fprd_obj.get_pval(cosTh,fprd=fprd)
@@ -182,7 +183,7 @@ def totalpHEN(events):
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_newChi2_200.npz')
-#filename = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/icecube/log10fprd_down_intp_bwp01.npy')
+#filename = os.path.join(os.path.split(AmonPyDir,'data/analysis/HWCIC_CDF_Chi2.npz')
 cdfChi2 = np.load(filename)
 
 CDF = [] #dummy variable
@@ -274,9 +275,9 @@ def maximizeLLH(all_events):
             pspace = pSpace(-1*solution.fun)
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
+            nnus = len(ev)-1
             #pchi2 = pChi2(chi2) #The p-value of the chi2 distribution
-
-            coincs.append([solution.x[0],solution.x[1],stderr,chi2,len(ev)-1,ev])#,pcluster,hwcsigma,ev])
+            coincs.append([solution.x[0],solution.x[1],stderr,chi2,nnus,ev])#,pcluster,hwcsigma,ev])
     return coincs
 
 def coincAnalysisHWC(new_event):
@@ -424,15 +425,12 @@ def ic_hawc(new_event=None):
         #Save results in DB
         print "Found %d coincidences"%(len(result))
 
-        #[solution.x[0],solution.x[1],stderr,-1*solution.fun,len(ev)-1,ev])
         for r in result:
-            #pvalue = r[3]
             dec = r[0]
             ra = r[1]
             sigmaR = r[2]
             chi2 = r[3]
             nev = r[4]
-            #print line
             nuEvents = r[5][1:]
             alertTime = []
 
