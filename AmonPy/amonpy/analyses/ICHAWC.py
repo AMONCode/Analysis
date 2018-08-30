@@ -208,7 +208,8 @@ def loglh(sigterm,bkgterm):
     return np.log(sigterm)-np.log(bkgterm)
 
 # Find total log-likelihood considering multiplets: spatial and temporal terms
-def tloglh_time(dec,ra,events):
+def spaceloglh(dec,ra,events):
+#def tloglh_time(dec,ra,events):
     version = 0. #0: IC Gaussian PSF; 1: IC parameters PSF
     val = 0.
     for nut in events:
@@ -233,7 +234,10 @@ def tloglh_time(dec,ra,events):
 
         # adding log-likelihood spatial terms
         val = val + loglh(SH1,SH0)
+    return val
 
+def temploglh(events):
+    val=0.
     if len(events) > 2:
         T=0.
         for i in range(1,len(events)-1) :
@@ -250,10 +254,10 @@ def maximizeLLH(all_events):
     coincs=[]
     for ev in all_events:
         try:
-            solution = sc.optimize.minimize(lambda x: -tloglh_time(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'SLSQP')
+            solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'SLSQP')
         except ValueError:
             try:
-                solution = sc.optimize.minimize(lambda x: -tloglh_time(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
+                solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
             except ValueError:
                 print "Error in minimization"
                 return coincs
@@ -272,7 +276,7 @@ def maximizeLLH(all_events):
             print "Number of neutrinos: %d"%(len(ev)-1)
             pcluster=pNuCluster(ev)
             phwc = ev[0][-1]
-            pspace = pSpace(-1*solution.fun)
+            pspace = pSpace(-1*(solution.fun+temploglh(ev)))
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
             nnus = len(ev)-1
