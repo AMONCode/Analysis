@@ -55,7 +55,7 @@ class AMONInstall(install):
                                     cp.set(section, k, answer)
                   with open("amonpy/amon.ini", "w") as f:
                         cp.write(f)
-                  install.run(self)
+
 
             if raw_input("Do you wish to setup the database? (Y/N): ").upper() == "Y":
                   print "root login for the mysql server..."
@@ -67,6 +67,7 @@ class AMONInstall(install):
                   subprocess.check_call(["mysql", "-u", "root", "-p", "-h", h, "-e", "use mysql; CREATE USER IF NOT EXISTS '%s'@'%s' IDENTIFIED BY '%s'; GRANT ALL PRIVILEGES ON `%s` . * TO '%s'@'%s'; GRANT ALL PRIVILEGES ON `%s` . * TO '%s'@'%s';" % (u,h,p,d1,u,h,d2,u,h) ])
             # these are tied to the code install
             #cp.set("dirs", "amonpydir", "fixme")
+            install.run(self)
 
 setup(name = "AmonPy",
       version = "1.4.0",
