@@ -66,8 +66,8 @@ def ic_hawc_config():
 
 ### Functions for the coincidence analysis
 # HAWC PDF for spatial null and alternative hypotheses
-hwcBkgfile = os.path.join(AmonPyDir,'analyses/hawc_bkg_intp.npy')
-#hwcBkgfile = os.path.join(os.path.split(os.path.abspath(AmonPyDir))[0],'data/hawc/hawc_bkg_intp.npy')
+#hwcBkgfile = os.path.join(AmonPyDir,'analyses/hawc_bkg_intp.npy')
+hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
 
 hwcBkg = np.load(hwcBkgfile).item()
 def probBkgHAWC(dec):
