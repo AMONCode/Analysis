@@ -8,6 +8,8 @@ from itertools import combinations
 
 from amonpy.tools.config import AMON_CONFIG as configs
 
+import os
+
 #dpath=configs.get('dirs','fermidata') #path to location of some critical fermi files
 dpath=configs.get('dirs','amonpydir')
 
