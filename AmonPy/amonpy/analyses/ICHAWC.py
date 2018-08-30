@@ -134,7 +134,7 @@ def pNuCluster(events):
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_LLH_200yr.npz')
-#filename = os.path.join(AmonPyDir,'data/hawc/CDF_LLH.npz')
+#filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_LLH.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
 for item in cdfLLH.iteritems():
@@ -183,7 +183,7 @@ def totalpHEN(events):
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
 filename = os.path.join(AmonPyDir,'analyses/newCDF_newChi2_200.npz')
-#filename = os.path.join(os.path.split(AmonPyDir,'data/analysis/HWCIC_CDF_Chi2.npz')
+#filename = os.path.join(os.path.split(AmonPyDir,'data/hawc_icecube/HWCIC_CDF_Chi2.npz')
 cdfChi2 = np.load(filename)
 
 CDF = [] #dummy variable
