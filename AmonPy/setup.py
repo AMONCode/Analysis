@@ -70,10 +70,10 @@ class AMONInstall(install):
             install.run(self)
 
 setup(name = "AmonPy",
-      version = "1.4.0",
+      version = "1.6.0",
       description='AMON Analysis Code',
       long_description=long_description,
-      author='Hugo Ayala, Jimmy DeLauney, Colin Turley',
+      author='Hugo Ayala, Jimmy DeLaunay, Colin Turley',
       author_email='hgayala@psu.edu, jjd330@psu.edu, cft114@psu.edu',
 
       license='FIXME',
