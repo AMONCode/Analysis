@@ -19,6 +19,7 @@ from amonpy.tools.config import AMON_CONFIG
 from datetime import datetime, timedelta
 from time import time
 import jsonpickle
+import MySQLdb
 
 from amonpy.dbase.db_classes import Alert, AlertLine, AlertConfig, exAlertConfig, exAlertArchivConfig, event_def, AlertConfig2
 from amonpy.dbase.db_classes import Event
@@ -53,6 +54,27 @@ def error_handler(uuid):
     print('Task {0} raised exception: {1!r}\n{2!r}'.format(
           uuid, exc, myresult.traceback))
 
+class ReconnectingConnectionPool(adbapi.ConnectionPool):
+    """Reconnecting adbapi connection pool for MySQL.
+    This class improves on the solution posted at
+    http://www.gelens.org/2008/09/12/reinitializing-twisted-connectionpool/
+    by checking exceptions by error code and only disconnecting the current
+    connection instead of all of them.
+    Also see:
+    http://twistedmatrix.com/pipermail/twisted-python/2009-July/020007.html
+    """
+    def _runInteraction(self, interaction, *args, **kw):
+        try:
+            return adbapi.ConnectionPool._runInteraction(self, interaction, *args, **kw)
+        except MySQLdb.OperationalError, e:
+            if e[0] not in (2006, 2013):
+                raise
+            log.msg("RCP: got error %s, retrying operation" %(e))
+            conn = self.connections.get(self.threadID())
+            self.disconnect(conn)
+            # try the interaction again
+            return adbapi.ConnectionPool._runInteraction(self, interaction, *args, **kw)
+
 
 class EventManager(Resource):
     """
@@ -76,13 +98,23 @@ class EventManager(Resource):
     counter = 1
 
     print "Event manager is %d" % counter
-    dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
+    # dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
+    #                                         user = UserFancyName,
+    #                                         passwd = PasswordFancy,
+    #                                         host = HostFancyName,
+    #                                         cp_min=1,
+    #                                         cp_max=1,
+    #                                         cp_reconnect=True)
+
+    dbpool = ReconnectingConnectionPool("MySQLdb", db = DBFancyName,
                                             user = UserFancyName,
                                             passwd = PasswordFancy,
                                             host = HostFancyName,
                                             cp_min=1,
                                             cp_max=1,
                                             cp_reconnect=True)
+
+
 
     print 'Configuring Analyses'
     amon_analysis_fname = os.path.join(AmonPyDir,'analyses/amon_analysis.ini')
@@ -105,6 +137,14 @@ class EventManager(Resource):
             eventBuffers[i].addStream(streams[analyses[i][j]])
         print eventBuffers[i].event_streams
         latest.append(datetime(1900,1,1,0,0,0,0))
+
+    path = AMON_CONFIG.get('dirs','serverdir')
+    tmp_path = os.path.join(path, 'server_tmp_events')
+    archive_path = os.path.join(path, 'server_archive_events')
+    if not os.path.isdir(tmp_path):
+        os.makedirs(tmp_path)
+    if not os.path.isdir(archive_path):
+        os.makedirs(archive_path)
 
     def render_POST(self,request):
             """ Main function where events are written to DB, then send to celery workers."""
@@ -225,7 +265,12 @@ class EventManager(Resource):
             evpar = voevent_to_event.make_event(os.path.join(path,"server_tmp_events",fname))
             event  = evpar[0]
             evParam = evpar[1]
-            shutil.move(os.path.join(path,"server_tmp_events",fname), os.path.join(path,"server_archive_events",fname))
+            fname_new = os.path.join(path,"server_archive_events",fname)
+            if os.path.exists(fname_new):
+                fname2 = fname.split('.')[0] + "_" +\
+                        datetime.utcnow().strftime("%Y_%m_%d_%H_%M") + '.xml'
+                fname_new = os.path.join(path,"server_archive_events", fname2)
+            shutil.move(os.path.join(path,"server_tmp_events",fname), fname_new)
             #event[0].forprint()
 
             #if not (evParam==[]):
