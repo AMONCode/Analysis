@@ -2,21 +2,16 @@
 client that sends events to the server using HTTP
 protocol with method=POST
 """
-import sys, getopt, os, shutil, logging, datetime
+import sys, os, shutil, logging
 import resource
 import fcntl
 
 from twisted.internet import reactor
-from twisted.python import usage, log
-from twisted.internet.task import LoopingCall
-from twisted.internet.defer import Deferred, succeed
+from twisted.python import log
+from twisted.internet.defer import Deferred
 from twisted.internet.protocol import Protocol
 from twisted.web.client import Agent, FileBodyProducer
 from twisted.web import http_headers
-
-from amonpy.tools.config import AMON_CONFIG
-
-from zope.interface import implements
 
 path=host=False
 
@@ -46,7 +41,7 @@ def stop(result):
     reactor.stop()
 
 def moveFile(path,fname):
-    shutil.move(path+fname, path+"archive/"+fname)
+    shutil.move(os.path.join(path,fname), os.path.join(path,"archive",fname))
     print "File %s sent" % (fname,)
 
 def printSent(fname):
@@ -93,7 +88,7 @@ def check_for_files(hostport, eventpath):
         files_xml=[]
 
         for filename in files:
-            if (os.path.isdir(path+filename) or filename[0]=='.' or filename.find(".log") !=-1):
+            if (os.path.isdir(os.path.join(path,filename)) or filename[0]=='.' or filename.find(".log") !=-1):
                 pass
             elif (filename.find(".xml")!=-1):
                 files_xml.append(filename)
@@ -103,7 +98,7 @@ def check_for_files(hostport, eventpath):
         if len(files_xml)>0:
             oldest = files_xml[0]
             try:
-                datafile=open(path+oldest)
+                datafile=open(os.path.join(path,oldest))
                 #data=datafile.read()
                 #lenght_data=str(len(data))
 
@@ -122,10 +117,8 @@ def check_for_files(hostport, eventpath):
                 #print "Event %s sent" % (oldest,)
             except:
                 log.msg("Error parsing file %s " % (path+oldest,))
-            shutil.move(path+oldest, os.path.join(AMON_CONFIG.get('dirs','serverdir'),"server_archive_events",oldest))
-            #shutil.move(path+oldest, "/Users/hugo/AMON/Test_new_server/server_archive_events/"+oldest)
-            #shutil.move(path+oldest, "/storage/home/hza53/work/AMON/Test_server/server_archive_events/"+oldest)
-            #datafile.close()
+
+            moveFile(path, oldest)
 
         else:
             pass

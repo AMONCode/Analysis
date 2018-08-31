@@ -26,8 +26,9 @@ from twisted.python import usage, log
 class Options(usage.Options):
 
     optParameters = [
-        ['hostport', 'hp', None, 'The host and port http address.'],
-        ['epath', None, None, 'Path to the directory with VOEvents'],
+        ['hostport', 'hp', "http://127.0.0.1:8000", 'The host and port http address.'],
+        ['epath', None, "./", 'Path to the directory with VOEvents'],
+        ['looptime', 'dt', 1.0, 'How often epath is checked for files in seconds']
         ]
 
 class ClientPostServiceMaker(object):
@@ -42,7 +43,11 @@ class ClientPostServiceMaker(object):
         #check directory with events for an oldest file
         # do it every 0.1 second using TimerService
         # set it to 10 sec to simulate real-time data arriving at AMON
-        loop_service = TimerService(10.0, check_for_files, options['hostport'], options['epath'])
+        archive_path = os.path.join(options['epath'], "archive")
+        if not os.path.isdir(archive_path):
+            os.makedirs(archive_path)
+        loop_service = TimerService(float(options['looptime']), check_for_files,\
+                            options['hostport'], options['epath'])
         loop_service.startService()
         return loop_service
 
