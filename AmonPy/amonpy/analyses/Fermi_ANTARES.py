@@ -226,7 +226,7 @@ while counter<len(unu):
         #check if best position is near the edge of the grid
         if edge==1: #if so, remake grid over new center
             print 'lets fix that'
-            xg1,yg1,rholderph1,rholdernu1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
+            xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
             #then recalculate lambda
             lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         if lam>bestline[0]: #if it new is better, replace old
@@ -356,7 +356,7 @@ while mcounter<len(unu):
         #check if best position is near the edge of the grid
         if edge==1: #if so, remake grid over new center
             print 'lets fix that'
-            xg1,yg1,rholderph1,rholdernu1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
+            xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
             #then recalculate lambda
             lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         if lam>bestline[0]: #if it new is better, replace old
