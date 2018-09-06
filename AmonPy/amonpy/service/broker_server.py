@@ -21,7 +21,7 @@ class Options(usage.Options):
 #implements(service.IServiceMaker, IPlugin)
 options = Options
 
-def makeService(self, options):
+def makeService(options):
 
     resource = EventManager()
     factory = Site(resource)
