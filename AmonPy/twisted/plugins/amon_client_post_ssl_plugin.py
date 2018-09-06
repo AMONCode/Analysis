@@ -13,8 +13,6 @@ import sys, getopt, os, shutil, datetime
 import resource
 import fcntl
 
-#sys.path.append("../../")
-
 
 from zope.interface import implements
 from twisted.application import internet, service
