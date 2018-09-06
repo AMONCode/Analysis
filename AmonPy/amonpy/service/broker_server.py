@@ -29,4 +29,4 @@ def makeService(self, options):
                                      interface=options['iface'])
     return tcp_service
 
-i#service_maker = AmonServerServiceMaker()
+#service_maker = AmonServerServiceMaker()
