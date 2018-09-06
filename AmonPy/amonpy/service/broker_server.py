@@ -18,7 +18,7 @@ class Options(usage.Options):
 
 #class AmonServerServiceMaker(object):
 
-implements(service.IServiceMaker, IPlugin)
+#implements(service.IServiceMaker, IPlugin)
 options = Options
 
 def makeService(self, options):
