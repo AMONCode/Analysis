@@ -100,6 +100,7 @@ setup(name = "AmonPy",
                    'amonpy/ops/analyser',
                    'amonpy/ops/network/',
                    'amonpy/ops/server/',
+                   'amonpy/service',
                    'twisted'
                   ],
       scripts = ['amonpy/ops/run_archival.py',
