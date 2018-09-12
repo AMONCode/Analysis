@@ -25,18 +25,8 @@ from amonpy.tools.config import AMON_CONFIG
 
 class EventPage(Resource):
     isLeaf = True
-    #from amon_server_post4 import WriteEvent
-    #w = WriteEvent()
 
-    # initiate celery task that will send message to analysis server
-    # about new incoming event
-    #n=AnalRT()
-    #config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
-    #Config = ConfigParser.ConfigParser()
-    #Config.read(config_fname)
     HostFancyName=AMON_CONFIG.get('database', 'host_name')#Config.get('database', 'host_name')
-    #nrc_path = os.path.join(AMON_CONFIG.get('dirs','amonpydir'),'.netrc')#Config.get('dirs', 'amonpydir') + '.netrc'
-    #nrc = netrc.netrc(nrc_path)
     UserFancyName=AMON_CONFIG.get('database', 'username')
     PasswordFancy=AMON_CONFIG.get('database','password')
     DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
