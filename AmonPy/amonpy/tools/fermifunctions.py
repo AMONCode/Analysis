@@ -745,7 +745,7 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
     #convert coordinates to ra/dec
     dst=np.hypot(cx1,cy1)
     ang=np.arctan2(cx1,cy1)
-    ra,dec=berring(ra,dec,dst,ang) #coincidence location
+    cra,cdec=berring(ra,dec,dst,ang) #coincidence location
     nph=len(vals) #number of photons
     nnu=len(rholdernu) #number of neutrinos
 
@@ -770,14 +770,19 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
     bkgval=np.log(phbkg[tb,eb,hpind])
 
     lam=2*(psfa+stirling(nnu)+stirling(nph)-np.sum(bkgval)+np.sum(nutterm)+np.sum(phtterm))+np.sum(np.log(nuprob/(1-nuprob)))
-    return lam,vals,ra,dec,griderr,tavg,deltat,sigmat,edge,cx1,cy1
+    return lam,vals,cra,cdec,griderr,tavg,deltat,sigmat,edge,cx1,cy1
 
 
 raw=np.loadtxt(os.path.join(dpath,"data/fermi_lat",'lambinhist.txt'))
 bins=raw[:,0]
 vals=raw[:,1]
 sila=interpolate.interp1d(bins,(1-vals),fill_value='extrapolate')
-normer=float(sila(11.7075))#one per year threshold
+#current neutrino rate is 0.53 per day
+#40.09 percent of neutrinos are part of a coincidence
+#so we get 0.212 coincidences per day
+#which is a frequency of 2.45e-06 coincidences per second (Hz in essence)
+# to get false alarm rate, multiply coincidence rate by normed lambda prob, drawn from imported distribution
 def lam2prob(lam):
-    #this will take a lambda and return an event rate in events above that lambda per second
-    return sila(lam)/(normer*31556952) #larger lambda means smaller frequency
+    #this will take a lambda and return an event rate in events
+    #above that lambda per second (essentially in Hz)
+    return sila(lam)*(2.45)*(10**-6) #larger lambda means smaller frequency

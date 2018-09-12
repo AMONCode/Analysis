@@ -5,7 +5,13 @@ import sys
 from datetime import datetime,timedelta
 from astropy.time import Time
 import os
+import subprocess
 import MySQLdb as mdb
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 #os.chdir('/storage/home/cft114/fermicron')
 from amonpy.tools.fermifunctions import distsph,spang,berring,getgridtrack,getlam,lam2prob,tsep,numul
 from amonpy.tools.config import AMON_CONFIG as configs
@@ -334,7 +340,7 @@ while mcounter<len(unu):
     xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,nux,nuy,phx,phy,e,ac,c)
 
     #find lambda of overall multiplet
-    lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
+    lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,centra,centdec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
 
     #now get rid of worst photon, one at a time
     #initialize a list to hold original lambda and other parameters
@@ -345,25 +351,24 @@ while mcounter<len(unu):
         bs=np.argmin(vals) #index of worst photon
         rholderph1=np.delete(rholderph1,bs,0) #cut off worst slice
         e=np.delete(e,bs)
-        ac=np.delete(e,bs)
+        ac=np.delete(ac,bs)
         c=np.delete(c,bs)
         time=np.delete(time,bs)
-        x=np.delete(x,bs)
-        y=np.delete(y,bs)
+        phx=np.delete(phx,bs)
+        phy=np.delete(phy,bs)
 
         #now calculate new lambda with worst photon cut off
-        lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
+        lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,centra,centdec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         #check if best position is near the edge of the grid
         if edge==1: #if so, remake grid over new center
             print 'lets fix that'
-            xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
+            xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],phx,phy,e,ac,c)
             #then recalculate lambda
-            lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
+            lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,centra,centdec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         if lam>bestline[0]: #if it new is better, replace old
             bestline=np.array([lam,tcenter,deltat,sigmat,ra,dec,coincerr,len(vals),len(nutime),nuid])
-
     #now compare newly generated lambda to each single-neutrino version
-    flagid=nuid
+    flagid=nulist
     n=0
     perfection=1
     indexholder=np.zeros(len(flagid))
@@ -586,10 +591,49 @@ def makevoevent(event):
     #print xml
     return xml
 
+def send_email(subject, body, to):
+    me = 'amon.psu@gmail.com'
+    msg = MIMEText(body)
+    msg['Subject'] = subject
+    msg['From'] = me
+    msg['To'] = ", ".join(to)
+    pas = '***REMOVED***'
+    s = smtplib.SMTP('smtp.gmail.com:587')
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(me, pas)
+    s.sendmail(me, to, msg.as_string())
+    s.quit()
 
+def send_email_attach(subject, body, to, attachment):
+    me = 'amon.psu@gmail.com'
+    msg = MIMEMultipart()
+    msg['Subject'] = subject
+    msg['From'] = me
+    msg['To'] = ", ".join(to)
+    msg.attach(MIMEText(body))
+    pas = '***REMOVED***'
+    
+    part = MIMEBase('application', "octet-stream")
+    part.set_payload(open(attachment, "rb").read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', 'attachment', filename=attachment)
+    msg.attach(part)
+    
+    s = smtplib.SMTP('smtp.gmail.com:587')
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(me, pas)
+    s.sendmail(me, to, msg.as_string())
+    s.quit()
 
+    
 
 n=0
+xmlpathholder=[] #list to hold all new xml file names
+lamlist=[]
 while n<len(lambdas):
     line=lambdas[n]
     lam=line[0]
@@ -603,13 +647,49 @@ while n<len(lambdas):
     nph=line[8]
     flagid=line[9]
     a,b=writeevents(user,host,password,lam,tcenter,deltat,sigmat,ra,dec,coincerr,nnu,nph,flagid)
-    if lam>2.75 and b==1: #lambda of 2.75 is the 1/month threshold, b is a flag to see if the event was newly written
+    if lam>1.45 and b==1: #lambda of 1.45 is the 4/year threshold, b is a flag to see if the event was newly written
+        lamlist.append(lam)
         xml=makevoevent(a)
         print xml
         fname = 'fermi-antares_coinc'+str(int(flagid))+'.xml'
         filen=os.path.join(AlertDir,fname)
+        xmlpathholder.append(filen) #put name into list
         f1=open(filen,'w+')
         f1.write(xml)
         f1.close()
     print n,a
     n+=1
+
+if len(lambdas)>5:
+    #if we see too many lambdas generated in this stretch
+    print 'Too Many Events'
+    subject='Too many Events'
+    body='Detected %d events. That is too many. They will not be sent to GCN \n   Good Luck' % (n)
+    send_email(subject,body,['cft114@psu.edu'])
+    sys.exit()
+    
+
+n=0
+while n<len(xmlpathholder):
+    #if  we do not trigger an error, send all new events to GCN
+    print 'sending email %d' (n,)
+    subject='New Fermi-ANTARES Alert'
+    body='New Fermi-ANTARES alert detected with a lambda of %f. XML sent to GCN is attached \n  Enjoy' % (lamlist(n))
+    send_email_attach(subject,body,['cft114@psu.edu'],xmlpathholder[n])
+    
+    cmd=['comet-sendvo']
+    cmd.append('--file ' + xmlpathholder[n])
+    subprocess.check_call(cmd)
+    
+    n+=1
+    
+
+
+
+
+
+
+
+
+
+
