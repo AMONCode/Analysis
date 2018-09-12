@@ -92,7 +92,11 @@ def hawc_burst(new_event=None):
     tevent = events.datetime
     content = 'Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f, FAR: %0.3e yr^-1'%(ra,dec,poserr,false_pos)
     print content
-    title='AMON HAWC-GRBlike alert'
+    if prodMachine is True:
+        title='AMON HAWC-GRBlike alert'
+    else:
+        title='Dev Machine: AMON HAWC-GRBlike alert'
+
     email_alerts.alert_email_content([events],content,title)
 
     if (events.type == "observation") and (false_pos<1.0e3):

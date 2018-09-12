@@ -18,7 +18,7 @@ def alert_email(alert, params):
     sub_emails = eval(AMON_CONFIG.get('mailing_list','sub_ehe_hese'))
     sub_cut_emails = eval(AMON_CONFIG.get('mailing_list','sub_cut_ehe_hese'))
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
-    prodMachine = AMON_CONFIG.get('machine','prod')
+    prodMachine = eval(AMON_CONFIG.get('machine','prod'))
     nrc = netrc.netrc(nrc_fname)
     stream = alert[0].stream
 

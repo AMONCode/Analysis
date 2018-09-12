@@ -162,7 +162,10 @@ def ic_hese_ehe(new_event=None):
         f1.write(xmlForm)
         f1.close()
         content = 'HESE_charge = '+str(hese_charge)+'\n'+'HESE_signal_trackness = '+str(signal_t)+'\n'+'HESE_ra = '+str(events.RA)+'\n'+'HESE_dec = '+str(events.dec)+'\n'+'HESE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'HESE_run_id = '+str(run_id)+'\n'+'HESE_event_id = '+str(event_id)+'\n'
-        title = 'Test from Dev machine: HESE'
+        if prodMachine is True:
+            title = 'HESE Alert'
+        else:
+            title = 'Test from Dev machine: HESE'
         email_alerts.alert_email_content([events],content,title)
         if (events.type=="observation") and (prodMachine is True):
             try:
@@ -205,6 +208,9 @@ def ic_hese_ehe(new_event=None):
         else:
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
         content = 'EHE_signalness = '+str(signalness)+'\n'+'EHE_ra = '+str(events.RA)+'\n'+'EHE_dec = '+str(events.dec)+'\n'+'EHE_event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'EHE_run_id = '+str(run_id)+'\n'+'EHE_event_id = '+str(event_id)+'\n'
-        title = 'Test from Dev machine: EHE'
+        if prodMachine is True:
+            title = 'EHE Alert'
+        else:
+            title = 'Test from Dev machine: EHE'
         email_alerts.alert_email_content([events],content,title)
         email_alerts.alert_email([events],params)
