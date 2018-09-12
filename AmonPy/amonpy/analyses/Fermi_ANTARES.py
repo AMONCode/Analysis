@@ -678,7 +678,7 @@ while n<len(xmlpathholder):
     send_email_attach(subject,body,['cft114@psu.edu'],xmlpathholder[n])
     
     cmd=['comet-sendvo']
-    cmd.append('--file ' + xmlpathholder[n])
+    cmd.append('--file=' + xmlpathholder[n])
     subprocess.check_call(cmd)
     
     n+=1
