@@ -674,7 +674,7 @@ while n<len(xmlpathholder):
     #if  we do not trigger an error, send all new events to GCN
     print 'sending email %d' % (n,)
     subject='New Fermi-ANTARES Alert'
-    body='New Fermi-ANTARES alert detected with a lambda of %f. XML sent to GCN is attached \n  Enjoy' % (lamlist(n))
+    body='New Fermi-ANTARES alert detected with a lambda of %f. XML sent to GCN is attached \n  Enjoy' % (lamlist[n])
     send_email_attach(subject,body,['cft114@psu.edu'],xmlpathholder[n])
     
     cmd=['comet-sendvo']
