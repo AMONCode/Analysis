@@ -6,6 +6,7 @@ an xml form (VOEvents),
 performs DB transactions in a separate threat, thus keeping the code asynchronous
 - send a message to AMON analysis code about new event (event stream, id and rev)
 """
+#Twisted modules
 from __future__ import absolute_import
 from twisted.internet import reactor, defer
 from twisted.web.resource import Resource
@@ -38,7 +39,7 @@ from amonpy.ops.server.buffer import EventBuffer, bufdur
 #from amonpy.ops.server.util import DatetimeHandler
 #jsonpickle.handlers.registry.register(datetime, DatetimeHandler)
 
-#importing configurations for analyses
+#Importing configurations for analyses
 from amonpy.analyses.ICSwift import *
 from amonpy.analyses.ICHAWC import *
 from amonpy.analyses.ICHESE_EHE import *
