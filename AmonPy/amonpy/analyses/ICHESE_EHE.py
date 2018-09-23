@@ -172,7 +172,7 @@ def ic_hese_ehe(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + fname)
                 # just for dev to prevent sending hese both from dev and pro machine
-                print "uncoment this if used on production"
+                # print "uncoment this if used on production"
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
                 print "Send HESE VOevent alert failed"
