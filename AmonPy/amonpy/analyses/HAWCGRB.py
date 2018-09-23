@@ -129,7 +129,7 @@ def hawc_burst(new_event=None):
                 print "HAWC Burst created, sending to GCN"
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + fname)
-                subprocess.check_call(cmd)
+                #subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")

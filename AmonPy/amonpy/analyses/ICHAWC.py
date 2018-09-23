@@ -507,7 +507,7 @@ def ic_hawc(new_event=None):
                         cmd.append('--file=' + filen)
                         # just for dev to prevent sending hese both from dev and pro machine
                         #print "uncoment this if used on production"
-                        subprocess.check_call(cmd)
+                        #subprocess.check_call(cmd)
                     except subprocess.CalledProcessError as e:
                         print "Send alert failed"
                         logger.error("send_voevent failed")
