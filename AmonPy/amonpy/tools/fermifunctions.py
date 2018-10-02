@@ -769,7 +769,7 @@ def getlam(rholderph,rholdernu,ra,dec,nutime,nuprob,phtime,xg1,yg1,energy,acos,p
 
     bkgval=np.log(phbkg[tb,eb,hpind])
 
-    lam=2*(psfa+stirling(nnu)+stirling(nph)-np.sum(bkgval)+np.sum(nutterm)+np.sum(phtterm))+np.sum(np.log(nuprob/(1-nuprob)))
+    lam=2*(psfa+stirling(nnu)+stirling(nph)-np.sum(bkgval)+np.sum(nutterm)+np.sum(phtterm))-np.sum(np.log(nuprob/(1-nuprob)))
     return lam,vals,cra,cdec,griderr,tavg,deltat,sigmat,edge,cx1,cy1
 
 
