@@ -575,7 +575,7 @@ def makevoevent(event):
     time2_2=time2[0:10]+'T'+time2[11:]
 
     time3=ve.TimeInstant(time2_2)
-
+    time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)
 
     observation.set_AstroCoordSystem(astro4)
