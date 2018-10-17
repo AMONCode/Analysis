@@ -457,7 +457,7 @@ def makevoevent(event):
     lessec=event[3]
     msec=event[4]
 
-    fulltime=lessec+timedelta(msec/float(1000))
+    fulltime=lessec+timedelta(milliseconds=msec)
 
     dec=event[5]
     ra=event[6]
