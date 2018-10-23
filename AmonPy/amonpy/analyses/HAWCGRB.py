@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 import netrc, jsonpickle
 from amonpy.tools.config import AMON_CONFIG
 
-import sys, shutil, os
+import sys, shutil, os, subprocess
 
 # DB configuration
 HostFancyName = AMON_CONFIG.get('database', 'host_name')#Config.get('database', 'host_name')
