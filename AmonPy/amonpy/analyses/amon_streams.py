@@ -23,7 +23,7 @@ streams = {
             "Auger":3,
             "Fermi":23,
             "IC-Gold":24,
-            "IC-Bronze"25,
+            "IC-Bronze":25,
           }
 
 inv_streams = dict(map(reversed,streams.items()))
