@@ -22,6 +22,8 @@ streams = {
             "Antares":1,
             "Auger":3,
             "Fermi":23,
+            "IC-Gold":24,
+            "IC-Bronze"25,
           }
 
 inv_streams = dict(map(reversed,streams.items()))
@@ -44,9 +46,10 @@ inv_alert_streams = dict(map(reversed,alert_streams.items()))
 
 # ID number for the streams used in GCN/TAN
 gcn_streams = {
-            "IC-HAWC":1,
-            "IC-Swift":2,
-            "IC-HESE-EHE":3,
+            "IC-OFU":0,
+            "IC-HESE":1,
+            "IC-EHE":2,
+            "IC-HAWC":9,
             "IC-Fermi":4,
             "OFU-Alerts":5,
             "GFU-Alerts":6,
