@@ -122,17 +122,6 @@ def ic_gold_bronze(new_event=None):
     content = 'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(events.RA)+'\n'+'Dec = '+str(events.dec)+'\n'+'Event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
 
     #Create Alert xml file
-    if new_event.stream == streams['IC-Gold']:
-        VOAlert = Alert2VOEvent([new_alert],'icecube_gold','IceCube Gold Event')
-    elif new_event.stream == streams['IC-Bronze']:
-        VOAlert = Alert2VOEvent([new_aler],'icecube_bronze','IceCube Bronze Event')
-    someparams = VOAlert.MakeDefaultParams([new_alert])
-    VOAlert.WhatVOEvent(someparams)
-    VOAlert.MakeWhereWhen([new_alert])
-    xmlForm=VOAlert.writeXML()#alert_to_voevent([new_alert])
-    f1.write(xmlForm)
-    f1.close()
-
     xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([events],params)
     if new_event.stream == streams['IC-Gold']:
         fname=os.path.join(AlertDir,'amon_ic-gold_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
