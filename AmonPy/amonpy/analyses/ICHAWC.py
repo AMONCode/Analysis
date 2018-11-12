@@ -276,7 +276,7 @@ def maximizeLLH(all_events):
             print "Number of neutrinos: %d"%(len(ev)-1)
             pcluster=pNuCluster(ev)
             phwc = ev[0][-1]
-            pspace = pSpace(-1*(solution.fun+temploglh(ev)))
+            pspace = pSpace(-1*(solution.fun))#+temploglh(ev)))
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
             nnus = len(ev)-1
