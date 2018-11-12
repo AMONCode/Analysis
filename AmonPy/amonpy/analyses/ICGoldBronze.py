@@ -57,7 +57,7 @@ def ic_gold_bronze_config():
     return config
 
 @app.task(ignore_result=True)
-def ic_hese_ehe(new_event=None):
+def ic_gold_bronze(new_event=None):
 
     max_id = db_read.alert_max_id(alert_streams['IC-Gold-Bronze'],HostFancyName,
                                        UserFancyName,

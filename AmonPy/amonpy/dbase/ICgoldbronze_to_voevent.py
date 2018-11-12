@@ -88,6 +88,10 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["Probability of a neutrino event being astrophysical in origin."])
     w.add_Param(p)
 
+    p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
+    p.set_Description(["False alarm rate, a value of zero means not available"])
+    w.add_Param(p)
+
     p = Param(name="energy", ucd="phys.energy", unit="TeV", dataType="float",  value=str(energy))
     p.set_Description(["Energy estimate - lower bound (in GeV)."])
     w.add_Param(p)
