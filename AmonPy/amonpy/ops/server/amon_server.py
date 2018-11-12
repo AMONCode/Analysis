@@ -14,6 +14,8 @@ from twisted.web.server import Site, NOT_DONE_YET
 from twisted.enterprise import adbapi
 from twisted.python import log
 
+import traceback
+
 import cgi, os, getopt, sys, shutil
 import ConfigParser,netrc, ast
 from amonpy.tools.config import AMON_CONFIG
@@ -190,7 +192,7 @@ class EventManager(Resource):
                                 event[0].psf_type,
                                 0))
                 plenght=len(evparam)
-                print 'DB Stuff'
+
                 for i in xrange(plenght):
                     transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
                                (evparam[i].name,
