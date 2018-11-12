@@ -46,6 +46,7 @@ from amonpy.analyses.ICHESE_EHE import *
 from amonpy.analyses.ICOFU import *
 from amonpy.analyses.ICGFU import *
 from amonpy.analyses.HAWCGRB import *
+from amonpy.analyses.ICGoldBronze import *
 
 @app.task
 def error_handler(uuid):
