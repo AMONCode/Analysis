@@ -97,9 +97,7 @@ def hawc_burst(new_event=None):
     else:
         title='Dev Machine: AMON HAWC-GRBlike alert'
 
-    email_alerts.alert_email_content([events],content,title)
-
-    if (events.type == "observation") and (false_pos<1.0e3):
+    if (events.type == "observation") and (false_pos<=10.0):
 
         new_alert = Alert(config.stream,idnum+1,config.rev)
         new_alert.dec = dec
@@ -124,7 +122,10 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        if (prodMachine == True):
+        title='AMON HAWC-GRBlike alert, probably interesting'
+
+        if (prodMachine == True) and (false_pos<=1.0):
+            title='AMON HAWC-GRBlike alert: URGENT!'
             try:
                 print "HAWC Burst created, sending to GCN"
                 cmd = ['comet-sendvo']
@@ -138,3 +139,6 @@ def hawc_burst(new_event=None):
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
         else:
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
+
+    #Send email after everything has been accomplished
+    email_alerts.alert_email_content([events],content,title)

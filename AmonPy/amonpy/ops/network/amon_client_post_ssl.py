@@ -1,5 +1,5 @@
 """@package amon_client_post_ssl
-client that sends events to the server using HTTP 
+client that sends events to the server using HTTP
 protocol with method=POST over TLS with certificate and key file client.crt and client.key
 """
 import sys, getopt, os, shutil, logging, datetime
@@ -47,17 +47,17 @@ def printError(failure):
     failure.value.reasons[0].printTraceback()
 def stop(result):
     reactor.stop()
-    
+
 def moveFile(path,fname):
-    shutil.move(path+fname, path+"archive/"+fname) 
-    print "File %s sent" % (fname,)  
-    
+    shutil.move(path+fname, path+"archive/"+fname)
+    print "File %s sent" % (fname,)
+
 def printSent(fname):
-    print "File %s sent" % (fname,) 
-     
+    print "File %s sent" % (fname,)
+
 def printNotSent(filename):
-    print "File %s not sent" % (fname,)  
-    
+    print "File %s not sent" % (fname,)
+
 def check_open_fds():
     fds = []
     soft, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
@@ -68,7 +68,7 @@ def check_open_fds():
             continue
         fds.append(fd)
     return soft, fds
-    
+
 
 class MyClientContextFactory(object):
     """A context factory for SSL clients."""
@@ -87,15 +87,15 @@ class MyClientContextFactory(object):
         ctx.use_certificate_file(self.certificateFileName)
         ctx.use_privatekey_file(self.privateKeyFileName)
         return ctx
-                
+
 def check_for_files(hostport, eventpath, keyfile, certfile):
     # check a directory with events (eventpath) for an oldest xml file
     # if found post it to the server (hostport) using HTTP POST protocol
-    
+
     # check for number of open file descriptors first, OS X is limited by default to 256
-    # each OS has its own limitation, file descriptors are open not only when the file 
+    # each OS has its own limitation, file descriptors are open not only when the file
     # is open, but for each new socket/connection opened as well
-    
+
     fds = []
     soft, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
     for fd in range(0, soft):
@@ -104,18 +104,18 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
         except IOError:
             continue
         fds.append(fd)
-        
+
     if (len(fds)<=soft):
         host=hostport
         path=eventpath
         fkey = keyfile
         fcert = certfile
-                
+
         agent = Agent(reactor,MyClientContextFactory(fcert,fkey))
-        
+
         files = sorted(os.listdir(path), key=lambda p: os.path.getctime(os.path.join(path, p)))
         files_xml=[]
-      
+
         for filename in files:
             if (os.path.isdir(path+filename) or filename[0]=='.' or filename.find(".log") !=-1):
                 pass
@@ -123,13 +123,13 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                 files_xml.append(filename)
             else:
                 pass
-            
+
         if len(files_xml)>0:
-            oldest = files_xml[0] 
-            
+            oldest = files_xml[0]
+
             try:
 	        try:
-                    datafile=open(path+oldest)
+                    datafile=open(os.path.join(path,oldest))
                 except Exception as E:
                     print E
                     print "had trouble with opening file"
@@ -139,11 +139,11 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                 #body = StringProducer(data)
                 body=FileBodyProducer(datafile)
 		print "made body"
-                # since twisted v.15 length is string 
+                # since twisted v.15 length is string
                 length_data=str(body.length)
 		print "got length"
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
-                                            'Content-Type':['text/xml'], 
+                                            'Content-Type':['text/xml'],
                                             'Content-Lenght': [length_data],
                                             'Content-Name':[oldest]})
                 print "made headers"
@@ -151,18 +151,16 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                 print "did request"
 		# on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
-                shutil.move(path+oldest, path+"archive/"+oldest)
+                shutil.move(os.path.join(path,oldest), os.path.join(path,"archive/",oldest))
                 #datafile.close()
                 #print "Event %s sent" % (oldest,)
             except (RuntimeError, TypeError, NameError,AttributeError, Exception) as E:
                 log.msg("Error parsing file %s " % (oldest,))
 		log.msg(str(E))
             else:
-                #shutil.move(path+oldest, path+"archive/"+oldest)        
+                #shutil.move(path+oldest, path+"archive/"+oldest)
                 print "ping db"
         else:
             pass
     else:
-        pass          
-    
-
+        pass
