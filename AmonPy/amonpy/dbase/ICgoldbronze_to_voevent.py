@@ -92,7 +92,7 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["False alarm rate, a value of zero means not available"])
     w.add_Param(p)
 
-    p = Param(name="energy", ucd="phys.energy", unit="TeV", dataType="float",  value=str(energy))
+    p = Param(name="energy", ucd="phys.energy", unit="GeV", dataType="float",  value=str(energy))
     p.set_Description(["Energy estimate - lower bound (in GeV)."])
     w.add_Param(p)
 
