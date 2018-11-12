@@ -156,7 +156,7 @@ def make_event(source, o=sys.stdout):
             evPar.units=p.get_unit()
             #evPar.forprint()
             evParam.append(evPar)
-    print "PARAMETER"
+    #print "PARAMETER"
     #evParam[0].forprint()
 
     #print>>o, 'WHEREWHEN'
