@@ -112,7 +112,7 @@ def hawc_burst(new_event=None):
             new_alert.type = 'test'
 
         #xmlForm=alert_to_voevent([new_alert])
-        fname= 'amon_hawc_burst_%s_%s_%s.xml'%(events.stream, events.id, events.rev)
+        fname= 'amon_hawc_burst_%s_%s_%s.xml'%(config.stream, events.id, events.rev)
         VOAlert = Alert2VOEvent([new_alert],'hawc_burstlike','Alert from HAWC Burst Monitoring')
         alertparams = VOAlert.MakeDefaultParams([new_alert])
         VOAlert.WhatVOEvent(alertparams)
