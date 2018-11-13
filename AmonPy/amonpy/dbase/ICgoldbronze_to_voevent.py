@@ -18,7 +18,6 @@ def ICgoldbronze_to_voevent(alert, params):
     stream=alert[0].stream #Need to check if GCN will be the same
     amon_id = alert[0].id
     rev=alert[0].rev
-    dupl=duplicate
 
     for i in range(len(params)):
         #if (params[i].name== 'qtot'):
