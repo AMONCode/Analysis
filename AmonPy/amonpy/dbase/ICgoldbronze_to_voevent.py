@@ -39,10 +39,10 @@ def ICgoldbronze_to_voevent(alert, params):
 
     v = VOEvent.VOEvent(version="2.0")
     if stream==streams['IC-Gold']:
-        v.set_ivorn("ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
+        v.set_ivorn("ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Gold neutrino event.")
     elif stream==streams['IC-Bronze']:
-        v.set_ivorn("ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
+        v.set_ivorn("ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Bronze neutrino event.")
     v.set_role("%s" % alert[0].type)
 
@@ -92,7 +92,7 @@ def ICgoldbronze_to_voevent(alert, params):
     w.add_Param(p)
 
     p = Param(name="energy", ucd="phys.energy", unit="GeV", dataType="float",  value=str(energy))
-    p.set_Description(["Energy estimate - lower bound (in GeV)."])
+    p.set_Description(["Likely neutrino energy (in GeV)."])
     w.add_Param(p)
 
     p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90))
