@@ -56,6 +56,8 @@ gcn_streams = {
             "GFU-Alerts":6,
             "HWC-GRBlike-Alerts":7,
             "Antares-Fermi":8,
+            "IC-Gold":24,
+            "IC-Bronze":25,
 }
 
 inv_gcn_streams = dict(map(reversed,gcn_streams.items()))
