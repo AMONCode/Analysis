@@ -58,19 +58,19 @@ def hawc_burst_config():
 @app.task(ignore_result=True)
 def hawc_burst(new_event=None):
 
-    max_id = db_read.alert_max_id(alert_streams['HWC-GRBlike-Alerts'],HostFancyName,
-                                       UserFancyName,
-                                       PasswordFancy,
-                                       DBFancyName)
+    # max_id = db_read.alert_max_id(alert_streams['HWC-GRBlike-Alerts'],HostFancyName,
+    #                                    UserFancyName,
+    #                                    PasswordFancy,
+    #                                    DBFancyName)
 
     config = hawc_burst_config()
 
-    if max_id is None:
-        idnum = 0
-    else:
-        idnum = max_id
+    # if max_id is None:
+    #     idnum = 0
+    # else:
+    #     idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    # print "Max Id Alert in DB: %d"%(idnum)
 
     new_event = jsonpickle.decode(new_event)
 
@@ -99,7 +99,7 @@ def hawc_burst(new_event=None):
 
     if (events.type == "observation") and (false_pos<=10.0):
 
-        new_alert = Alert(config.stream,idnum+1,config.rev)
+        new_alert = Alert(config.stream,events.id,config.rev)
         new_alert.dec = dec
         new_alert.RA = ra
         new_alert.sigmaR = poserr
