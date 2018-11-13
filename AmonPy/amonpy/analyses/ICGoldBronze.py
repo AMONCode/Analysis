@@ -148,4 +148,4 @@ def ic_gold_bronze(new_event=None):
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
     email_alerts.alert_email_content([events],content,title)
-    email_alerts.alert_email([events],params)
+    #email_alerts.alert_email([events],params)
