@@ -94,7 +94,7 @@ def ic_gold_bronze(new_event=None):
             # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
             if (params[i].name=='signalness'):
                 signalness = params[i].value
-                print 'Signal trackenss %.2f' % signal_t
+                print 'Signal trackenss %.2f' % signalness
             if (params[i].name=='run_id'):
                 run_id=params[i].value
             if (params[i].name=='event_id'):
