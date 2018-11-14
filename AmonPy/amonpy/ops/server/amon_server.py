@@ -243,7 +243,7 @@ class EventManager(Resource):
             # Get the file name of the VOEvent
 
             self.headers = request.getAllHeaders()
-            #print self.headers
+            print self.headers
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
