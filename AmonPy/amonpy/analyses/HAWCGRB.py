@@ -97,7 +97,7 @@ def hawc_burst(new_event=None):
     else:
         title='Dev Machine: AMON HAWC-GRBlike alert'
 
-    if (events.type == "observation") and (false_pos<=10.0):
+    if (events.type == "observation") and (false_pos<=365.0):
 
         new_alert = Alert(config.stream,events.id,config.rev)
         new_alert.dec = dec
