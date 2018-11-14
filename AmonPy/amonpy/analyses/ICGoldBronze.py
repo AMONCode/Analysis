@@ -79,8 +79,8 @@ def ic_gold_bronze(new_event=None):
     src_error_90=0.
 
     t1 = time()
-    events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
-                                    UserFancyName,PasswordFancy,DBFancyName)
+    # new_event=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
+    #                                 UserFancyName,PasswordFancy,DBFancyName)
     params=db_read.read_parameters(new_event.stream,new_event.id,new_event.rev,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 
@@ -119,19 +119,19 @@ def ic_gold_bronze(new_event=None):
         title = 'IC Gold/Bronze Alert'
     else:
         title = 'Test from Dev machine: IC Gold/Bronze'
-    content = 'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(events.RA)+'\n'+'Dec = '+str(events.dec)+'\n'+'Event_time = '+str(pd.to_datetime(events.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
+    content = 'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(new_event.RA)+'\n'+'Dec = '+str(new_event.dec)+'\n'+'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
 
     #Create Alert xml file
-    xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([events],params)
+    xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([new_event],params)
     if new_event.stream == streams['IC-Gold']:
-        fname=os.path.join(AlertDir,'amon_ic-gold_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
+        fname=os.path.join(AlertDir,'amon_ic-gold_%s_%s_%s.xml'%(new_event.stream, new_event.id, new_event.rev))
     elif new_event.stream == streams['IC-Bronze']:
-        fname=os.path.join(AlertDir,'amon_ic-bronze_%s_%s_%s.xml'%(events.stream, events.id, events.rev))
+        fname=os.path.join(AlertDir,'amon_ic-bronze_%s_%s_%s.xml'%(new_event.stream, new_event.id, new_event.rev))
     f1=open(fname, 'w+')
     f1.write(xmlForm)
     f1.close()
 
-    if (events.type=="observation") and (prodMachine is True):
+    if (new_event.type=="observation") and (prodMachine is True):
         try:
             cmd = ['comet-sendvo']
             cmd.append('--file=' + fname)
@@ -147,5 +147,5 @@ def ic_gold_bronze(new_event=None):
     else:
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
-    email_alerts.alert_email_content([events],content,title)
-    #email_alerts.alert_email([events],params)
+    email_alerts.alert_email_content([new_event],content,title)
+    #email_alerts.alert_email([new_event],params)
