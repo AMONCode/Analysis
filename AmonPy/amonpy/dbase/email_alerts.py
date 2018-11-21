@@ -118,7 +118,7 @@ def alert_email(alert, params):
 def alert_email_content(alert,content,title_msg):
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
     nrc = netrc.netrc(nrc_fname)
-    emails = ['hgayala@psu.edu']
+    emails = ['hgayala@psu.edu','delauj2@gmail.com']
 
     if alert[0].type == "observation":
         FROM = nrc.hosts['gmail'][0] + '@gmail.com'
@@ -127,7 +127,7 @@ def alert_email_content(alert,content,title_msg):
     else:
         FROM = nrc.hosts['gmail'][0] + '@gmail.com'
         PASS = nrc.hosts['gmail'][2]
-        TO = ['hgayala@psu.edu']
+        TO = ['hgayala@psu.edu','delauj2@gmail.com']
 
     SERVER = 'smtp.gmail.com'
     PORT = 587
