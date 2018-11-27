@@ -122,7 +122,7 @@ def hawc_burst(new_event=None):
         alertparams.append(apar)
         apar = VOAlert.MakeParam(name="amon_id",ucd="meta.number",unit=" ",datatype="int",value=new_event.id,description='AMON id number')
         alertparams.append(apar)
-        apar = VOAlert.MakeParam(name="rev",ucd="meta.number,unit=" ",datatype="int",value=new_event.rev,description="Revision of the alert")
+        apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit=" ",datatype="int",value=new_event.rev,description="Revision of the alert")
         alertparams.append(apar)
         apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Time window of the search")
         alertparams.append(apar)
