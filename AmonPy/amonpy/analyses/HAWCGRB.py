@@ -107,6 +107,7 @@ def hawc_burst(new_event=None):
         new_alert.deltaT = new_event.deltaT
         new_alert.false_pos = false_pos
         new_alert.observing = config.stream
+        new_alert.datetime = tevent
         if (prodMachine == True):
             new_alert.type = 'observation'
         else:
