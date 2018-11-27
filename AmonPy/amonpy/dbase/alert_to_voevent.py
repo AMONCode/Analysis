@@ -92,8 +92,8 @@ class Alert2VOEvent(object):
 
         return paramlist
 
-    def MakeParam(self,name,unit,datatype,value,description):
-        p=Param(name=str(name), ucd=str(unit), dataType=str(datatype), value=str(value))
+    def MakeParam(self,name,ucd,unit,datatype,value,description):
+        p=Param(name=str(name), ucd=str(ucd), unit=str(unit), dataType=str(datatype), value=str(value))
         p.set_Description([str(description)])
         return p
 

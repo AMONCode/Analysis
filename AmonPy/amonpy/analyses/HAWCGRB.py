@@ -2,7 +2,7 @@ from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
-from amonpy.analyses.amon_streams import streams, alert_streams
+from amonpy.analyses.amon_streams import streams, alert_streams, gcn_streams
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
@@ -75,8 +75,8 @@ def hawc_burst(new_event=None):
     new_event = jsonpickle.decode(new_event)
 
     t1 = time()
-    events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
-                                    UserFancyName,PasswordFancy,DBFancyName)
+    # events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
+    #                                 UserFancyName,PasswordFancy,DBFancyName)
     params=db_read.read_parameters(new_event.stream,new_event.id,new_event.rev,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 
@@ -85,11 +85,11 @@ def hawc_burst(new_event=None):
     print ' lenght of parameters %s' % len(params)
 
     #Event description
-    ra = events.RA
-    dec = events.dec
-    poserr = events.sigmaR
-    false_pos = events.false_pos
-    tevent = events.datetime
+    ra = new_event.RA
+    dec = new_event.dec
+    poserr = new_event.sigmaR
+    false_pos = new_event.false_pos
+    tevent = new_event.datetime
     content = 'Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f, FAR: %0.3e yr^-1'%(ra,dec,poserr,false_pos)
     print content
     if prodMachine is True:
@@ -97,13 +97,14 @@ def hawc_burst(new_event=None):
     else:
         title='Dev Machine: AMON HAWC-GRBlike alert'
 
-    if (events.type == "observation") and (false_pos<=365.0):
+    if (new_event.type == "observation") and (false_pos<=365.0):
 
-        new_alert = Alert(config.stream,events.id,config.rev)
+        new_alert = Alert(config.stream,new_event.id,config.rev)
         new_alert.dec = dec
         new_alert.RA = ra
         new_alert.sigmaR = poserr
-        new_alert.pvalue = events.pvalue
+        new_alert.pvalue = new_event.pvalue
+        new_alert.deltaT = new_event.deltaT
         new_alert.false_pos = false_pos
         new_alert.observing = config.stream
         if (prodMachine == True):
@@ -112,9 +113,25 @@ def hawc_burst(new_event=None):
             new_alert.type = 'test'
 
         #xmlForm=alert_to_voevent([new_alert])
-        fname= 'amon_hawc_burst_%s_%s_%s.xml'%(config.stream, events.id, events.rev)
+        fname= 'amon_hawc_burst_%s_%s_%s.xml'%(config.stream, new_event.id, new_event.rev)
         VOAlert = Alert2VOEvent([new_alert],'hawc_burstlike','Alert from HAWC Burst Monitoring')
-        alertparams = VOAlert.MakeDefaultParams([new_alert])
+        #alertparams = VOAlert.MakeDefaultParams([new_alert])
+        ## MakeParam(self,name,ucd,unit,datatype,value,description)
+        alertparams = []
+        apar = VOAlert.MakeParam(name="stream",ucd="meta.number",unit=" ",datatype="int",value=gcn_streams["HWC-GRBlike-Alerts"],description="Alert stream identification")
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="amon_id",ucd="meta.number",unit=" ",datatype="int",value=new_event.id,description='AMON id number')
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="rev",ucd="meta.number,unit=" ",datatype="int",value=new_event.rev,description="Revision of the alert")
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Time window of the search")
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="false_pos", ucd="stat.probability",unit="yr-1", datatype="float", value=false_pos, description="False Alarm Rate")
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="pvalue", ucd="stat.probability",unit=" ", datatype="float", value=new_alert.pvalue, description="P-value of the alert")
+        alertparams.append(apar)
+        apar = VOAlert.MakeParam(name="skymap",ucd="meta.code.multip",unit=" ", datatype="string", value=" ",description="Skymap of alert (not available yet)")
+        alertparams.append(apar)
         VOAlert.WhatVOEvent(alertparams)
         VOAlert.MakeWhereWhen([new_alert])
         xmlForm = VOAlert.writeXML()
@@ -141,4 +158,4 @@ def hawc_burst(new_event=None):
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
 
     #Send email after everything has been accomplished
-    email_alerts.alert_email_content([events],content,title)
+    email_alerts.alert_email_content([new_event],content,title)
