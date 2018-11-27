@@ -90,7 +90,7 @@ def hawc_burst(new_event=None):
     poserr = new_event.sigmaR
     false_pos = new_event.false_pos
     tevent = new_event.datetime
-    content = 'Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f, FAR: %0.3e yr^-1'%(ra,dec,poserr,false_pos)
+    content = 'Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f, FAR: %0.3e yr^-1, Time: %s'%(ra,dec,poserr,false_pos,str(tevent))
     print content
     if prodMachine is True:
         title='AMON HAWC-GRBlike alert'
