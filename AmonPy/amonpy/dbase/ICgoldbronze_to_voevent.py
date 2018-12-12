@@ -33,6 +33,8 @@ def ICgoldbronze_to_voevent(alert, params):
             src_error_50=params[i].value # GeV
         if (params[i].name== 'src_error90'):
             src_error_90=params[i].value # GeV
+        if (params[i].name== 'far'):
+            far=params[i].value
 
     datenow=datetime.utcnow()
     ############ VOEvent header ############################
@@ -87,7 +89,7 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["Probability of a neutrino event being astrophysical in origin."])
     w.add_Param(p)
 
-    p = Param(name="false_pos", ucd="stat.probability", unit=" ", dataType="float",  value=str(alert[0].false_pos))
+    p = Param(name="far", ucd="stat.probability", unit=" ", dataType="float",  value=str(far))
     p.set_Description(["False alarm rate, a value of zero means not available"])
     w.add_Param(p)
 

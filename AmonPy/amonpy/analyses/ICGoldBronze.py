@@ -77,6 +77,7 @@ def ic_gold_bronze(new_event=None):
     signalness=0.
     src_error_50=0.
     src_error_90=0.
+    far=0.
 
     t1 = time()
     # new_event=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
@@ -105,6 +106,8 @@ def ic_gold_bronze(new_event=None):
                 src_error_90=params[i].value
             if (params[i].name== 'energy'):
                 energy=params[i].value
+            if (params[i].name== 'far'):
+                far=params[i].value
     """
                 modified from
                 https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
