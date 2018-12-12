@@ -119,10 +119,16 @@ def ic_gold_bronze(new_event=None):
                 comment out code bellow if you do not have comet installed!
     """
     if prodMachine is True:
-        title = 'IC Gold/Bronze Alert'
+        if new_event.stream == streams['IC-Gold']:
+            title = 'IC Gold Alert'
+        elif new_event.stream == streams['IC-Bronze']:
+            title = 'IC Bronze Alert'
     else:
-        title = 'Test from Dev machine: IC Gold/Bronze'
-    content = 'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(new_event.RA)+'\n'+'Dec = '+str(new_event.dec)+'\n'+'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
+        if new_event.stream == streams['IC-Gold']:
+            title = 'Test from Dev machine: IC Gold'
+        elif new_event.stream == streams['IC-Bronze']:
+            title = 'Test from Dev machine: IC Bronze'
+    content = 'FAR = '+str(far)+'\n'+'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(new_event.RA)+'\n'+'Dec = '+str(new_event.dec)+'\n'+'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
 
     #Create Alert xml file
     xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([new_event],params)
