@@ -20,7 +20,7 @@ from amonpy.tools.config import AMON_CONFIG
 
 import sys, shutil, os, subprocess
 
-# DB configuration
+# Get the DB configuration
 HostFancyName = AMON_CONFIG.get('database', 'host_name')#Config.get('database', 'host_name')
 AlertDir = AMON_CONFIG.get('dirs','alertdir')
 
@@ -28,11 +28,13 @@ UserFancyName = AMON_CONFIG.get('database','username')#nrc.hosts[HostFancyName][
 PasswordFancy = AMON_CONFIG.get('database','password')#nrc.hosts[HostFancyName][2]
 DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
 
+# Variable to check in which server/machine we are
 prodMachine = eval(AMON_CONFIG.get('machine','prod'))
 
 
 def hawc_burst_config():
-    """ Returns a HAWC Burst AlertConfig object
+    """
+        Returns a HAWC Burst AlertConfig object.
     """
     stream = alert_streams['HWC-GRBlike-Alerts']
     rev = 0
