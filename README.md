@@ -9,7 +9,7 @@ AMON analysis software for receiving, handling events and generating coincidence
 # Installation
 
 Please contact the AMON team to use the software
-See (http://www.amon.psu.edu/)
+See the [AMON Webpage](http://www.amon.psu.edu/)
 
 Installing after cloning
 ```sh
