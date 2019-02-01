@@ -11,11 +11,13 @@ from amonpy.tools.config import AMON_CONFIG
 from amonpy.monitoring.monitor_funcs import get_times, send_error_email, send_email, get_events, get_event_Streams
 
 prodMachine = eval(AMON_CONFIG.get('machine','prod'))
+nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
+nrc = netrc.netrc(nrc_fname)
 
 def main():
     to = ['hgayala@psu.edu','delauj2@gmail.com']
-    me = 'amon.psu@gmail.com'
-    pwd= 'amonpassword'
+    me = nrc.hosts['gmail'][0] + '@gmail.com'
+    pwd= nrc.hosts['gmail'][2]
     now = datetime.utcnow()
     before = now - timedelta(hours=24)
     numstreams = get_event_Streams()
@@ -44,6 +46,6 @@ if __name__ == "__main__":
         body = str(type(inst)) + '\n' + str(inst.args) + '\n' + str(inst)
         subject = 'no_events_inawhile_email.py error'
         to = ['hgayala@psu.edu']
-        me = 'amon.psu@gmail.com'
-        pwd= 'amonpassword'
+        me = nrc.hosts['gmail'][0] + '@gmail.com'
+        pwd= nrc.hosts['gmail'][2]
         send_error_email(to,me,pwd,subject, body)
