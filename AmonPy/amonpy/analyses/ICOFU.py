@@ -35,6 +35,9 @@ UserFancyName = AMON_CONFIG.get('database','username')#nrc.hosts[HostFancyName][
 PasswordFancy = AMON_CONFIG.get('database','password')#nrc.hosts[HostFancyName][2]
 DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
 
+# Variable to check in which server/machine we are
+prodMachine = eval(AMON_CONFIG.get('machine','prod'))
+
 def ic_ofu_config():
     """ Returns an IC OFU AlertConfig object
     """
@@ -86,12 +89,12 @@ def ic_ofu(new_event=None):
     print ' lenght of parameters %s' % len(params)
     if (events.type == "observation"):
         xmlForm=ofualert_to_voevent.ofualert_to_voevent([events],params)
-        fname=self.alertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
+        fname=AlertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
             % (events.stream, events.id, events.rev)
         f1=open(fname, 'w+')
         f1.write(xmlForm)
         f1.close()
-        if (self.prodMachine == True):
+        if (prodMachine == True):
             try:
                 print "OFU created"
                 cmd = ['comet-sendvo']

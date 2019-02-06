@@ -29,7 +29,7 @@ streams = {
 inv_streams = dict(map(reversed,streams.items()))
 
 # Number for the alert streams for the different
-# correlation analyses
+# correlation analyses/pass-through analyses.
 
 alert_streams = {
             "IC-HAWC":1,

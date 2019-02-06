@@ -50,8 +50,8 @@ def ofualert_to_voevent(alert, params):
     datenow2=datenow1[0:10]+"T"+datenow1[11:]
     w.set_Date(str(datenow2))
     a = Author()
-    a.add_contactName("Gordana Tesic, Azadeh Keivani")
-    a.add_contactEmail('gut10@psu.edu, keivani@psu.edu')
+    a.add_contactName("James DeLaunay, Hugo Ayala")
+    a.add_contactEmail('jjd330@psu.edu,hgayala@psu.edu')
     w.set_Author(a)
     v.set_Who(w)
 
