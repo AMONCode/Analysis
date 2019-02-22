@@ -41,10 +41,10 @@ def ICgoldbronze_to_voevent(alert, params):
 
     v = VOEvent.VOEvent(version="2.0")
     if stream==streams['IC-Gold']:
-        v.set_ivorn("ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+str(event_id)+'_'+ str(rev))
+        v.set_ivorn("ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Gold neutrino event.")
     elif stream==streams['IC-Bronze']:
-        v.set_ivorn("ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+str(event_id)+'_'+ str(rev))
+        v.set_ivorn("ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Bronze neutrino event.")
     v.set_role("%s" % alert[0].type)
 

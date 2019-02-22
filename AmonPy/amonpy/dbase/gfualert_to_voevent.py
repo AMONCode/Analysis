@@ -173,9 +173,9 @@ def gfualert_to_voevent(alert, params):
     #print xml
     return xml
 
-if __name__ == "__main__":
-    alert=[Alert(1,0,0)]
-    xml1=alert_to_voevent(alert)
-    print xml1
-    f1=open('./test_alert.xml', 'w+')
-    f1.write(xml1)
+#if __name__ == "__main__":
+#    alert=[Alert(1,0,0)]
+#    xml1=alert_to_voevent(alert)
+#    print xml1
+#    f1=open('./test_alert.xml', 'w+')
+#    f1.write(xml1)
