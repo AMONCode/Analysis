@@ -472,7 +472,7 @@ def ic_hawc(new_event=None):
             f1=open(filen, 'w+')
 
             #Create Alert xml file
-            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu multimessenger coincidence')
+            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc',new_alert.id,new_alert.id,'Gamma-Nu multimessenger coincidence')
             someparams = VOAlert.MakeDefaultParams([new_alert])
             VOAlert.WhatVOEvent(someparams)
             VOAlert.MakeWhereWhen([new_alert])
