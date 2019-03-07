@@ -120,7 +120,7 @@ def hawc_burst(new_event=None):
         #run number and event id
         run_id = str(new_event.id[:-8]) # Contains run id an search time if >1sec.
         event_id = str(new_event.id[-4:])
-        VOAlert = Alert2VOEvent([new_alert],'hawc_burstlike','Alert from HAWC Burst Monitoring',run_id,event_id)
+        VOAlert = Alert2VOEvent([new_alert],'hawc_burst','Alert from HAWC Burst Monitoring',run_id,event_id)
 
         alertparams = []
         apar = VOAlert.MakeParam(name="stream",ucd="meta.number",unit=" ",datatype="int",value=gcn_streams["HWC-GRBlike-Alerts"],description="Alert stream identification")
