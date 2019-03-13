@@ -118,8 +118,8 @@ def hawc_burst(new_event=None):
         fname= 'amon_hawc_burst_%s_%s_%s.xml'%(config.stream, new_event.id, new_event.rev)
         #run_id and event_id come from the alert id, which in HAWC burst is a combination of the search time,
         #run number and event id
-        run_id = str(new_event.id[:-8]) # Contains run id an search time if >1sec.
-        event_id = str(new_event.id[-4:])
+        run_id = str(new_event.id)[:-8] # Contains run id an search time if >1sec.
+        event_id = str(new_event.id)[-4:]
         VOAlert = Alert2VOEvent([new_alert],'hawc_burst','Alert from HAWC Burst Monitoring',run_id,event_id)
 
         alertparams = []
