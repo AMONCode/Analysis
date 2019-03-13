@@ -11,7 +11,7 @@ import logging
 
 from amonpy.tools.config import AMON_CONFIG
 
-fro slackclient import SlackClient
+from slackclient import SlackClient
 
 class StreamToLogger(object):
     """
