@@ -69,7 +69,7 @@ def ICgoldbronze_to_voevent(alert, params):
         p.set_Description(["IceCube Bronze stream identification"])
     w.add_Param(p)
 
-    p = Param(name="amon_id", ucd="meta.number",dataType="int", value=str(amon_id))
+    p = Param(name="amon_id", ucd="meta.number",dataType="string", value=str(amon_id))
     p.set_Description(["Alert identification number"])
     w.add_Param(p)
 
@@ -89,7 +89,7 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["Probability of a neutrino event being astrophysical in origin."])
     w.add_Param(p)
 
-    p = Param(name="far", ucd="stat.probability", unit=" ", dataType="float",  value=str(far))
+    p = Param(name="far", ucd="stat.probability", unit="yr^-1", dataType="float",  value=str(far))
     p.set_Description(["False alarm rate, a value of zero means not available"])
     w.add_Param(p)
 
