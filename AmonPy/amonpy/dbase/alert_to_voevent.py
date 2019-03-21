@@ -50,7 +50,7 @@ class Alert2VOEvent(object):
         p.set_Description(["Analysis stream identification"])
         paramlist.append(p)
 
-        p = Param(name="amon_id", ucd="meta.number", dataType="int", value=str(amon_id))
+        p = Param(name="amon_id", ucd="meta.number", dataType="string", value=str(amon_id))
         p.set_Description(["Alert identification"])
         paramlist.append(p)
 
