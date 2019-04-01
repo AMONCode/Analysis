@@ -148,7 +148,7 @@ def ic_gold_bronze(new_event=None):
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
         except subprocess.CalledProcessError as e:
-            print "Send HESE VOevent alert failed"
+            print "Send Gold/Bronze VOevent alert failed"
             logger.error("send_voevent failed")
             raise e
         else:
