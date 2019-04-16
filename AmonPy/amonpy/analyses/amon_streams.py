@@ -45,15 +45,21 @@ alert_streams = {
 
 inv_alert_streams = dict(map(reversed,alert_streams.items()))
 
-# ID number for the streams used in GCN/TAN
+# ID number for the streams that are sent to GCN
 gcn_streams = {
             "IC-OFU":0,
             "IC-HESE":1,
             "IC-EHE":2,
             "IC-HAWC":9,
             "IC-Fermi":4,
-            "OFU-Alerts":5,
-            "GFU-Alerts":6,
+            "OFU-Alerts1":12,
+            "OFU-Alerts2":13,
+            "OFU-Alerts3":14,
+            "OFU-Alerts4":15,
+            "GFU-Alerts1":16,
+            "GFU-Alerts2":17,
+            "GFU-Alerts3":18,
+            "GFU-Alerts4":19,
             "HWC-GRBlike-Alerts":7,
             "Antares-Fermi":8,
             "IC-Gold":24,
