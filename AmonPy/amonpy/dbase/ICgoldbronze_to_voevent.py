@@ -53,8 +53,8 @@ def ICgoldbronze_to_voevent(alert, params):
     datenow2=datenow1[0:10]+"T"+datenow1[11:]
     w.set_Date(str(datenow2))
     a = Author()
-    a.add_contactName("Erik Blaufuss, James DeLaunay, Hugo Ayala")
-    a.add_contactEmail('blaufuss@umd.edu, jjd330@psu.edu,hgayala@psu.edu')
+    a.add_contactName("Icecube Realtime Committee")
+    a.add_contactEmail('roc@icecube.wisc.edu')
     w.set_Author(a)
     v.set_Who(w)
 
@@ -93,8 +93,8 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["False alarm rate, a value of zero means not available"])
     w.add_Param(p)
 
-    p = Param(name="energy", ucd="phys.energy", unit="GeV", dataType="float",  value=str(energy))
-    p.set_Description(["Likely neutrino energy (in GeV)."])
+    p = Param(name="energy", ucd="phys.energy", unit="TeV", dataType="float",  value=str(energy/1000.))
+    p.set_Description(["Likely neutrino energy (in TeV)."])
     w.add_Param(p)
 
     p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90))
