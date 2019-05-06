@@ -85,7 +85,7 @@ def ICgoldbronze_to_voevent(alert, params):
     p.set_Description(["Run id"])
     w.add_Param(p)
 
-    p = Param(name="signalness", ucd="stat.probability", unit=" ", dataType="float",  value=str(signalness))
+    p = Param(name="signalness", ucd="stat.probability", unit="", dataType="float",  value=str(signalness))
     p.set_Description(["Probability of a neutrino event being astrophysical in origin."])
     w.add_Param(p)
 
