@@ -154,17 +154,11 @@ DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`skyMapEvent` ;
 
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`skyMapEvent` (
-  `Dec` FLOAT NOT NULL ,
-  `RA` FLOAT NOT NULL ,
-  `delta_Dec` FLOAT NULL DEFAULT NULL COMMENT 'pixel resolution' ,
-  `delta_RA` FLOAT NULL DEFAULT NULL COMMENT 'pixel resolution' ,
-  `val1` FLOAT NULL DEFAULT NULL COMMENT 'normalized probability file or table' ,
-  `val2` FLOAT NULL DEFAULT NULL ,
-  `val3` FLOAT NULL DEFAULT NULL COMMENT 'sensitivity pointer' ,
+  `location` VARCHAR(256) NOT NULL COMMENT 'path to map' ,
   `event_eventStreamConfig_stream` INT NOT NULL ,
   `event_id` BIGINT NOT NULL ,
   `event_rev` SMALLINT NOT NULL ,
-  PRIMARY KEY (`Dec`, `RA`, `event_eventStreamConfig_stream`, `event_id`, `event_rev`) ,
+  PRIMARY KEY (`location`, `event_eventStreamConfig_stream`, `event_id`, `event_rev`) ,
   INDEX `fk_skyMapEvent_event1_idx` (`event_eventStreamConfig_stream` ASC, `event_id` ASC, `event_rev` ASC) ,
   CONSTRAINT `fk_skyMapEvent_event1`
     FOREIGN KEY (`event_eventStreamConfig_stream` , `event_id` , `event_rev` )
@@ -182,17 +176,11 @@ DROP TABLE IF EXISTS `AMON_DATABASE_NAME`.`skyMapAlert` ;
 
 SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `AMON_DATABASE_NAME`.`skyMapAlert` (
-  `Dec` FLOAT NOT NULL ,
-  `RA` FLOAT NOT NULL ,
-  `delta_Dec` FLOAT NULL DEFAULT NULL ,
-  `delta_RA` FLOAT NULL DEFAULT NULL ,
-  `val1` FLOAT NULL DEFAULT NULL ,
-  `val2` FLOAT NULL DEFAULT NULL ,
-  `val3` FLOAT NULL DEFAULT NULL ,
+  `location` VARCHAR(256) NOT NULL COMMENT 'path to map' ,
   `alert_alertConfig_stream` INT NOT NULL ,
   `alert_id` INT NOT NULL ,
   `alert_rev` TINYINT NOT NULL ,
-  PRIMARY KEY (`Dec`, `RA`, `alert_alertConfig_stream`, `alert_id`, `alert_rev`) ,
+  PRIMARY KEY (`location`, `alert_alertConfig_stream`, `alert_id`, `alert_rev`) ,
   INDEX `fk_skyMapAlert_alert1_idx` (`alert_alertConfig_stream` ASC, `alert_id` ASC, `alert_rev` ASC) ,
   CONSTRAINT `fk_skyMapAlert_alert1`
     FOREIGN KEY (`alert_alertConfig_stream` , `alert_id` , `alert_rev` )
