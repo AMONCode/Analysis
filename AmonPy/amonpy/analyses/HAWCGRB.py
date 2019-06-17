@@ -148,8 +148,6 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        title='AMON HAWC-GRBlike alert, probably interesting'
-
         if (prodMachine == True) and (false_pos<=1.0):
             title='AMON HAWC-GRBlike alert: URGENT!'
             try:
@@ -166,5 +164,5 @@ def hawc_burst(new_event=None):
         else:
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
 
-    #Send email after everything has been accomplished
+    #Send email after everything has been accomplished, all the events
     email_alerts.alert_email_content([new_event],content,title)
