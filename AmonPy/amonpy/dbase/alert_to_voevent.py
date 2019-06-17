@@ -23,7 +23,7 @@ class Alert2VOEvent(object):
         a = Author()
         a.add_contactName(name)
         a.add_contactEmail(email)
-        datenow=str(datetime.now())
+        datenow=str(datetime.utcnow())
         d1 = datenow[0:10]+"T"+datenow[11:]
         w=Who()
         w.set_Date(d1)
