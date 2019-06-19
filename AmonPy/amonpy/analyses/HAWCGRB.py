@@ -6,6 +6,7 @@ from amonpy.analyses.amon_streams import streams, alert_streams, gcn_streams
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
+from amonpy.monitoring.monitor_funcs import slack_message
 
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
@@ -155,6 +156,7 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
+                slack_message(title+"\n"+content,"alerts")
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")
