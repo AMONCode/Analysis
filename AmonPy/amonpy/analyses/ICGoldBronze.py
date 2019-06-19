@@ -3,7 +3,8 @@ from amonpy.dbase import db_read, db_write
 from amonpy.dbase import ICgoldbronze_to_voevent
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams
-
+from amonpy.tools.config import AMON_CONFIG
+from amonpy.monitoring.monitor_funcs import slack_message
 
 from amonpy.ops.server.celery import app
 from amonpy.ops.server.buffer import EventBuffer
@@ -17,7 +18,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
 import netrc, jsonpickle
-from amonpy.tools.config import AMON_CONFIG
+
 
 import sys, shutil, os, subprocess
 
@@ -147,6 +148,7 @@ def ic_gold_bronze(new_event=None):
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
+            slack_message(title+"\n"+content,"alerts")
         except subprocess.CalledProcessError as e:
             print "Send Gold/Bronze VOevent alert failed"
             logger.error("send_voevent failed")
