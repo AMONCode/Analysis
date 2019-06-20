@@ -17,7 +17,7 @@ import subprocess
 
 here = path.abspath(path.dirname(__file__))
 
-with open(path.join(here, 'README.txt')) as f:
+with open(path.join(here, 'README.md')) as f:
       long_description = f.read()
 
 class AMONInstall(install):
