@@ -56,7 +56,7 @@ Scripts to create databases are in mysql directory.
 README file there explains how to run them.
 
 If you are creating your own database, or recreating database on db.hpc.rcc.psu.edu
-run amonpy/dbase/test_db_write.py in order to populate event and alert configuration
+run `amonpy/dbase/test_db_write.py` in order to populate event and alert configuration
 tables. If these two tables are empty, events and alerts produced by
 analysis code cannot be written in event and alert table due to the foreign keys constraints.
 
@@ -74,7 +74,7 @@ Ignore text bellow if you have a developer distribution of the code from the AMO
 
 To install AMON package run:
 
-python setup.py install
+`python setup.py install --user`
 
 Code will run without installation as well, if run from the source code subdirectories:
 amonpy/ops
