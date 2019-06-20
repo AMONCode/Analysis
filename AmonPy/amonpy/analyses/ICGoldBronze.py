@@ -1,6 +1,6 @@
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
-from amonpy.dbase import ICgoldbronze_to_voevent
+from amonpy.dbase import ICgoldbronze_to_voevent, post_on_websites
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams
 from amonpy.tools.config import AMON_CONFIG
@@ -157,6 +157,9 @@ def ic_gold_bronze(new_event=None):
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
     else:
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
+
+        post_on_websites.ICgoldbronze_to_AMONalerts(new_event,params)
+        post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
 
     email_alerts.alert_email_content([new_event],content,title)
     #email_alerts.alert_email([new_event],params)
