@@ -8,7 +8,7 @@ import pandas as pd
 from datetime import datetime
 
 def post_on_OpenAMON(post, particle):
-    
+
     site_email = ["kaya338hene@post.wordpress.com"] # email linked to the psu wordpress website OpenAMON
     notif_email = ["tmg5746@gmail.com"] # email used to trigger app notifications
     me = "amon.psu@gmail.com"
