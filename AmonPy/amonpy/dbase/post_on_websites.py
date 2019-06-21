@@ -63,7 +63,7 @@ def ICgoldbronze_to_OpenAMON(event, params):
 
     
     post="""## An intriguing event has just been detected by the IceCube neutrino telescope!
-    
+
 This event has a %.1f%% chance to be a neutrino of astrophysical origin. The background noise fluctuation should produce a similar event every %d days in average.
 
 Its energy is estimated to be around %d TeV [1. %d times the average energy released in nuclear fission of one Uranium-235 atom] and its source has a 90%% probability to be located within a zone of %.2f square deg [2. %d times smaller than the moon angular coverage].
@@ -110,27 +110,29 @@ def ICgoldbronze_to_AMONalerts(event, params):
     elif event.stream == streams['IC-Bronze']:
         notice_type = 'IceCube Bronze'
     
+    event_datetime=str(pd.to_datetime(event.datetime))
+    tag=event_datetime[8:10]+event_datetime[5:7]+event_datetime[2:4]
+
     post = """
-    NOTICE_TYPE: %s
-    EVENT_TIME: %s
-    STREAM: %s
-    RUN_NUM: %s
-    EVENT_NUM: %s
-    SRC_RA: %0.4f [deg]
-    SRC_DEC: %0.4f [deg]
-    SRC_ERROR_90: %0.2f [arcmin radius, stat-only, 90%% containment]
-    
-    SRC_ERROR_50: %0.2f [arcmin radius, stat-only, 50%% containment]
-    
-    REVISION: %s
-    ENERGY:  %.4e [TeV]
-    SIGNALNESS: %.4f [dn]
-    FAR: %.4f [yr^-1]
-    COMMENTS: %s event.
-    COMMENTS: The position error is statistical only, there is no systematic added.
-    [category %s]""" % (notice_type, str(pd.to_datetime(event.datetime)), str(event.stream), str(run_id),
+NOTICE_TYPE: %s
+EVENT_TIME: %s
+STREAM: %s
+RUN_NUM: %s
+EVENT_NUM: %s
+SRC_RA: %0.4f [deg]
+SRC_DEC: %0.4f [deg]
+SRC_ERROR_90: %0.2f [arcmin radius, stat-only, 90%% containment]
+SRC_ERROR_50: %0.2f [arcmin radius, stat-only, 50%% containment]
+REVISION: %s
+ENERGY:  %.4e [TeV]
+SIGNALNESS: %.4f [dn]
+FAR: %.4f [yr^-1]
+COMMENTS: %s event.
+COMMENTS: The position error is statistical only, there is no systematic added.
+[category %s]
+[tags IceCube-%s]""" % (notice_type, event_datetime, str(event.stream), str(run_id),
     str(event_id), event.RA, event.dec, src_error_90, src_error_50, str(event.rev), energy/1000.,
-    signalness, far, notice_type, notice_type)
+    signalness, far, notice_type, notice_type, tag)
 
     post_title = "%s alert" % (notice_type)
 
@@ -144,24 +146,24 @@ def HAWCGRB_to_AMONalerts(event):
 
     run_id = str(event.id)[:-8]
     event_id = str(event.id)[-4:]
+    tag=str(event.datetime)[8:10]+str(event.datetime)[5:7]+str(event.datetime)[2:4]
 
     post = """ 
-    NOTICE_TYPE: %s 
-    EVENT_TIME: %s 
-    STREAM: %s 
-    RUN_NUM: %s 
-    EVENT_NUM: %s 
-    SRC_RA: %0.4f [deg] 
-    SRC_DEC: %0.4f [deg] 
-    SRC_ERROR: %0.2f [arcmin radius, stat+sys, 90%% containment]
-    
-    REVISION: %s 
-    FAR: %0.3e [yr^-1] 
-    Pvalue: %0.3e [0.0 - 1.0] 
-    delta_T: %s [sec] 
-    COMMENTS: HAWC burst monitor event. 
-    [category HAWC Burst Monitor]""" % ("HAWC Burst Monitor", str(event.datetime), str(event.stream), str(run_id), str(event_id),
-    event.RA, event.dec, event.sigmaR, str(event.rev), event.false_pos, event.pvalue, str(event.deltaT)) 
+NOTICE_TYPE: %s 
+EVENT_TIME: %s 
+STREAM: %s 
+RUN_NUM: %s 
+EVENT_NUM: %s 
+SRC_RA: %0.4f [deg] 
+SRC_DEC: %0.4f [deg] 
+SRC_ERROR: %0.2f [arcmin radius, stat+sys, 90%% containment]
+REVISION: %s 
+FAR: %0.3e [yr^-1] 
+Pvalue: %0.3e [0.0 - 1.0] 
+delta_T: %s [sec] 
+COMMENTS: HAWC burst monitor event.
+[category HAWC Burst Monitor]
+[tags HAWC-%s]""" % ("HAWC Burst Monitor", str(event.datetime), str(event.stream), str(run_id), str(event_id),
+    event.RA, event.dec, event.sigmaR, str(event.rev), event.false_pos, event.pvalue, str(event.deltaT), tag) 
  
     post_on_AMONalerts(post, "HAWC Burst Monitor alert")
-
