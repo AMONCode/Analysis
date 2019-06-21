@@ -111,7 +111,7 @@ def ICgoldbronze_to_AMONalerts(event, params):
         notice_type = 'IceCube Bronze'
     
     event_datetime=str(pd.to_datetime(event.datetime))
-    tag=event_datetime[8:10]+event_datetime[5:7]+event_datetime[2:4]
+    tag=event_datetime[2:4]+event_datetime[5:7]+event_datetime[8:10]
 
     post = """
 NOTICE_TYPE: %s
@@ -146,7 +146,7 @@ def HAWCGRB_to_AMONalerts(event):
 
     run_id = str(event.id)[:-8]
     event_id = str(event.id)[-4:]
-    tag=str(event.datetime)[8:10]+str(event.datetime)[5:7]+str(event.datetime)[2:4]
+    tag=str(event.datetime)[2:4]+str(event.datetime)[5:7]+str(event.datetime)[8:10]
 
     post = """ 
 NOTICE_TYPE: %s 
