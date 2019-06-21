@@ -134,7 +134,7 @@ COMMENTS: The position error is statistical only, there is no systematic added.
     str(event_id), event.RA, event.dec, src_error_90, src_error_50, str(event.rev), energy/1000.,
     signalness, far, notice_type, notice_type, tag)
 
-    post_title = "%s alert" % (notice_type)
+    post_title = "%s alert %s" % (notice_type, tag)
 
     post_on_AMONalerts(post, post_title)
 
@@ -165,5 +165,7 @@ COMMENTS: HAWC burst monitor event.
 [category HAWC Burst Monitor]
 [tags HAWC-%s]""" % ("HAWC Burst Monitor", str(event.datetime), str(event.stream), str(run_id), str(event_id),
     event.RA, event.dec, event.sigmaR, str(event.rev), event.false_pos, event.pvalue, str(event.deltaT), tag) 
- 
-    post_on_AMONalerts(post, "HAWC Burst Monitor alert")
+     
+    post_title = "HAWC Burst Monitor alert %s" % (tag)
+
+    post_on_AMONalerts(post, post_title)
