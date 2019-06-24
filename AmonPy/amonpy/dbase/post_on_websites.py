@@ -49,8 +49,6 @@ def ICgoldbronze_to_OpenAMON(event, params):
         if (params[i].name== 'far'):
             far=params[i].value
 
-    datenow=datetime.utcnow()
-
     # TODO add an image?
     # TODO add the stellarium thing # <a href="https://stellarium-web.org/skysource/Vega?fov=120.00&amp;date=2019-06-15T01:30:13Z&amp;lat=39.86&amp;lng=-74.17&amp;elev=0">in the direction of Vega</a>[1. This is a broad direction, see the complete set of information for a precise one]!"
     # TODO change "degree" into real degree sign (make it python 2 and 3 compatible)
@@ -61,7 +59,8 @@ def ICgoldbronze_to_OpenAMON(event, params):
     src_error_90_solid_angle=(1.-cos(radians(src_error_90)))*2.*pi # steradians
     src_error_50_solid_angle=(1.-cos(radians(src_error_50)))*2.*pi # steradians
 
-    
+    E_sci_notat = ("%.5e" % (energy/1000.)).replace("e+0", "*10^") # Write energy [TeV] in e+ format and replace e+0 by *10^
+
     post="""## An intriguing event has just been detected by the IceCube neutrino telescope!
 
 This event has a %.1f%% chance to be a neutrino of astrophysical origin. The background noise fluctuation should produce a similar event every %d days in average.
@@ -78,7 +77,7 @@ The estimated energy is %.5e TeV.
 The background noise should produce an event at least as significant %.2f times per year which leads to a probability of %.2f%% that this event is a track-like neutrino of astrophysical origin.
 [category alert]""" % (signalness*100., (1./far)*365.25, energy/1000., energy/0.2, src_error_90_solid_angle*(180./pi)**2,
 src_error_90_solid_angle/moon_solid_angle, str(event.datetime), float(event.RA), float(event.dec), degrees(src_error_90)*60.,
-degrees(src_error_50)*60., energy/1000., far, signalness*100.)
+degrees(src_error_50)*60., E_sci_notat, far, signalness*100.)
 
     post_on_OpenAMON(post, "Neutrino")
 
