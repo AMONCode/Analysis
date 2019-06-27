@@ -99,7 +99,6 @@ def hawc_burst(new_event=None):
         title='AMON HAWC-GRBlike alert'
     else:
         title='Dev Machine: AMON HAWC-GRBlike alert'
-        post_on_websites.HAWCGRB_to_AMONalerts(new_event) # TODO remove that when put on dev machine
         post_on_websites.HAWCGRB_to_OpenAMON(new_event)
 
     if (new_event.type == "observation") and (false_pos<=12.0):
@@ -168,7 +167,6 @@ def hawc_burst(new_event=None):
         else:
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
             
-            post_on_websites.HAWCGRB_to_AMONalerts(new_event)
             post_on_websites.HAWCGRB_to_OpenAMON(new_event)
 
     #Send email after everything has been accomplished, all the events
