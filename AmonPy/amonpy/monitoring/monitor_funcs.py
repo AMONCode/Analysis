@@ -136,7 +136,7 @@ def pois_prob(mu,nev,dt):
         p -= np.exp(-mu*dt)*((mu*dt)**k)/(m.factorial(k))
     return p
 
-def slack_message(message,channel,attachment=None,token=None):
+def slack_message(message,channel,prodMachine,attachment=None,token=None):
     try:
         sc = SlackClient(token)
     except Exception as e:

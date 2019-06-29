@@ -148,7 +148,7 @@ def ic_gold_bronze(new_event=None):
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
-            slack_message(title+"\n"+content,"alerts")
+            slack_message(title+"\n"+content,"alerts",prodMachine)
         except subprocess.CalledProcessError as e:
             print "Send Gold/Bronze VOevent alert failed"
             logger.error("send_voevent failed")
