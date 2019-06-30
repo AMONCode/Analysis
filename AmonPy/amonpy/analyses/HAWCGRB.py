@@ -28,6 +28,7 @@ AlertDir = AMON_CONFIG.get('dirs','alertdir')
 UserFancyName = AMON_CONFIG.get('database','username')#nrc.hosts[HostFancyName][0]
 PasswordFancy = AMON_CONFIG.get('database','password')#nrc.hosts[HostFancyName][2]
 DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
+token = AMON_CONFIG.get('alerts','slack_token')#Slack token
 
 # Variable to check in which server/machine we are
 prodMachine = eval(AMON_CONFIG.get('machine','prod'))
@@ -156,7 +157,7 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-                slack_message(title+"\n"+content,"alerts")
+                slack_message(title+"\n"+content,"alerts",token=token)
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")
