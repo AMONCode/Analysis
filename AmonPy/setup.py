@@ -28,6 +28,7 @@ class AMONInstall(install):
             cp.add_section("machine")
             cp.add_section("mailing_list")
             cp.add_section("rabbitmq")
+            cp.add_section("alerts")
             # users can change these
             cp.set("database", "archive_dbname", "AMON_test1")#str(uuid.uuid5(uuid.NAMESPACE_URL ,"%s://%s/archive" % (socket.gethostname(), self.prefix))))
             cp.set("database", "realtime_dbname", "AMON_test2")#str(uuid.uuid5(uuid.NAMESPACE_URL ,"%s://%s/realtime" % (socket.gethostname(), self.prefix))))
