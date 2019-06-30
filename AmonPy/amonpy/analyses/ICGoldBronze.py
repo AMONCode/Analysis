@@ -32,6 +32,7 @@ prodMachine = eval(AMON_CONFIG.get('machine','prod'))
 UserFancyName = AMON_CONFIG.get('database','username')#nrc.hosts[HostFancyName][0]
 PasswordFancy = AMON_CONFIG.get('database','password')#nrc.hosts[HostFancyName][2]
 DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')#Config.get('database', 'realtime_dbname')
+token = AMON_CONFIG.get('alerts','slack_token')#Slack token
 
 def ic_gold_bronze_config():
     """ Returns an IC-HESE-EHE AlertConfig object
@@ -148,7 +149,7 @@ def ic_gold_bronze(new_event=None):
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
-            slack_message(title+"\n"+content,"alerts",prodMachine)
+            slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
         except subprocess.CalledProcessError as e:
             print "Send Gold/Bronze VOevent alert failed"
             logger.error("send_voevent failed")

@@ -47,6 +47,8 @@ class AMONInstall(install):
             cp.set("rabbitmq","password","a_passwd")
             cp.set("rabbitmq","vhost","test")
 
+            cp.set("alerts","slack_token","a_token")
+
             if raw_input("Do you wish to setup the amon server configuration? (Y/N): ").upper() == "Y":
                   for section in cp.sections():
                         for k,v in cp.items(section):
