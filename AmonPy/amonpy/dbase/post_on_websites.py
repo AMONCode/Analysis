@@ -1,6 +1,10 @@
 """
 Functions to post alerts on OpenAMON app for outreach and trigger a notification or on AMONalerts for physicists.
 """
+from __future__ import division
+from builtins import str
+from builtins import range
+from past.utils import old_div
 from math import cos, pi, degrees, radians
 from amonpy.monitoring.monitor_funcs import send_email
 from amonpy.analyses.amon_streams import streams
@@ -66,7 +70,7 @@ The uncertainty in the location of the event is based on statistical uncertainty
 The estimated energy is %s TeV.
 The background noise should produce an event at least as significant %.2f times per year which leads to a probability of %.2f%% that this event is a track-like neutrino of astrophysical origin.
 [category alert]""" % (signalness*100., (1./far)*365.25, energy/1000., energy/0.2, src_error_90_solid_angle*(180./pi)**2,
-src_error_90_solid_angle/moon_solid_angle, str(event.datetime), float(event.RA), float(event.dec), src_error_90*60.,
+old_div(src_error_90_solid_angle,moon_solid_angle), str(event.datetime), float(event.RA), float(event.dec), src_error_90*60.,
 src_error_50*60., E_sci_notat, far, signalness*100.)
 # TODO adapt moon thing for larger error
 
@@ -99,7 +103,7 @@ The algorithm estimates its source location to be around the following coordinat
 The uncertainty in the location of the event account for statistics and systematics uncertainties.
 The background noise should produce an event at least as significant %.2f times per year.
 [category alert]""" % ((1./event.false_pos)*365.25, src_error_90_solid_angle*(180./pi)**2,
-src_error_90_solid_angle/moon_solid_angle, str(event.datetime), float(event.RA), float(event.dec), event.sigmaR*60.,
+old_div(src_error_90_solid_angle,moon_solid_angle), str(event.datetime), float(event.RA), float(event.dec), event.sigmaR*60.,
 event.false_pos)
 
     post_on_OpenAMON(post, "Gamma ray burst")
