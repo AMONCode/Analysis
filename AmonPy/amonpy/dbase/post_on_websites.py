@@ -53,11 +53,11 @@ def ICgoldbronze_to_OpenAMON(event, params):
 
     post="""## An intriguing event has just been detected by the IceCube neutrino telescope!
 
-This event has a %.1f%% chance to be a neutrino of astrophysical origin. The background noise fluctuation should produce a similar event every %d days in average.
+This event has a %.1f%% chance to be a neutrino of astrophysical origin. An event as significant or more should be produced by the background noise every %d days in average.
 
 Its energy is estimated to be around %d TeV [1. %d times the average energy released in nuclear fission of one Uranium-235 atom] and its source is located with a 90%% probability to be within a zone of %.2f square deg [2. %d times smaller than the moon angular coverage].
 
-Is it the result of a blazar, a supernovae...? This alert has been sent to astronomers around the world so they can point their telescopes toward the source of this event. An other signal from a different messenger could allow to understand the mechanisms involved.
+Is it the result of a blazar, a supernovae...? This alert has been sent to astronomers around the world so they can point their telescopes toward the source of this event. An other signal from a different messenger could allow to identify the source and understand the mechanisms powering this emission.
 
 ### Complete set of information:
 This event has been detected on %s UTC (Coordinated Universal Time).
@@ -89,14 +89,14 @@ def HAWCGRB_to_OpenAMON(event):
     
     post="""## An intriguing event has just been detected by the HAWC gamma ray telescope!
 
-The background noise fluctuation should produce a similar event every %d days in average. Its source is located with a 90%% probability to be within a zone of %.2f square deg [2. %d times smaller than the moon angular coverage].
+An event as significant or more should be produced by the background noise fluctuation every %d days in average. Its source is located with a 90%% probability to be within a zone of %.2f square deg [2. %d times smaller than the moon angular coverage].
 
-Is it the result of a blazar, a supernovae...? This alert has been sent to astronomers around the world so they can point their telescopes toward the source of this event. An other signal from a different messenger could allow to understand the mechanisms involved.
+Is it the result of a blazar, a supernovae...? This alert has been sent to astronomers around the world so they can point their telescopes toward the source of this event. An other signal from a different messenger could allow to identify the source and understand the mechanisms involved.
 
 ### Complete set of information:
 This event has been detected on %s UTC (Coordinated Universal Time).
 The algorithm estimates its source location to be around the following coordinates: right ascension = %.4f degrees, declination = %.4f degrees with a 90%% probability to be within a disk of radius %.1f arcmin.
-The uncertainty in the location of the event is based on statistical uncertainty only, not accounting for the systematic error which should be smaller.
+The uncertainty in the location of the event account for statistics and systematics uncertainties.
 The background noise should produce an event at least as significant %.2f times per year.
 [category alert]""" % ((1./event.false_pos)*365.25, src_error_90_solid_angle*(180./pi)**2,
 src_error_90_solid_angle/moon_solid_angle, str(event.datetime), float(event.RA), float(event.dec), event.sigmaR*60.,
