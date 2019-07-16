@@ -160,5 +160,5 @@ def ic_gold_bronze(new_event=None):
 
         post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
 
-    #email_alerts.alert_email_content([new_event],content,title)
+    email_alerts.alert_email_content([new_event],content,title)
     #email_alerts.alert_email([new_event],params)
