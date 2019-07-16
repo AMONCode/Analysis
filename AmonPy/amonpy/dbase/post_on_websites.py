@@ -1,5 +1,5 @@
 """
-Functions to post alerts on OpenAMON app for outreach and trigger a notification or on AMONalerts for physicists.
+Functions to post alerts on OpenAMON app for outreach and trigger a notification.
 """
 from __future__ import division
 from builtins import str
