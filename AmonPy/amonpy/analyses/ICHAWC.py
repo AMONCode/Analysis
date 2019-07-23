@@ -597,8 +597,8 @@ def ic_hawc(new_event=None):
         #Write results to the DB
         if len(alerts) > 0:
             db_write.write_alert(config.stream, HostFancyName, UserFancyName, PasswordFancy, DBFancyName, alerts)
-    #elif new_event.stream == streams['IC-Singlet']:
-
+    elif new_event.stream == streams['IC-Singlet']:
+        print "Neutrino event. Not doing anything for now."
     #    result = []#coincAnalysisIC(new_event)
     #    for res in result:
             # for r in res:
