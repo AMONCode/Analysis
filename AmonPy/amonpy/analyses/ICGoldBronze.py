@@ -159,7 +159,6 @@ def ic_gold_bronze(new_event=None):
     else:
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
-        post_on_websites.ICgoldbronze_to_AMONalerts(new_event,params)
         post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
 
     email_alerts.alert_email_content([new_event],content,title)
