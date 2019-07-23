@@ -2,7 +2,7 @@ from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
-from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams
+from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams, gcn_streams
 from amonpy.monitoring.monitor_funcs import slack_message
 
 from amonpy.tools.IC_PSF import *
