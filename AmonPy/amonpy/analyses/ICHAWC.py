@@ -570,7 +570,7 @@ def ic_hawc(new_event=None):
             #if chi2 > 7.3: # ~1 per year
             #if chi2 > 6.48: # ~4 per year
 
-            if newchi2 > 3.86:#36.9: # ~1 per day FOR TESTING
+            if chi2 > 3.86:#36.9: # ~1 per day FOR TESTING
             #if chi2 > 11.0: # R TESTING
                 title='AMON IC-HAWC alert'
 
