@@ -75,25 +75,29 @@ def ic_hawc_config():
 ### Functions for the coincidence analysis
 def insideHAWCBrightSources(dec,ra):
     CrabDec, CrabRA = 22.03,83.623
-    if spcang(ra,CrabRA,dec,CrabDec)<=1.3:
-        return True
     Mrk421Dec, Mrk421RA = 38.15,166.15
-    if spcang(ra,Mrk421RA,dec,Mrk421Dec)<=1.:
-        return True
     Mrk501Dec, Mrk501RA = 39.15,235.45
-    if spcang(ra,Mrk421RA,dec,Mrk421Dec)<=1.:
-        return True
     G1Dec,G1RA = 17.9, 98.0
-    if spcang(ra,G1RA,dec,G1Dec)<=3.:
-        return True
     G2Dec,G2RA = 15.0, 105.1
-    if spcang(ra,G2RA,dec,G2Dec)<=3.:
-        return True
     c = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
     lon, lat = c.galactic.l.value, c.galactic.b.value
-    if lat<3.0 and lat>-3.0:
+    if spcang(ra,CrabRA,dec,CrabDec)<=1.3:
+        return True
+    elif spcang(ra,Mrk421RA,dec,Mrk421Dec)<=1.:
+        return True
+    elif spcang(ra,Mrk501RA,dec,Mrk501Dec)<=1.:
+        return True
+    elif spcang(ra,G1RA,dec,G1Dec)<=3.:
+        return True
+    elif spcang(ra,G2RA,dec,G2Dec)<=3.:
+        return True
+    elif lat<3.0 and lat>-3.0:
         if lon<90.0 and lon>0:
             return True
+        else:
+            return False
+    else:
+        return False
 
 
 # HAWC PDF for spatial null and alternative hypotheses
