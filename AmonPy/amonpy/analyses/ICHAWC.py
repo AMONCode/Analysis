@@ -365,6 +365,7 @@ def coincAnalysisHWC(new_event):
     datalist.append([streams['HAWC-DM'],dec1,ra1,poserr1,hwcDuration,probBkgHAWC(dec1),phwc])
     print "HAWC event: "
     print "Pos: %0.2f,%0.2f,%0.2f"%(ra1,dec1,poserr1)
+    print("ID: {}".format(new_event.id))
 
     for e in eventList:
         dec2 = e.dec
