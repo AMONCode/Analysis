@@ -477,6 +477,7 @@ def ic_hawc(new_event=None):
             far = r[5]
             pvalue = 1.#r[6]
             nuEvents = r[-1][1:]
+            phEvent = r[-1][0]
             alertTime = []
 
             for j in nuEvents:
@@ -497,7 +498,7 @@ def ic_hawc(new_event=None):
             new_alert.dec = dec
             new_alert.RA = ra
             new_alert.sigmaR = 1.18*sigmaR #Send 50%?
-            new_alert.deltaT = events[0][4]*3600.
+            new_alert.deltaT = phEvent[4]*3600.
             new_alert.pvalue = 1.#pvalue
             new_alert.false_pos = far
             new_alert.nevents = nev  #Number of neutrinos
