@@ -507,8 +507,8 @@ def ic_hawc(new_event=None):
             #We will use the end of the hawc transit for the alert time
             print(new_event.datetime)
             print(pd.to_datetime(new_event.datetime))
-            print(datetime(pd.to_datetime(new_event.datetime)))
-            new_alert.datetime = datetime(pd.to_datetime(new_event.datetime)) #using HAWC set time
+            #print(datetime(pd.to_datetime(new_event.datetime)))
+            new_alert.datetime = pd.to_datetime(new_event.datetime) #using HAWC set time
             new_alert.observing = config.stream
 
             if (prodMachine==True):
