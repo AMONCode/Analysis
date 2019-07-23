@@ -490,7 +490,7 @@ def ic_hawc(new_event=None):
             rev = 0
             alertid = idnum+1
             if new_event.rev > 0:
-                #using udpated information, new HAWC event has bigger significance
+                print("Using udpated information, new HAWC event has bigger significance")
                 rev = rev+1
                 alertid = idnum
 
@@ -513,7 +513,6 @@ def ic_hawc(new_event=None):
                 new_alert.type = 'test'
             alerts.append(new_alert)
 
-            idnum = idnum+1
             # if new alert crosses threshold send email_alerts and GCN
             fname='amon_ic-hawc_%s_%s_%s.xml'%(new_alert.stream, new_alert.id, new_alert.rev)
             filen=os.path.join(AlertDir,fname)
