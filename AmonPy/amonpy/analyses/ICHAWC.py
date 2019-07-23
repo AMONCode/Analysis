@@ -77,7 +77,7 @@ def insideHAWCBrightSources(dec,ra):
     CrabDec, CrabRA = 22.03,83.623
     if spcang(ra,CrabRA,dec,CrabDec)<=1.3:
         return True
-    Mrk421Dec Mrk421RA = 38.15,166.15
+    Mrk421Dec, Mrk421RA = 38.15,166.15
     if spcang(ra,Mrk421RA,dec,Mrk421Dec)<=1.:
         return True
     Mrk501Dec, Mrk501RA = 39.15,235.45
