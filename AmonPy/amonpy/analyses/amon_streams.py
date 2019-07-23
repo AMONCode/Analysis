@@ -60,10 +60,11 @@ gcn_streams = {
             "GFU-Alerts2":17,
             "GFU-Alerts3":18,
             "GFU-Alerts4":19,
-            "HWC-GRBlike-Alerts":7,
-            "Antares-Fermi":8,
-            "IC-Gold":24,
-            "IC-Bronze":25,
+            "HWC-GRBlike-Alerts":7,#171 in GCN socket information
+            "Antares-Fermi":8,#170 in GCN socket information
+            "IC-Gold":24,#173 in GCN socket info
+            "IC-Bronze":25,#174 in GCN socket info
+            "Gamma-Nu-Coinc":172,
 }
 
 inv_gcn_streams = dict(map(reversed,gcn_streams.items()))
