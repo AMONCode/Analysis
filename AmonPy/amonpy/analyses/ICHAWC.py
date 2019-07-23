@@ -478,7 +478,6 @@ def ic_hawc(new_event=None):
             pvalue = 1.#r[6]
             nuEvents = r[-1][1:]
             alertTime = []
-            time =
 
             for j in nuEvents:
                 alertTime.append(j[5])
