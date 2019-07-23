@@ -505,7 +505,10 @@ def ic_hawc(new_event=None):
             new_alert.nevents = nev  #Number of neutrinos
 
             #We will use the end of the hawc transit for the alert time
-            new_alert.datetime = datetime(pd.to_datetime(new_event.datetime))#datetime(alertTime[0].year,alertTime[0].month,alertTime[0].day,hours,minutes,seconds) #datetime.now() #do an average of the IC neutrinos?
+            print(new_event.datetime)
+            print(pd.to_datetime(new_event.datetime))
+            print(datetime(pd.to_datetime(new_event.datetime)))
+            new_alert.datetime = datetime(pd.to_datetime(new_event.datetime)) #using HAWC set time
             new_alert.observing = config.stream
 
             if (prodMachine==True):
