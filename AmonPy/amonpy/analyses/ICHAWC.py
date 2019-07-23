@@ -84,10 +84,10 @@ def insideHAWCBrightSources(dec,ra):
     if spcang(ra,Mrk421RA,dec,Mrk421Dec)<=1.:
         return True
     G1Dec,G1RA = 17.9, 98.0
-    if spcang(ra,G1G1RA,dec,G1G1Dec)<=3.:
+    if spcang(ra,G1RA,dec,G1Dec)<=3.:
         return True
-    G1Dec,G1RA = 15.0, 105.1
-    if spcang(ra,G1G1RA,dec,G1G1Dec)<=3.:
+    G2Dec,G2RA = 15.0, 105.1
+    if spcang(ra,G2RA,dec,G2Dec)<=3.:
         return True
     c = SkyCoord(ra=ra*u.degree, dec=dec*u.degree, frame='icrs')
     lon, lat = c.galactic.l.value, c.galactic.b.value
