@@ -32,6 +32,10 @@ token = AMON_CONFIG.get('alerts','slack_token')#Slack token
 
 # Variable to check in which server/machine we are
 prodMachine = eval(AMON_CONFIG.get('machine','prod'))
+if prodMachine:
+    channel = 'alerts'
+else:
+    channel = 'test-alerts'
 
 
 def hawc_burst_config():
@@ -157,7 +161,7 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-                slack_message(title+"\n"+content,"alerts",token=token)
+
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")
@@ -166,8 +170,9 @@ def hawc_burst(new_event=None):
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
         else:
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
-            
-            post_on_websites.HAWCGRB_to_OpenAMON(new_event)
 
+            post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+        # send slack message for alerts with FAR<12 per year
+        slack_message(title+"\n"+content,channel,prodMachine,token=token)
     #Send email after everything has been accomplished, all the events
     email_alerts.alert_email_content([new_event],content,title)
