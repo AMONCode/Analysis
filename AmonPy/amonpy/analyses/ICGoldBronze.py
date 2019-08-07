@@ -150,6 +150,7 @@ def ic_gold_bronze(new_event=None):
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
             slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
+            post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print "Send Gold/Bronze VOevent alert failed"
             logger.error("send_voevent failed")
@@ -159,7 +160,7 @@ def ic_gold_bronze(new_event=None):
     else:
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
-        post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
+
 
     email_alerts.alert_email_content([new_event],content,title)
     #email_alerts.alert_email([new_event],params)
