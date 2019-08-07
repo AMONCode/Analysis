@@ -161,7 +161,7 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-
+                post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")
@@ -171,7 +171,7 @@ def hawc_burst(new_event=None):
         else:
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
 
-            post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+
         # send slack message for alerts with FAR<12 per year
         slack_message(title+"\n"+content,channel,prodMachine,token=token)
     #Send email after everything has been accomplished, all the events
