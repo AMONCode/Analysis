@@ -1,5 +1,5 @@
 import numpy as np
-from astropy.time import timeError
+from astropy.time import Time
 
 def J2000(time,ra,dec,degrees=True):
     """
