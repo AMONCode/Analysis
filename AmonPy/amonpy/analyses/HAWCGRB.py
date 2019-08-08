@@ -18,6 +18,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import netrc, jsonpickle
 from amonpy.tools.config import AMON_CONFIG
+from amonpy.tools.J2000 import J2000
 
 import sys, shutil, os, subprocess
 
@@ -93,12 +94,18 @@ def hawc_burst(new_event=None):
     print ' lenght of parameters %s' % len(params)
 
     #Event description
+
     ra = new_event.RA
     dec = new_event.dec
+    tevent = new_event.datetime
+    timest=str(tevent)
+
+    # need to get J2000 coordinates, HAWC sends current epoch.
+    ra,dec = J2000(timest,ra,dec)
     poserr = new_event.sigmaR
     false_pos = new_event.false_pos
-    tevent = new_event.datetime
-    content = 'Position RA: %0.2f Dec: %0.2f\n Ang.Err.: %0.3f,\n FAR: %0.3e yr^-1,\n Time: %s'%(ra,dec,poserr,false_pos,str(tevent))
+
+    content = 'Position RA: %0.3f Dec: %0.3f\n Ang.Err.: %0.3f,\n FAR: %0.3e yr^-1,\n Time: %s'%(ra,dec,poserr,false_pos,str(tevent))
     print content
     if prodMachine is True:
         title='AMON HAWC-GRBlike alert'
