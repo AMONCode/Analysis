@@ -161,7 +161,7 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        if (prodMachine == True) and (false_pos<=1.0):
+        if (prodMachine == True) and (false_pos<=12.0):
             title='AMON HAWC-GRBlike alert: URGENT!'
             try:
                 print "HAWC Burst created, sending to GCN"
