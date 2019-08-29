@@ -152,13 +152,12 @@ class EventManager(Resource):
 
     def render_POST(self,request):
             """ Main function where events are written to DB, then send to celery workers."""
+
             path = AMON_CONFIG.get('dirs','serverdir')
-            #path = "/Users/hugo/AMON/Test_new_server/"
-            #path = "/storage/home/hza53/work/AMON/Test_server/"
+
             def _writeEventParam(transaction, event, evparam,buffers):
                 # this will run in a separate thread, allowing us to use series of queries
                 # without blocking the rest of the code
-
                 # take microsecond part from datetime because of the older versions of mysql
 
                 if '.' in str(event[0].datetime):
@@ -205,8 +204,6 @@ class EventManager(Resource):
 
             def writeEventParam(event, evparam,buffers):
                 return EventManager.dbpool.runInteraction(_writeEventParam, event, evparam,buffers)
-                #dd.addCallbacks(self.printResult, self.printError)
-                #return dd
 
             def printError(error):
                 print "Got Error: %r" % error
@@ -216,8 +213,6 @@ class EventManager(Resource):
                 print 'Event written to DB, send to task'
                 evt = result
 
-                #print len(EventManager.eventBuffers)
-                #print EventManager.analyses
                 print 'Event stream: ',inv_streams[evt[0].stream]
                 for i in xrange(len(EventManager.eventBuffers)):
                     if evt[0].stream in EventManager.eventBuffers[i].event_streams:
@@ -256,10 +251,8 @@ class EventManager(Resource):
             except Exception as e:
                 print 'something went wrong: ' + str(e)
 
-            #print  request.content.getvalue()
             fname=self.headers['content-name']
 
-            #fp = open(path+"server_tmp_events/"+fname, "w")
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
             fp.write(request.content.getvalue())
             fp.close()
@@ -275,11 +268,6 @@ class EventManager(Resource):
                         datetime.utcnow().strftime("%Y_%m_%d_%H_%M") + '.xml'
                 fname_new = os.path.join(path,"server_archive_events", fname2)
             shutil.move(os.path.join(path,"server_tmp_events",fname), fname_new)
-            #event[0].forprint()
-
-            #if not (evParam==[]):
-                #evParam[0].forprint()
-
 
             #Write event to the DB and to the buffer(s)
             print 'Write event'
