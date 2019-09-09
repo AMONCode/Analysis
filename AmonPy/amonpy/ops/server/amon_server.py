@@ -257,7 +257,7 @@ class EventManager(Resource):
             fp.write(request.content.getvalue())
             fp.close()
 
-            #Convert VOEvent into AMON event
+            #Convert VOEvent into AMON event and move VOEvent file to the archive directory
 
             evpar = voevent_to_event.make_event(os.path.join(path,"server_tmp_events",fname))
             event  = evpar[0]
@@ -273,7 +273,7 @@ class EventManager(Resource):
             print 'Write event'
             d = writeEventParam(event, evParam,EventManager.eventBuffers)
 
-            print 'Send event to celery task'
+            print 'Send event to celery tasks'
             d.addCallbacks(printResult,printError)
 
 
