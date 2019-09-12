@@ -496,12 +496,12 @@ def ic_hawc(new_event=None):
                 alertid = idnum
 
             new_alert = Alert(config.stream,alertid,rev)
-            new_alert.dec = dec
-            new_alert.RA = ra
-            new_alert.sigmaR = 1.18*sigmaR #Send 50%?
-            new_alert.deltaT = phEvent[4]*3600.
+            new_alert.dec = float("{:.2f}".format(dec))
+            new_alert.RA = float("{:.2f}".format(ra))
+            new_alert.sigmaR = float("{:.2f}".format(1.18*sigmaR)) #Send 50%?
+            new_alert.deltaT = float("{:.2f}".format(phEvent[4]*3600.))
             new_alert.pvalue = 1.#pvalue
-            new_alert.false_pos = far
+            new_alert.false_pos = float("{:.2f}".format(far))
             new_alert.nevents = nev  #Number of neutrinos
 
             #We will use the end of the hawc transit for the alert time
@@ -535,7 +535,7 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Time window of the search")
+            apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
             alertparams.append(apar)
