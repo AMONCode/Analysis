@@ -1,7 +1,7 @@
 """@package convert_time
 conversion between MJD time to timestamp needed for DB
-modified from free code at 
-http://www.atnf.csiro.au/people/Enno.Middelberg/python/python.html 
+modified from free code at
+http://www.atnf.csiro.au/people/Enno.Middelberg/python/python.html
 by g.t.
 """
 import sys
@@ -64,15 +64,15 @@ def gettimestamp(jd):
 	    fracyear=yyyy+daysum/366
 	else:
 	    fracyear=yyyy+daysum/365
-	print x+" = "+`fracyear`
+	print(x+" = "+`fracyear`)
     else:
 	str1="%i-%i-%i" % (yyyy, months[mm-1],dd)
 	str2=string.zfill(h,2)+":"+string.zfill(min,2)+":"+string.zfill(sec,2)
     str3=str1+" "+str2
     dt=datetime.datetime(yyyy, months[mm-1],int(dd),int(h),int(min),int(sec),int(float(sec-int(sec))*1000000))
     return dt, int(float(sec-int(sec))*1000000)
-    
+
 if __name__ == "__main__":
     mjd=50448.
-    print ('MJD: %f') % (mjd) 
-    print  gettimestamp(mjd) 
+    print('MJD: {}'.format(mjd))
+    print( gettimestamp(mjd) )
