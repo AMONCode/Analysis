@@ -6,7 +6,7 @@ class SelectChoice(wx.App):
     def __init__(self,**kwargs):
         super(SelectChoice, self).__init__()
         
-        if 'info' in kwargs.keys():
+        if 'info' in list(kwargs.keys()):
             self.info = kwargs['info']
         else:
             self.info = 'Insert time window in seconds:'
