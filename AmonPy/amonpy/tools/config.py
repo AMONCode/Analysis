@@ -1,5 +1,5 @@
 import pkg_resources
-from ConfigParser import ConfigParser as CP
+from configParser import ConfigParser as CP
 
 AMON_CONFIG = CP()
 
