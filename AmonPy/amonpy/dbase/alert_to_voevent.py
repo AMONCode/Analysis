@@ -12,12 +12,12 @@ from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
 
 class Alert2VOEvent(object):
-    def __init__(self,alert,ivorn,description,run_id,event_id,name="Hugo Ayala",email="hgayala@psu.edu"):
+    def __init__(self,alert,ivorn,description,gcn_stream,event_id,name="Hugo Ayala",email="hgayala@psu.edu"):
         stream = alert[0].stream
         #amon_id = alert[0].id
         rev = alert[0].rev
         self.voevent = VOEvent.VOEvent(version="2.0")
-        self.voevent.set_ivorn("ivo://amon/%s#%s_%s_%s_%s"%(str(ivorn),str(stream),str(run_id),str(event_id),str(rev)))
+        self.voevent.set_ivorn("ivo://amon/%s#%s_%s_%s_%s"%(str(ivorn),str(gcn_stream),str(stream),str(event_id),str(rev)))
         self.voevent.set_role("%s" % alert[0].type)
         self.voevent.set_Description(str(description))
         a = Author()
