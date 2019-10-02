@@ -168,7 +168,8 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-                post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+                if new_event.rev == 0:
+                    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print "Send HAWC Burst VOevent alert failed"
                 #logger.error("send_voevent failed")
