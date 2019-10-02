@@ -524,7 +524,7 @@ def ic_hawc(new_event=None):
 
             #Create Alert xml file
 
-            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',new_alert.stream,new_alert.id)
+            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
             alertparams = []
             apar = VOAlert.MakeParam(name="gcn_stream",ucd="meta.number",unit="",datatype="int",value=gcn_streams["Gamma-Nu-Coinc"],description="GCN Socket Identification")
