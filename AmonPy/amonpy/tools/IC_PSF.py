@@ -1,3 +1,6 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
 import numpy as np
 from scipy.interpolate import interp2d, InterpolatedUnivariateSpline
 from scipy import signal, stats, special
@@ -34,7 +37,7 @@ def xygrid2r(pdf_grid, grid_r, r_max=5):
     r_ax = np.linspace(0,r_max,50+1)#[1:]
     dr = r_ax[1] - r_ax[0]
     prob = np.zeros_like(r_ax)
-    for i in xrange(len(r_ax)):
+    for i in range(len(r_ax)):
         r = r_ax[i]
         bl = (grid_r <= r)
         prob[i] = np.sum(pdf_grid[bl])
@@ -46,7 +49,7 @@ def find_xs4ys(yvals, func, x_b = (0,20), tol=.01, err_ret=False):
     nys = len(yvals)
     xs = np.zeros(nys)
     perc_errs = np.zeros(nys)
-    for i in xrange(nys):
+    for i in range(nys):
         ind_0 = np.argmin(np.abs(yvals[i] - func(x_ax0)))
         if ind_0 < 1:
             xs[i] = x_b[0]
@@ -83,13 +86,13 @@ def comb_psfs2(sig, mu, lam, get_rs=False, r_min=3.5, r_max_perc=.99, probs=None
 
     if ignore:
         if exp_cdf(r_big/(2.*nlog_steps), lam) > .5:
-            print "Single step contains > 50% of nu prob, skipping"
+            print("Single step contains > 50% of nu prob, skipping")
             #print "r_big/40, %.3f, nu_cdf(r_big/40.), %.3f" %(r_big/40.,\
             #        exp_cdf(r_big/40.,lam))
             return None
 
         if r_Hperc_ex < r01_ln:
-            print "Nu r%d smaller than mu r01, prob don't need to combine" %(int(100*r_max_perc))
+            print("Nu r%d smaller than mu r01, prob don't need to combine" %(int(100*r_max_perc)))
             return None
 
     tot_prob_rbig = log_norm_func_cum(r_big, sig, mu)*exp_cdf(r_big, lam)

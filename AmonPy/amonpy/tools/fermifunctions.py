@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
+from __future__ import print_function
 import numpy as np
 import healpy as hp
 from scipy import interpolate
@@ -343,7 +344,7 @@ def onesig(eb,tb,con):
         n+=1
 
     if xint(mid,eb,tb,con) < final-0.1:
-        print eb,tb,con
+        print(eb,tb,con)
 
 
     return mid
@@ -446,7 +447,7 @@ def numul(nutime,nura,nudec):
     #each element is a list of all neutrinos forming a multiplet
     #Multiplicity can be arbitrarily high, but rarely exceeds 3
 
-    base=np.zeros((len(nutime)*100,2),dtype=long)
+    base=np.zeros((len(nutime)*100,2),dtype=int)
     evil=tsep(nutime,nutime,base,1/86.4,sameness=True)
     dsts=distsph(nura[evil[:,0]],nudec[evil[:,0]],nura[evil[:,1]],nudec[evil[:,1]])
 
