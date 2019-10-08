@@ -3,8 +3,7 @@
 A quick test for comparison to convert_time module.
 """
 import sys
-sys.path.append('../sim')
-import sidereal
+from amonpy.sim.sidereal import *
 
 def gettimestamp(mjd):
     jd = mjd + 2400000.5

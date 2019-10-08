@@ -4,6 +4,9 @@ modified from free code at
 http://www.atnf.csiro.au/people/Enno.Middelberg/python/python.html
 by g.t.
 """
+from __future__ import division
+from __future__ import print_function
+from builtins import range
 import sys
 import time
 import datetime
@@ -25,16 +28,16 @@ def gettimestamp(jd):
     dd = B - D - int(30.6001*E) + F
 
     if E<13.5:
-	mm=E-1
+	    mm=E-1
 
     if E>13.5:
-	mm=E-13
+	    mm=E-13
 
     if mm>2.5:
-	yyyy=C-4716
+	    yyyy=C-4716
 
     if mm<2.5:
-	yyyy=C-4715
+	    yyyy=C-4715
 
     months=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     daylist=[31,28,31,30,31,30,31,31,30,31,30,31]
@@ -46,28 +49,28 @@ def gettimestamp(jd):
 
     # Now calculate the fractional year. Do we have a leap year?
     if (yyyy%4 != 0):
-	days=daylist2
+	    days=daylist2
     elif (yyyy%400 == 0):
-	days=daylist2
+	    days=daylist2
     elif (yyyy%100 == 0):
-	days=daylist
+	    days=daylist
     else:
-	days=daylist2
+	    days=daylist2
 
     if "-f" in sys.argv:
-	daysum=0
-	for y in range(mm-1):
-	    daysum=daysum+days[y]
-	daysum=daysum+dd-1
+	    daysum=0
+	    for y in range(mm-1):
+	        daysum=daysum+days[y]
+	    daysum=daysum+dd-1
 
-	if days[1]==29:
-	    fracyear=yyyy+daysum/366
-	else:
-	    fracyear=yyyy+daysum/365
-	print(x+" = "+`fracyear`)
+	    if days[1]==29:
+	        fracyear=yyyy+daysum/366
+	    else:
+	        fracyear=yyyy+daysum/365
+	    print(x+" = "+repr(fracyear))
     else:
-	str1="%i-%i-%i" % (yyyy, months[mm-1],dd)
-	str2=string.zfill(h,2)+":"+string.zfill(min,2)+":"+string.zfill(sec,2)
+        str1="%i-%i-%i" % (yyyy, months[mm-1],dd)
+        str2=string.zfill(h,2)+":"+string.zfill(min,2)+":"+string.zfill(sec,2)
     str3=str1+" "+str2
     dt=datetime.datetime(yyyy, months[mm-1],int(dd),int(h),int(min),int(sec),int(float(sec-int(sec))*1000000))
     return dt, int(float(sec-int(sec))*1000000)

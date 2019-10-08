@@ -19,6 +19,11 @@
     DBFancyName  ='AMON_test2'
 
 """
+from __future__ import division
+from __future__ import print_function
+from builtins import str
+from builtins import input
+from builtins import range
 
 import sys
 from amonpy.dbase import db_read
@@ -93,7 +98,7 @@ if (key & 2**kk):
     plt.xlabel('deltaT (sec)')
     plt.show()
     plt.show() # for some reason I needed to do this twice on isis
-    junk= input('hit any key to continue')
+    junk= eval(input('hit any key to continue'))
     print('')
 
 
@@ -126,7 +131,7 @@ if (key & 2**kk):
     plt.show()
     # add code here
 
-    junk= input('hit any key to continue')
+    junk= eval(input('hit any key to continue'))
     print('')
 
 kk=2
@@ -135,7 +140,7 @@ if (key & 2**kk):
 
     # add code here
 
-    junk= input('hit any key to continue')
+    junk= eval(input('hit any key to continue'))
     print('')
 
 kk=3
@@ -144,7 +149,7 @@ if (key & 2**kk):
 
     # add code here
 
-    junk= input('hit any key to continue')
+    junk= eval(input('hit any key to continue'))
     print('')
 
 
@@ -154,5 +159,5 @@ if (key & 2**kk):
 
     # add code here
 
-    junk= input('hit any key to continue')
+    junk= eval(input('hit any key to continue'))
     print('')
