@@ -24,7 +24,7 @@ with open(path.join(here, 'README.md')) as f:
 
 class AMONInstall(install):
       def run(self):
-            cp = ConfigParser()
+            cp = ConfigParser(allow_no_value=True)
             cp.add_section("database")
             cp.add_section("dirs")
             cp.add_section("machine")
