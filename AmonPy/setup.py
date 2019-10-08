@@ -7,10 +7,12 @@ See:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
+from __future__ import print_function
+from builtins import input
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path
-from configParser import ConfigParser
+from configparser import ConfigParser
 import uuid
 import socket
 import subprocess
