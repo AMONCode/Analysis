@@ -1,3 +1,6 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import object
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 from amonpy.analyses.amon_streams import streams, alert_streams
@@ -86,7 +89,7 @@ class ic_swift_coinc(object):
         elif self.n_evs > 2:
             return 100.
         else:
-            print "add events"
+            print("add events")
             return None
 
 
@@ -103,7 +106,7 @@ def ic_swift(new_event=None):
         idnum = 0
     else:
         idnum = max_id
-    print idnum
+    print(idnum)
 
     new_event = jsonpickle.decode(new_event)
 
@@ -120,7 +123,7 @@ def ic_swift(new_event=None):
 
     coinc_found = False
 
-    print new_event.stream
+    print(new_event.stream)
 
     if new_event.stream == streams['IC-Singlet']:
         # IC
@@ -137,7 +140,7 @@ def ic_swift(new_event=None):
             if type(ev) is list:
                 ev = ev[0]
             angsep = ang_sep(new_event.RA, new_event.dec, ev.RA, ev.dec)
-            print "angsep: ", angsep
+            print("angsep: ", angsep)
             if angsep <= max_ang:
                 coinc = ic_swift_coinc(ev, config)
                 coinc.add_ic(new_event)
@@ -182,17 +185,17 @@ def ic_swift(new_event=None):
         coincs.append(coinc)
 
     else:
-        print "bad stream num"
+        print("bad stream num")
 
 
     if coinc_found:
         n_coincs = len(coincs)
-        print "Found %d coincidences" %(n_coincs)
+        print("Found %d coincidences" %(n_coincs))
 
         for coinc in coincs:
-            print "IC-Swift coincidence found"
-            print "with %d IC-singlet(s)," %(coinc.n_evs-1)
-            print "LLH value of %.3f" %(coinc.llh)
+            print("IC-Swift coincidence found")
+            print("with %d IC-singlet(s)," %(coinc.n_evs-1))
+            print("LLH value of %.3f" %(coinc.llh))
 
             # make an Alert class object
             # then use it to write to the Alert Table in the DB
