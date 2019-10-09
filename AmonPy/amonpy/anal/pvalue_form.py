@@ -148,7 +148,7 @@ def good_denominator(ll, pvalue_weights):
     return log_sum_weights, log_sum_imag
 
 
-pval=[[0.6,0.4],[0.8,0.6]]
+#pval=[[0.6,0.4],[0.8,0.6]]
 #pval=[[1./0.6, 0.008000257],[1./0.65,0.008579261],[1./1.2,0.0008911761], \
  #    [1./1.25, 0.006967988],[1./1.3, 0.004973110]]
-print(pvalue_good(pval))
+#print(pvalue_good(pval))
