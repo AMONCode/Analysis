@@ -3,7 +3,9 @@ Module defining analysis class objects for clustering.
 Clustring requires specific assumptions about time cuts
 and the point spread function (PSF).
 """
-
+from __future__ import division
+from builtins import range
+from builtins import object
 import sys
 from datetime import datetime, timedelta
 from numpy import array, dot, math
@@ -243,7 +245,7 @@ class Fisher(object):
     @property
     def x1(self):
         radec2vec_list = []
-        for kk in xrange(len(self.ev)):
+        for kk in range(len(self.ev)):
             radec2vec_list+=[radec2vec(self.ev[kk].RA,self.ev[kk].dec)]
         return radec2vec_list
 
@@ -252,28 +254,28 @@ class Fisher(object):
     def cospsi(self):
         vec_list = list(itertools.combinations(self.x1,2))
         cospsi_list= []
-        for kk in xrange(len(vec_list)):
+        for kk in range(len(vec_list)):
             cospsi_list+=[dot(vec_list[kk][0],vec_list[kk][1])]
         return cospsi_list
     # list of angles between events
     @property
     def psi(self):
         psi_list = []
-        for kk in xrange(len(psi_list)):
+        for kk in range(len(psi_list)):
            psi_list+=[math.degrees(math.acos(self.cospsi[kk]))]
         return psi_list
     # List of position uncertainties combined in quadrature
     @property
     def sigmaQ(self):
         sumQ = 0.
-        for kk in xrange(len(self.ev)):
+        for kk in range(len(self.ev)):
             sumQ +=(self.ev[kk].sigmaR)**2
         return sumQ**0.5
     # List of position uncertainties combined as they would for a weighted sum
     @property
     def sigmaW(self):
         sumW = 0.
-        for kk in xrange(len(self.ev)):
+        for kk in range(len(self.ev)):
             sumW +=(self.ev[kk].sigmaR)**(-2)
         return (sumW)**(-0.5)
     # List of number of sigma any pair of events are apart (using qudrature)
@@ -281,14 +283,14 @@ class Fisher(object):
     def Nsigma(self):
         #return self.psi/self.sigmaQ
         list_Nsigma = []
-        for kk in xrange(len(self.cospsi)):
+        for kk in range(len(self.cospsi)):
             list_Nsigma +=[(2.*(1.-self.cospsi[kk]))**0.5/math.radians(self.sigmaQ)]
         return list_Nsigma
     # Best fit location for a postulated common source
     @property
     def x0(self):
         w=0.
-        for kk in xrange(len(self.x1)):
+        for kk in range(len(self.x1)):
             w += self.x1[kk]/self.ev[kk].sigmaR**2
         norm = (dot(w,w))**0.5
         return w/norm
