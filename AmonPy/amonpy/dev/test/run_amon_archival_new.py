@@ -2,18 +2,13 @@
 """@package run_amon_archival_new
 Old module for running archival clustering analysis, second version.
 """
+from __future__ import print_function
+from builtins import range
 import sys
-sys.path.append('../')
-sys.path.append('../tools')
-sys.path.append('../dbase')
-sys.path.append('../ops')
-#sys.path.append('../anal')
 from time import time
-import db_read
-import cluster
-from db_classes import Alert
-import db_write
-import db_delete
+from amonpy.dbase import db_read, db_write, db_delete
+from amonpy.anal import cluster
+from amonpy.dbase.db_classes import Alert
 
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
@@ -92,7 +87,7 @@ def amon_archival(pipe, Nmax):
         Nevents = len(events)
     #for testing...
     #Nevents = 5000
-        for ii in xrange(Nevents):
+        for ii in range(Nevents):
             jj = ii + 1
             deltaT = 0.
             while ((deltaT < deltaTmax) and (jj < Nevents)):
@@ -142,7 +137,7 @@ def amon_archival(pipe, Nmax):
                         alerts +=[new_alert]
                         new_alert.forprint()
                 
-                        print   
+                        print()   
                               
                 jj+=1
         server_p.send(alerts)       

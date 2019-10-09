@@ -2,6 +2,9 @@
 """@package run_write_basic_sim
 Old module for running basic simulation and writing it into database.
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
 sys.path.append("../../sim")
 sys.path.append("../../tools")
@@ -34,13 +37,13 @@ for config in conf:
     Nsim = int(round(random.gauss(Nex,math.sqrt(Nex))))
     
     # simulate the events
-    print
-    print 'Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...'
+    print()
+    print('Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...')
     t1 = time()
-    sims = [SimEvent(config) for jj in xrange(Nsim)]
+    sims = [SimEvent(config) for jj in range(Nsim)]
     t2 = time()
-    print '....run time (sec): ', t2 - t1
-    print 
+    print('....run time (sec): ', t2 - t1)
+    print() 
 
     # put events in temporal order
     sims = sorted(sims,key=attrgetter('datetime'))
@@ -56,11 +59,11 @@ for config in conf:
 #    db_write.write_event(1,stream_name,'db.hpc.rcc.psu.edu', '', '', 'AMON_test2', sims)
     
         
-    print 'Here is some information on the first 5 events:'
+    print('Here is some information on the first 5 events:')
     Nshow = min(Nsim, 5)
-    for jj in xrange(Nshow):
-        print 'stream: ', sims[jj].stream, 'id: ', sims[jj].id, '  RA: ', sims[jj].RA, '  dec: ', sims[jj].dec, '  datetime: ', sims[jj].datetime 
-    print ''
+    for jj in range(Nshow):
+        print('stream: ', sims[jj].stream, 'id: ', sims[jj].id, '  RA: ', sims[jj].RA, '  dec: ', sims[jj].dec, '  datetime: ', sims[jj].datetime) 
+    print('')
     
     # combine the results together and sort
     results.extend(sims)

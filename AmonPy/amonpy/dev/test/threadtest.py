@@ -4,6 +4,8 @@ use multiprocessing module. Similar to threading module but does not
  automatically share data between threads, using instead "message passing" 
  which is implemented here as a "pipe"
 """ 
+from __future__ import print_function
+from builtins import range
 import multiprocessing
 
 # here is the server software, a small analysis that buffers up to Nmax events
@@ -41,7 +43,7 @@ if __name__ == '__main__':
 
     #make a list of "times"
     N = int(30)
-    times = [ii for ii in xrange(N)]
+    times = [ii for ii in range(N)]
 
     # Launch the sever process
     (server_p,client_p) = multiprocessing.Pipe()
@@ -54,8 +56,8 @@ if __name__ == '__main__':
     for t in times:
         client_p.send(t)
         s = (client_p.recv())
-        print 'New event time: ', t, ', buffer diff: ', s[0], \
-            ', buffer sum: ', s[1]
+        print('New event time: ', t, ', buffer diff: ', s[0], \
+            ', buffer sum: ', s[1])
 
     #Close the server pipe in the client
     server_p.close()

@@ -9,7 +9,9 @@ Assumptions:
 4. Observatory is not moving 
 5. No skymap is used (i.e. analytic PSF)
 """
+from __future__ import print_function
 
+from builtins import object
 from datetime import datetime, timedelta
 from numpy import math
 import random
@@ -56,9 +58,9 @@ class SimEvent(object):
     def __del__(self):	
         SimEvent.num_events[self.stream] -=1
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
     @property
     def jday(self):
         return sidereal.JulianDate.fromDatetime(self.datetime).j
