@@ -2,6 +2,9 @@
 client that sends events to the server using HTTP 
 protocol with method=POST
 """
+from __future__ import print_function
+from builtins import str
+from builtins import object
 import sys, getopt, os, shutil, logging, datetime
 
 from twisted.internet import reactor
@@ -19,18 +22,18 @@ path=log=host=False
 
 def usage():
 	"""Displays program usage menu"""
-	print """Usage:
+	print("""Usage:
 	        -s --host        Host server
 			-p --path        Path to check for new data files and archive e.g. /path/to/datafiles/
 			-l --log         Name and path to create log file. e.g. path/to/logfile/clientlog.log
 			-h --help        Show usage menu and quit.
-		  """
+		  """)
 	exit()
 	
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "s:p:l:h", ["host=","path=", "log="])
-except getopt.GetoptError, err:
-	print str(err)
+except getopt.GetoptError as err:
+	print(str(err))
 	usage()
 	
 for o, a in opts:
@@ -45,7 +48,7 @@ for o, a in opts:
 	elif o in ("-h", "--help"):
 		usage()
 	else:
-		print "Option",o,"not recognized."
+		print("Option",o,"not recognized.")
 		usage()
 
 # set up archive directory where the events are moved after sending them to server
@@ -61,7 +64,7 @@ if not (os.path.isdir(path+"archive/")):
 try:
 	logging.basicConfig(filename=log, level=logging.DEBUG)
 except:
-	print "Could not open or create log file:",log+". Please make sure the directory exists and has proper write permissions."
+	print("Could not open or create log file:",log+". Please make sure the directory exists and has proper write permissions.")
 	exit()
 
 # options for logging 
@@ -95,7 +98,7 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
         self.finished.callback(None)
@@ -106,7 +109,7 @@ def printResource(response):
     return finished
 
 def printError(failure):
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
@@ -120,22 +123,22 @@ for filename in os.listdir(path):
     if (os.path.isdir(path+filename) or filename[0]=='.' or filename.find(".log") !=-1):
         pass
     else:	
-        print "There is a file: %s"	% (path+filename)
+        print("There is a file: %s"	% (path+filename))
         filelist=os.listdir(path)
         filelist_xml=[]
         for fl in filelist:
             if fl.find(".xml")!=-1:
                 filelist_xml.append(fl)
-        print "filelist"
-        print filelist
-        print "xml list"
-        print filelist_xml        
+        print("filelist")
+        print(filelist)
+        print("xml list")
+        print(filelist_xml)        
         len1=len(filelist_xml)
         try:				
             datafile=open(path+filename)
             data=datafile.read()
             lenght_data=str(len(data))
-            print "file %s read" % (path+filename)
+            print("file %s read" % (path+filename))
             datafile.close()
             shutil.move(path+filename, path+"archive/"+filename)
             body = StringProducer(data)
@@ -144,11 +147,11 @@ for filename in os.listdir(path):
                                             'Content-Lenght': [lenght_data],
                                             'Content-Name':[filename]})
             d = agent.request('POST', host, headers, bodyProducer=body)
-            print headers
+            print(headers)
             # on success it returns Deferred with a response object
             d.addCallbacks(printResource, printError)
             len1=len1-1
-            print "more files to go %s" % (len1,)
+            print("more files to go %s" % (len1,))
             if len1==0: # exclude log and . files
                 d.addBoth(stop)
         except:

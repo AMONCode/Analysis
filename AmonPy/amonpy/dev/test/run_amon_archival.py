@@ -2,17 +2,14 @@
 """@package run_amon_archival
 Old module for running archival clustering analysis.
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
-sys.path.append('../')
-sys.path.append('../tools')
-sys.path.append('../dbase')
-sys.path.append('../anal')
 from time import time
-import db_read
-import cluster
-from db_classes import Alert
-import db_write
-import db_delete
+from amonpy.dbase import db_read, db_write, db_delete
+from amonpy.anal import cluster
+from amonpy.dbase.db_classes import Alert
 
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
@@ -42,14 +39,14 @@ def amon_archival():
     events=db_read.read_event_timeslice(TimeStart,TimeSlice,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
     t2 = time()
-    print
-    print len(events), 'events have been read from the database' 
-    print 'read time (s): ', t2-t1
-    print
+    print()
+    print(len(events), 'events have been read from the database') 
+    print('read time (s): ', t2-t1)
+    print()
 
     # select out icecube only events (for testing)
     events = [ev for ev in events if ev.stream!=-1]
-    print 'Events: ', len(events)
+    print('Events: ', len(events))
 
 
     # put events in temporal order
@@ -69,7 +66,7 @@ def amon_archival():
     Nevents = len(events)
     #for testing...
     #Nevents = 5000
-    for ii in xrange(Nevents):
+    for ii in range(Nevents):
         jj = ii + 1
         deltaT = 0.
         while ((deltaT < deltaTmax) and (jj < Nevents)):
@@ -129,10 +126,10 @@ if __name__ == "__main__":
     t1 = time()
     stream_num, alerts = amon_archival()     
     t2 = time()
-    print
-    print '*** Alert generation complete***'
-    print '    Time taken (sec): ', t2 -t1 
-    print '    No. of alerts generated: ', len(alerts)
-    print
+    print()
+    print('*** Alert generation complete***')
+    print('    Time taken (sec): ', t2 -t1) 
+    print('    No. of alerts generated: ', len(alerts))
+    print()
 
     

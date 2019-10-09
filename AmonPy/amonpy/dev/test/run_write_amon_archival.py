@@ -2,6 +2,8 @@
 """@package run_write_amon_archival
 Old module for running archival clustering analysis and writing it into database.
 """
+from __future__ import print_function
+from builtins import range
 import sys
 sys.path.append('../')
 sys.path.append('../tools')
@@ -43,14 +45,14 @@ result_dialog=''
 # select an option how to run this script 
 result_dialog = dialog_choice.SelectChoice(choices).result
 if result_dialog==choices[0]:
-    print 'Archival analysis will not be written to DB' 
+    print('Archival analysis will not be written to DB') 
     stream_num, alerts=run_amon_archival.amon_archival()
 elif result_dialog==choices[1]:
-    print 'Archival analysis will be written to DB'
+    print('Archival analysis will be written to DB')
     stream_num, alerts=run_amon_archival.amon_archival()
 elif result_dialog==choices[2]:
-    print 'Archival analysis will be appended as new alert stream in  DB'
-    print 'This option is not supported yet, terminating.'
+    print('Archival analysis will be appended as new alert stream in  DB')
+    print('This option is not supported yet, terminating.')
     sys.exit(0)
     # need to:
     # 1. Identify the lowest unused alert stream number in the database
@@ -58,19 +60,19 @@ elif result_dialog==choices[2]:
     # 3. Call the archival run script with the new config
     # 4. Write the results to the database
 else:
-    print 'Terminating.'
+    print('Terminating.')
     sys.exit(0)
 
 num_alerts=len(alerts)
-print 'There is %d alert to be written' % num_alerts
+print('There is %d alert to be written' % num_alerts)
 
 # populate alertline class
 alertlines=db_populate_class.populate_alertline(alerts)  
 num_alertlines=0
 num_alertlines=len(alertlines)
-for i in xrange(num_alertlines):
-    print "Alert line %d" % i
-    print
+for i in range(num_alertlines):
+    print("Alert line %d" % i)
+    print()
     alertlines[i].forprint() 
 
 
@@ -78,12 +80,12 @@ for i in xrange(num_alertlines):
 if (stream_num !=0):    # don't take any action for stream zero
     if result_dialog==choices[1]:
         
-        print "Checking if arhival alerts are already in DB. \
-               They will be deleted,before new alerts are written."
+        print("Checking if arhival alerts are already in DB. \
+               They will be deleted,before new alerts are written.")
         count=0
         count=db_read.alert_count(stream_num,"alert",HostFancyName, UserFancyName, 
                      PasswordFancy,DBFancyName) 
-        print 'Number of rows to be deleted %d' % count                 
+        print('Number of rows to be deleted %d' % count)                 
         if (count > 0):
             "Alert table is not empty. Deleting this stream."
        
@@ -98,10 +100,10 @@ if (stream_num !=0):    # don't take any action for stream zero
         db_write.write_alertline(HostFancyName,UserFancyName,PasswordFancy, 
                              DBFancyName,alertlines)
     elif result_dialog==choices[0]:
-        print 'Analysis results will not be written'  
+        print('Analysis results will not be written')  
     elif result_dialog==choices[2]:
-        print 'This option is not supported yet. Results are not appended.'  
+        print('This option is not supported yet. Results are not appended.')  
     else: 
-        print 'Pass.'                          
+        print('Pass.')                          
 else:
-    print 'Invalid stream number. Only streams >= 1 allowed for archival analysis.'
+    print('Invalid stream number. Only streams >= 1 allowed for archival analysis.')
