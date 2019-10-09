@@ -7,6 +7,11 @@ performs DB transactions in a separate threat, thus keeping the code asynchronou
 - send a message to AMON analysis code about new event (event stream, id and rev)
 """
 from __future__ import absolute_import
+from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
 from twisted.internet import reactor, defer
 from twisted.web.resource import Resource
 from twisted.web.server import Site, NOT_DONE_YET
@@ -14,7 +19,7 @@ from twisted.enterprise import adbapi
 from twisted.python import log
 
 import cgi, os, getopt, sys, shutil
-import ConfigParser,netrc, ast
+import configparser,netrc, ast
 from amonpy.tools.config import AMON_CONFIG
 from datetime import datetime, timedelta
 from time import time
@@ -52,7 +57,7 @@ def error_handler(uuid):
 class EventManager(Resource):
     isLeaf = True
 
-    print 'Configuring AMON Databases'
+    print('Configuring AMON Databases')
     #Configure AMON databases
     #amon_config_fname = '/Users/hugo/Software/Analysis/AmonPy/amonpy/amon.ini'
     #AmonConfig = ConfigParser.ConfigParser()
@@ -70,7 +75,7 @@ class EventManager(Resource):
     microsec = 0.
     counter = 1
 
-    print "Event manager is %d" % counter
+    print("Event manager is %d" % counter)
     dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
                                             user = UserFancyName,
                                             passwd = PasswordFancy,
@@ -79,9 +84,9 @@ class EventManager(Resource):
                                             cp_max=1,
                                             cp_reconnect=True)
 
-    print 'Configuring Analyses'
+    print('Configuring Analyses')
     amon_analysis_fname = '/storage/home/hza53/Software/Analysis/AmonPy/amonpy/analyses/amon_analysis.ini'
-    AmonAnalysis=ConfigParser.ConfigParser()
+    AmonAnalysis=configparser.ConfigParser()
     AmonAnalysis.read(amon_analysis_fname)
     analyses = ast.literal_eval(AmonAnalysis.get('active_analysis','analyses'))
 
@@ -90,15 +95,15 @@ class EventManager(Resource):
     eventBuffers = []
     latest=[]
 
-    for i in xrange(len(analyses)):
-        print 'Analysis: %d'%(i+1)
+    for i in range(len(analyses)):
+        print('Analysis: %d'%(i+1))
         #func.append(globals()[analyses[i][2]])
         alertConfig.append(globals()[analyses[i][-1]+"_config"]())
         eventBuffers.append(EventBuffer())
-        for j in xrange(len(analyses[i])-1):
-            print '   %s '%(analyses[i][j])
+        for j in range(len(analyses[i])-1):
+            print('   %s '%(analyses[i][j]))
             eventBuffers[i].addStream(streams[analyses[i][j]])
-        print eventBuffers[i].event_streams
+        print(eventBuffers[i].event_streams)
         latest.append(datetime(1900,1,1,0,0,0,0))
 
     def render_POST(self,request):
@@ -140,8 +145,8 @@ class EventManager(Resource):
                                 event[0].psf_type,
                                 0))
                 plenght=len(evparam)
-                print 'DB Stuff'
-                for i in xrange(plenght):
+                print('DB Stuff')
+                for i in range(plenght):
                     transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
                                (evparam[i].name,
                                 evparam[i].value,
@@ -157,16 +162,16 @@ class EventManager(Resource):
                 #return dd
 
             def printError(error):
-                print "Got Error: %r" % error
+                print("Got Error: %r" % error)
                 error.printTraceback
 
             def printResult(result):
-                print 'Event written to DB and buffers'
+                print('Event written to DB and buffers')
                 evt = result
                 date = evt[0].datetime
-                print type(evt[0].datetime)
+                print(type(evt[0].datetime))
 
-                for i in xrange(len(EventManager.eventBuffers)):
+                for i in range(len(EventManager.eventBuffers)):
                     if evt[0].stream in EventManager.eventBuffers[i].event_streams:
 
                         #check if event is already in buffer
@@ -177,23 +182,23 @@ class EventManager(Resource):
                             for e in EventManager.eventBuffers[i].events:
                                 if((evt[0].stream == e.stream) and (evt[0].id == e.id)):
                                     if(evt[0].rev == e.rev):
-                                        print "Event is already in the buffer. It will not be added to the buffer."
+                                        print("Event is already in the buffer. It will not be added to the buffer.")
                                         inBuffer = True
                                         break
                                     elif (evt[0].rev < e.rev):
-                                        print "Old event revision arrived later than a newer one."
-                                        print "No analysis for this obsolete event"
+                                        print("Old event revision arrived later than a newer one.")
+                                        print("No analysis for this obsolete event")
                                         inBuffer = True
                                         break
                                     else:
-                                        print "Old event revision in the buffer, remove it."
+                                        print("Old event revision in the buffer, remove it.")
                                         EventManager.eventBuffers[i].events.pop(b[i].events.index(e))
                                         #buffers[i].events.append(event)
                                         #break
                             if inBuffer is False:
 
                                 if date < EventManager.latest[i]:
-                                    print '  reordering analysis buffer due to latent event'
+                                    print('  reordering analysis buffer due to latent event')
                                     EventManager.eventBuffers[i].events = sorted(EventManager.eventBuffers[i].events,key=attrgetter('datetime'),reverse=True)
                                 else:
                                     EventManager.latest[i] = date
@@ -203,14 +208,14 @@ class EventManager(Resource):
                                 while bufdur(EventManager.eventBuffers[i].events) > EventManager.alertConfig[i].bufferT:
                                     eventout = EventManager.eventBuffers[i].events.pop()
                                     if ((eventout.stream==evt[0].stream) and (eventout.id==evt[0].id) and (eventout.rev==evt[0].rev)):
-                                        print 'The new event came late into the buffer. Not using it'
+                                        print('The new event came late into the buffer. Not using it')
 
                                 try:
                                     evt[0].datetime = evt[0].datetime.strftime("%Y-%m-%dT%H:%M:%S.%f")
                                 except AttributeError:
                                     pass
 
-                                print 'Send celery task'
+                                print('Send celery task')
                                 max_id = db_read.alert_max_id(EventManager.alertConfig[i].stream,HostFancyName,
                                                                    UserFancyName,
                                                                    PasswordFancy,
@@ -221,7 +226,7 @@ class EventManager(Resource):
                                 link_error=error_handler.s(),
                                 queue=EventManager.analyses[i][2])
 
-                                print "Adding event to buffer"#for stream %d"%(event[0].stream)
+                                print("Adding event to buffer")#for stream %d"%(event[0].stream)
                                 EventManager.eventBuffers[i].events.append(evt[0])
                                 # try:
                                 #     evt[0].datetime = evt[0].datetime.strftime("%Y-%m-%dT%H:%M:%S.%f")
@@ -229,7 +234,7 @@ class EventManager(Resource):
                                 #     pass
                                 #print 'Finish adding event to DB and Buffers'
                         else:
-                            print 'Starting buffer. Adding first event'
+                            print('Starting buffer. Adding first event')
                             EventManager.latest[i]=date
                             try:
                                 evt[0].datetime = evt[0].datetime.strftime("%Y-%m-%dT%H:%M:%S.%f")
@@ -265,7 +270,7 @@ class EventManager(Resource):
                             }
                     )
             except Exception as e:
-                print 'something went wrong: ' + str(e)
+                print('something went wrong: ' + str(e))
 
             #print  request.content.getvalue()
             fname=self.headers['content-name']
@@ -287,10 +292,10 @@ class EventManager(Resource):
 
 
             #Write event to the DB and to the buffer(s)
-            print 'Write event'
+            print('Write event')
             d = writeEventParam(event, evParam,EventManager.eventBuffers)
 
-            print 'Send event to celery task'
+            print('Send event to celery task')
             d.addCallbacks(printResult,printError)
 
 

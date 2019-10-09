@@ -2,6 +2,10 @@
 client that sends events to the server using HTTP
 protocol with method=POST over TLS with certificate and key file client.crt and client.key
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
+from builtins import object
 import sys, getopt, os, shutil, logging, datetime
 import resource
 import fcntl
@@ -28,10 +32,10 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
-        print 'Finished receiving body:', reason.getErrorMessage()
+        print('Finished receiving body:', reason.getErrorMessage())
         self.finished.callback(None)
 
 def printResource(response):
@@ -43,20 +47,20 @@ def printError(failure):
     #d=Deferred()
     #d.addCallbacks(printNotSent)
     #print >>sys.stderr, failure
-    print type(failure.value), failure
+    print(type(failure.value), failure)
     failure.value.reasons[0].printTraceback()
 def stop(result):
     reactor.stop()
 
 def moveFile(path,fname):
     shutil.move(path+fname, path+"archive/"+fname)
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printSent(fname):
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printNotSent(filename):
-    print "File %s not sent" % (fname,)
+    print("File %s not sent" % (fname,))
 
 def check_open_fds():
     fds = []
@@ -131,24 +135,24 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
 	        try:
                     datafile=open(os.path.join(path,oldest))
                 except Exception as E:
-                    print E
-                    print "had trouble with opening file"
-		print "opened datafile"
+                    print(E)
+                    print("had trouble with opening file")
+		print("opened datafile")
 		#data=datafile.read()
                 #lenght_data=str(len(data))
                 #body = StringProducer(data)
                 body=FileBodyProducer(datafile)
-		print "made body"
+		print("made body")
                 # since twisted v.15 length is string
                 length_data=str(body.length)
-		print "got length"
+		print("got length")
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'],
                                             'Content-Lenght': [length_data],
                                             'Content-Name':[oldest]})
-                print "made headers"
+                print("made headers")
 		d = agent.request('POST', host, headers, bodyProducer=body)
-                print "did request"
+                print("did request")
 		# on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
                 shutil.move(os.path.join(path,oldest), os.path.join(path,"archive/",oldest))
@@ -159,7 +163,7 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
 		log.msg(str(E))
             else:
                 #shutil.move(path+oldest, path+"archive/"+oldest)
-                print "ping db"
+                print("ping db")
         else:
             pass
     else:
