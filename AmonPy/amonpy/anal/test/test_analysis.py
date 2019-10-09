@@ -3,6 +3,8 @@
 @package test_analysis
 Module for testing analysis modules.
 """
+from __future__ import print_function
+from builtins import str
 import sys
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
@@ -34,10 +36,10 @@ def test_anal():
     events=db_read.read_event_timeslice(TimeStart,TimeSlice,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
     t2 = time()
-    print
-    print len(events), 'events have been read from the database'
-    print 'read time (s): ', t2-t1
-    print
+    print()
+    print(len(events), 'events have been read from the database')
+    print('read time (s): ', t2-t1)
+    print()
 
     # select out icecube only events (for testing)
     # by changing the following to if ev.stream == 0
@@ -66,11 +68,11 @@ def test_anal():
     alerts = client.recv()
 
     t2 = time()
-    print
-    print '*** Alert generation complete***'
-    print '    Time taken (sec): ', t2 -t1
-    print '    No. of alerts generated: ', len(alerts)
-    print
+    print()
+    print('*** Alert generation complete***')
+    print('    Time taken (sec): ', t2 -t1)
+    print('    No. of alerts generated: ', len(alerts))
+    print()
 
     #Close the server pipe in the client
     server.close()
