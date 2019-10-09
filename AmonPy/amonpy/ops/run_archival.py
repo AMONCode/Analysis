@@ -15,6 +15,8 @@
 """
 # 3rd party modules
 from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str
 from time import time
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
@@ -95,24 +97,24 @@ if missing_requirements:
        raise RuntimeError(missing_args_str)
 
 if (options.use_new_config) & (options.cluster_method != 1):
-       print options.cluster_method
-       print 'Unsupported cluster method requested\nAnalysis will use Fisher (default)'
+       print(options.cluster_method)
+       print('Unsupported cluster method requested\nAnalysis will use Fisher (default)')
        options.cluster_method=1
-       print options.cluster_method
+       print(options.cluster_method)
 
 if not options.password:
        options.password=getpass.getpass('DB Password: ')
 
 if options.verbose:
-       print '**** EXECUTING run_archival.py ****\nhostname: ' + str(options.host) + '\nusername: ' \
-                     + str(options.username) + '\npassword: <hidden>\ndatabase: ' + str(options.database)
+       print('**** EXECUTING run_archival.py ****\nhostname: ' + str(options.host) + '\nusername: ' \
+                     + str(options.username) + '\npassword: <hidden>\ndatabase: ' + str(options.database))
 
 # Create the most generic Event class
 Event = event_def()
 
 if options.use_test_config:
        if options.verbose:
-              print 'USING TEST ALERT CONFIG'
+              print('USING TEST ALERT CONFIG')
        config = exAlertConfig()
        config.forprint()
        event_streams = [0,1,7]
@@ -124,19 +126,19 @@ if options.use_db_config:
        config=db_read.read_alertConfig(stream_num,rev,options.host,
                           options.username,options.password,options.database);
        if options.verbose:
-              print 'AlertConfig loading from the database...\n...works only for stream 1 and revision 0 for now'
+              print('AlertConfig loading from the database...\n...works only for stream 1 and revision 0 for now')
        config.forprint()
        event_streams = [0,1,7]
 if options.use_new_config:
        if options.verbose:
-              print 'User-generated AlertConfig\nChecking the highest taken analysis stream number from database...'
+              print('User-generated AlertConfig\nChecking the highest taken analysis stream number from database...')
 
        stream_count=db_read.stream_count_alertconfig(options.host,
                           options.username,options.password,options.database)
        stream_num = stream_count + 1
 
        if options.verbose:
-              print "Latest stream number is %s\n The next free stream number is %s" % (stream_count, stream_num)
+              print("Latest stream number is %s\n The next free stream number is %s" % (stream_count, stream_num))
 
        rev = 0
        config = AlertConfig2(stream_num, rev)
@@ -180,14 +182,14 @@ if options.use_new_config:
 
        if (options.stream_config == 1) or (options.stream_config == 2) or (options.stream_config == 3) or (options.stream_config == 4):
               if len(options.num_events_thresh) > 1:
-                     print 'More number thresholds input than config streams chosen, using first number in list (%d)' % \
-                                   options.num_events_thresh[0]
+                     print('More number thresholds input than config streams chosen, using first number in list (%d)' % \
+                                   options.num_events_thresh[0])
               config.N_thresh='{' + str(event_streams[0]) + ':' + str(options.num_events_thresh[0]) + '}'
 
        elif (options.stream_config == 5) or (options.stream_config == 6) or (options.stream_config == 7) or (options.stream_config == 8):
               if len(options.num_events_thresh) > 2:
-                     print 'More number thresholds input than config streams chosen, using first two numbers in list \
-                                   (%d and %d)' % (options.num_events_thresh[0], options.num_events_thresh[1])
+                     print('More number thresholds input than config streams chosen, using first two numbers in list \
+                                   (%d and %d)' % (options.num_events_thresh[0], options.num_events_thresh[1]))
               thresh1='{' + str(event_streams[0]) + ':' + \
                             str(options.num_events_thresh[0]) + ', '
               thresh2= str(event_streams[1]) + ':' + \
@@ -195,8 +197,8 @@ if options.use_new_config:
               config.N_thresh = thresh1 + thresh2
        else:
               if len(options.num_events_thresh) > 3:
-                     print 'More number thresholds input than config streams chosen, using first three numbers in list \
-                                   (%d, %d, and %d)' % (options.num_events_thresh[0],options.num_events_thresh[1],options.num_events_thresh[2])
+                     print('More number thresholds input than config streams chosen, using first three numbers in list \
+                                   (%d, %d, and %d)' % (options.num_events_thresh[0],options.num_events_thresh[1],options.num_events_thresh[2]))
               thresh1='{' + str(event_streams[0]) + ':' + \
                             str(options.num_events_thresh[0]) + ', '
               thresh2= str(event_streams[1]) + ':' + \
@@ -225,8 +227,8 @@ if options.use_new_config:
        config.R_thresh           = 0.0
 
        config.forprint()
-       print
-       print 'Writing configuration to database'
+       print()
+       print('Writing configuration to database')
        db_write.write_alert_config([stream_num],options.host,
                      options.username,options.password,options.database, [config])
 if (not options.use_test_config) & (not options.use_db_config) & (not options.use_new_config):
@@ -242,7 +244,7 @@ t1 = time()
 events=db_read.read_event_timeslice_streams(event_streams, TimeStart,TimeSlice,options.host,
                                     options.username,options.password,options.database)
 t2 = time()
-print '   Read time: %.2f seconds' % float(t2-t1)
+print('   Read time: %.2f seconds' % float(t2-t1))
 
 # put events in temporal order, oldest events first
 events = sorted(events,key=attrgetter('datetime'))
@@ -255,62 +257,62 @@ if MAX_ID == None:
     MAX_ID = -1
 
 # start analysis server process
-print
-print ' STARTING ANALYSIS SERVER'
+print()
+print(' STARTING ANALYSIS SERVER')
 (server_p,client_p) = multiprocessing.Pipe()
 anal_p = multiprocessing.Process(target=analysis.anal,
                     args=((server_p,client_p),config, MAX_ID))
 anal_p.start()
 
 # send events to the analysis process, send the oldest events first
-print '   Sending events'
+print('   Sending events')
 t1 = time()
 for ev in events:
     client_p.send(ev)
 t2 = time()
-print '   Analysis time: %.2f seconds' % float(t2-t1)
+print('   Analysis time: %.2f seconds' % float(t2-t1))
 # get the stored alerts
-print '   Retrieving alerts'
+print('   Retrieving alerts')
 t1 = time()
 client_p.send('get_alerts')
 alerts = client_p.recv()
 t2 = time()
-print '   Retrieval time: %.2f seconds' % float(t2-t1)
+print('   Retrieval time: %.2f seconds' % float(t2-t1))
 
 # analysis done, close the pipe
 server_p.close()
 client_p.close()
-print '   Analysis server closed'
+print('   Analysis server closed')
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
-    print '   %d alerts'     % len(alerts)
+    print('   %d alerts'     % len(alerts))
 elif(alerts == 'Empty' or alerts == 'Problem'):
-    print alerts
-    print "No alerts, exiting."
+    print(alerts)
+    print("No alerts, exiting.")
     sys.exit(0)
 else:
-    print alerts
-    print "No alerts, exiting."
+    print(alerts)
+    print("No alerts, exiting.")
     sys.exit(0)
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
 #if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
     alertlines=db_populate_class.populate_alertline(alerts)
-    print '   %d alertlines generated' % len(alertlines)
-    print ' ANALYSIS COMPLETE'
+    print('   %d alertlines generated' % len(alertlines))
+    print(' ANALYSIS COMPLETE')
 
 
 # identify what to do with alerts
     if options.output_config==1:
-        print ' QUIT: Analysis results will NOT be written to DB'
+        print(' QUIT: Analysis results will NOT be written to DB')
     elif options.output_config==2:
-        print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+        print(' WRITING ANALYSIS RESULTS TO THE DATABASE')
         if (stream_num !=0):    # don't take any action for stream zero
-            print "   Checking if arhival alerts are already in DB."
+            print("   Checking if arhival alerts are already in DB.")
             count=db_read.alert_count(stream_num,"alert",options.host,
                            options.username,options.password,options.database)
-            print '   Number of rows to be deleted: %d' % count
+            print('   Number of rows to be deleted: %d' % count)
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
                    options.host,options.username,options.password,options.database)
@@ -321,15 +323,15 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
             db_write.write_alertline(options.host,options.username,
                 options.password, options.database,alertlines)
         else:
-            print '   Invalid stream number'
-            print '   Only streams >= 1 allowed for archival analysis'
+            print('   Invalid stream number')
+            print('   Only streams >= 1 allowed for archival analysis')
     elif options.output_config==3:
-        print 'APPENDING NEW ALERT STREAM TO THE DATABASE'
+        print('APPENDING NEW ALERT STREAM TO THE DATABASE')
         if (stream_num !=0):    # don't take any action for stream zero
-            print "   Checking if arhival alerts are already in DB."
+            print("   Checking if arhival alerts are already in DB.")
             count=db_read.alert_count(stream_num,"alert",options.host,
                            options.username,options.password,options.database)
-            print '   Number of rows to be deleted: %d' % count
+            print('   Number of rows to be deleted: %d' % count)
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
                    options.host,options.username,options.password,options.database)
@@ -340,15 +342,15 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
             db_write.write_alertline(options.host,options.username,
                 options.password, options.database,alertlines)
         else:
-            print '   Invalid stream number'
-            print '   Only streams >= 1 allowed for archival analysis'
+            print('   Invalid stream number')
+            print('   Only streams >= 1 allowed for archival analysis')
     else:
        raise RuntimeError("Not sure what to do with alerts, see --help for more details")
 
 else:
-    print "Last event"
+    print("Last event")
     alerts[1].forprint()
-    print "No alerts found"
+    print("No alerts found")
     sys.exit(0)
-print
-print ' **** END run_archival.py ****'
+print()
+print(' **** END run_archival.py ****')

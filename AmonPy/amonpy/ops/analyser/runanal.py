@@ -22,6 +22,9 @@
     to GCN and delete each xml fiel after it has been sent.
 """
 from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str
+from builtins import range
 from amonpy.ops.analyser.celery import app
 from celery import Task
 #from celery import current_app
@@ -55,7 +58,7 @@ import amonpy.dbase.email_alerts as email_alerts
 from time import time
 from datetime import datetime, timedelta
 from operator import itemgetter, attrgetter
-import ConfigParser, netrc
+import configparser, netrc
 #import wx
 import multiprocessing
 import ast
@@ -77,7 +80,7 @@ class AnalRT(Task):
     def __init__(self):
         self.Event = event_def()
         config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
-        Config = ConfigParser.ConfigParser()
+        Config = configparser.ConfigParser()
         Config.read(config_fname)
         self.HostFancyName = Config.get('database', 'host_name')
         nrc_path = Config.get('dirs', 'amonpydir') + '.netrc'
@@ -89,8 +92,8 @@ class AnalRT(Task):
         self.alertDir = Config.get('dirs', 'alertdir')
         self.prodMachine = eval(Config.get('machine', 'prod'))
 
-        print
-        print ' USING TEST ALERT CONFIG'
+        print()
+        print(' USING TEST ALERT CONFIG')
         self.config = exAlertConfig()
         self.archiv_config = exAlertArchivConfig()
         self.config.forprint()
@@ -102,18 +105,18 @@ class AnalRT(Task):
                                              self.PasswordFancy,
                                              self.DBFancyName)
             # sort the events!!1
-        print
-        print "MAX ALERT ID IN DATABASE IS"
-        print self.max_id
+        print()
+        print("MAX ALERT ID IN DATABASE IS")
+        print(self.max_id)
         if (self.max_id==None):
             self.max_id=-1
-        print
+        print()
         # to prevent sendinf IceCube's EHE and HESE if they overlap
         #self.run_check=0
         #self.event_check=0
         #self.rev_check=0
         #self.sendAlert=True
-        print ' STARTING ANALYSIS SERVER'
+        print(' STARTING ANALYSIS SERVER')
         (self.server_p,self.client_p) = multiprocessing.Pipe()
         self.anal_p = multiprocessing.Process(target=analysis.anal,
                     args=((self.server_p,self.client_p),self.config,self.max_id))
@@ -142,15 +145,15 @@ class AnalRT(Task):
                                         self.UserFancyName,self.PasswordFancy,self.DBFancyName)
 
         t2 = time()
-        print '   Read time: %.2f seconds' % float(t2-t1)
-        print ' lenght of parameters %s' % len(params)
+        print('   Read time: %.2f seconds' % float(t2-t1))
+        print(' lenght of parameters %s' % len(params))
         if (len(params)>0):
             for i in range(len(params)):
                 # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
                 if (params[i].name=='signal_trackness'):
                     eventHESE=True
                     signal_t = params[i].value
-                    print 'Signal trackenss %.2f' % signal_t
+                    print('Signal trackenss %.2f' % signal_t)
                 if (params[i].name=='causalqtot'):
                     hese_charge=params[i].value
                 if (params[i].name=='run_id'):
@@ -166,8 +169,8 @@ class AnalRT(Task):
                 alertDuplicate=False
             else:
                 alertDuplicate=True
-            print "alert duplicate"
-            print alertDuplicate
+            print("alert duplicate")
+            print(alertDuplicate)
 
         if (events.stream==11):
             events_duplicate=db_read.read_event_single(10,evnumber,evrev,self.HostFancyName,
@@ -176,8 +179,8 @@ class AnalRT(Task):
                 alertDuplicate=False
             else:
                 alertDuplicate=True
-            print "alert duplicate"
-            print alertDuplicate
+            print("alert duplicate")
+            print(alertDuplicate)
         #if ((events.stream==10) or (events.stream==11)):
             #if ((run_id==self.run_check) and (event_id==self.event_check) and (events.rev==self.rev_check)):
             #    self.sendAlert=False
@@ -212,10 +215,10 @@ class AnalRT(Task):
                     cmd = ['comet-sendvo']
                     cmd.append('--file=' + fname)
                     # just for dev to prevent sending hese both from dev and pro machine
-                    print "uncoment this if used on production"
+                    print("uncoment this if used on production")
                     subprocess.check_call(cmd)
                 except subprocess.CalledProcessError as e:
-                    print "Send HESE VOevent alert failed"
+                    print("Send HESE VOevent alert failed")
                     #logger.error("send_voevent failed")
                     raise e
                 else:
@@ -235,12 +238,12 @@ class AnalRT(Task):
                 f1.close()
                 if (self.prodMachine == True):
                     try:
-                        print "EHE sent to GCN"
+                        print("EHE sent to GCN")
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + fname)
                         subprocess.check_call(cmd)
                     except subprocess.CalledProcessError as e:
-                        print "Send IceCube EHE VOevent alert failed"
+                        print("Send IceCube EHE VOevent alert failed")
                         #logger.error("send_voevent failed")
                         raise e
                     else:
@@ -259,12 +262,12 @@ class AnalRT(Task):
                 f1.close()
                 if (self.prodMachine == True):
                     try:
-                        print "OFU created"
+                        print("OFU created")
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + fname)
                         subprocess.check_call(cmd)
                     except subprocess.CalledProcessError as e:
-                        print "Send IceCube OFU VOevent alert failed"
+                        print("Send IceCube OFU VOevent alert failed")
                         #logger.error("send_voevent failed")
                         raise e
                     else:
@@ -282,12 +285,12 @@ class AnalRT(Task):
                 f1.close()
                 if (self.prodMachine == True):
                     try:
-                        print "GFU created"
+                        print("GFU created")
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + fname)
                         subprocess.check_call(cmd)
                     except subprocess.CalledProcessError as e:
-                        print "Send IceCube GFU VOevent alert failed"
+                        print("Send IceCube GFU VOevent alert failed")
                         #logger.error("send_voevent failed")
                         raise e
                     else:
@@ -299,27 +302,27 @@ class AnalRT(Task):
         # put events in temporal order
         #events = sorted(events,key=attrgetter('datetime'))
         # send events to the analysis process
-        print '   Sending events'
+        print('   Sending events')
         t1 = time()
         #for ev in events:
             #self.client_p.send(ev)
         # do not analyse OFU for now, not approved by IceCube to use in analysis
         if (isinstance(events,Event) and (events.stream!=12) and (events.stream!=13) and (events.stream!=14) and (events.stream!=15)) :
             #self.client_p.send(events)
-            print "NOT DOING ANALYSIS FOR NOW"
+            print("NOT DOING ANALYSIS FOR NOW")
         else:
-            print "NOT EVENT"
+            print("NOT EVENT")
 
         t2 = time()
-        print '   Analysis time: %.2f seconds' % float(t2-t1)
+        print('   Analysis time: %.2f seconds' % float(t2-t1))
         # get the stored alerts
-        print '   Retrieving alerts'
+        print('   Retrieving alerts')
         t1 = time()
         self.client_p.send('get_alerts')
         alerts = self.client_p.recv()
         #print '   %d alerts'     % len(alerts)
         t2 = time()
-        print '   Retrieval time: %.2f seconds' % float(t2-t1)
+        print('   Retrieval time: %.2f seconds' % float(t2-t1))
 
         # analysis done, close the pipe
         #server_p.close()
@@ -332,9 +335,9 @@ class AnalRT(Task):
             #alerts[0].forprint()
             #alertlines=db_populate_class.populate_alertline(alerts)
             #print '   %d alertlines generated' % len(alertlines)
-            print ' ANALYSIS COMPLETE'
+            print(' ANALYSIS COMPLETE')
 
-            print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+            print(' WRITING ANALYSIS RESULTS TO THE DATABASE')
             # modify it later to append to database, not to rewrite
             if (self.stream_num !=0):    # don't take any action for stream zero in testing phase
 
@@ -346,7 +349,7 @@ class AnalRT(Task):
                     alertIdChange=False
                     # check to see if older alerts with these events existed
                     num_events=len(alert.events)
-                    for j in xrange(num_events):
+                    for j in range(num_events):
                         streams+=[alert.events[j].stream]
                         ids+=[alert.events[j].id]
                         if not ((alert.events[j].stream == events.stream) and
@@ -416,12 +419,12 @@ class AnalRT(Task):
                 """
                 if (self.prodMachine==True):
                     try:
-                        print "alert created"
+                        print("alert created")
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + fname)
                         subprocess.check_call(cmd)
                     except subprocess.CalledProcessError as e:
-                        print "Send VOevent alert failed"
+                        print("Send VOevent alert failed")
                         #logger.error("send_voevent failed")
                         raise e
                     else:
@@ -430,13 +433,13 @@ class AnalRT(Task):
                 else:
                     shutil.move(fname, self.alertDir+"archive/") 
             else:
-                print '   Invalid stream number'
-                print '   Only streams >= 1 allowed for testing analysis'
+                print('   Invalid stream number')
+                print('   Only streams >= 1 allowed for testing analysis')
             return "%d alerts found" % (len(alerts),)
         elif(alerts[0] ==True):
             # call archival analysis for a very late arrival event that is outside of time
             # buffer
-            print "Call archival"
+            print("Call archival")
             #print "True or false, true is correct"
             #print alerts[0]
             #print "Event"
@@ -455,8 +458,8 @@ class AnalRT(Task):
                                              self.PasswordFancy,
                                              self.DBFancyName)
             # sort the events!!1
-            print "max_id is"
-            print max_id
+            print("max_id is")
+            print(max_id)
             if (max_id==None):
                 max_id=-1
             # code the function bellow in module analysis
@@ -464,9 +467,9 @@ class AnalRT(Task):
             if (len(alerts_archive)!=0):
                 #alertlines=db_populate_class.populate_alertline(alerts_archive)
                 #print '   %d alertlines generated' % len(alertlines)
-                print ' ARCHIVAL ANALYSIS COMPLETE'
+                print(' ARCHIVAL ANALYSIS COMPLETE')
 
-                print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+                print(' WRITING ANALYSIS RESULTS TO THE DATABASE')
 
                 if (self.stream_num2 !=0):    # don't take any action for stream zero in testing phase
 
@@ -495,7 +498,7 @@ class AnalRT(Task):
                                              self.PasswordFancy,
                                              self.DBFancyName)
                     except:
-                        print "Alert line cannot be read, probably not written yet"
+                        print("Alert line cannot be read, probably not written yet")
                         alertlines_written = []
                     # check if this out-of-buffer event was already analysed in case in close-in time arrival
                     # with another out-of-buffer event
@@ -512,7 +515,7 @@ class AnalRT(Task):
                             alertIdChangeAr=False
                             # check to see if older alerts with these events existed
                             num_events_ar=len(alert_ar.events)
-                            for j in xrange(num_events_ar):
+                            for j in range(num_events_ar):
                                 streams_ar+=[alert_ar.events[j].stream]
                                 ids_ar+=[alert_ar.events[j].id]
                             lines_db_ar=db_read.read_alertline_events2(streams_ar,ids_ar,
@@ -563,12 +566,12 @@ class AnalRT(Task):
                         """
                         if (self.prodMachine==True):
                             try:
-                                print "AMON alert created"
+                                print("AMON alert created")
                                 cmd = ['comet-sendvo']
                                 cmd.append('--file=' + fname)
                                 subprocess.check_call(cmd)
                             except subprocess.CalledProcessError as e:
-                                print "Send VOevent alert failed"
+                                print("Send VOevent alert failed")
                                 #logger.error("send_voevent failed")
                                 raise e
                             else:
@@ -577,11 +580,11 @@ class AnalRT(Task):
                         else:
                             shutl.move(fname, self.alertDir+"archive/")
                     else:
-                        print "Late event already analysed"
+                        print("Late event already analysed")
                         alerts_archive=[]
                 else:
-                    print '   Invalid stream number'
-                    print '   Only streams >= 1 allowed for testing analysis'
+                    print('   Invalid stream number')
+                    print('   Only streams >= 1 allowed for testing analysis')
             if len(alerts_archive)!=0:
                 return "%d alerts found" % (len(alerts_archive),)
             else:

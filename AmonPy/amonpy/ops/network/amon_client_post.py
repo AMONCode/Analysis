@@ -2,6 +2,9 @@
 client that sends events to the server using HTTP
 protocol with method=POST
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys, os, shutil, logging
 import resource
 import fcntl
@@ -21,10 +24,10 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
-        print 'Finished receiving body:', reason.getErrorMessage()
+        print('Finished receiving body:', reason.getErrorMessage())
         self.finished.callback(None)
 
 def printResource(response):
@@ -35,20 +38,20 @@ def printResource(response):
 def printError(failure):
     d=Deferred()
     d.addCallbacks(printNotSent)
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
 
 def moveFile(path,fname):
     shutil.move(os.path.join(path,fname), os.path.join(path,"archive",fname))
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printSent(fname):
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printNotSent(filename):
-    print "File %s not sent" % (fname,)
+    print("File %s not sent" % (fname,))
 
 def check_open_fds():
     fds = []

@@ -8,6 +8,9 @@ performs DB transactions in a separate threat, thus keeping the code asynchronou
 """
 #Twisted modules
 from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str
+from builtins import range
 from twisted.internet import reactor, defer
 from twisted.web.resource import Resource
 from twisted.web.server import Site, NOT_DONE_YET
@@ -17,7 +20,7 @@ from twisted.python import log
 import traceback
 
 import cgi, os, getopt, sys, shutil
-import ConfigParser,netrc, ast
+import configparser,netrc, ast
 from amonpy.tools.config import AMON_CONFIG
 from datetime import datetime, timedelta
 from time import time
@@ -70,7 +73,7 @@ class ReconnectingConnectionPool(adbapi.ConnectionPool):
     def _runInteraction(self, interaction, *args, **kw):
         try:
             return adbapi.ConnectionPool._runInteraction(self, interaction, *args, **kw)
-        except MySQLdb.OperationalError, e:
+        except MySQLdb.OperationalError as e:
             if e[0] not in (2006, 2013):
                 raise
             log.msg("RCP: got error %s, retrying operation" %(e))
@@ -86,7 +89,7 @@ class EventManager(Resource):
     """
     isLeaf = True
 
-    print 'Configuring AMON Databases'
+    print('Configuring AMON Databases')
     #Configure AMON databases
 
     HostFancyName = AMON_CONFIG.get('database', 'host_name')#AmonConfig.get('database', 'host_name')
@@ -101,7 +104,7 @@ class EventManager(Resource):
     microsec = 0.
     counter = 1
 
-    print "Event manager is %d" % counter
+    print("Event manager is %d" % counter)
     # dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
     #                                         user = UserFancyName,
     #                                         passwd = PasswordFancy,
@@ -120,9 +123,9 @@ class EventManager(Resource):
 
 
 
-    print 'Configuring Analyses'
+    print('Configuring Analyses')
     amon_analysis_fname = os.path.join(AmonPyDir,'analyses/amon_analysis.ini')
-    AmonAnalysis=ConfigParser.ConfigParser()
+    AmonAnalysis=configparser.ConfigParser()
     AmonAnalysis.read(amon_analysis_fname)
     analyses = ast.literal_eval(AmonAnalysis.get('active_analysis','analyses'))
 
@@ -131,15 +134,15 @@ class EventManager(Resource):
     eventBuffers = []
     latest=[]
 
-    for i in xrange(len(analyses)):
-        print 'Analysis: %d'%(i+1)
+    for i in range(len(analyses)):
+        print('Analysis: %d'%(i+1))
         #func.append(globals()[analyses[i][2]])
         alertConfig.append(globals()[analyses[i][-1]+"_config"]())
         eventBuffers.append(EventBuffer())
-        for j in xrange(len(analyses[i])-1):
-            print '   %s '%(analyses[i][j])
+        for j in range(len(analyses[i])-1):
+            print('   %s '%(analyses[i][j]))
             eventBuffers[i].addStream(streams[analyses[i][j]])
-        print eventBuffers[i].event_streams
+        print(eventBuffers[i].event_streams)
         latest.append(datetime(1900,1,1,0,0,0,0))
 
     path = AMON_CONFIG.get('dirs','serverdir')
@@ -192,7 +195,7 @@ class EventManager(Resource):
                                 0))
                 plenght=len(evparam)
 
-                for i in xrange(plenght):
+                for i in range(plenght):
                     transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
                                (evparam[i].name,
                                 evparam[i].value,
@@ -206,25 +209,25 @@ class EventManager(Resource):
                 return EventManager.dbpool.runInteraction(_writeEventParam, event, evparam,buffers)
 
             def printError(error):
-                print "Got Error: %r" % error
+                print("Got Error: %r" % error)
                 error.printTraceback
 
             def printResult(result):
-                print 'Event written to DB, send to task'
+                print('Event written to DB, send to task')
                 evt = result
 
-                print 'Event stream: ',inv_streams[evt[0].stream]
-                for i in xrange(len(EventManager.eventBuffers)):
+                print('Event stream: ',inv_streams[evt[0].stream])
+                for i in range(len(EventManager.eventBuffers)):
                     if evt[0].stream in EventManager.eventBuffers[i].event_streams:
 
                         #Checking the datetime format so that it can be jsonpickled
                         try:
                             evt[0].datetime = evt[0].datetime.strftime("%Y-%m-%dT%H:%M:%S.%f")
                         except AttributeError:
-                            print 'Something bad happened'
+                            print('Something bad happened')
                             pass
 
-                        print 'Send to celery task'
+                        print('Send to celery task')
                         globals()[EventManager.analyses[i][-1]].apply_async((jsonpickle.encode(evt[0]),),
                         link_error=error_handler.s(),
                         queue=EventManager.analyses[i][-1])
@@ -238,7 +241,7 @@ class EventManager(Resource):
             # Get the file name of the VOEvent
 
             self.headers = request.getAllHeaders()
-            print self.headers
+            print(self.headers)
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
@@ -249,7 +252,7 @@ class EventManager(Resource):
                             }
                     )
             except Exception as e:
-                print 'something went wrong: ' + str(e)
+                print('something went wrong: ' + str(e))
 
             fname=self.headers['content-name']
 
@@ -270,10 +273,10 @@ class EventManager(Resource):
             shutil.move(os.path.join(path,"server_tmp_events",fname), fname_new)
 
             #Write event to the DB and to the buffer(s)
-            print 'Write event'
+            print('Write event')
             d = writeEventParam(event, evParam,EventManager.eventBuffers)
 
-            print 'Send event to celery tasks'
+            print('Send event to celery tasks')
             d.addCallbacks(printResult,printError)
 
 
