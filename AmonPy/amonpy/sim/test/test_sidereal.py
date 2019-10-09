@@ -2,9 +2,10 @@
 """@package test_sidereal
 Testing module for sidereal_m module.
 """
+from __future__ import print_function
+from builtins import range
 import sys
-sys.path.append("../")
-import sidereal_m as sidereal
+from amonpy.sim import sidereal_m as sidereal
 from numpy import math
 import unittest
 from datetime import datetime, timedelta
@@ -22,23 +23,23 @@ class TestSidereal(unittest.TestCase):
 
     def test1_coords(self):
         Ntest = 360 
-        az = [ii/float(Ntest)*360. for ii in xrange(Ntest+1)]
-        alt = [45. for ii in xrange(Ntest+1)]
-        dt = datetime(2012,01,01,0,0,0,0)
-        times = [dt for ii in xrange(Ntest+1)]
+        az = [ii/float(Ntest)*360. for ii in range(Ntest+1)]
+        alt = [45. for ii in range(Ntest+1)]
+        dt = datetime(2012,0o1,0o1,0,0,0,0)
+        times = [dt for ii in range(Ntest+1)]
         lon = 0.
         lat = -90.
         latlon = sidereal.LatLon(math.radians(lat),math.radians(lon))
     
 
-        for ii in xrange(Ntest+1):
+        for ii in range(Ntest+1):
             GST = sidereal.SiderealTime.fromDatetime(times[ii])
             LST = GST.lst(math.radians(lon))
             altaz = sidereal.AltAz(math.radians(alt[ii]),math.radians(az[ii]))
             radec = altaz.raDec(LST,latlon)
             ra = math.degrees(radec.ra)
             dec = math.degrees(radec.dec)
-            print ii, times[ii], LST, az[ii], alt[ii], ra, dec 
+            print(ii, times[ii], LST, az[ii], alt[ii], ra, dec) 
 
 
 # Run the unittests

@@ -1,3 +1,6 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
 from grbsim import Universe, Population, Source, Spectrum
 import matplotlib.pyplot as plt
 
@@ -23,7 +26,7 @@ if __name__ == "__main__":
     
     # make a population of GRBs
     P = Population(rho0,zi,zf,z1,n1,n2,logLi,logLf,logL1,alpha,beta,U)
-    print 'Normalization methods: ', P.phi_norm, P.phi_norm2, P.R_norm
+    print('Normalization methods: ', P.phi_norm, P.phi_norm2, P.R_norm)
     
     # use a single example spectrum for W&P 2010
     alpha = -1.0
@@ -36,8 +39,8 @@ if __name__ == "__main__":
     Nsources = 10000
     Nztrials = 0
     NLtrials = 0
-    print
-    for kk in xrange(Nsources):
+    print()
+    for kk in range(Nsources):
         src = Source(1.0,P,spec)
         #print src.z, src.L, src.Eflux, src.Nflux
         sources +=[src]
@@ -47,13 +50,13 @@ if __name__ == "__main__":
     # calculate acceptance-rejection statistics
     zeff = float(Nsources)/float(Nztrials)*100
     Leff = float(Nsources)/float(NLtrials)*100
-    print
-    print 'Efficiency of acceptance-rejection methd for z: ', zeff,'%'
-    print 'Efficiency of acceptance-rejection methd for L: ', Leff,'%'
+    print()
+    print('Efficiency of acceptance-rejection methd for z: ', zeff,'%')
+    print('Efficiency of acceptance-rejection methd for L: ', Leff,'%')
     
 
     #Redshift for the sources
-    S_Z = [sources[ii].z for ii in xrange(Nsources)]
+    S_Z = [sources[ii].z for ii in range(Nsources)]
     
     Npoints = 100    # for the theoretical line
     Nbins = 50       # for the histogram
@@ -62,7 +65,7 @@ if __name__ == "__main__":
     
     
     #Theorical line
-    x = [ii*step1 for ii in xrange(Npoints+1)]
+    x = [ii*step1 for ii in range(Npoints+1)]
     Norm = P.R_norm    # much faster if we just calculate this once
     y = [Nsources*P.R(xi)/Norm*step2 for xi in x]
         
