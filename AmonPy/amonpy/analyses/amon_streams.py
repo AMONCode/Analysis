@@ -1,6 +1,7 @@
 # ID numbers for the different datasets
 # Notice that some observatories have different streams
 
+from builtins import map
 streams = {
             "IC-Singlet" : 0,
             "IC-HESE" : 10,
@@ -26,7 +27,7 @@ streams = {
             "IC-Bronze":25,
           }
 
-inv_streams = dict(map(reversed,streams.items()))
+inv_streams = dict(list(map(reversed,list(streams.items()))))
 
 # Number for the alert streams for the different
 # correlation analyses/pass-through analyses.
@@ -43,7 +44,7 @@ alert_streams = {
             "IC-Gold-Bronze":9,
 }
 
-inv_alert_streams = dict(map(reversed,alert_streams.items()))
+inv_alert_streams = dict(list(map(reversed,list(alert_streams.items()))))
 
 # ID number for the streams that are sent to GCN
 gcn_streams = {
@@ -67,4 +68,4 @@ gcn_streams = {
             "Gamma-Nu-Coinc":172,
 }
 
-inv_gcn_streams = dict(map(reversed,gcn_streams.items()))
+inv_gcn_streams = dict(list(map(reversed,list(gcn_streams.items()))))

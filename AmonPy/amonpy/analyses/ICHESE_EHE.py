@@ -1,3 +1,6 @@
+from __future__ import print_function
+from builtins import str
+from builtins import range
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 from amonpy.dbase.alert_to_voevent import alert_to_voevent
@@ -69,7 +72,7 @@ def ic_hese_ehe(new_event=None):
     else:
         idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    print("Max Id Alert in DB: %d"%(idnum))
 
     new_event = jsonpickle.decode(new_event)
 
@@ -86,8 +89,8 @@ def ic_hese_ehe(new_event=None):
                                     UserFancyName,PasswordFancy,DBFancyName)
 
     t2 = time()
-    print '   Read time: %.2f seconds' % float(t2-t1)
-    print ' lenght of parameters %s' % len(params)
+    print('   Read time: %.2f seconds' % float(t2-t1))
+    print(' lenght of parameters %s' % len(params))
 
     #Get some parameters of the event
     if (len(params)>0):
@@ -96,7 +99,7 @@ def ic_hese_ehe(new_event=None):
             if (params[i].name=='signal_trackness'):
                 eventHESE=True
                 signal_t = params[i].value
-                print 'Signal trackenss %.2f' % signal_t
+                print('Signal trackenss %.2f' % signal_t)
             if (params[i].name=='causalqtot'):
                 hese_charge=params[i].value
             if (params[i].name=='run_id'):
@@ -117,8 +120,8 @@ def ic_hese_ehe(new_event=None):
             alertDuplicate=False
         else:
             alertDuplicate=True
-        print "alert duplicate"
-        print alertDuplicate
+        print("alert duplicate")
+        print(alertDuplicate)
     if (events.stream==streams['IC-EHE']):
         events_duplicate=db_read.read_event_single(streams['IC-HESE'],new_event.id,new_event.rev,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
@@ -126,8 +129,8 @@ def ic_hese_ehe(new_event=None):
             alertDuplicate=False
         else:
             alertDuplicate=True
-        print "alert duplicate"
-        print alertDuplicate
+        print("alert duplicate")
+        print(alertDuplicate)
 
     ##########################################
     #if ((eventHESE==True) and (signal_t >= 0.)):
@@ -175,7 +178,7 @@ def ic_hese_ehe(new_event=None):
                 # print "uncoment this if used on production"
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
-                print "Send HESE VOevent alert failed"
+                print("Send HESE VOevent alert failed")
                 logger.error("send_voevent failed")
                 raise e
             else:
@@ -195,12 +198,12 @@ def ic_hese_ehe(new_event=None):
 
         if (events.type=="observation") and (prodMachine is True):
             try:
-                print "EHE sent to GCN"
+                print("EHE sent to GCN")
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + fname)
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
-                print "Send IceCube EHE VOevent alert failed"
+                print("Send IceCube EHE VOevent alert failed")
                 logger.error("send_voevent failed")
                 raise e
             else:

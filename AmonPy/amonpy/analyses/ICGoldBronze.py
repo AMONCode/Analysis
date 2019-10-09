@@ -1,3 +1,6 @@
+from __future__ import print_function
+from builtins import str
+from builtins import range
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 from amonpy.dbase import ICgoldbronze_to_voevent, post_on_websites
@@ -70,7 +73,7 @@ def ic_gold_bronze(new_event=None):
     else:
         idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    print("Max Id Alert in DB: %d"%(idnum))
 
     new_event = jsonpickle.decode(new_event)
 
@@ -88,8 +91,8 @@ def ic_gold_bronze(new_event=None):
                                     UserFancyName,PasswordFancy,DBFancyName)
 
     t2 = time()
-    print '   Read time: %.2f seconds' % float(t2-t1)
-    print ' lenght of parameters %s' % len(params)
+    print('   Read time: %.2f seconds' % float(t2-t1))
+    print(' lenght of parameters %s' % len(params))
 
     #Get some parameters of the event
     if (len(params)>0):
@@ -97,7 +100,7 @@ def ic_gold_bronze(new_event=None):
             # if ((params[i].name=='varname') and (params[i].value=='heseEvent')):
             if (params[i].name=='signalness'):
                 signalness = params[i].value
-                print 'Signal trackenss %.2f' % signalness
+                print('Signal trackenss %.2f' % signalness)
             if (params[i].name=='run_id'):
                 run_id=params[i].value
             if (params[i].name=='event_id'):
@@ -152,7 +155,7 @@ def ic_gold_bronze(new_event=None):
             slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
             post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
-            print "Send Gold/Bronze VOevent alert failed"
+            print("Send Gold/Bronze VOevent alert failed")
             logger.error("send_voevent failed")
             raise e
         else:
