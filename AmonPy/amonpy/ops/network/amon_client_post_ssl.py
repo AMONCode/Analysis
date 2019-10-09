@@ -132,35 +132,35 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
             oldest = files_xml[0]
 
             try:
-	        try:
+                try:
                     datafile=open(os.path.join(path,oldest))
                 except Exception as E:
                     print(E)
                     print("had trouble with opening file")
-		print("opened datafile")
-		#data=datafile.read()
+                print("opened datafile")
+		        #data=datafile.read()
                 #lenght_data=str(len(data))
                 #body = StringProducer(data)
                 body=FileBodyProducer(datafile)
-		print("made body")
+                print("made body")
                 # since twisted v.15 length is string
                 length_data=str(body.length)
-		print("got length")
+                print("got length")
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'],
                                             'Content-Lenght': [length_data],
                                             'Content-Name':[oldest]})
                 print("made headers")
-		d = agent.request('POST', host, headers, bodyProducer=body)
+                d = agent.request('POST', host, headers, bodyProducer=body)
                 print("did request")
-		# on success it returns Deferred with a response object
+                # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
                 shutil.move(os.path.join(path,oldest), os.path.join(path,"archive/",oldest))
                 #datafile.close()
                 #print "Event %s sent" % (oldest,)
             except (RuntimeError, TypeError, NameError,AttributeError, Exception) as E:
                 log.msg("Error parsing file %s " % (oldest,))
-		log.msg(str(E))
+                log.msg(str(E))
             else:
                 #shutil.move(path+oldest, path+"archive/"+oldest)
                 print("ping db")

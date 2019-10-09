@@ -124,10 +124,10 @@ def pvalue_good_log(pvalues, weights):
                 if (log_p > p_max):
 	                p_max = log_p
                 #print p
-	if (p > 0.):
-	    return math.log(p)
-	else:
-	    return p_max
+    if (p > 0.):
+        return math.log(p)
+    else:
+        return p_max
 
 def good_denominator(ll, pvalue_weights):
     """
@@ -144,7 +144,7 @@ def good_denominator(ll, pvalue_weights):
             log_sum_weights += math.log(math.fabs(diff))
             if (diff < 0.):
                 log_sum_imag +=1
-	print('denominator % s and %s' % (log_sum_weights, log_sum_imag))
+    print('denominator % s and %s' % (log_sum_weights, log_sum_imag))
     return log_sum_weights, log_sum_imag
 
 
