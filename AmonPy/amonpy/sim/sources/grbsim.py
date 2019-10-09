@@ -1,3 +1,7 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
+from builtins import object
 from scipy import integrate
 import math
 import random
@@ -250,23 +254,23 @@ if __name__ == "__main__":
     
     # make a population of GRBs
     P = Population(rho0,zi,zf,z1,n1,n2,logLi,logLf,logL1,alpha,beta,U)
-    print 'Normalization methods: ', P.phi_norm, P.phi_norm2, P.R_norm
+    print('Normalization methods: ', P.phi_norm, P.phi_norm2, P.R_norm)
     
     # create some sources belonging to the population
     sources = []
     Nsources = 10
     Nztrials = 0
     NLtrials = 0
-    print
+    print()
     # use a single example spectrum for W&P 2010
     alpha = -1.0
     beta  = -2.25
     Epeak = 0.511 # MeV
     spec = Spectrum(Epeak,alpha,beta)
     
-    for kk in xrange(Nsources):
+    for kk in range(Nsources):
         src = Source(1.0,P,spec)
-        print src.z, src.L, src.Eflux, src.ztrials, src.Ltrials
+        print(src.z, src.L, src.Eflux, src.ztrials, src.Ltrials)
         sources +=[src]
         Nztrials += src.ztrials
         NLtrials += src.Ltrials
@@ -274,9 +278,9 @@ if __name__ == "__main__":
     # calculate acceptance-rejection statistics
     zeff = float(Nsources)/float(Nztrials)*100
     Leff = float(Nsources)/float(NLtrials)*100
-    print
-    print 'Efficiency of acceptance-rejection methd for z: ', zeff,'%'
-    print 'Efficiency of acceptance-rejection methd for L: ', Leff,'%'    
+    print()
+    print('Efficiency of acceptance-rejection methd for z: ', zeff,'%')
+    print('Efficiency of acceptance-rejection methd for L: ', Leff,'%')    
      
     # make list of z values and then...     
     #y = P.R(z)/P.R_norm   
