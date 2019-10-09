@@ -3,8 +3,10 @@ Builds the basic classes (Event, Alert, etc), that correspond to tables
 in the AMON database. Some modifications from the database format are
 made to enable use of python features
 """
+from __future__ import print_function
 
 #from numpy import *
+from builtins import object
 from operator import itemgetter, attrgetter
 from datetime import datetime, timedelta
 import random
@@ -195,9 +197,9 @@ def event_def(*args):
             for attr in atlist:
                 try:
                     value = getattr(self,attr)
-                    print attr.ljust(20,' '), value
+                    print(attr.ljust(20,' '), value)
                 except:
-                    print attr.ljust(20,' '), 'Empty slot'
+                    print(attr.ljust(20,' '), 'Empty slot')
 
     return Event
 
@@ -244,9 +246,9 @@ class Alert(object):
         Alert.num_alerts -=1
 
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
 
 
 
@@ -293,9 +295,9 @@ class EventStreamConfig(object):
     def duration(self):
         return timedelta.total_seconds(self.validStop - self.validStart)
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
 
 
 
@@ -412,9 +414,9 @@ def simstream(stream):
         config.mag_rigidity     = ''
 
     else:
-        print ''
-        print 'stream ID not recognized by function simstream(stream)'
-        print ''
+        print('')
+        print('stream ID not recognized by function simstream(stream)')
+        print('')
 
     return config
 
@@ -448,9 +450,9 @@ class AlertConfig(object):
 		AlCertConfig.num_configs -=1
 
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
 
 class AlertConfig2(object):
     """ Creates the AlertConfig2 test class. Instances are created by
@@ -485,9 +487,9 @@ class AlertConfig2(object):
 		AlertConfig2.num_configs -=1
 
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
 
 
 def exAlertConfig():
@@ -561,9 +563,9 @@ class AlertLine(object):
         AlertLine.num_alertlines -=1
 
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)
 
 # ******************* BEGIN parameter class definition **********************
 # create a generic parameter object for AMON
@@ -592,6 +594,6 @@ class Parameter(object):
         Parameter.num_param -=1
 
     def forprint(self):
-        for attr, value in self.__dict__.iteritems():
+        for attr, value in self.__dict__.items():
             #print attr, value
-            print attr.ljust(20,' ')+': ', value
+            print(attr.ljust(20,' ')+': ', value)

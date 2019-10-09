@@ -1,6 +1,11 @@
+from __future__ import print_function
 #
 # Before running, make sure to add a row in eventStreamConfig table in the database that has a stream number assigned to the triggering observatory (for example number 4 for swift). That can be done by running only the testWriteConfigArchive(self) function in /amonpy/dbase/test/test_db_write.py.
 
+from builtins import str
+from builtins import zip
+from builtins import range
+from builtins import object
 import pyfits
 import MySQLdb as mdb
 import getpass
@@ -31,7 +36,7 @@ def parse_command_line():
         parser.add_argument("-v", "--verbose", action="store_true", help="Be verbose")
         return parser.parse_args()
 
-class attitude:
+class attitude(object):
 	''' Class to interpolate latitude, longitude, and elevation values from data taken from Swift attitude files The relevant data from the attitude files are currently grouped in txt files with four columns, in this order: time, latitude, longitude, elevation
 	'''
 	def __init__(self,pos_files, verbose):
@@ -47,16 +52,16 @@ class attitude:
 		# creates interpolated class objects for latitude, longitude,
 		# and elevation
                 if verbose:
-                        print 'Opening monthly attitude file %s' % self.file_locs[self.file_num]
+                        print('Opening monthly attitude file %s' % self.file_locs[self.file_num])
 		monthly_data = open(self.file_locs[self.file_num],'r')
 		position_data = []
 		for row in monthly_data.readlines():
 			position_data.append([float(value) for value in row.split(' ')])
-		position_data_izip = itertools.izip(*position_data)
-		self.attitude_time = position_data_izip.next()
-		latitude = position_data_izip.next()
-		longitude = position_data_izip.next()
-		elevation = position_data_izip.next()
+		position_data_izip = zip(*position_data)
+		self.attitude_time = next(position_data_izip)
+		latitude = next(position_data_izip)
+		longitude = next(position_data_izip)
+		elevation = next(position_data_izip)
 		self.interp_latitude = interp1d(self.attitude_time,latitude)
 		self.interp_longitude = interp1d(self.attitude_time,longitude)
 		self.interp_elevation = interp1d(self.attitude_time,elevation)
@@ -107,7 +112,7 @@ class attitude:
                                 self.files_exhausted = True
                         return self.interpolate_position(event,verbose)
 
-class observation:
+class observation(object):
         '''
 	Class to store all of the information needed by the MySQL database for a set of observations at a given time.
 	Information will be stored in tuples, and each observation in a given detection will have its own tuple element
@@ -178,7 +183,7 @@ class observation:
 		# constant (possibly 0) will be added to all event_id's before
 		# being uploaded to the database to maintain a consistent id
 		# numbering
-		self.event_id = tuple(id_interval_start + id_increment for id_increment in xrange(self.num_detection))
+		self.event_id = tuple(id_interval_start + id_increment for id_increment in range(self.num_detection))
 
 		#Interpolate latitude, longitude, and elevation values
 		#self.latitude, self.longitude, self.elevation = positions.interpolate_position(self.observation_time,self.num_detection,self.event_id[0])
@@ -196,7 +201,7 @@ def get_swift_data(fits_file_loc, pvalue_interp_class, positions,verbose):
 	# Open the fits file, and then find the location of the relevant
 	# columns
         if verbose:
-                print 'Opening monthly fits file %s' % fits_file_loc
+                print('Opening monthly fits file %s' % fits_file_loc)
         fits_file = pyfits.open(fits_file_loc)[1]
 	data_list = ['SNR','TIME','RA_OBJ','DEC_OBJ','RA_CENT','DEC_CENT']
 	data_list_arg = {prop: fits_file.columns.names.index(prop) for prop in data_list}
@@ -250,24 +255,24 @@ def db_load(snr_events, pw, options):
                 # Note that for SQL queries, need to use %s for placeholder
                 # because MySQL will convert the value to a literal, not
                 # python.
-		for i in xrange(len(snr_events)):
+		for i in range(len(snr_events)):
                         event_ids = tuple(event_id + id_start for event_id in snr_events[i].event_id)
                         mysql_event_statement = "INSERT INTO event(eventStreamConfig_stream, " +\
                                 "id, rev, time, time_msec, `Dec`, RA, sigmaR, pvalue, type, point_RA, "+\
                                 "`point_Dec`, longitude, latitude, elevation, psf_type, eventStreamConfig_rev) "+\
                                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s)"
-			event_data = zip(snr_events[i].stream_config, event_ids, snr_events[i].rev, 
+			event_data = list(zip(snr_events[i].stream_config, event_ids, snr_events[i].rev, 
                                 snr_events[i].time, snr_events[i].time_msec, snr_events[i].dec_obj, 
                                 snr_events[i].ra_obj, snr_events[i].sigma_r, snr_events[i].pvalue, 
                                 snr_events[i].db_type, snr_events[i].ra_cent, snr_events[i].dec_cent, 
                                 snr_events[i].longitude, snr_events[i].latitude, snr_events[i].elevation, 
-                                snr_events[i].psf_type, snr_events[i].stream_rev)
+                                snr_events[i].psf_type, snr_events[i].stream_rev))
                         mysql_parameter_statement = "INSERT INTO parameter(name, value, units, event_eventStreamConfig_stream, " +\
                                 "event_id, event_rev) VALUES (%s, %s, %s, %s, %s, %s)"
-                        parameter_data = zip(('position_accuracy_warning',)*snr_events[i].num_detection, 
+                        parameter_data = list(zip(('position_accuracy_warning',)*snr_events[i].num_detection, 
                                 (snr_events[i].position_flag,)*snr_events[i].num_detection, 
                                 ('no units',)*snr_events[i].num_detection, snr_events[i].stream_config, 
-                                event_ids, snr_events[i].rev)
+                                event_ids, snr_events[i].rev))
 			cur.executemany(mysql_event_statement,event_data)
 			cur.executemany(mysql_parameter_statement,parameter_data)
 
@@ -278,7 +283,7 @@ def db_update(pw, options):
 
         # Open the connection
         if options.verbose:
-                print 'Entered update function'
+                print('Entered update function')
 	con = mdb.connect(options.host,options.username,pw,options.database)
 	with con:
                 cur = con.cursor() 
@@ -293,22 +298,22 @@ def db_update(pw, options):
                 max_id_find = cur.execute("SELECT MAX(id) FROM event WHERE eventStreamConfig_stream = 4;")
                 max_id = [int(id) for id in cur.fetchone()][0]
                 if options.verbose:
-                        print 'min(id) = %d, max_id = %d' % (min_id, max_id)
+                        print('min(id) = %d, max_id = %d' % (min_id, max_id))
                 if options.num_scram_events:
                         max_id = min_id + int(options.num_scram_events)
                 scrambled_times = swift.random_time_stamp(1 + max_id - min_id)
-                id_range = range(min_id, max_id+1)
-                update_tuples = zip(id_range,scrambled_times)
+                id_range = list(range(min_id, max_id+1))
+                update_tuples = list(zip(id_range,scrambled_times))
                 mysql_temp_upload_statement = "INSERT INTO temp_table(id, time) VALUES(%s, %s);"
                 if options.verbose:
-                        print 'About to apply update to database'
+                        print('About to apply update to database')
                 cur.execute("CREATE TEMPORARY TABLE temp_table(id INT(11) PRIMARY KEY NOT NULL, time DATETIME NOT NULL);")
                 while update_tuples:
                         update_tuples_chunk, update_tuples = update_tuples[:1000], update_tuples[1000:]
                         cur.executemany(mysql_temp_upload_statement, update_tuples_chunk)
                         con.commit()
                 if options.verbose:
-                        print 'Made temporary table, now going to update event table'
+                        print('Made temporary table, now going to update event table')
                 mysql_update_statement = "UPDATE event SET time = (" + \
                         "SELECT time FROM temp_table " + \
                         "WHERE id = event.id) " + \

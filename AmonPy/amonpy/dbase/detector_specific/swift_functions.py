@@ -5,7 +5,8 @@
 """
 
 # Author: Cody Messick <cody.messick@psu.edu>
-
+from __future__ import division
+from builtins import str
 from numpy.random import randint
 import time
 from decimal import Decimal
