@@ -289,8 +289,8 @@ class EventStreamConfig(object):
         self.bckgr              = ''
         self.mag_rigidity       = ''
         EventStreamConfig.num_configs +=1
-	def __del__(self):
-		EventStreamConfig.num_configs -=1
+    def __del__(self):
+        EventStreamConfig.num_configs -=1
     @property
     def duration(self):
         return timedelta.total_seconds(self.validStop - self.validStart)
@@ -446,8 +446,8 @@ class AlertConfig(object):
         self.R_thresh           = 0.0
         self.cluster_thresh     = 0.0
         AlertConfig.num_configs +=1
-	def __del__(self):
-		AlCertConfig.num_configs -=1
+    def __del__(self):
+        AlCertConfig.num_configs -=1
 
     def forprint(self):
         for attr, value in self.__dict__.items():
@@ -483,8 +483,8 @@ class AlertConfig2(object):
         self.R_thresh           = 0.0    # added so that DB supports this class
 
         AlertConfig2.num_configs +=1
-	def __del__(self):
-		AlertConfig2.num_configs -=1
+    def __del__(self):
+        AlertConfig2.num_configs -=1
 
     def forprint(self):
         for attr, value in self.__dict__.items():
