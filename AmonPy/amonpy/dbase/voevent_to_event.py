@@ -13,10 +13,12 @@ Options:
     -f, --force     Force: over-write output file without asking
 
 """
+from __future__ import print_function
 
 # Modified by G.T.from format_to_html.py by Roy D. Williams and Dave Kuhlmann
 #
 
+from builtins import str
 import sys
 import os
 import getopt
@@ -27,10 +29,7 @@ import VOEventLib.Vutil as Vutil
 from datetime import datetime
 from amonpy.dbase.db_classes import *
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from io import StringIO
 
 def usage():
     sys.stderr.write(__doc__)
@@ -121,7 +120,7 @@ def make_event(source, o=sys.stdout):
     #print
     groups = v.get_What().get_Group()
     #print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
-    print
+    print()
     #evParam[0].event_eventStreamConfig_stream = event[0].stream
     #evParam[0].event_id = event[0].id
     #evParam[0].event_rev = event[0].rev
@@ -269,7 +268,7 @@ def main():
         format_to_file(infilename, outfilename, force)
     if text:
         content = format_to_string(infilename)
-        print content
+        print(content)
     if not stdout and outfilename is None and not text:
         usage()
 

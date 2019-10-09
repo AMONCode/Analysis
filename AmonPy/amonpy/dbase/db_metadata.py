@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+from builtins import str
+from builtins import range
+from builtins import object
 import MySQLdb as mdb
 import sys
 import MySQLdb
@@ -28,7 +32,7 @@ Under development.
 #con = mdb.connect(host_name, user_name, passw_name, db_name)    
 #cur = con.cursor()
 
-class DBMetadata:
+class DBMetadata(object):
     def __init__(self):
         """A class for DB metadata"""
         self.database = []
@@ -38,7 +42,7 @@ class DBMetadata:
         try:
            runit = cur.execute(statement)
            results = cur.fetchall()
-        except mdb.Error, e:
+        except mdb.Error as e:
             results = "The query failed: %s" %(e)
         return results
 
@@ -72,16 +76,16 @@ def resproc(finput):
     results = finput[1]
     output = {}
     c = 0
-    for r in xrange(0, len(results)):
+    for r in range(0, len(results)):
         record = results[r]
         outrecord = {}
-        for column in xrange(0, len(header)):
+        for column in range(0, len(header)):
             outrecord[header[column]] = record[column]
         output[str(c)] = outrecord
         c += 1  
     orecord = ""
     
-    for record in xrange(0, len(results)):
+    for record in range(0, len(results)):
         record = str(record)
         item = output[record]
     for k in header:
@@ -101,33 +105,33 @@ def main():
         cur = con.cursor()
         statement = "USE %s" %(db)
         cur.execute(statement)
-    except mdb.Error, e:
-        print """There was a problem in accessing the database %s.\ 
-                 The error is printed below.\n\n%s""" %(db, e)
+    except mdb.Error as e:
+        print("""There was a problem in accessing the database %s.\ 
+                 The error is printed below.\n\n%s""" %(db, e))
 
 
     mydb = DBMetadata()             
-    print mydb.tables(cur)
-    print mydb.table_status(cur)
+    print(mydb.tables(cur))
+    print(mydb.table_status(cur))
     for i in mydb.tables(cur)[1]:
-        print
-        print mydb.table_describe(i, cur)
+        print()
+        print(mydb.table_describe(i, cur))
         
     tables = mydb.tables(cur)
-    print
-    print "TABLES OF %s:" %(db)
-    print
-    for c in xrange(0, len(tables[1])):
-        print tables[1][c][0]
-        print '\n\n' 
+    print()
+    print("TABLES OF %s:" %(db))
+    print()
+    for c in range(0, len(tables[1])):
+        print(tables[1][c][0])
+        print('\n\n') 
     tablestats = mydb.table_status(cur)
-    print
-    print "TABLE STATUS:"
-    print
-    print resproc(tablestats)
-    print '\n\n' 
+    print()
+    print("TABLE STATUS:")
+    print()
+    print(resproc(tablestats))
+    print('\n\n') 
     r=mydb.table_describe('event', cur) 
-    print r[1][0][0] 
+    print(r[1][0][0]) 
       
 if __name__ == '__main__':
     main()          

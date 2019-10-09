@@ -4,6 +4,9 @@ Builds a simple VOEvent packet from alert
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from __future__ import print_function
+from builtins import str
+from builtins import object
 import sys
 
 from amonpy.dbase.db_classes import *
@@ -34,7 +37,7 @@ class Alert2VOEvent(object):
         #CREATE FIRST THE DEFAULT AND EXTRA PARAMETERS
         w = What()
         if len(voeventparams)==0:
-            print "need list of Parameters for voevent"
+            print("need list of Parameters for voevent")
             return 0
         for i in voeventparams:
             w.add_Param(i)
@@ -144,7 +147,7 @@ class Alert2VOEvent(object):
                                 schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
             return xml
         else:
-            print "xml not written. Need to fill the information first"
+            print("xml not written. Need to fill the information first")
 
 
 
@@ -294,6 +297,6 @@ def alert_to_voevent(alert):
 if __name__ == "__main__":
     alert=[Alert(1,0,0)]
     xml1=alert_to_voevent(alert)
-    print xml1
+    print(xml1)
     f1=open('./test_alert.xml', 'w+')
     f1.write(xml1)
