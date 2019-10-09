@@ -1,3 +1,4 @@
+from builtins import str
 from datetime import datetime, timedelta
 import smtplib
 from email.mime.text import MIMEText
