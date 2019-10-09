@@ -1,3 +1,7 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
+from builtins import object
 from datetime import datetime, timedelta
 import numpy as np
 import math as m
@@ -48,8 +52,8 @@ def get_event_Streams():
         for row in results:
             streamnums.append(row[0])
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return streamnums
 
@@ -64,8 +68,8 @@ def get_times(stream, low_time = datetime(2010,1,1,0,0,0), limit = 999999):
         for dates in results:
             dates_list.append(dates)
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return dates_list
 
@@ -87,8 +91,8 @@ def get_events(stream, time = datetime(2010,1,1,0,0,0),limit = 99999):
         for dates in results:
             events.append(dates)
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return events
 
