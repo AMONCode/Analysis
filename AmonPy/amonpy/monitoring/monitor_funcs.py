@@ -16,8 +16,8 @@ import logging
 from amonpy.tools.config import AMON_CONFIG
 from amonpy.analyses.amon_streams import streams, inv_streams
 
-from slackclient import SlackClient
-
+#from slackclient import SlackClient
+from slack import WebClient  
 class StreamToLogger(object):
     """
     Fake file-like stream object that redirects writes to a logger instance.
@@ -142,7 +142,7 @@ def pois_prob(mu,nev,dt):
 
 def slack_message(message,channel,prodMachine,attachment=None,token=None):
     try:
-        sc = SlackClient(token)
+        sc = WebClient(token)
     except Exception as e:
         print(e)
     if prodMachine:
