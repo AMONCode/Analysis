@@ -106,7 +106,7 @@ def insideHAWCBrightSources(dec,ra):
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
 
-hwcBkg = np.load(hwcBkgfile).item()
+hwcBkg = np.load(hwcBkgfile, encoding = 'latin1',allow_pickle=True).item()
 def probBkgHAWC(dec):
     """Spatial Bkg PDF for a HAWC hotspot. Based on data """
     if dec<-25.: return 0.00619
@@ -121,7 +121,7 @@ def probSigHAWC(spc,sigma):
 
 ##IC PDFs for spatial null hypotheses
 ## The alternative  is given by an interpolator for each event.
-icfprdFile = np.load(os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'))
+icfprdFile = np.load(os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'),encoding = 'latin1',allow_pickle=True)
 icbkg_interp = icfprdFile['B_spat_interp'].item()
 def probBkgIC(cosTh):
     """Spatial Bkg PDF for a IceCube neutrino. Based on simulation"""

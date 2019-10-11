@@ -23,7 +23,7 @@ class FPRD(object):
 
     def __init__(self, fname='FPRD_stuff.npz'):
 
-        npz_file = np.load(fname)
+        npz_file = np.load(fname,encoding = 'latin1',allow_pickle=True)
 
         try:
             up_intp = npz_file['up_log10fprd_intp'].item()
