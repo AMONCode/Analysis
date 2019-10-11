@@ -158,7 +158,7 @@ def pNuCluster(events):
 filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_LLH_scramble.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
-for item in cdfLLH.iteritems():
+for item in cdfLLH.items():
     CDF.append(item[1])
 n = CDF[0]
 b = CDF[1]
@@ -168,7 +168,7 @@ def pSpace(llh):
     if llh < bin_centers[0]:
         return 1.
     elif llh > bin_centers[-1]:
-        print "This event has an even smaller p_value than the current interpolation range!!"
+        print("This event has an even smaller p_value than the current interpolation range!!")
         return 1.-f(bin_centers[-1])
     else:
         return 1.-f(llh)
@@ -201,7 +201,7 @@ def totalpHEN(events):
 filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_newChi2_scramble.npz')
 cdfChi2 = np.load(filename)
 CDF = [] #dummy variable
-for item in cdfChi2.iteritems():
+for item in cdfChi2.items():
     CDF.append(item[1])
 n = CDF[0]
 b = CDF[1]
@@ -211,7 +211,7 @@ def pChi2(chi2):
     if chi2 < xo[0]:
         return 1.
     elif chi2 > xo[-1]:
-        print "This event has an even smaller p_value than the current interpolation range!!"
+        print( "This event has an even smaller p_value than the current interpolation range!!")
         return 1.-f2(xo[-1])
     else:
         return 1.-f2(chi2)
@@ -271,7 +271,7 @@ def maximizeLLH(all_events):
             try:
                 solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
             except ValueError:
-                print "Error in minimization"
+                print("Error in minimization")
                 return coincs
         res = list(solution.x)
         stderr = 0.
@@ -285,7 +285,7 @@ def maximizeLLH(all_events):
 
             stderr = np.sqrt(1/stderr)
             #print stderr
-            print "Number of neutrinos: %d"%(len(ev)-1)
+            print("Number of neutrinos: %d"%(len(ev)-1))
             pcluster=pNuCluster(ev)
             phwc = ev[0][-3]
             pspace = pSpace(-1*(solution.fun))#+temploglh(ev)))
@@ -347,8 +347,8 @@ def coincAnalysisHWC(new_event):
     alldatalist= []
     datalist = []
     datalist.append([streams['HAWC-DM'],dec1,ra1,poserr1,hwcDuration,probBkgHAWC(dec1),phwc,new_event.id,new_event.rev])
-    print "HAWC event: "
-    print "Pos: %0.2f,%0.2f,%0.2f"%(ra1,dec1,poserr1)
+    print("HAWC event: ")
+    print("Pos: %0.2f,%0.2f,%0.2f"%(ra1,dec1,poserr1))
     print("ID: {}".format(new_event.id))
 
     for e in eventList:
@@ -378,8 +378,8 @@ def coincAnalysisHWC(new_event):
                 if p.name == 'energy': energy = p.value
                 #else: energy = 1000 #In GeV
 
-            print "IC event: "
-            print "RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score)
+            print("IC event: ")
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score))
 
             psfIC = probSigIC(sigR,muR,lamR)
             sinDec = np.sin(np.deg2rad(dec2))
@@ -417,7 +417,7 @@ def coincAnalysisIC(new_event):
     #alldatalist= []
     #datalist = []
     #datalist.append([decIC,raIC,poserrIC])
-    print "Probably a late IC event, not doing anything for now"
+    print("Probably a late IC event, not doing anything for now")
     for e in eventList:
         coincs.append(coincAnalysisHWC(e))
 
@@ -439,7 +439,7 @@ def ic_hawc(new_event=None):
     else:
         idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    print("Max Id Alert in DB: %d"%(idnum))
 
     new_event = jsonpickle.decode(new_event)
 
@@ -452,7 +452,7 @@ def ic_hawc(new_event=None):
     if new_event.stream == streams['HAWC-DM']:
         result = coincAnalysisHWC(new_event)
         #Save results in DB
-        print "Found %d coincidences"%(len(result))
+        print("Found %d coincidences"%(len(result)))
 
         for r in result:
             dec = r[0]
@@ -546,15 +546,15 @@ def ic_hawc(new_event=None):
             f1.close()
 
             content = 'Times: '
-            print content
-            print 'Time of Alert: ',new_alert.datetime
-            print '  First IC time: ',alertTime[0]
-            print '  Last IC time: ',alertTime[-1]
-            print 'HAWC Set Time: ',new_event.datetime
+            print(content)
+            print('Time of Alert: ',new_alert.datetime)
+            print('  First IC time: ',alertTime[0])
+            print('  Last IC time: ',alertTime[-1])
+            print('HAWC Set Time: ',new_event.datetime)
             #print 'HAWC Set Time: ',datetime(pd.to_datetime(new_event.datetime)) + timedelta(seconds=r[0][4])
             content = 'Alert ID: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(idnum,ra,dec,
                     sigmaR,new_alert.pvalue,chi2,new_alert.false_pos,nev)
-            print content
+            print(content)
 
             #if chi2 > 7.3: # ~1 per year
             #if chi2 > 6.48: # ~4 per year
@@ -564,8 +564,8 @@ def ic_hawc(new_event=None):
                 title='AMON IC-HAWC alert'
 
 
-                print "ID: %d"%new_alert.id
-                print "Alert Stream: %s"%inv_alert_streams[new_alert.stream]
+                print("ID: %d"%new_alert.id)
+                print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
                 if (prodMachine == True):
                     try:
@@ -576,7 +576,7 @@ def ic_hawc(new_event=None):
                         subprocess.check_call(cmd)
 
                     except subprocess.CalledProcessError as e:
-                        print "Send alert failed"
+                        print("Send alert failed")
                         logger.error("send_voevent failed")
                         raise e
                     else:
@@ -633,8 +633,8 @@ def ic_hawc(new_event=None):
             # if len(alerts) > 0:
             #     db_write.write_alert(config.stream, HostFancyName, UserFancyName, PasswordFancy, DBFancyName, alerts)
     else:
-        print 'Event should not be part of this analysis'
+        print('Event should not be part of this analysis')
 
 
 
-    print "###########"
+    print("###########")
