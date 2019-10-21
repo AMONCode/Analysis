@@ -586,13 +586,12 @@ def ic_hawc(new_event=None):
                 email_alerts.alert_email_content([new_alert],content,title)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
 
-            for p in phEvent:
-                al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,
-                    streams['HAWC-DM'],p[-2],p[-1])
-                alertline_lst.append(al)
+            #alertLine for HAWC
+            al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['HAWC-DM'],phEvent[-2],phEvent[-1])
+            alertline_lst.append(al)
+            #alertLine for IceCube
             for n in nuEvents:
-                al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,
-                    streams['IC-Singlet'],n[-2],n[-1])
+                al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['IC-Singlet'],n[-2],n[-1])
                 alertline_lst.append(al)
         #Write results to the DB
         if len(alerts) > 0:
