@@ -319,10 +319,10 @@ def coincAnalysisHWC(new_event):
 
     #Check that HAWC event is not close to another one,
     #since it could be the same event but from different Transit
-    if new_event.rev == 0:
-         prev_alerts = read_alert_timeslice(time_start,time_interval,host_name,user_name,
-                                  passw_name, db_name)
-         pd.to_datetime(new_event.datetime)
+    #if new_event.rev == 0:
+         #prev_alerts = read_alert_timeslice(time_start,time_interval,host_name,user_name,
+         #                         passw_name, db_name)
+         #pd.to_datetime(new_event.datetime)
 
     #Check that event is outside HAWC bright sources: Plane, Crab, Geminga, Gamigo, Mrk 421, Mrk 501
     if insideHAWCBrightSources(dec1,ra1):
@@ -483,7 +483,7 @@ def ic_hawc(new_event=None):
             new_alert = Alert(config.stream,alertid,rev)
             new_alert.dec = float("{:.2f}".format(dec))
             new_alert.RA = float("{:.2f}".format(ra))
-            new_alert.sigmaR = float("{:.2f}".format(1.18*sigmaR)) #Send 50%?
+            new_alert.sigmaR = float("{:.2f}".format(1.18*sigmaR)) #Send 50%
             new_alert.deltaT = float("{:.2f}".format(phEvent[4]*3600.))
             new_alert.pvalue = 1.#pvalue
             new_alert.false_pos = float("{:.2f}".format(far))
