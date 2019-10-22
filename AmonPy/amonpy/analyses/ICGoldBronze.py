@@ -76,7 +76,6 @@ def ic_gold_bronze(new_event=None):
     print("Max Id Alert in DB: %d"%(idnum))
 
     new_event = jsonpickle.decode(new_event, classes=Event)
-    print(new_event)
 
     signalness = 0.
     energy=0.

@@ -74,7 +74,7 @@ def ic_hese_ehe(new_event=None):
 
     print("Max Id Alert in DB: %d"%(idnum))
 
-    new_event = jsonpickle.decode(new_event)
+    new_event = jsonpickle.decode(new_event, classes=Event)
 
     eventHESE = False
     signal_t = 0.

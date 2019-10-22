@@ -77,7 +77,7 @@ def ic_ofu(new_event=None):
 
     print("Max Id Alert in DB: %d"%(idnum))
 
-    new_event = jsonpickle.decode(new_event)
+    new_event = jsonpickle.decode(new_event, classes=Event)
 
     t1 = time()
     events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
