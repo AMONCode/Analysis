@@ -116,8 +116,8 @@ def write_event(real_archive, host_name, user_name, passw_name, db_name, eventli
 
     print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
     """ Write parameter list to DB from MC and real-time data streams"""
@@ -151,8 +151,8 @@ def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
 
     print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, db_name, filename):
     """
@@ -270,48 +270,8 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             'tabulated','bckgr.dat','0'))
             con.commit()
         except mdb.Error as e:
-            print('Exception %s' %e)
-            print('Something went wrong, no data are written.')
-            con.rollback()
-
+          cur.close()
         con.close()
-
-    elif stream_num==5:
-        obs_name='FACT'
-        try:
-            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
-            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-            'tabulated','bckgr.dat','0'))
-            con.commit()
-        except mdb.Error as e:
-            print('Exception %s' %e)
-            print('Something went wrong, no data are written.')
-            con.rollback()
-
-        con.close()
-
-    elif ((stream_num==7) or (stream_num==8)):
-        obs_name='HAWC'
-        try:
-            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2015-01-01 00:00:00',
-            '2020-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-            'tabulated','bckgr.dat','0'))
-            con.commit()
-        except mdb.Error as e:
-            print('Exception %s' %e)
-            print('Something went wrong, no data are written.')
-            con.rollback()
-
-        con.close()
-
-    else:
-        print("Not ready for other streams. Only IceCube, Swift, and FACT for now.")
-        con.close()
-        cur.close()
 
 def write_event_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write event config list to DB table eventStreamConfig """
@@ -372,8 +332,8 @@ def write_event_config(stream_num, host_name, user_name, passw_name, db_name, ev
 
     print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert list to DB from MC and real-time data streams"""
@@ -412,8 +372,8 @@ def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist
 
     print("   Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert config list to DB """
@@ -455,8 +415,8 @@ def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, ev
 
     print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
     """ Write alertline list to DB from MC and real-time data streams"""
@@ -490,5 +450,5 @@ def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
 
     print("   Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
