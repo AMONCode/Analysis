@@ -149,7 +149,8 @@ def slack_message(message,channel,prodMachine,attachment=None,token=None):
         user = "AMON-PROD"
     else:
         user = "AMON-DEV"
-    sc.api_call('chat.postMessage',channel=channel,text=message,username=user,icon_emoji=":amon:")
+    #sc.api_call('chat.postMessage',channel=channel,text=message,username=user,icon_emoji=":amon:")
+    sc.chat_postMessage(channel=channel,text=message,username=user,icon_emoji=":amon:")
     if attachment is not None:
         try:
             with open(attachment,'rb') as f:
