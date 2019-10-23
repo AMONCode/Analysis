@@ -310,11 +310,10 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
 
         if num_streams == 1:
             stmt = ("""SELECT * FROM event WHERE time>= '{}' AND time <= '{}' AND eventStreamConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
-            cur.execute(stmt)
         else:
             stmt = ("""SELECT * FROM event WHERE (time>= '{}' AND time <= '{}') AND ({})""".format(timeStart, timeStop, selecStream))
-            cur.execute(stmt)
 
+        cur.execute(stmt)
         numrows = int(cur.rowcount)
         print('   %d rows selected for reading' % numrows)
 
@@ -407,12 +406,10 @@ def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_na
         #print
         if num_streams == 1:
             stmt=("""SELECT * FROM event WHERE rev = (select max(rev) from event as e where e.eventStreamConfig_Stream=event.eventStreamConfig_Stream and e.id=event.id) AND time>= '{}' AND time <= '{}' AND eventStreamConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
-            cur.execute(stmt)
         else:
             stmt=("""SELECT * FROM event WHERE (rev = (select max(rev) from event as e where e.eventStreamConfig_Stream=event.eventStreamConfig_Stream and e.id=event.id) AND time>= '{}' AND time <= '{}') AND ({})""".format(timeStart, timeStop, selecStream))
-            cur.execute(stmt)
 
-        #print "  ...CONNECTED"
+        cur.execute(stmt)
         numrows = int(cur.rowcount)
         print('   %d rows selected for reading' % numrows)
 
@@ -614,7 +611,7 @@ def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user
     alertList=[db_classes.Alert(0, 0, 0)]
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
-    
+
     try:
         timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
         timeStop=timeStart+datetime.timedelta(seconds=time_interval)
@@ -639,22 +636,21 @@ def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user
         print(r[1][0][0])
 
         num_columns=len(r[1])
-        print('    Number of columns in the table %d' %  num_columns)
-        print()
-        print('    Column names:')
-        print()
+        #print('    Number of columns in the table %d' %  num_columns)
+        #print()
+        #print('    Column names:')
+        #print()
 
-        for ii in range(num_columns):
-            print('    ', r[1][ii][0])
-        print()
+        #for ii in range(num_columns):
+            #print('    ', r[1][ii][0])
+        #print()
 
         if num_streams == 1:
-            stmt = ("""SELECT * FROM alert WHERE time>= '{}' AND time <= '{}' AND alertConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
-            cur.execute(stmt)
+            stmt = ("""SELECT * FROM alert WHERE time>= '{}' AND time <= '{}' AND alertConfig_stream = {} ORDER BY time ASC""".format(timeStart, timeStop, streams[0]))
         else:
-            stmt = ("""SELECT * FROM alert WHERE (time>= '{}' AND time <= '{}') AND ({})""".format(timeStart, timeStop, selecStream))
-            cur.execute(stmt)
+            stmt = ("""SELECT * FROM alert WHERE (time>= '{}' AND time <= '{}') AND ({}) ORDER BY time ASC""".format(timeStart, timeStop, selecStream))
 
+        cur.execute(stmt)
         print("Connected")
         numrows = int(cur.rowcount)
         print("Number of rows selected: %d" % numrows)
@@ -1268,10 +1264,11 @@ def read_alertline_events(streams,ids,revs,host_name,user_name,
     eventList.pop()  # remove the last dummy event
     print("   %d rows read from the database" % len(eventList))
     return eventList
+
 def read_alertline_events2(streams,ids,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of alertlines from the DB.
-        Input streams, event ids and revesions, host name, user name, password and DB name.
+        Input streams, event ids, host name, user name, password and DB name.
     """
 
     # initiate event list, put dummy identifiers and replace
@@ -1357,3 +1354,14 @@ def read_alertline_events2(streams,ids,host_name,user_name,
     eventList.pop()  # remove the last dummy event
     print("   %d rows read from the database" % len(eventList))
     return eventList
+
+def get_latest_alert_info_from_event(alert_stream,event_id):
+
+    con = mdb.connect(host_name,user_name,passw_name,db_name)
+    sql = 'SELECT alert_id, alert_rev from alertLine where alert_alertConfig_stream = {} and event_id = {}'.format(alert_stream,event_id)
+    df = pd.read_sql(sql,conn)
+
+    max_rev = np.max(df['alert_rev'])
+    alert_id = df['alert_id'][0]
+
+    return alert_id,max_rev

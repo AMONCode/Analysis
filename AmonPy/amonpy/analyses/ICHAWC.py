@@ -317,13 +317,6 @@ def coincAnalysisHWC(new_event):
     hwcsig = new_param[2].value
     phwc = 1.-stats.norm.cdf(hwcsig) #HAWC p_value
 
-    #Check that HAWC event is not close to another one,
-    #since it could be the same event but from different Transit
-    #if new_event.rev == 0:
-         #prev_alerts = read_alert_timeslice(time_start,time_interval,host_name,user_name,
-         #                         passw_name, db_name)
-         #pd.to_datetime(new_event.datetime)
-
     #Check that event is outside HAWC bright sources: Plane, Crab, Geminga, Gamigo, Mrk 421, Mrk 501
     if insideHAWCBrightSources(dec1,ra1):
         coincs = []
@@ -449,7 +442,17 @@ def ic_hawc(new_event=None):
     #Do the analysis
     alerts = []
     alertline_lst=[]
+
+    send = True
     if new_event.stream == streams['HAWC-DM']:
+        #Check that HAWC event is not close to another one,
+        #since it could be the same event but from different Transit
+        #if new_event.rev == 0:
+            #alert_rev, send = HAWC_event_check(new_event)
+             #prev_alerts = read_alert_timeslice(time_start,time_interval,host_name,user_name,
+             #                         passw_name, db_name)
+             #pd.to_datetime(new_event.datetime)
+
         result = coincAnalysisHWC(new_event)
         #Save results in DB
         print("Found %d coincidences"%(len(result)))
@@ -475,10 +478,32 @@ def ic_hawc(new_event=None):
 
             rev = 0
             alertid = idnum+1
-            if new_event.rev > 0:
+            send = True
+
+            if new_event.rev > 0: #might need to fix this, use alertLine to get the latest revision of the alert
                 print("Using udpated information, new HAWC event has bigger significance")
-                rev = rev+1
-                alertid = idnum
+                alertid,rev=db_read.get_latest_alert_info_from_event([alert_streams['IC-HAWC']],new_event.id)
+                
+            else:
+                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],pd.to_datetime(new_event.datetime)-datetime.timedelta(seconds=20.*60),20.*60,
+                    HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
+                bestfar = far
+                bestid = alertid
+                bestrev = rev
+                for pa in prev_alerts:
+                    dangle = spcang(ra,pa.RA,dec,pa.dec)
+                    if dangle>1.8:
+                        continue
+
+                    if bestfar>pa.false_pos:
+                        send=False
+
+                    bestid = pa.id
+                    bestrev += 1
+
+
+                alertid = bestid
+                rev = bestrev
 
             new_alert = Alert(config.stream,alertid,rev)
             new_alert.dec = float("{:.2f}".format(dec))
@@ -552,7 +577,7 @@ def ic_hawc(new_event=None):
             print('  Last IC time: ',alertTime[-1])
             print('HAWC Set Time: ',new_event.datetime)
             #print 'HAWC Set Time: ',datetime(pd.to_datetime(new_event.datetime)) + timedelta(seconds=r[0][4])
-            content = 'Alert ID: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(idnum,ra,dec,
+            content = 'Alert ID: %d, Rev: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(alertid,rev,ra,dec,
                     sigmaR,new_alert.pvalue,chi2,new_alert.false_pos,nev)
             print(content)
 
@@ -567,7 +592,7 @@ def ic_hawc(new_event=None):
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
-                if (prodMachine == True):
+                if (prodMachine == True and send == True):
                     try:
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + filen)
