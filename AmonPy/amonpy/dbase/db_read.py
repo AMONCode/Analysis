@@ -20,6 +20,7 @@ import math
 import string
 #import numpy
 from numpy import *
+import pandas as pd
 
 # amonpy imports
 from amonpy.dbase import db_metadata
