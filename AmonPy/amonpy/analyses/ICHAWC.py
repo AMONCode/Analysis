@@ -482,7 +482,7 @@ def ic_hawc(new_event=None):
 
             if new_event.rev > 0: #might need to fix this, use alertLine to get the latest revision of the alert
                 print("Using udpated information, new HAWC event has bigger significance")
-                alertid,rev=db_read.get_latest_alert_info_from_event([alert_streams['IC-HAWC']],new_event.id,
+                alertid,rev=db_read.get_latest_alert_info_from_event(alert_streams['IC-HAWC'],new_event.id,
                     HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 rev+=1
 
