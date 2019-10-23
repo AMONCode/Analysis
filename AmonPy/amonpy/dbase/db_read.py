@@ -18,7 +18,7 @@ import time
 import datetime
 import math
 import string
-#import numpy
+#import numpy as np
 from numpy import *
 import pandas as pd
 
@@ -1360,9 +1360,9 @@ def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,p
 
     con = mdb.connect(host_name,user_name,passw_name,db_name)
     sql = 'SELECT alert_id, alert_rev from alertLine where alert_alertConfig_stream = {} and event_id = {}'.format(alert_stream,event_id)
-    df = pd.read_sql(sql,conn)
+    df = pd.read_sql(sql,con)
 
-    max_rev = np.max(df['alert_rev'])
+    max_rev = max(df['alert_rev'])
     alert_id = df['alert_id'][0]
 
     return alert_id, max_rev
