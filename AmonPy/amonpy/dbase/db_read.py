@@ -1355,7 +1355,8 @@ def read_alertline_events2(streams,ids,host_name,user_name,
     print("   %d rows read from the database" % len(eventList))
     return eventList
 
-def get_latest_alert_info_from_event(alert_stream,event_id):
+def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,
+                         passw_name, db_name):
 
     con = mdb.connect(host_name,user_name,passw_name,db_name)
     sql = 'SELECT alert_id, alert_rev from alertLine where alert_alertConfig_stream = {} and event_id = {}'.format(alert_stream,event_id)
@@ -1365,3 +1366,4 @@ def get_latest_alert_info_from_event(alert_stream,event_id):
     alert_id = df['alert_id'][0]
 
     return alert_id, max_rev
+G
