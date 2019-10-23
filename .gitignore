@@ -2,7 +2,7 @@
 *.log
 *.sh
 *.pid
-Amonpy/amonpy/.netrc
-Amonpy/amonpy/amon.ini
+AmonPy/amonpy/.netrc
+AmonPy/amonpy/amon.ini
 build/
 AmonPy/AmonPy.egg-info/
