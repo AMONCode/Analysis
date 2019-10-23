@@ -1365,4 +1365,3 @@ def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,p
     alert_id = df['alert_id'][0]
 
     return alert_id, max_rev
-G
