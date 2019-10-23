@@ -1364,4 +1364,4 @@ def get_latest_alert_info_from_event(alert_stream,event_id):
     max_rev = np.max(df['alert_rev'])
     alert_id = df['alert_id'][0]
 
-    return alert_id,max_rev
+    return alert_id, max_rev
