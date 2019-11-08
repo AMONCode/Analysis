@@ -487,7 +487,7 @@ def ic_hawc(new_event=None):
                 rev+=1
 
             else:
-                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],pd.to_datetime(new_event.datetime)-timedelta(seconds=20.*60),20.*60,
+                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],str(pd.to_datetime(new_event.datetime)-timedelta(seconds=20.*60),20.*60),
                     HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 bestfar = far
                 bestid = alertid
