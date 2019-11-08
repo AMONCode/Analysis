@@ -487,7 +487,7 @@ def ic_hawc(new_event=None):
                 rev+=1
 
             else:
-                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],pd.to_datetime(new_event.datetime)-datetime.timedelta(seconds=20.*60),20.*60,
+                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],pd.to_datetime(new_event.datetime)-timedelta(seconds=20.*60),20.*60,
                     HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 bestfar = far
                 bestid = alertid
@@ -521,6 +521,7 @@ def ic_hawc(new_event=None):
             print(pd.to_datetime(new_event.datetime))
             #print(datetime(pd.to_datetime(new_event.datetime)))
             new_alert.datetime = pd.to_datetime(new_event.datetime) #using HAWC set time
+            timest=str(new_alert.datetime)
             new_alert.observing = config.stream
 
             if (prodMachine==True):
@@ -547,6 +548,8 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
+            #apar = VOAlert.MakeParam(name="nameID",ucd="meta.id",unit="",datatype="string",value="NuEm_{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A"),description="Name of the alert")
+            #alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
