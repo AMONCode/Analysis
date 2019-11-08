@@ -79,7 +79,7 @@ class AnalRT(Task):
 #class AnalRT(object):
     def __init__(self):
         self.Event = event_def()
-        config_fname = '/home/amon/amon_code/AmonPy/amonpy/amon.ini'
+        config_fname = '/home/ubuntu/amon_code/AmonPy/amonpy/amon.ini'
         Config = configparser.ConfigParser()
         Config.read(config_fname)
         self.HostFancyName = Config.get('database', 'host_name')
