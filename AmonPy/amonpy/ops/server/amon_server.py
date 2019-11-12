@@ -210,10 +210,10 @@ class EventManager(Resource):
                 error.printTraceback
 
             def printResult(result):
-                print 'Event written to DB, send to task'
+
                 evt = result
 
-                print 'Event stream: ',inv_streams[evt[0].stream]
+                print '  Event stream: ',inv_streams[evt[0].stream]
                 for i in xrange(len(EventManager.eventBuffers)):
                     if evt[0].stream in EventManager.eventBuffers[i].event_streams:
 
@@ -224,7 +224,7 @@ class EventManager(Resource):
                             print 'Something bad happened'
                             pass
 
-                        print 'Send to celery task'
+                        print '  Sending to celery task'
                         globals()[EventManager.analyses[i][-1]].apply_async((jsonpickle.encode(evt[0]),),
                         link_error=error_handler.s(),
                         queue=EventManager.analyses[i][-1])
@@ -238,7 +238,7 @@ class EventManager(Resource):
             # Get the file name of the VOEvent
 
             self.headers = request.getAllHeaders()
-            print self.headers
+
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
@@ -252,6 +252,7 @@ class EventManager(Resource):
                 print 'something went wrong: ' + str(e)
 
             fname=self.headers['content-name']
+            print("Received file: {}".format(fname))
 
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
             fp.write(request.content.getvalue())
@@ -270,12 +271,13 @@ class EventManager(Resource):
             shutil.move(os.path.join(path,"server_tmp_events",fname), fname_new)
 
             #Write event to the DB and to the buffer(s)
-            print 'Write event'
+            #print 'Write event'
             d = writeEventParam(event, evParam,EventManager.eventBuffers)
+            print 'Event written to DB'
 
             print 'Send event to celery tasks'
             d.addCallbacks(printResult,printError)
 
-
             request.finish()
+            print('Event processed')
             return NOT_DONE_YET
