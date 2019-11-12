@@ -252,6 +252,7 @@ class EventManager(Resource):
                 print 'something went wrong: ' + str(e)
 
             fname=self.headers['content-name']
+            print("")
             print("Received file: {}".format(fname))
 
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
@@ -280,4 +281,5 @@ class EventManager(Resource):
 
             request.finish()
             print('Event processed')
+            
             return NOT_DONE_YET
