@@ -1,5 +1,8 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
 from amonpy.dbase.db_classes import *
-from amonpy.dbase import db_read, db_write
+from amonpy.dbase import db_read, db_write, db_populate_class
 from amonpy.dbase.alert_to_voevent import *
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams, inv_alert_streams, gcn_streams
@@ -58,7 +61,7 @@ def ic_hawc_config():
     config.deltaT         = 100.00 #80000.0 #100.0               # seconds
     config.bufferT        = 86400.00 #1000.0 86400 24 h buffer             # seconds
     config.cluster_method = 'Fisher'            # function to be called
-    config.cluster_thresh = 2.00 #10.0 #2.0                 # significance
+    config.cluster_thresh = 6.48 #10.0 #2.0                 # significance
     config.psf_paramDesc1 = 'deg'
     config.psf_paramDesc2 = 'N/A'
     config.psf_paramDesc3 = 'N/A'
@@ -102,7 +105,6 @@ def insideHAWCBrightSources(dec,ra):
 
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
-
 hwcBkg = np.load(hwcBkgfile).item()
 def probBkgHAWC(dec):
     """Spatial Bkg PDF for a HAWC hotspot. Based on data """
@@ -115,9 +117,6 @@ def probSigHAWC(spc,sigma):
     psf = np.exp(-np.deg2rad(spc)**2/(2*(np.deg2rad(sigma))**2))/(2*np.pi*(np.deg2rad(sigma)**2))
     return psf
 
-
-##IC PDFs for spatial null hypotheses
-## The alternative  is given by an interpolator for each event.
 icfprdFile = np.load(os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'))
 icbkg_interp = icfprdFile['B_spat_interp'].item()
 def probBkgIC(cosTh):
@@ -125,17 +124,6 @@ def probBkgIC(cosTh):
     b = icbkg_interp(cosTh)/4.8434e-5 #constant is normalization factor
     b = b*(np.pi/(180.*360.))
     return b
-
-# def probBkgIC(sinDec):
-#     x=sinDec
-#     #numbers obtained from archival data after doing a fit
-#     a=1.035595
-#     x0=-0.117645
-#     g1 = 0.81984
-#     g2 = 1.655227
-#     y = a*(1/np.pi) * ((g1/2)/((x-x0)**2 + (g1**2/4))) * ((x-x0)<0)
-#     y+= (a*g2/g1)*((1/np.pi) * ((g2/2)/((x-x0)**2 + (g2**2/4))) ) * ((x-x0)>=0)
-#     return y*np.pi/(180.*360.)# units of deg^2, SigPSF is given in deg^2 #/(2*np.pi)
 
 def probSigIC(sigR,muR,lamR):
     """Spatial Signal PDF for a IceCube neutrino. Based on simulation"""
@@ -170,7 +158,7 @@ def pNuCluster(events):
 filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_LLH_scramble.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
-for item in cdfLLH.iteritems():
+for item in cdfLLH.items():
     CDF.append(item[1])
 n = CDF[0]
 b = CDF[1]
@@ -180,20 +168,12 @@ def pSpace(llh):
     if llh < bin_centers[0]:
         return 1.
     elif llh > bin_centers[-1]:
-        print "This event has an even smaller p_value than the current interpolation range!!"
+        print("This event has an even smaller p_value than the current interpolation range!!")
         return 1.-f(bin_centers[-1])
     else:
         return 1.-f(llh)
 
 # Calculation of the p_value of IC.
-#filename = os.path.join(AmonPyDir,'analyses/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
-#filename = os.path.join(AmonPyDir,'data/icecube/log10fprd_up_trunc_intp_bwp05_xf5_yf1.npy')
-#Rup = np.load(filename).item()
-#filename = os.path.join(AmonPyDir,'analyses/log10fprd_down_intp_bwp01.npy')
-#filename = os.path.join(AmonPyDir,'data/icecube/log10fprd_down_intp_bwp01.npy')
-#Rdn = np.load(filename).item()
-
-#fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'analyses/FPRD_info.npz'))
 fprd_obj=FPRD(fname=os.path.join(AmonPyDir,'data/icecube/FPRD_info.npz'))
 def pHEN(cosTh,y,fprd=None):
     """Function to get the pvalue of an IceCube event"""
@@ -211,18 +191,17 @@ def totalpHEN(events):
     val=1
     N=len(events)
     if N==2:
-        return val*events[1][-1]
+        return val*events[1][-3]
     else:
         for i in range(1,N):
-            val*=events[i][-1]
+            val*=events[i][-3]
         return val
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
 filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_newChi2_scramble.npz')
 cdfChi2 = np.load(filename)
-
 CDF = [] #dummy variable
-for item in cdfChi2.iteritems():
+for item in cdfChi2.items():
     CDF.append(item[1])
 n = CDF[0]
 b = CDF[1]
@@ -232,13 +211,12 @@ def pChi2(chi2):
     if chi2 < xo[0]:
         return 1.
     elif chi2 > xo[-1]:
-        print "This event has an even smaller p_value than the current interpolation range!!"
+        print( "This event has an even smaller p_value than the current interpolation range!!")
         return 1.-f2(xo[-1])
     else:
         return 1.-f2(chi2)
 
 # Define an initial space log-likelihood for each event (dec and ra are coordinates of the source position)
-#def loglh(dec1,ra1,dec,ra,sigma1,bkgterm):
 def loglh(sigterm,bkgterm):
     return np.log(sigterm)-np.log(bkgterm)
 
@@ -293,7 +271,7 @@ def maximizeLLH(all_events):
             try:
                 solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
             except ValueError:
-                print "Error in minimization"
+                print("Error in minimization")
                 return coincs
         res = list(solution.x)
         stderr = 0.
@@ -307,9 +285,9 @@ def maximizeLLH(all_events):
 
             stderr = np.sqrt(1/stderr)
             #print stderr
-            print "Number of neutrinos: %d"%(len(ev)-1)
+            print("Number of neutrinos: %d"%(len(ev)-1))
             pcluster=pNuCluster(ev)
-            phwc = ev[0][-1]
+            phwc = ev[0][-3]
             pspace = pSpace(-1*(solution.fun))#+temploglh(ev)))
             icpvalue = totalpHEN(ev)
             chi2 = -2 * np.log(pspace * phwc * pcluster * icpvalue) #The main quantity
@@ -319,9 +297,8 @@ def maximizeLLH(all_events):
             pvalChi2 = stats.chi2.sf(chi2,ddof)
             newchi2 = -np.log10(pvalChi2)
             pvalue = pChi2(newchi2) #
-            far = np.power(10,-0.74*newchi2 + 5.40)#np.power(10,-0.08718512*chi2 + 5.8773)  #parameters from linear fit from archival data.
+            far = np.power(10,-0.74*newchi2 + 5.40) #parameters from linear fit from archival data.
 
-            #pchi2 = pChi2(chi2) #The p-value of the chi2 distribution
             coincs.append([solution.x[0],solution.x[1],stderr,newchi2,nnus,far,pvalue,ev])
     return coincs
 
@@ -362,9 +339,9 @@ def coincAnalysisHWC(new_event):
 
     alldatalist= []
     datalist = []
-    datalist.append([streams['HAWC-DM'],dec1,ra1,poserr1,hwcDuration,probBkgHAWC(dec1),phwc])
-    print "HAWC event: "
-    print "Pos: %0.2f,%0.2f,%0.2f"%(ra1,dec1,poserr1)
+    datalist.append([streams['HAWC-DM'],dec1,ra1,poserr1,hwcDuration,probBkgHAWC(dec1),phwc,new_event.id,new_event.rev])
+    print("HAWC event: ")
+    print("Pos: %0.2f,%0.2f,%0.2f"%(ra1,dec1,poserr1))
     print("ID: {}".format(new_event.id))
 
     for e in eventList:
@@ -394,8 +371,8 @@ def coincAnalysisHWC(new_event):
                 if p.name == 'energy': energy = p.value
                 #else: energy = 1000 #In GeV
 
-            print "IC event: "
-            print "RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score)
+            print("IC event: ")
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score))
 
             psfIC = probSigIC(sigR,muR,lamR)
             sinDec = np.sin(np.deg2rad(dec2))
@@ -407,7 +384,7 @@ def coincAnalysisHWC(new_event):
             else:
                 y=bdt_score
             pvalIC = pHEN(cosTh,y)
-            datalist.append([streams['IC-Singlet'],dec2,ra2,poserr2,psfIC,pd.to_datetime(e.datetime), bkgIC , pvalIC])
+            datalist.append([streams['IC-Singlet'], dec2, ra2, poserr2, psfIC, pd.to_datetime(e.datetime), bkgIC, pvalIC, e.id, e.rev])
 
     alldatalist.append(datalist)
 
@@ -427,13 +404,13 @@ def coincAnalysisIC(new_event):
     decIC = new_event.dec
     poserrIC = new_event.sigmaR
 
-    eventList = db_read.read_events_angle_sepration([streams['HAWC-DM']],3.5,raIC,decIC,HostFancyName,
+    eventList = db_read.read_events_angle_separation([streams['HAWC-DM']],3.5,raIC,decIC,HostFancyName,
                                         UserFancyName,PasswordFancy,DBFancyName)
 
     #alldatalist= []
     #datalist = []
     #datalist.append([decIC,raIC,poserrIC])
-    print "Probably a late IC event, not doing anything for now"
+    print("Probably a late IC event, not doing anything for now")
     for e in eventList:
         coincs.append(coincAnalysisHWC(e))
 
@@ -455,7 +432,7 @@ def ic_hawc(new_event=None):
     else:
         idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    print("Max Id Alert in DB: %d"%(idnum))
 
     new_event = jsonpickle.decode(new_event)
 
@@ -464,10 +441,21 @@ def ic_hawc(new_event=None):
 
     #Do the analysis
     alerts = []
+    alertline_lst=[]
+
+    send = True
     if new_event.stream == streams['HAWC-DM']:
+        #Check that HAWC event is not close to another one,
+        #since it could be the same event but from different Transit
+        #if new_event.rev == 0:
+            #alert_rev, send = HAWC_event_check(new_event)
+             #prev_alerts = read_alert_timeslice(time_start,time_interval,host_name,user_name,
+             #                         passw_name, db_name)
+             #pd.to_datetime(new_event.datetime)
+
         result = coincAnalysisHWC(new_event)
         #Save results in DB
-        print "Found %d coincidences"%(len(result))
+        print("Found %d coincidences"%(len(result)))
 
         for r in result:
             dec = r[0]
@@ -490,15 +478,39 @@ def ic_hawc(new_event=None):
 
             rev = 0
             alertid = idnum+1
-            if new_event.rev > 0:
+            send = True
+
+            if new_event.rev > 0: #might need to fix this, use alertLine to get the latest revision of the alert
                 print("Using udpated information, new HAWC event has bigger significance")
-                rev = rev+1
-                alertid = idnum
+                alertid,rev=db_read.get_latest_alert_info_from_event(alert_streams['IC-HAWC'],new_event.id,
+                    HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
+                rev+=1
+
+            else:
+                prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],str(pd.to_datetime(new_event.datetime)-timedelta(seconds=20.*60)),20.*60,
+                    HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
+                bestfar = far
+                bestid = alertid
+                bestrev = rev
+                for pa in prev_alerts:
+                    dangle = spcang(ra,pa.RA,dec,pa.dec)
+                    if dangle>1.8:
+                        continue
+
+                    if bestfar>pa.false_pos:
+                        send=False
+
+                    bestid = pa.id
+                    bestrev += 1
+
+
+                alertid = bestid
+                rev = bestrev
 
             new_alert = Alert(config.stream,alertid,rev)
             new_alert.dec = float("{:.2f}".format(dec))
             new_alert.RA = float("{:.2f}".format(ra))
-            new_alert.sigmaR = float("{:.2f}".format(1.18*sigmaR)) #Send 50%?
+            new_alert.sigmaR = float("{:.2f}".format(1.18*sigmaR)) #Send 50%
             new_alert.deltaT = float("{:.2f}".format(phEvent[4]*3600.))
             new_alert.pvalue = 1.#pvalue
             new_alert.false_pos = float("{:.2f}".format(far))
@@ -509,6 +521,7 @@ def ic_hawc(new_event=None):
             print(pd.to_datetime(new_event.datetime))
             #print(datetime(pd.to_datetime(new_event.datetime)))
             new_alert.datetime = pd.to_datetime(new_event.datetime) #using HAWC set time
+            timest=str(new_alert.datetime)
             new_alert.observing = config.stream
 
             if (prodMachine==True):
@@ -535,6 +548,8 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
+            #apar = VOAlert.MakeParam(name="nameID",ucd="meta.id",unit="",datatype="string",value="NuEm_{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A"),description="Name of the alert")
+            #alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
@@ -561,28 +576,28 @@ def ic_hawc(new_event=None):
             f1.close()
 
             content = 'Times: '
-            print content
-            print 'Time of Alert: ',new_alert.datetime
-            print '  First IC time: ',alertTime[0]
-            print '  Last IC time: ',alertTime[-1]
-            print 'HAWC Set Time: ',new_event.datetime
+            print(content)
+            print('Time of Alert: ',new_alert.datetime)
+            print('  First IC time: ',alertTime[0])
+            print('  Last IC time: ',alertTime[-1])
+            print('HAWC Set Time: ',new_event.datetime)
             #print 'HAWC Set Time: ',datetime(pd.to_datetime(new_event.datetime)) + timedelta(seconds=r[0][4])
-            content = 'Alert ID: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(idnum,ra,dec,
+            content = 'Alert ID: %d, Rev: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(alertid,rev,ra,dec,
                     sigmaR,new_alert.pvalue,chi2,new_alert.false_pos,nev)
-            print content
+            print(content)
 
             #if chi2 > 7.3: # ~1 per year
             #if chi2 > 6.48: # ~4 per year
 
-            if chi2 > 3.86:#36.9: # ~1 per day FOR TESTING
+            if chi2 > 2.78:#3.86:# ~10 per day FOR TESTING
             #if chi2 > 11.0: # R TESTING
                 title='AMON IC-HAWC alert'
 
 
-                print "ID: %d"%new_alert.id
-                print "Alert Stream: %s"%inv_alert_streams[new_alert.stream]
+                print("ID: %d"%new_alert.id)
+                print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
-                if (prodMachine == True):
+                if (prodMachine == True and send == True):
                     try:
                         cmd = ['comet-sendvo']
                         cmd.append('--file=' + filen)
@@ -591,7 +606,7 @@ def ic_hawc(new_event=None):
                         subprocess.check_call(cmd)
 
                     except subprocess.CalledProcessError as e:
-                        print "Send alert failed"
+                        print("Send alert failed")
                         logger.error("send_voevent failed")
                         raise e
                     else:
@@ -601,10 +616,17 @@ def ic_hawc(new_event=None):
                 email_alerts.alert_email_content([new_alert],content,title)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
 
-
+            #alertLine for HAWC
+            al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['HAWC-DM'],phEvent[-2],phEvent[-1])
+            alertline_lst.append(al)
+            #alertLine for IceCube
+            for n in nuEvents:
+                al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['IC-Singlet'],n[-2],n[-1])
+                alertline_lst.append(al)
         #Write results to the DB
         if len(alerts) > 0:
             db_write.write_alert(config.stream, HostFancyName, UserFancyName, PasswordFancy, DBFancyName, alerts)
+            db_write.write_alertline(HostFancyName, UserFancyName, PasswordFancy, DBFancyName, alertline_lst)
     elif new_event.stream == streams['IC-Singlet']:
         print("Neutrino event. Not doing anything for now.")
     #    result = []#coincAnalysisIC(new_event)
@@ -640,8 +662,8 @@ def ic_hawc(new_event=None):
             # if len(alerts) > 0:
             #     db_write.write_alert(config.stream, HostFancyName, UserFancyName, PasswordFancy, DBFancyName, alerts)
     else:
-        print 'Event should not be part of this analysis'
+        print('Event should not be part of this analysis')
 
 
 
-    print "###########"
+    print("###########")
