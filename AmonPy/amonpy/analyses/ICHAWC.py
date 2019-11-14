@@ -471,7 +471,7 @@ def ic_hawc(new_event=None):
             #hours,minutes = divmod(minutes,60)
 
             rev = 0
-            alertid = idnum+
+            alertid = idnum+1
             send = True
 
             if new_event.rev > 0:
