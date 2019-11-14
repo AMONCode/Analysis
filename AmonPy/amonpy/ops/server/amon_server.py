@@ -215,7 +215,6 @@ class EventManager(Resource):
                 error.printTraceback
 
             def printResult(result):
-                print('Event written to DB, send to task')
                 evt = result
 
                 print('Event stream: ',inv_streams[evt[0].stream])
@@ -229,7 +228,7 @@ class EventManager(Resource):
                             print('Something bad happened')
                             pass
 
-                        print('Send to celery task')
+                        print('Sending to celery task')
                         globals()[EventManager.analyses[i][-1]].apply_async((jsonpickle.encode(evt[0]),),
                         link_error=error_handler.s(),
                         queue=EventManager.analyses[i][-1])
@@ -245,9 +244,13 @@ class EventManager(Resource):
             headers_b = request.getAllHeaders() # getAllHeaders gives byte strings...
             #self.headers = { key.decode('latin1'): headers_b.get(key).decode('latin1') for key in headers_b.keys() } # ...we decode them to have text strings
             self.headers = request.getAllHeaders()
+<<<<<<< HEAD
+
+=======
             print(self.headers)
             #print(request.content, request.content.getvalue())
             test = request.content.getvalue().decode('latin1')
+>>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
@@ -261,7 +264,13 @@ class EventManager(Resource):
                 print('something went wrong: ' + str(e))
                 print(traceback.print_exc())
 
+<<<<<<< HEAD
+            fname=self.headers['content-name']
+            print("")
+            print("Received file : {}".format(fname))
+=======
             fname=self.headers[b'content-name'].decode('latin1')
+>>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
 
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
             fp.write(request.content.getvalue().decode('latin1'))
@@ -281,12 +290,15 @@ class EventManager(Resource):
             shutil.move(os.path.join(path,"server_tmp_events",fname), fname_new)
 
             #Write event to the DB and to the buffer(s)
-            print('Write event')
+            #print('Write event')
             d = writeEventParam(event, evParam,EventManager.eventBuffers)
+            print('Event written to DB')
 
             print('Send event to celery tasks')
             d.addCallbacks(printResult,printError)
 
 
             request.finish()
+            print('Event processed')
+
             return NOT_DONE_YET

@@ -120,7 +120,7 @@ def make_event(source, o=sys.stdout):
     #print
     groups = v.get_What().get_Group()
     #print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
-    print()
+    #print()
     #evParam[0].event_eventStreamConfig_stream = event[0].stream
     #evParam[0].event_id = event[0].id
     #evParam[0].event_rev = event[0].rev

@@ -1,7 +1,16 @@
 *.pyc
 *.log
+<<<<<<< HEAD
+*.sh
+*.pid
+AmonPy/amonpy/.netrc
+AmonPy/amonpy/amon.ini
+build/
+AmonPy/AmonPy.egg-info/
+=======
 *.pid
 AmonPy.egg-info/
 AmonPy/amonpy/.netrc
 AmonPy/amonpy/amon.ini
 build/
+>>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d

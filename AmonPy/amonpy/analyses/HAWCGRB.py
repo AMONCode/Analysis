@@ -144,6 +144,8 @@ def hawc_burst(new_event=None):
         alertparams.append(apar)
         apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_event.rev,description="Revision of the alert")
         alertparams.append(apar)
+        #apar = VOAlert.MakeParam(name="nameID",ucd="meta.id",unit="",datatype="string",value="HAWC_{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A"),description="Name of the alert")
+        #alertparams.append(apar)
         apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=event_id,description="Event id within a given run")
         alertparams.append(apar)
         apar = VOAlert.MakeParam(name="run_id",ucd="meta.number",unit="",datatype="int",value=run_id,description="Run id")
@@ -170,7 +172,8 @@ def hawc_burst(new_event=None):
                 cmd = ['comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-                post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+                if new_event.rev == 0:
+                    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
                 #logger.error("send_voevent failed")
