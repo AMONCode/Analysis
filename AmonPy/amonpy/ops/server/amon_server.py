@@ -44,6 +44,8 @@ from amonpy.ops.server.buffer import EventBuffer, bufdur
 #from amonpy.ops.server.util import DatetimeHandler
 #jsonpickle.handlers.registry.register(datetime, DatetimeHandler)
 
+import traceback
+
 #Importing configurations for analyses
 from amonpy.analyses.ICSwift import *
 from amonpy.analyses.ICHAWC import *
@@ -239,26 +241,40 @@ class EventManager(Resource):
             # Start of render_POST
             # Get the file name of the VOEvent
 
+            headers_b = request.getAllHeaders() # getAllHeaders gives byte strings...
+            #self.headers = { key.decode('latin1'): headers_b.get(key).decode('latin1') for key in headers_b.keys() } # ...we decode them to have text strings
             self.headers = request.getAllHeaders()
+<<<<<<< HEAD
 
+=======
+            print(self.headers)
+            #print(request.content, request.content.getvalue())
+            test = request.content.getvalue().decode('latin1')
+>>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
                     headers = self.headers,
 
                     environ = {'REQUEST_METHOD':'POST',
-                            'CONTENT_TYPE': self.headers['content-type'],
+                            'CONTENT_TYPE': str(self.headers[b'content-type']),
                             }
                     )
             except Exception as e:
                 print('something went wrong: ' + str(e))
+                print(traceback.print_exc())
 
+<<<<<<< HEAD
             fname=self.headers['content-name']
             print("")
             print("Received file : {}".format(fname))
+=======
+            fname=self.headers[b'content-name'].decode('latin1')
+>>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
 
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
-            fp.write(request.content.getvalue())
+            fp.write(request.content.getvalue().decode('latin1'))
+            #fp.write(request.content.getvalue())
             fp.close()
 
             #Convert VOEvent into AMON event and move VOEvent file to the archive directory
