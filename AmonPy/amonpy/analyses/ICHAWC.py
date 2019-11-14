@@ -475,7 +475,7 @@ def ic_hawc(new_event=None):
             send = True
 
             if new_event.rev > 0:
-                print("Using udpated information, new HAWC event has bigger significance
+                print("Using udpated information, new HAWC event has bigger significance")
                 alertid,rev=db_read.get_latest_alert_info_from_event(alert_streams['IC-HAWC'],new_event.id,
                     HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
                 rev+=1
