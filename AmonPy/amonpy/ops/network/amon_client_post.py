@@ -8,6 +8,7 @@ from builtins import range
 import sys, os, shutil, logging
 import resource
 import fcntl
+import traceback
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -101,18 +102,19 @@ def check_for_files(hostport, eventpath):
         if len(files_xml)>0:
             oldest = files_xml[0]
             try:
-                datafile=open(os.path.join(path,oldest))
+                datafile=open(os.path.join(path,oldest), "rb")
                 #data=datafile.read()
                 #lenght_data=str(len(data))
 
                 #body = StringProducer(data)
+
                 body=FileBodyProducer(datafile)
                 length_data=str(body.length)
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'],
                                             'Content-Length': [length_data],
                                             'Content-Name':[oldest]})
-                d = agent.request('POST', host, headers, bodyProducer=body)
+                d = agent.request(b'POST', host.encode(), headers, bodyProducer=body)
                 # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
                 #shutil.move(path+oldest,path+"archive/"+oldest)
@@ -120,6 +122,7 @@ def check_for_files(hostport, eventpath):
                 #print "Event %s sent" % (oldest,)
             except:
                 log.msg("Error parsing file %s " % (path+oldest,))
+                print(traceback.print_exc())
 
             moveFile(path, oldest)
 

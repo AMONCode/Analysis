@@ -108,7 +108,7 @@ def ic_swift(new_event=None):
         idnum = max_id
     print(idnum)
 
-    new_event = jsonpickle.decode(new_event)
+    new_event = jsonpickle.decode(new_event, classes=Event)
 
     coincs= []
     if new_event is None:

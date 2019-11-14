@@ -2,47 +2,47 @@
 <voe:VOEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
 xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0 http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd"
- version="2.0" role="test" ivorn="ivo://amontest/test#1_0_0">
+ version=b'"2.0"' role="test" ivorn=b'"ivo://amon/multi_mesg#1_0_0"'>
     <Who>
-        <Date>2013-10-24T00:02:05.575680</Date>
+        <Date>b'2019-10-11T20:41:50.910442'</Date>
         <Author>
-            <contactName>Gordana Tesic, Miles Smith</contactName>
-            <contactEmail>gut10@psu.edu, mus44@psu.edu</contactEmail>
+            <contactName>b'Hugo Ayala'</contactName>
+            <contactEmail>b'hgayala@psu.edu'</contactEmail>
         </Author>
     </Who>
     <What>
-        <Param name="stream" dataType="string" value="1" ucd="meta.number">
-            <Description>Analysis stream identification</Description>
+        <Param name=b'"stream"' dataType="int" value=b'"1"' ucd=b'"meta.number"'>
+            <Description>b'Analysis stream identification'</Description>
         </Param>
-        <Param name="id" dataType="string" value="0" ucd="meta.number">
-            <Description>Alert identification</Description>
+        <Param name=b'"amon_id"' dataType="int" value=b'"0"' ucd=b'"meta.number"'>
+            <Description>b'Alert identification'</Description>
         </Param>
-        <Param name="rev" dataType="string" value="0" ucd="meta.number">
-            <Description>Alert revision</Description>
+        <Param name=b'"rev"' dataType="int" value=b'"0"' ucd=b'"meta.number"'>
+            <Description>b'Alert revision'</Description>
         </Param>
-        <Param name="nevents" dataType="float" value="0.0" ucd="meta.number" unit=" ">
-            <Description>Number of events in the alert</Description>
+        <Param name=b'"nevents"' dataType="int" value=b'"0.0"' ucd=b'"meta.number"' unit=b'" "'>
+            <Description>b'Number of events in the alert'</Description>
         </Param>
-        <Param name="deltaT" dataType="float" value="0.0" ucd="time.timeduration" unit="s">
-            <Description>Time window of the burst</Description>
+        <Param name=b'"deltaT"' dataType="float" value=b'"0.0"' ucd=b'"time.timeduration"' unit=b'"s"'>
+            <Description>b'Time window of the burst'</Description>
         </Param>
-        <Param name="sigmaT" dataType="float" value="0.0" ucd="time.timeduration" unit="s">
-            <Description>Uncertainty of the time window</Description>
+        <Param name=b'"sigmaT"' dataType="float" value=b'"0.0"' ucd=b'"time.timeduration"' unit=b'"s"'>
+            <Description>b'Uncertainty of the time window'</Description>
         </Param>
-        <Param name="false_pos" dataType="float" value="0.0" ucd="stat.probability" unit=" ">
-            <Description>False positive rate</Description>
+        <Param name=b'"false_pos"' dataType="float" value=b'"0.0"' ucd=b'"stat.probability"' unit=b'" "'>
+            <Description>b'False positive rate'</Description>
         </Param>
-        <Param name="observing" dataType="int" value="0" ucd="meta.number" unit=" ">
-            <Description>Observatories observing given part og the sky</Description>
+        <Param name=b'"observing"' dataType="int" value=b'"0"' ucd=b'"meta.number"' unit=b'" "'>
+            <Description>b'Observatories observing given part og the sky'</Description>
         </Param>
-        <Param name="trigger" dataType="int" value="0" ucd="meta.number" unit=" ">
-            <Description>Observatories triggering</Description>
+        <Param name=b'"trigger"' dataType="int" value=b'"0"' ucd=b'"meta.number"' unit=b'" "'>
+            <Description>b'Observatories triggering'</Description>
         </Param>
-        <Param name="pvalue" dataType="float" value="0.0" ucd="stat.probability" unit=" ">
-            <Description>Pvalue for the alert</Description>
+        <Param name=b'"pvalue"' dataType="float" value=b'"0.0"' ucd=b'"stat.probability"' unit=b'" "'>
+            <Description>b'Pvalue for the alert'</Description>
         </Param>
-        <Param name="skymap" dataType="string" value="False" ucd="meta.code.multip" unit=" ">
-            <Description>Skymap or no skymap assotiated with the alert</Description>
+        <Param name=b'"skymap"' dataType="string" value=b'"False"' ucd=b'"meta.code.multip"' unit=b'" "'>
+            <Description>b'Skymap or no skymap assotiated with the alert'</Description>
         </Param>
     </What>
     <WhereWhen>
@@ -54,14 +54,14 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0 http://www.ivoa.net/xml
             <ObservationLocation>
                 <AstroCoordSystem id="UTC-ICRS-TOPO"/>
                 <AstroCoords coord_system_id="UTC-ICRS-TOPO">
-                    <Time unit="s">
+                    <Time unit=b'"s"'>
                         <TimeInstant>
-                            <ISOTime>2000-01-01T00:00:00.000001</ISOTime>
+                            <ISOTime>b'2000-01-01T00:00:00.000001'</ISOTime>
                         </TimeInstant>
                     </Time>
-                    <Position2D unit="deg-deg">
-                        <Name1>RA</Name1>
-                        <Name2>Dec</Name2>
+                    <Position2D unit=b'"deg-deg"'>
+                        <Name1>b'RA'</Name1>
+                        <Name2>b'Dec'</Name2>
                         <Value2>
                             <C1>-1.000000</C1>
                             <C2>0.000000</C2>
@@ -72,6 +72,6 @@ xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0 http://www.ivoa.net/xml
             </ObservationLocation>
         </ObsDataLocation>
     </WhereWhen>
-    <Description>Report of some irrelevant information</Description>
+    <Description>b'Report of the multimessenger multiplets'</Description>
 </voe:VOEvent>
 
