@@ -244,13 +244,7 @@ class EventManager(Resource):
             headers_b = request.getAllHeaders() # getAllHeaders gives byte strings...
             #self.headers = { key.decode('latin1'): headers_b.get(key).decode('latin1') for key in headers_b.keys() } # ...we decode them to have text strings
             self.headers = request.getAllHeaders()
-<<<<<<< HEAD
 
-=======
-            print(self.headers)
-            #print(request.content, request.content.getvalue())
-            test = request.content.getvalue().decode('latin1')
->>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
             try:
                 postfile = cgi.FieldStorage(
                     fp = request.content,
@@ -264,13 +258,9 @@ class EventManager(Resource):
                 print('something went wrong: ' + str(e))
                 print(traceback.print_exc())
 
-<<<<<<< HEAD
-            fname=self.headers['content-name']
+            fname=self.headers[b'content-name'].decode('latin1')
             print("")
             print("Received file : {}".format(fname))
-=======
-            fname=self.headers[b'content-name'].decode('latin1')
->>>>>>> 16769acfed62fd5766dc57b84ff2d8a8cfc7f26d
 
             fp = open(os.path.join(path,"server_tmp_events",fname),"w")
             fp.write(request.content.getvalue().decode('latin1'))
