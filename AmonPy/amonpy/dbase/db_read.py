@@ -647,7 +647,7 @@ def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user
             #print('    ', r[1][ii][0])
         #print()
 
-         if num_streams == 1:
+        if num_streams == 1:
             stmt = ("""SELECT * FROM alert WHERE time>= '{}' AND time <= '{}' AND alertConfig_stream = {} ORDER BY time ASC""".format(timeStart, timeStop, streams[0]))
         else:
             stmt = ("""SELECT * FROM alert WHERE (time>= '{}' AND time <= '{}') AND ({}) ORDER BY time ASC""".format(timeStart, timeStop, selecStream))
