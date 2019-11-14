@@ -153,7 +153,8 @@ def ic_gold_bronze(new_event=None):
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
             slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
-            post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
+            if new_event.rev == 0:
+                post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print("Send Gold/Bronze VOevent alert failed")
             logger.error("send_voevent failed")

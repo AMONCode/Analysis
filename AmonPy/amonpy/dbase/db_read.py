@@ -18,8 +18,9 @@ import time
 import datetime
 import math
 import string
-#import numpy
+#import numpy as np
 from numpy import *
+import pandas as pd
 
 # amonpy imports
 from amonpy.dbase import db_metadata
@@ -191,7 +192,7 @@ def read_event_timeslice(time_start,time_interval,host_name,user_name,
     print("   %d rows read from the database" % len(eventList))
     return eventList
 
-def read_events_angle_sepration(streams,angle,RA,Dec,host_name,user_name,passw_name,db_name):
+def read_events_angle_separation(streams,angle,RA,Dec,host_name,user_name,passw_name,db_name):
     """ Get a list of events from the DB from a point in the sky with a distance of <angle.
         Input, streams, angle separation, RA and Dec of the point in the sky,
         host_name, user_name, password and DB name.
@@ -268,7 +269,98 @@ def read_events_angle_sepration(streams,angle,RA,Dec,host_name,user_name,passw_n
 
 def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user_name,
                          passw_name, db_name):
-    """ Read a list of events from the DB.
+    """ Read a list of events from specific streams the DB.
+        Input start time (datetime), time window
+       (in seconds), host name, user name, password and DB name.
+    """
+
+    # initiate event list, put dummy identifiers and replace
+    # them later with real values
+    eventList=[db_classes.Event(0, 0, 0)]
+
+    con = mdb.connect(host_name,user_name,passw_name,db_name)
+    cur = con.cursor()
+    try:
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    except:
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    print('   Requested time slice: %s - %s' %(timeStart,timeStop))
+
+    # **** Code to read the database column names is bellow****
+    # **** Just print them out for now ****
+
+    #if (eventSingle._Event__lock == False):
+    num_streams=len(streams)
+
+    selecStream = ""
+    for s in streams:
+        if s == streams[-1]:
+            selecStream += "eventStreamConfig_stream = %d"%(s)
+        else:
+            selecStream += "eventStreamConfig_stream = %d OR "%(s)
+
+    try:
+        print()
+        print(" TRYING TO CONNECT TO THE DATABASE...")
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('event', cur)
+        num_columns=len(r[1])
+        print("  ...CONNECTED")
+
+        if num_streams == 1:
+            stmt = ("""SELECT * FROM event WHERE time>= '{}' AND time <= '{}' AND eventStreamConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
+        else:
+            stmt = ("""SELECT * FROM event WHERE (time>= '{}' AND time <= '{}') AND ({})""".format(timeStart, timeStop, selecStream))
+
+        cur.execute(stmt)
+        numrows = int(cur.rowcount)
+        print('   %d rows selected for reading' % numrows)
+
+        for i in range(numrows):
+            row = cur.fetchone()
+            eventList[i].stream     = row[0]
+            eventList[i].id         = row[1]
+            eventList[i].rev        = row[2]
+            eventList[i].datetime   = row[3]
+            # add microseconds
+            eventList[i].datetime  += datetime.timedelta(microseconds=row[4])
+            eventList[i].dec        = row[5]
+            eventList[i].RA         = row[6]
+            eventList[i].sigmaR     = row[7]
+            eventList[i].nevents    = row[8]
+            eventList[i].deltaT     = row[9]
+            eventList[i].sigmaT     = row[10]
+            eventList[i].false_pos  = row[11]
+            eventList[i].pvalue     = row[12]
+            eventList[i].type       = row[13]
+            eventList[i].point_RA   = row[14]
+            eventList[i].point_dec  = row[15]
+            eventList[i].longitude  = row[16]
+            eventList[i].latitude   = row[17]
+            eventList[i].elevation  = row[18]
+            eventList[i].psf_type     = row[19]
+            eventList[i].configstream     = row[20]
+            #add a space for the next event
+            eventList+=[db_classes.Event(0, 0, 0)]
+        cur.close()
+        con.close()
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        con.rollback()
+        print("   Events failed to be read.")
+        cur.close()
+        con.close()
+    eventList.pop()  # remove the last dummy event
+    print("   %d rows read from the database" % len(eventList))
+    return eventList
+
+
+# Difference between and previous function is that it looks for newer revisions only
+def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_name,user_name,
+                         passw_name, db_name):
+    """ Read a list of events from specific streams from the DB. Only latest revisions will be read.
         Input start time (datetime), time window
        (in seconds), host name, user name, password and DB name.
     """
@@ -315,259 +407,11 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
         #    print '    ', r[1][ii][0]
         #print
         if num_streams == 1:
-            cur.execute("""SELECT * FROM event WHERE time>= %s AND
-                        time <= %s AND
-                        eventStreamConfig_stream = %s""", (timeStart, timeStop, streams[0]))
+            stmt=("""SELECT * FROM event WHERE rev = (select max(rev) from event as e where e.eventStreamConfig_Stream=event.eventStreamConfig_Stream and e.id=event.id) AND time>= '{}' AND time <= '{}' AND eventStreamConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
         else:
-            cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-                        time <= %s) AND (%s)""", (timeStart, timeStop, selecStream))
-        # elif num_streams == 2:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1]))
-        # elif num_streams == 3:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2]))
-        # elif num_streams == 4:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2], streams[3]))
-        # elif num_streams == 5:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s )""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2], streams[3], streams[4]))
-        # elif num_streams == 6:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2], streams[3], streams[4],
-        #                 streams[5]))
-        # elif num_streams == 7:
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2], streams[3], streams[4],
-        #                 streams[5], streams[6]))
-        # else:
-        #     print 'Maximum number of streams is 8 for now'
-        #     cur.execute("""SELECT * FROM event WHERE (time>= %s AND
-        #                 time <= %s) AND
-        #                 (eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s OR
-        #                 eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-        #                 streams[0], streams[1], streams[2], streams[3], streams[4],
-        #                 streams[5], streams[6], streams[7]))
+            stmt=("""SELECT * FROM event WHERE (rev = (select max(rev) from event as e where e.eventStreamConfig_Stream=event.eventStreamConfig_Stream and e.id=event.id) AND time>= '{}' AND time <= '{}') AND ({})""".format(timeStart, timeStop, selecStream))
 
-        #print "  ...CONNECTED"
-        numrows = int(cur.rowcount)
-        print('   %d rows selected for reading' % numrows)
-
-        for i in range(numrows):
-            row = cur.fetchone()
-            eventList[i].stream     = row[0]
-            eventList[i].id         = row[1]
-            eventList[i].rev        = row[2]
-            eventList[i].datetime   = row[3]
-            # add microseconds
-            eventList[i].datetime  += datetime.timedelta(microseconds=row[4])
-            eventList[i].dec        = row[5]
-            eventList[i].RA         = row[6]
-            eventList[i].sigmaR     = row[7]
-            eventList[i].nevents    = row[8]
-            eventList[i].deltaT     = row[9]
-            eventList[i].sigmaT     = row[10]
-            eventList[i].false_pos  = row[11]
-            eventList[i].pvalue     = row[12]
-            eventList[i].type       = row[13]
-            eventList[i].point_RA   = row[14]
-            eventList[i].point_dec  = row[15]
-            eventList[i].longitude  = row[16]
-            eventList[i].latitude   = row[17]
-            eventList[i].elevation  = row[18]
-            eventList[i].psf_type     = row[19]
-            eventList[i].configstream     = row[20]
-            #add a space for the next event
-            eventList+=[db_classes.Event(0, 0, 0)]
-        cur.close()
-        con.close()
-    except mdb.Error as e:
-        print('Exception %s' %e)
-        con.rollback()
-        print("   Events failed to be read.")
-        cur.close()
-        con.close()
-    eventList.pop()  # remove the last dummy event
-    print("   %d rows read from the database" % len(eventList))
-    return eventList
-
-def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_name,user_name,
-                         passw_name, db_name):
-    """ Read a list of events from the DB. Only latest revisions will be read.
-        Input start time (datetime), time window
-       (in seconds), host name, user name, password and DB name.
-    """
-
-    # initiate event list, put dummy identifiers and replace
-    # them later with real values
-    eventList=[db_classes.Event(0, 0, 0)]
-
-    con = mdb.connect(host_name,user_name,passw_name,db_name)
-    cur = con.cursor()
-    try:
-        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
-        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
-    except:
-        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S")
-        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
-    print('   Requested time slice: %s - %s' %(timeStart,timeStop))
-
-    # **** Code to read the database column names is bellow****
-    # **** Just print them out for now ****
-
-    #if (eventSingle._Event__lock == False):
-    num_streams=len(streams)
-    try:
-        print()
-        print(" TRYING TO CONNECT TO THE DATABASE...")
-        mydb = db_metadata.DBMetadata()
-        r=mydb.table_describe('event', cur)
-        num_columns=len(r[1])
-        print("  ...CONNECTED")
-        #print '    Number of columns in the table %d' %  num_columns
-        #print
-        #print '    Column names:'
-        #print
-        #for ii in xrange(num_columns):
-        #    print '    ', r[1][ii][0]
-        #print
-        if num_streams == 1:
-            cur.execute("""SELECT * FROM event WHERE rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                           time <= %s AND
-                           eventStreamConfig_stream = %s""", (timeStart, timeStop, streams[0]))
-        elif num_streams == 2:
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                           time <= %s) AND
-                           (eventStreamConfig_stream = %s OR
-                           eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                           streams[0], streams[1]))
-        elif num_streams == 3:
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                           time <= %s) AND
-                           (eventStreamConfig_stream = %s OR
-                           eventStreamConfig_stream = %s OR
-                           eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                           streams[0], streams[1], streams[2]))
-        elif num_streams == 4:
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                        time <= %s) AND
-                        (eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                        streams[0], streams[1], streams[2], streams[3]))
-        elif num_streams == 5:
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                        time <= %s) AND
-                        (eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s )""", (timeStart, timeStop,
-                        streams[0], streams[1], streams[2], streams[3], streams[4]))
-        elif num_streams == 6:
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                        time <= %s) AND
-                        (eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                        streams[0], streams[1], streams[2], streams[3], streams[4],
-                        streams[5]))
-        elif num_streams == 7:
-            cur.execute("""SELECT * FROM event WHERE ( rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                        time <= %s) AND
-                        (eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                        streams[0], streams[1], streams[2], streams[3], streams[4],
-                        streams[5], streams[6]))
-        else:
-            print('Maximum number of streams is 8 for now')
-            cur.execute("""SELECT * FROM event WHERE (rev = (select max(rev) from
-                           event as e where
-                           e.eventStreamConfig_Stream=event.eventStreamConfig_Stream
-                           and e.id=event.id) AND time>= %s AND
-                        time <= %s) AND
-                        (eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s OR
-                        eventStreamConfig_stream = %s)""", (timeStart, timeStop,
-                        streams[0], streams[1], streams[2], streams[3], streams[4],
-                        streams[5], streams[6], streams[7]))
-
-        #print "  ...CONNECTED"
+        cur.execute(stmt)
         numrows = int(cur.rowcount)
         print('   %d rows selected for reading' % numrows)
 
@@ -758,7 +602,7 @@ def read_alert_single(alert_stream, alert_num, alert_rev, host_name, user_name, 
 
     return alertSingle
 
-def read_alert_timeslice(time_start,time_interval,host_name,user_name,
+def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of alerts from the DB.
         Input start time (datetime), time window (in seconds),
@@ -770,10 +614,22 @@ def read_alert_timeslice(time_start,time_interval,host_name,user_name,
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
-    timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
-    print(timeStart)
-    timeStop=timeStart+datetime.timedelta(seconds=time_interval)
-    print(timeStop)
+    try:
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S.%f")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    except:
+        timeStart=datetime.datetime.strptime(time_start,"%Y-%m-%d %H:%M:%S")
+        timeStop=timeStart+datetime.timedelta(seconds=time_interval)
+    print('   Requested time slice: %s - %s' %(timeStart,timeStop))
+
+    num_streams=len(streams)
+
+    selecStream = ""
+    for s in streams:
+        if s == streams[-1]:
+            selecStream += "alertConfig_stream = %d"%(s)
+        else:
+            selecStream += "alertConfig_stream = %d OR "%(s)
 
     try:
         print("Try to connect to DB")
@@ -782,16 +638,21 @@ def read_alert_timeslice(time_start,time_interval,host_name,user_name,
         print(r[1][0][0])
 
         num_columns=len(r[1])
-        print('    Number of columns in the table %d' %  num_columns)
-        print()
-        print('    Column names:')
-        print()
+        #print('    Number of columns in the table %d' %  num_columns)
+        #print()
+        #print('    Column names:')
+        #print()
 
-        for ii in range(num_columns):
-            print('    ', r[1][ii][0])
-        print()
-        cur.execute("""SELECT * FROM alert WHERE time>= %s AND
-                    time <= %s""", (timeStart, timeStop))
+        #for ii in range(num_columns):
+            #print('    ', r[1][ii][0])
+        #print()
+
+         if num_streams == 1:
+            stmt = ("""SELECT * FROM alert WHERE time>= '{}' AND time <= '{}' AND alertConfig_stream = {} ORDER BY time ASC""".format(timeStart, timeStop, streams[0]))
+        else:
+            stmt = ("""SELECT * FROM alert WHERE (time>= '{}' AND time <= '{}') AND ({}) ORDER BY time ASC""".format(timeStart, timeStop, selecStream))
+
+        cur.execute(stmt)
         print("Connected")
         numrows = int(cur.rowcount)
         print("Number of rows selected: %d" % numrows)
@@ -825,7 +686,7 @@ def read_alert_timeslice(time_start,time_interval,host_name,user_name,
     except mdb.Error as e:
         print('Exception %s' %e)
         con.rollback()
-        print("Events failed to be read.")
+        print("Alerts failed to be read.")
         cur.close()
         con.close()
     alertList.pop()  # remove the last dummy event
@@ -1408,7 +1269,7 @@ def read_alertline_events(streams,ids,revs,host_name,user_name,
 def read_alertline_events2(streams,ids,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of alertlines from the DB.
-        Input streams, event ids and revesions, host name, user name, password and DB name.
+        Input streams, event ids, host name, user name, password and DB name.
     """
 
     # initiate event list, put dummy identifiers and replace
@@ -1494,3 +1355,14 @@ def read_alertline_events2(streams,ids,host_name,user_name,
     eventList.pop()  # remove the last dummy event
     print("   %d rows read from the database" % len(eventList))
     return eventList
+
+def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,passw_name, db_name):
+
+    con = mdb.connect(host_name,user_name,passw_name,db_name)
+    sql = 'SELECT alert_id, alert_rev from alertLine where alert_alertConfig_stream = {} and event_id = {}'.format(alert_stream,event_id)
+    df = pd.read_sql(sql,con)
+
+    max_rev = max(df['alert_rev'])
+    alert_id = df['alert_id'][0]
+
+    return alert_id, max_rev
