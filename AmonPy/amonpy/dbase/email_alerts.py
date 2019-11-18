@@ -145,3 +145,25 @@ def alert_email_content(alert,content,title_msg):
     server.login(FROM, PASS)
     server.sendmail(FROM, TO, message)
     server.quit()
+
+def alert_email_content_emails(alert,content,title_msg,emails):
+    nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
+    nrc = netrc.netrc(nrc_fname)
+    FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+    TO = emails
+
+    SERVER = 'smtp.gmail.com'
+    PORT = 587
+    msg = MIMEText(content)
+    msg['Subject'] = title_msg
+    msg['From'] = FROM
+    msg['To'] = ", ".join(TO)
+    message = msg.as_string()
+
+    server = smtplib.SMTP(SERVER, PORT)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login(FROM, PASS)
+    server.sendmail(FROM, TO, message)
+    server.quit()
