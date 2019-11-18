@@ -150,6 +150,7 @@ def alert_email_content_emails(content,title_msg,emails):
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
     nrc = netrc.netrc(nrc_fname)
     FROM = nrc.hosts['gmail'][0] + '@gmail.com'
+    PASS = nrc.hosts['gmail'][2]
     TO = emails
 
     SERVER = 'smtp.gmail.com'
