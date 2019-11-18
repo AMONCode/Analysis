@@ -146,7 +146,7 @@ def alert_email_content(alert,content,title_msg):
     server.sendmail(FROM, TO, message)
     server.quit()
 
-def alert_email_content_emails(alert,content,title_msg,emails):
+def alert_email_content_emails(content,title_msg,emails):
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
     nrc = netrc.netrc(nrc_fname)
     FROM = nrc.hosts['gmail'][0] + '@gmail.com'
