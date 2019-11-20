@@ -534,7 +534,7 @@ def ic_hawc(new_event=None):
             if far<=4.0 and far>0.01:
                 alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
             else:
-                alertname="HAWC-IC-{}".format(new_alert.id) 
+                alertname="HAWC-IC-{}".format(new_alert.id)
 
             VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
@@ -583,8 +583,7 @@ def ic_hawc(new_event=None):
             emails=['hgayala@psu.edu']
             emails2=['hgayala@psu.edu']
 
-
-            #if far<=4.0 and far >0.01
+            #if far<=4.0 and far >0.01:
             if far<3650.:# and far>0.01:
                 title='AMON IC-HAWC alert'
 
