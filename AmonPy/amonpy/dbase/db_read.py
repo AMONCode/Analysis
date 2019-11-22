@@ -356,7 +356,6 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
     print("   %d rows read from the database" % len(eventList))
     return eventList
 
-
 # Difference between and previous function is that it looks for newer revisions only
 def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_name,user_name,
                          passw_name, db_name):
@@ -1266,6 +1265,7 @@ def read_alertline_events(streams,ids,revs,host_name,user_name,
     eventList.pop()  # remove the last dummy event
     print("   %d rows read from the database" % len(eventList))
     return eventList
+
 def read_alertline_events2(streams,ids,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of alertlines from the DB.
