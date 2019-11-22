@@ -287,8 +287,7 @@ class EventManager(Resource):
             print('Send event to celery tasks')
             d.addCallbacks(printResult,printError)
 
-
             request.finish()
             print('Event processed')
-
+            
             return NOT_DONE_YET
