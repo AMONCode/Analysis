@@ -501,6 +501,7 @@ def ic_hawc(new_event=None):
                         send=False
                     if pa.id<bestid:
                         bestid = pa.id
+                    if pa.rev>=bestrev:
                         bestrev =pa.rev + 1
                 alertid = bestid
                 rev = bestrev
@@ -567,6 +568,7 @@ def ic_hawc(new_event=None):
 
             f1.write(xmlForm)
             f1.close()
+            MOVEFILE=True
 
             content = 'Times: '
             print(content)
@@ -583,9 +585,10 @@ def ic_hawc(new_event=None):
             emails=['hgayala@psu.edu']
             emails2=['hgayala@psu.edu']
 
+            title='AMON IC-HAWC alert'
             #if far<=4.0 and far >0.01:
             if far<3650.:# and far>0.01:
-                title='AMON IC-HAWC alert'
+
 
 
                 print("ID: %d"%new_alert.id)
@@ -603,16 +606,21 @@ def ic_hawc(new_event=None):
                     except subprocess.CalledProcessError as e:
                         print("Send alert failed")
                         logger.error("send_voevent failed")
+                        MOVEFILE=False
                         raise e
                     #else:
                         #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 #else:
-                shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
+
                 email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
             elif far<0.01:
-                email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails2)
+                email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
+                slack_message(title+"\n"+content2+"\n"+fname,channel,prodMachine,token=token)
+
+            if MOVEFILE:
+                shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
 
             #alertLine for HAWC
             al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['HAWC-DM'],phEvent[-2],phEvent[-1])
