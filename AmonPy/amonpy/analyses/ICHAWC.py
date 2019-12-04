@@ -535,16 +535,18 @@ def ic_hawc(new_event=None):
             if far<=4.0 and far>0.01:
                 alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
             else:
-                alertname="HAWC-IC-{}".format(new_alert.id)
+                alertname="IC-HAWC-{}".format(new_alert.id)
 
-            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
+            VOAlert = Alert2VOEvent([new_alert],'nu_em_coinc','Nu-EM Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
             alertparams = []
             apar = VOAlert.MakeParam(name="gcn_stream",ucd="meta.number",unit="",datatype="int",value=gcn_streams["Gamma-Nu-Coinc"],description="GCN Socket Identification")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="amon_stream",ucd="meta.number",unit="",datatype="int",value=new_alert.stream,description="AMON Alert stream identification")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="amon_id",ucd="meta.number",unit="",datatype="string",value=new_alert.id,description='AMON id number')
+            apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='AMON id number')
+            alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="run_id",ucd="meta.number",unit="",datatype="int",value="0",description='Run ID number. Zero for coincidences')
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
