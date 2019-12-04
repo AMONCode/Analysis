@@ -616,7 +616,7 @@ def ic_hawc(new_event=None):
                         #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 #else:
 
-                email_alerts.alert_email_content([new_alert],content,title)
+                #email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
             elif far<0.01:
