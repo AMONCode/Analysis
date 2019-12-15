@@ -534,16 +534,18 @@ def ic_hawc(new_event=None):
             if far<=4.0 and far>0.01:
                 alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
             else:
-                alertname="HAWC-IC-{}".format(new_alert.id)
+                alertname="IC-HAWC-{}".format(new_alert.id)
 
-            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
+            VOAlert = Alert2VOEvent([new_alert],'nu_em_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
             alertparams = []
             apar = VOAlert.MakeParam(name="gcn_stream",ucd="meta.number",unit="",datatype="int",value=gcn_streams["Gamma-Nu-Coinc"],description="GCN Socket Identification")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="amon_stream",ucd="meta.number",unit="",datatype="int",value=new_alert.stream,description="AMON Alert stream identification")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="amon_id",ucd="meta.number",unit="",datatype="string",value=new_alert.id,description='AMON id number')
+            apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='AMON id number')
+            alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="run_id",ucd="meta.number",unit="",datatype="int",value="0",description='Run ID number. Zero for coincidences')
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
@@ -551,8 +553,12 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
-            alertparams.append(apar)
+            if far<0.1:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=0.1, description="False Alarm Rate (<0.1)")
+                alertparams.append(apar)
+            else:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
+                alertparams.append(apar)
             apar = VOAlert.MakeParam(name="pvalue", ucd="stat.probability",unit="", datatype="float", value=new_alert.pvalue, description="P-value of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="src_error90", ucd="stat.error.sys",unit="deg", datatype="float", value=2.15*sigmaR, description="Angular error of the source (90% containment)")
@@ -581,6 +587,9 @@ def ic_hawc(new_event=None):
 
             content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
                     new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,new_alert.false_pos)
+            if far<0.1:
+                content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
+                        new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,"<0.1")
             emails=['hgayala@psu.edu']
             emails2=['hgayala@psu.edu']
 
@@ -608,7 +617,7 @@ def ic_hawc(new_event=None):
                         #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 #else:
 
-                email_alerts.alert_email_content([new_alert],content,title)
+                #email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
             elif far<0.01:
