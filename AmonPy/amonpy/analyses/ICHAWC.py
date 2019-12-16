@@ -556,8 +556,12 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
-            alertparams.append(apar)
+            if far <0.1:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
+                alertparams.append(apar)
+            else:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=0.1, description="False Alarm Rate (<0.1)")
+                alertparams.append(apar)
             apar = VOAlert.MakeParam(name="pvalue", ucd="stat.probability",unit="", datatype="float", value=new_alert.pvalue, description="P-value of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="src_error90", ucd="stat.error.sys",unit="deg", datatype="float", value=2.15*sigmaR, description="Angular error of the source (90% containment)")
@@ -584,16 +588,15 @@ def ic_hawc(new_event=None):
             content = 'Alert ID: %d, Rev: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(alertid,rev,ra,dec,sigmaR*1.18,new_alert.pvalue,chi2,new_alert.false_pos,nev)
             print(content)
 
-            content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
-                    new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,new_alert.false_pos)
+            content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,new_alert.false_pos)
+            if far<0.1:
+                content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,"<0.1")
             emails=['hgayala@psu.edu']
             emails2=['hgayala@psu.edu']
 
             title='AMON IC-HAWC alert'
             #if far<=4.0 and far >0.01:
             if far<3650.:# and far>0.01:
-
-
 
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
