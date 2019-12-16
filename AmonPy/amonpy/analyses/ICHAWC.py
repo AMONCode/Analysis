@@ -620,7 +620,7 @@ def ic_hawc(new_event=None):
                 #email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
                 slack_message(title+"\n"+content,channel,prodMachine,token=token)
-            elif far<0.01:
+            elif far<0.1:
                 email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
                 slack_message(title+"\n"+content2+"\n"+fname,channel,prodMachine,token=token)
 
