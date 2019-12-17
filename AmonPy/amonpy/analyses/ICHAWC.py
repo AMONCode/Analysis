@@ -528,6 +528,7 @@ def ic_hawc(new_event=None):
             # if new alert crosses threshold send email_alerts and GCN
             fname='amon_ic-hawc_%s_%s_%s.xml'%(new_alert.stream, new_alert.id, new_alert.rev)
             filen=os.path.join(AlertDir,fname)
+            print(filen)
             f1=open(filen, 'w+')
 
             #Create Alert xml file
@@ -591,18 +592,22 @@ def ic_hawc(new_event=None):
                 content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
                         new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,"<0.1")
             emails=['hgayala@psu.edu']
-            emails2=['hgayala@psu.edu']
+            emails2=['hgayala@psu.edu','dorner@astro.uni-wuerzburg.de','julie.e.mcenery@nasa.gov','fabian.schussler@cea.fr','tmorokuma@ioa.s.u-tokyo.ac.jp','hawc-followup@umdgrb.umd.edu','roc@icecube.wisc.edu','alberto@inaoep.mx','tboroson@lcogt.net','lipunov@sai.msu.ru','Thomas.A.Prince@jpl.nasa.gov','miguel@psu.edu','scott.d.barthelmy@nasa.gov','adf15@psu.edu','konstancja.satalecka@desy.de','brunner@cppm.in2p3.fr','dornic@cppm.in2p3.fr']
 
             title='AMON IC-HAWC alert'
-            #if far<=4.0 and far >0.01:
+            # TEMPORAL UNITL GCN IS ON
+            if far<=4.0:
+                email_alerts.alert_email_content([new_alert],content,title)
+                email_alerts.alert_email_content_emails(content2,title,emails2)
+                slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
             if far<3650.:# and far>0.01:
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
                 if (prodMachine == True and send == True):
                     try:
-                        cmd = ['comet-sendvo']
-                        cmd.append('--file=' + filen)
+                        cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo','-f',filen]
+                        #cmd.append('--file=' + filen)
                         # just for dev to prevent sending hese both from dev and pro machine
                         #print "uncoment this if used on production"
                         subprocess.check_call(cmd)
@@ -611,15 +616,14 @@ def ic_hawc(new_event=None):
                     except subprocess.CalledProcessError as e:
                         print("Send alert failed")
                         logger.error("send_voevent failed")
+                        logger.error("File: {}".format(fname))
                         MOVEFILE=False
                         raise e
                     #else:
                         #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 #else:
-
-                #email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
-                slack_message(title+"\n"+content,channel,prodMachine,token=token)
+                slack_message(title+"\n"+content+"\n"+filen,"test-alerts",False,token=token)
             elif far<0.1:
                 email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
                 slack_message(title+"\n"+content2+"\n"+fname,channel,prodMachine,token=token)

@@ -93,7 +93,7 @@ def ic_gfu(new_event=None):
         if (prodMachine == True):
             try:
                 print("GFU created")
-                cmd = ['comet-sendvo']
+                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + fname)
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
