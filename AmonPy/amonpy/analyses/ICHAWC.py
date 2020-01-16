@@ -371,9 +371,9 @@ def coincAnalysisHWC(new_event):
                 #else: energy = 1000 #In GeV
 
             print("IC event: ")
-            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score))
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,poserr2,energy,bdt_score))
 
-            psfIC = probSigIC(sigR,muR,lamR)
+            psfIC = probSigIC(1.0,1.0,1.0)#probSigIC(sigR,muR,lamR)
             sinDec = np.sin(np.deg2rad(dec2))
             cosTh = -1*sinDec
             sinTh = np.sqrt(1-cosTh**2)
