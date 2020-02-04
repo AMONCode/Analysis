@@ -97,10 +97,7 @@ def insideHAWCBrightSources(dec,ra):
     elif lat<3.0 and lat>-3.0:
         if lon<90.0 and lon>0:
             return True
-        else:
-            return False
-    else:
-        return False
+    return False
 
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
@@ -149,7 +146,7 @@ def pNuCluster(events):
     if N==1:
         return val
     else:
-        lmb = 0.0066887 * events[0][4]*3600.*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
+        lmb = 0.0066887 * events[0][4]*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
         val = stats.poisson.sf(N-2,lmb)
     return val
 
@@ -317,7 +314,7 @@ def coincAnalysisHWC(new_event):
     phwc = 1.-stats.norm.cdf(hwcsig) #HAWC p_value
 
     #Check that event is outside HAWC bright sources: Plane, Crab, Geminga, Gamigo, Mrk 421, Mrk 501
-    if insideHAWCBrightSources(dec1,ra1):
+    if insideHAWCBrightSources(dec1,ra1) is True:
         coincs = []
         return coincs
 
@@ -352,7 +349,7 @@ def coincAnalysisHWC(new_event):
 
         if spc<3.5:
 
-            poserr2 = e.sigmaR #If version is 0, this value will be used.
+            poserr2 = e.sigmaR/2.14 #If version is 0, this value will be used, 90%->1sigma
             param = db_read.read_parameters(e.stream,e.id,e.rev,HostFancyName,
                                             UserFancyName,PasswordFancy,DBFancyName)
             fprd = 0.0
@@ -484,6 +481,8 @@ def ic_hawc(new_event=None):
                 print("Using udpated information, new HAWC event has bigger significance")
                 alertid,rev=db_read.get_latest_alert_info_from_event(alert_streams['IC-HAWC'],new_event.id,
                     HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
+                if alertid<0:
+                    alertid = idnum+1
                 rev+=1
             else:
                 prev_alerts = db_read.read_alert_timeslice_streams([alert_streams['IC-HAWC']],str(pd.to_datetime(new_event.datetime)-timedelta(seconds=20.*60)),40.*60,
