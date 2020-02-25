@@ -147,7 +147,7 @@ def ic_gold_bronze(new_event=None):
 
     if (new_event.type=="observation") and (prodMachine is True):
         try:
-            cmd = ['comet-sendvo']
+            cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
             cmd.append('--file=' + fname)
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
