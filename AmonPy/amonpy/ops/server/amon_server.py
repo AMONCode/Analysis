@@ -54,6 +54,7 @@ from amonpy.analyses.ICOFU import *
 from amonpy.analyses.ICGFU import *
 from amonpy.analyses.HAWCGRB import *
 from amonpy.analyses.ICGoldBronze import *
+from amonpy.analyses.ICCascade import *
 
 @app.task
 def error_handler(uuid):
@@ -198,7 +199,14 @@ class EventManager(Resource):
                 plenght=len(evparam)
 
                 for i in range(plenght):
-                    transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
+                    if 'skymap_' in evparam[i].name:
+                        transaction.execute("""INSERT INTO skyMapEvent VALUES (%s,%s,%s,%s)""",
+                               (evparam[i].value,
+                                evparam[i].event_eventStreamConfig_stream,
+                                evparam[i].event_id,
+                                evparam[i].event_rev))
+                    else:
+                        transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
                                (evparam[i].name,
                                 evparam[i].value,
                                 evparam[i].units,
