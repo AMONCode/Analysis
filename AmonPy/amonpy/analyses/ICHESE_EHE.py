@@ -172,7 +172,7 @@ def ic_hese_ehe(new_event=None):
         email_alerts.alert_email_content([events],content,title)
         if (events.type=="observation") and (prodMachine is True):
             try:
-                cmd = ['comet-sendvo']
+                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + fname)
                 # just for dev to prevent sending hese both from dev and pro machine
                 # print "uncoment this if used on production"
