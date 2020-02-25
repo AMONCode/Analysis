@@ -146,9 +146,9 @@ def slack_message(message,channel,prodMachine,attachment=None,token=None):
     except Exception as e:
         print(e)
     if prodMachine:
-        user = "AMON-PROD"
+        user = "AWS-PROD"
     else:
-        user = "AMON-DEV"
+        user = "AWS-DEV"
     #sc.api_call('chat.postMessage',channel=channel,text=message,username=user,icon_emoji=":amon:")
     sc.chat_postMessage(channel=channel,text=message,username=user,icon_emoji=":amon:")
     if attachment is not None:
