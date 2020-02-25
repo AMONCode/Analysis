@@ -149,7 +149,7 @@ def pNuCluster(events):
     if N==1:
         return val
     else:
-        lmb = 0.0066887 * events[0][4]*3600.*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
+        lmb = 0.0066887 * events[0][4]*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
         val = stats.poisson.sf(N-2,lmb)
     return val
 
@@ -317,7 +317,7 @@ def coincAnalysisHWC(new_event):
     phwc = 1.-stats.norm.cdf(hwcsig) #HAWC p_value
 
     #Check that event is outside HAWC bright sources: Plane, Crab, Geminga, Gamigo, Mrk 421, Mrk 501
-    if insideHAWCBrightSources(dec1,ra1):
+    if insideHAWCBrightSources(dec1,ra1) is True:
         coincs = []
         return coincs
 
@@ -352,7 +352,7 @@ def coincAnalysisHWC(new_event):
 
         if spc<3.5:
 
-            poserr2 = e.sigmaR #If version is 0, this value will be used.
+            poserr2 = e.sigmaR/2.14 #If version is 0, this value will be used.
             param = db_read.read_parameters(e.stream,e.id,e.rev,HostFancyName,
                                             UserFancyName,PasswordFancy,DBFancyName)
             fprd = 0.0
@@ -371,7 +371,7 @@ def coincAnalysisHWC(new_event):
                 #else: energy = 1000 #In GeV
 
             print("IC event: ")
-            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,sigR,energy,bdt_score))
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} Energy: {:0.1f} BDT: {:0.3f} ".format(ra2,dec2,poserr2,energy,bdt_score))
 
             psfIC = probSigIC(sigR,muR,lamR)
             sinDec = np.sin(np.deg2rad(dec2))
@@ -493,7 +493,7 @@ def ic_hawc(new_event=None):
                 bestrev = rev
                 for pa in prev_alerts:
                     dangle = spcang(ra,pa.RA,dec,pa.dec)
-                    if dangle>1.8:
+                    if dangle>2.0:
                         continue
 
                     if bestfar>pa.false_pos:
