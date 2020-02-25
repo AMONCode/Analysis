@@ -244,7 +244,7 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
 
         con.close()
 
-    elif ((stream_num==24) or (stream_num==25)):
+    elif ((stream_num==24) or (stream_num==25) or (stream_num==26)):
         obs_name='IceCube'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,

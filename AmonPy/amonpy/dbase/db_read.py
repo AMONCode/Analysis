@@ -752,6 +752,58 @@ def read_alertConfig(stream, rev, host_name, user_name, passw_name, db_name):
 
     return eventSingle
 
+def read_skymaps(event_stream, event_num, event_rev, host_name, user_name, passw_name, db_name):
+    """ Read a given event skymap from the DB. Input event stream name (char), event ID (int)
+        event_Rev (int), host name, user name, password and DB name. """
+
+    #eventSingle=db_classes.Parameter(event_name,event_stream, event_num, event_rev)
+    # initiate list with dummy parameters, remove it later
+    skymaps = {}
+    con = mdb.connect(host_name, user_name, passw_name, db_name)
+    cur = con.cursor()
+
+    #if (eventSingle._Event__lock == False):
+
+    try:
+        #print "Try to connect to DB: %s %s %s" % (event_stream, event_num, event_rev)
+        mydb = db_metadata.DBMetadata()
+        r=mydb.table_describe('skyMapEvent', cur)
+        num_columns=len(r[1])
+        #print "Connected"
+        #print 'Number of columns in the table %d' %  num_columns
+        #print
+        #print 'Column names:'
+        #print
+
+        #for ii in xrange(num_columns):
+            #print r[1][ii][0]
+        #print
+
+        cur.execute("""SELECT location FROM skyMapEvent WHERE event_eventStreamConfig_stream = %s AND
+                    event_id = %s AND event_rev = %s""", (event_stream, event_num, event_rev))
+
+        numrows=int(cur.rowcount)
+        evPars=[]
+        for i in range(numrows):
+            row = cur.fetchone()
+            #eventSingle=db_classes.Parameter(row[0],event_stream,event_num,event_rev)
+            # eventList[i].name       =  row[0]
+            if 'fits' in row[0]:
+                skymaps['skymap_fits'] = row[0]
+            if 'png' in row[0]:
+                skymaps['skymap_png'] = row[0]
+
+        cur.close()
+        con.close()
+    except mdb.Error as e:
+        #print 'Exception %s' %e
+        con.rollback()
+        #print "Event %s %s %s failed to be read." % event_stream, event_num, event_rev
+        cur.close()
+        con.close()
+    #print "   %d rows read from the database" % len(eventList)
+    return skymaps
+
 def read_parameter_single(event_name,event_stream, event_num, event_rev, host_name, user_name, passw_name, db_name):
     """ Read a given event from the DB. Input event stream name (char), event ID (int)
         event_Rev (int), host name, user name, password and DB name. """
@@ -1362,7 +1414,11 @@ def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,p
     sql = 'SELECT alert_id, alert_rev from alertLine where alert_alertConfig_stream = {} and event_id = {}'.format(alert_stream,event_id)
     df = pd.read_sql(sql,con)
 
-    max_rev = max(df['alert_rev'])
-    alert_id = df['alert_id'][0]
+    try:
+        max_rev = max(df['alert_rev'])
+        alert_id = df['alert_id'][0]
+    except ValueError:
+        max_rev = -1
+        alert_id = -1 
 
     return alert_id, max_rev

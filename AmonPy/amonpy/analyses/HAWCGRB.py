@@ -169,7 +169,7 @@ def hawc_burst(new_event=None):
             title='AMON HAWC-GRBlike alert: URGENT!'
             try:
                 print("HAWC Burst created, sending to GCN")
-                cmd = ['comet-sendvo']
+                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
                 if new_event.rev == 0:

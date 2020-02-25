@@ -679,7 +679,7 @@ while n<len(xmlpathholder):
     body='New Fermi-ANTARES alert detected with a lambda of %f. XML sent to GCN is attached \n  Enjoy' % (lamlist[n])
     send_email_attach(subject,body,['cft114@psu.edu'],xmlpathholder[n])
     
-    cmd=['comet-sendvo']
+    cmd=['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
     cmd.append('--file=' + xmlpathholder[n])
     subprocess.check_call(cmd)
     
