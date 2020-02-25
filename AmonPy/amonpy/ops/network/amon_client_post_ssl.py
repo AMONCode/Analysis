@@ -133,7 +133,7 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
 
             try:
                 try:
-                    datafile=open(os.path.join(path,oldest))
+                    datafile=open(os.path.join(path,oldest), 'rb')
                 except Exception as E:
                     print(E)
                     print("had trouble with opening file")
@@ -151,7 +151,7 @@ def check_for_files(hostport, eventpath, keyfile, certfile):
                                             'Content-Lenght': [length_data],
                                             'Content-Name':[oldest]})
                 print("made headers")
-                d = agent.request('POST', host, headers, bodyProducer=body)
+                d = agent.request(b'POST', host, headers, bodyProducer=body)
                 print("did request")
                 # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
