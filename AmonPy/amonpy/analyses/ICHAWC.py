@@ -598,7 +598,7 @@ def ic_hawc(new_event=None):
                 email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails2)
                 slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
-            if far<3650.:# and far>0.01:
+            if far<=4.0 and far>0.01:
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
