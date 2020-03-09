@@ -1,3 +1,4 @@
+from __future__ import print_function
 #test_db_class.py
 import sys
 from sys import argv
@@ -32,13 +33,13 @@ class TestDBclass(unittest.TestCase):
         pass
 
     def test1_init_del(self):
-        print
-        print '(1) test_init_del'
+        print()
+        print('(1) test_init_del')
         event1 = Event(1,0,0)
-        print 'Created an event. Number of events:', Event._num_events
+        print('Created an event. Number of events:', Event._num_events)
         del event1
-        print 'Deleted event. Number of events:', Event._num_events
-        print
+        print('Deleted event. Number of events:', Event._num_events)
+        print()
 
     #def test2_dict(self):
     #    print
@@ -50,12 +51,12 @@ class TestDBclass(unittest.TestCase):
    #     print
 
     def test3_forprint(self):
-        print
-        print '(3) test_forprint'
+        print()
+        print('(3) test_forprint')
         event1 = Event(1,0,0)
-        print "here's a printed list: "
+        print("here's a printed list: ")
         event1.forprint()
-        print ''
+        print('')
 
     #def test4_lock(self):
     #    print
@@ -68,51 +69,51 @@ class TestDBclass(unittest.TestCase):
     #    print
 
     def test5_list(self):
-        print
-        print '(5) test_list'
+        print()
+        print('(5) test_list')
         events = [Event(1,0,0), Event(1,1,0)]
-        print 'Created a list of 2 events. Number of events:', Event._num_events
-        print
+        print('Created a list of 2 events. Number of events:', Event._num_events)
+        print()
 
     def test6_EventStreamConfig(self):
-        print
-        print '(6) test_list'
+        print()
+        print('(6) test_list')
         config0 = simstream(0)
-        print 'Created 1 configs. Number of configs:', \
-                EventStreamConfig.num_configs
-        print
+        print('Created 1 configs. Number of configs:', \
+                EventStreamConfig.num_configs)
+        print()
         config0.forprint()
-        print
+        print()
         fov_dict = ast.literal_eval(config0.fov)
-        print fov_dict['lon']
-        print
+        print(fov_dict['lon'])
+        print()
 
     def test7_del_Alert(self):
-        print
-        print '(7) test Alert class'
+        print()
+        print('(7) test Alert class')
         alert1 = Alert(1,0,0)
-        print 'Created an alert. Number of alerts:', Alert.num_alerts
+        print('Created an alert. Number of alerts:', Alert.num_alerts)
         del alert1
-        print 'Deleted event. Number of events:', Alert.num_alerts
-        print
+        print('Deleted event. Number of events:', Alert.num_alerts)
+        print()
 
     def test8_print_Alert(self):
-        print
-        print '(8) test Alert class'
+        print()
+        print('(8) test Alert class')
         alert1 = Alert(1,0,0)
-        print 'Created an alert. Number of alerts:', Alert.num_alerts
+        print('Created an alert. Number of alerts:', Alert.num_alerts)
         alert1.forprint()
-        print
+        print()
 
     def test9_AlertConfig(self):
-        print
-        print '(9) test AlertConfig class'
+        print()
+        print('(9) test AlertConfig class')
         configAlert = AlertConfig(1,0)
-        print 'Created 1 alert configs. Number of configs:', \
-                AlertConfig.num_configs
-        print
+        print('Created 1 alert configs. Number of configs:', \
+                AlertConfig.num_configs)
+        print()
         configAlert.forprint()
-        print
+        print()
 
 
 # Run the unittests

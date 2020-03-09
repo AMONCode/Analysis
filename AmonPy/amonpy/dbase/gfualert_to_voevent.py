@@ -4,6 +4,8 @@ Builds a simple VOEvent packet from alert
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from builtins import str
+from builtins import range
 import sys
 import random
 

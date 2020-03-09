@@ -4,6 +4,10 @@ Builds a simple VOEvent packet from alert
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from __future__ import division
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
 import random
 from VOEventLib.VOEvent import *
@@ -212,6 +216,6 @@ def ehealert_to_voevent(alert, params, duplicate):
 if __name__ == "__main__":
     alert=[Alert(1,0,0)]
     xml1=alert_to_voevent(alert)
-    print xml1
+    print(xml1)
     f1=open('./test_alert.xml', 'w+')
     f1.write(xml1)

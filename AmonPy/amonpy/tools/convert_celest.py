@@ -3,7 +3,7 @@
 converts between celestial angles (RA,dec)
 given in degrees and unit vector on the sphere
 """
-
+from __future__ import division
 from numpy import math, array
 
 def radec2vec(ra,dec):

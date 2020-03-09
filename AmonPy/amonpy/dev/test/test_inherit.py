@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import object
 from datetime import datetime, timedelta
 import random
 """@package test_inherit
@@ -251,40 +253,40 @@ class SimEvent(Event):
 
 ######### MAIN CODE ###############
         
-print
-print '*** TESTING CLASS INHERITANCE ***'
-print 
-print '1. Create an Event object with default datetime...'    
+print()
+print('*** TESTING CLASS INHERITANCE ***')
+print() 
+print('1. Create an Event object with default datetime...')    
 event = Event(1,2,3)
-print 'event.datetime: ', event.datetime
-print 'now set the datetime to something else...'
+print('event.datetime: ', event.datetime)
+print('now set the datetime to something else...')
 event.datetime = datetime(2012,1,2,3,4,5,6)
-print 'event.datetime: ', event.datetime
+print('event.datetime: ', event.datetime)
 del event
 
-print
+print()
 config = {'start':datetime(2012,1,1,0,0,0,0),
           'stop':datetime(2013,1,1,0,0,0,0),
           'dur':60**2*24*366.}
-print '2. Create a derived SimEvent object with default datetime...'
-print '(This is an independent object from the previous test)'
+print('2. Create a derived SimEvent object with default datetime...')
+print('(This is an independent object from the previous test)')
 simevent = SimEvent(1,2,3,config)
-print 'simevent.datetime: ', simevent.datetime
+print('simevent.datetime: ', simevent.datetime)
 
-print
-print '3. Now run the simulation method on the SimEvent object...'
+print()
+print('3. Now run the simulation method on the SimEvent object...')
 simevent._simulate()
-print 'simevent.datetime: ', simevent.datetime
+print('simevent.datetime: ', simevent.datetime)
 
-print
-print '4. The randomized result is unaltered by a second call...'
-print 'simevent.datetime: ', simevent.datetime
+print()
+print('4. The randomized result is unaltered by a second call...')
+print('simevent.datetime: ', simevent.datetime)
 
-print
-print '5. And you can call the unhidden atributes of simevent with a loop...'
-print
+print()
+print('5. And you can call the unhidden atributes of simevent with a loop...')
+print()
 attrlist = [attr for attr in dir(Event) if attr[0] != '_']
 for attr in attrlist:
-    print attr.rjust(12,' ')+':', getattr(simevent,attr)
-print
+    print(attr.rjust(12,' ')+':', getattr(simevent,attr))
+print()
 

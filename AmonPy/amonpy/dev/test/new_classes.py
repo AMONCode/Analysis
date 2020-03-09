@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import object
 from numpy import *
 pi = math.pi
 from operator import itemgetter, attrgetter
@@ -190,9 +192,9 @@ def event_def(*args):
             for attr in atlist:            
                 try:
                     value = getattr(self,attr)
-                    print attr.ljust(20,' '), value
+                    print(attr.ljust(20,' '), value)
                 except:
-                    print attr.ljust(20,' '), 'Empty slot'
+                    print(attr.ljust(20,' '), 'Empty slot')
 
     return Event
 
@@ -200,47 +202,47 @@ def event_def(*args):
 # test code
 if __name__ == "__main__":
 
-    print
-    print '********************TEST 1**************************'
-    print 'Event class defined by Event = event_def()'
-    print 'Gives empty slots for populating from the database'
-    print 'stream, id, rev determined by user'
-    print 
+    print()
+    print('********************TEST 1**************************')
+    print('Event class defined by Event = event_def()')
+    print('Gives empty slots for populating from the database')
+    print('stream, id, rev determined by user')
+    print() 
     Event  = event_def()
     event1 = Event(1,2,3)
     event1.forprint()
     #print Event._num_events
-    print '**************************************************'
-    print 
+    print('**************************************************')
+    print() 
     
-    print
-    print '**********************TEST 2***********************'   
-    print 'Now define Event = event_def(config)'
-    print 'stream # taken from config, id from cumulative number of events,'
-    print 'rev given by user, and config populates the many defaults'
-    print 
+    print()
+    print('**********************TEST 2***********************')   
+    print('Now define Event = event_def(config)')
+    print('stream # taken from config, id from cumulative number of events,')
+    print('rev given by user, and config populates the many defaults')
+    print() 
     config = simstream(0) 
     Event  = event_def(config)
     event2 = Event(45,25,0)    # stream and id will be overridden
     event2.forprint()
-    print
+    print()
     event3 = Event(45,25,0)    # stream and id will be overridden
     event3.forprint()
-    print
-    print 'Note that the number of events was reset to 0 when the Event '\
-          + 'class was reinitiated '
+    print()
+    print('Note that the number of events was reset to 0 when the Event '\
+          + 'class was reinitiated ')
     #print Event._num_events
-    print '**************************************************'      
-    print
+    print('**************************************************')      
+    print()
 
-    print
-    print '*************************TEST 3********************'
-    print 'Fianlly, define Event = event_def(config,True)'
-    print 'Which will switch on the simulation'
-    print
+    print()
+    print('*************************TEST 3********************')
+    print('Fianlly, define Event = event_def(config,True)')
+    print('Which will switch on the simulation')
+    print()
     Event = event_def(config,True)
     event4 = Event(45,25,0)    # stream and id will be overridden
     event4.forprint()
     #print Event._num_events
-    print '**************************************************'      
-    print
+    print('**************************************************')      
+    print()

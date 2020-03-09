@@ -1,6 +1,8 @@
 """@package amon_server_post_events
 receives events from a client using HTTP protocols and writes them into database
 """
+from __future__ import print_function
+from builtins import str
 import cgi, os, getopt, sys
 from datetime import datetime, timedelta
 from time import time
@@ -20,16 +22,16 @@ path=False
 # usage of the program
 def usage():
 	"""Displays program usage menu"""
-	print """Usage:
+	print("""Usage:
 			-p --path        Path to install archive directories for received events
 			-h --help        Show usage menu and quit.
-		  """
+		  """)
 	exit()
 
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "p:hi", ["path=", "help"])
-except getopt.GetoptError, err:
-	print str(err)
+except getopt.GetoptError as err:
+	print(str(err))
 	usage()
 
 for o, a in opts:
@@ -40,7 +42,7 @@ for o, a in opts:
 	elif o in ("-h", "--help"):
 		usage()
 	else:
-		print "Option",o,"not recognized."
+		print("Option",o,"not recognized.")
 		usage()
 
 # just a temp placeholder for a single file until it is written to the database
@@ -59,7 +61,7 @@ class EventPage(Resource):
 
     def render_POST(self, request):
         self.headers = request.getAllHeaders()
-        print self.headers
+        print(self.headers)
         try:
             postfile = cgi.FieldStorage(
                 fp = request.content,
@@ -70,9 +72,9 @@ class EventPage(Resource):
                         }
                 )
         except Exception as e:
-            print 'something went wrong: ' + str(e)
+            print('something went wrong: ' + str(e))
 
-        print  request.content.getvalue()
+        print(request.content.getvalue())
         fname=self.headers['content-name']
 
         fp = open(path+"server_events/"+fname, "w")
@@ -87,7 +89,7 @@ class EventPage(Resource):
         dbase.db_write.write_event(0, self.HostFancyName, self.UserFancyName,
                                    self.PasswordFancy, self.DBFancyName,event)
         t2 = time()
-        print '   DB writing time: %.5f seconds' % float(t2-t1)
+        print('   DB writing time: %.5f seconds' % float(t2-t1))
 
         return request.content.read() #[::-1]
 

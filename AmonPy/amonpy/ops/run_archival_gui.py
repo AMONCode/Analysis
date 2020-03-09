@@ -14,6 +14,8 @@
     containing the information required to access the database
 """
 from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str
 import sys
 
 # AmonPy modules:
@@ -36,8 +38,8 @@ import wx
 import multiprocessing
 import ast
 
-print
-print ' **** EXECUTING run_archival.py ****'
+print()
+print(' **** EXECUTING run_archival.py ****')
 
 # Create the most generic Event class
 Event = event_def()
@@ -56,22 +58,22 @@ HostFancyName=db['host']
 UserFancyName=db['user']
 PasswordFancy=db['password']
 DBFancyName=db['database']
-print
-print ' USING DATABASE ACCESS FILE: %s ' %filename
-print '   hostname: '.ljust(11), db['host']
-print '   username: '.ljust(11), db['user']
-print '   password: '.ljust(11), db['password']
-print '   database: '.ljust(11), db['database']
+print()
+print(' USING DATABASE ACCESS FILE: %s ' %filename)
+print('   hostname: '.ljust(11), db['host'])
+print('   username: '.ljust(11), db['user'])
+print('   password: '.ljust(11), db['password'])
+print('   database: '.ljust(11), db['database'])
 
 
 # get the Alert Stream cofig
-print
+print()
 choices_conf=['Use test config','Get config from DB',
               'Create new config','Cancel']
 info = 'Which Alert configuration?'
 result_dialog_conf = dialog_choice.SelectChoice(choices_conf,info=info).result
 if result_dialog_conf==choices_conf[0]:
-    print ' USING TEST ALERT CONFIG'
+    print(' USING TEST ALERT CONFIG')
     config = exAlertConfig()
     config.forprint()
     event_streams = [0,1,7]
@@ -82,23 +84,23 @@ if result_dialog_conf==choices_conf[1]:
     rev=0
     config=db_read.read_alertConfig(stream_num,rev,HostFancyName,
                           UserFancyName,PasswordFancy,DBFancyName);
-    print
-    print 'AlertConfig loading from the database...'
-    print
-    print '...works only for stream 1 and revision 0 for now'
+    print()
+    print('AlertConfig loading from the database...')
+    print()
+    print('...works only for stream 1 and revision 0 for now')
     config.forprint()
     event_streams = [0,1,7]
 if result_dialog_conf==choices_conf[2]:
-    print 'User-generated AlertConfig'
-    print
-    print 'Checking the highest taken analysis stream number from database...'
-    print
+    print('User-generated AlertConfig')
+    print()
+    print('Checking the highest taken analysis stream number from database...')
+    print()
     stream_count=db_read.stream_count_alertconfig(HostFancyName,
                           UserFancyName,PasswordFancy,DBFancyName)
-    print "Latest stream number is %s" % stream_count
-    print
+    print("Latest stream number is %s" % stream_count)
+    print()
     stream_num = stream_count + 1
-    print "The next free stream number is %s" % stream_num
+    print("The next free stream number is %s" % stream_num)
     rev = 0
     config = AlertConfig2(stream_num, rev)
     choices_stream=['IceCube only','ANTARES only', 'HAWC only', 'IceCube + ANTARES',
@@ -128,7 +130,7 @@ if result_dialog_conf==choices_conf[2]:
         config.participating      = 2**0 + 2**1 + 2**7
         event_streams.extend([0,1,7])
     else:
-        print 'User requested cancelation.'
+        print('User requested cancelation.')
         sys.exit(0)
     #far = 0
     #info = 'Enter FAR density [sr^-1s^-1](0 means no FAR used)'
@@ -176,9 +178,9 @@ if result_dialog_conf==choices_conf[2]:
     if result_clust == choices_clust[0]:
         config.cluster_method = str(result_clust)
     else:
-        print
-        print 'Unsupported method requested'
-        print 'Analysis will use Fisher (default)'
+        print()
+        print('Unsupported method requested')
+        print('Analysis will use Fisher (default)')
         config.cluster_method = 'Fisher'
     info = 'Cluster threshold (# of sigma)'
     config.cluster_thresh      =  float(input_text_window.SelectChoice(info=info).result)
@@ -194,12 +196,12 @@ if result_dialog_conf==choices_conf[2]:
     config.R_thresh           = 0.0
 
     config.forprint()
-    print
-    print 'Writing configuration to database'
+    print()
+    print('Writing configuration to database')
     db_write.write_alert_config([stream_num],HostFancyName,
                            UserFancyName,PasswordFancy,DBFancyName, [config])
 if result_dialog_conf==choices_conf[3]:
-    print ' QUIT: User requested'
+    print(' QUIT: User requested')
     sys.exit(0)
 stream_num = config.stream
 
@@ -212,73 +214,73 @@ t1 = time()
 events=db_read.read_event_timeslice_streams(event_streams, TimeStart,TimeSlice,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 t2 = time()
-print '   Read time: %.2f seconds' % float(t2-t1)
+print('   Read time: %.2f seconds' % float(t2-t1))
 
 # put events in temporal order, oldest events first
 events = sorted(events,key=attrgetter('datetime'))
 
 # start analysis server process
-print
-print ' STARTING ANALYSIS SERVER'
+print()
+print(' STARTING ANALYSIS SERVER')
 (server_p,client_p) = multiprocessing.Pipe()
 anal_p = multiprocessing.Process(target=analysis.anal,
                     args=((server_p,client_p),config))
 anal_p.start()
 
 # send events to the analysis process, send the oldest events first
-print '   Sending events'
+print('   Sending events')
 t1 = time()
 for ev in events:
     client_p.send(ev)
 t2 = time()
-print '   Analysis time: %.2f seconds' % float(t2-t1)
+print('   Analysis time: %.2f seconds' % float(t2-t1))
 # get the stored alerts
-print '   Retrieving alerts'
+print('   Retrieving alerts')
 t1 = time()
 client_p.send('get_alerts')
 alerts = client_p.recv()
 t2 = time()
-print '   Retrieval time: %.2f seconds' % float(t2-t1)
+print('   Retrieval time: %.2f seconds' % float(t2-t1))
 
 # analysis done, close the pipe
 server_p.close()
 client_p.close()
-print '   Analysis server closed'
+print('   Analysis server closed')
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
-    print '   %d alerts'     % len(alerts)
+    print('   %d alerts'     % len(alerts))
 elif(alerts == 'Empty' or alerts == 'Problem'):
-    print alerts
-    print "No alerts, exiting."
+    print(alerts)
+    print("No alerts, exiting.")
     sys.exit(0)
 else:
-    print alerts
-    print "No alerts, exiting."
+    print(alerts)
+    print("No alerts, exiting.")
     sys.exit(0)
 
 if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] !=True):
 #if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem'):
 # populate alertline class
     alertlines=db_populate_class.populate_alertline(alerts)
-    print '   %d alertlines generated' % len(alertlines)
-    print ' ANALYSIS COMPLETE'
+    print('   %d alertlines generated' % len(alertlines))
+    print(' ANALYSIS COMPLETE')
 
 
 # identify what to do with alerts
-    print
+    print()
     choices = ['Do not write to DB','Overwrite alert stream',
            'Make new alert stream', 'Cancel']
     info = 'What would you like to do with the alerts?'
     result_dialog = dialog_choice.SelectChoice(choices,info=info).result
     if result_dialog==choices[0]:
-        print ' QUIT: Analysis results will NOT be written to DB'
+        print(' QUIT: Analysis results will NOT be written to DB')
     elif result_dialog==choices[1]:
-        print ' WRITING ANALYSIS RESULTS TO THE DATABASE'
+        print(' WRITING ANALYSIS RESULTS TO THE DATABASE')
         if (stream_num !=0):    # don't take any action for stream zero
-            print "   Checking if arhival alerts are already in DB."
+            print("   Checking if arhival alerts are already in DB.")
             count=db_read.alert_count(stream_num,"alert",HostFancyName,
                            UserFancyName,PasswordFancy,DBFancyName)
-            print '   Number of rows to be deleted: %d' % count
+            print('   Number of rows to be deleted: %d' % count)
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
                    HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
@@ -289,15 +291,15 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
             db_write.write_alertline(HostFancyName,UserFancyName,
                 PasswordFancy, DBFancyName,alertlines)
         else:
-            print '   Invalid stream number'
-            print '   Only streams >= 1 allowed for archival analysis'
+            print('   Invalid stream number')
+            print('   Only streams >= 1 allowed for archival analysis')
     elif result_dialog==choices[2]:
-        print 'APPENDING NEW ALERT STREAM TO THE DATABASE'
+        print('APPENDING NEW ALERT STREAM TO THE DATABASE')
         if (stream_num !=0):    # don't take any action for stream zero
-            print "   Checking if arhival alerts are already in DB."
+            print("   Checking if arhival alerts are already in DB.")
             count=db_read.alert_count(stream_num,"alert",HostFancyName,
                            UserFancyName,PasswordFancy,DBFancyName)
-            print '   Number of rows to be deleted: %d' % count
+            print('   Number of rows to be deleted: %d' % count)
             if (count > 0):
                 db_delete.delete_alertline_stream_by_alert(stream_num,
                    HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
@@ -308,16 +310,16 @@ if (len(alerts) > 0 and alerts != 'Empty' and alerts != 'Problem' and alerts[0] 
             db_write.write_alertline(HostFancyName,UserFancyName,
                 PasswordFancy, DBFancyName,alertlines)
         else:
-            print '   Invalid stream number'
-            print '   Only streams >= 1 allowed for archival analysis'
+            print('   Invalid stream number')
+            print('   Only streams >= 1 allowed for archival analysis')
     else:
-        print ' QUIT: User request'
+        print(' QUIT: User request')
         sys.exit(0)
 
 else:
-    print "Last event"
+    print("Last event")
     alerts[1].forprint()
-    print "No alerts found"
+    print("No alerts found")
     sys.exit(0)
-print
-print ' **** END run_archival.py ****'
+print()
+print(' **** END run_archival.py ****')

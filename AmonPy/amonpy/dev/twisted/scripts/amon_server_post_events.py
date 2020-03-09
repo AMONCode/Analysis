@@ -2,6 +2,8 @@
 receives events from a client using HTTP protocols and saves them in 
 an archive directory called server_events
 """
+from __future__ import print_function
+from builtins import str
 from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
@@ -15,16 +17,16 @@ path=False
 
 def usage():
 	"""Displays program usage menu"""
-	print """Usage:
+	print("""Usage:
 			-p --path        Path to install archive directories for received events
 			-h --help        Show usage menu and quit.
-		  """
+		  """)
 	exit()
 	
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "p:hi", ["path=", "help"])
-except getopt.GetoptError, err:
-	print str(err)
+except getopt.GetoptError as err:
+	print(str(err))
 	usage()
 	
 for o, a in opts:
@@ -35,7 +37,7 @@ for o, a in opts:
 	elif o in ("-h", "--help"):
 		usage()
 	else:
-		print "Option",o,"not recognized."
+		print("Option",o,"not recognized.")
 		usage()	
 		
 # set up archive directory
@@ -50,7 +52,7 @@ class EventPage(Resource):
     
     def render_POST(self, request):
         self.headers = request.getAllHeaders()
-        print self.headers
+        print(self.headers)
         try:
             postfile = cgi.FieldStorage(
                 fp = request.content,
@@ -61,11 +63,11 @@ class EventPage(Resource):
                         }
                 )
         except Exception as e:
-            print 'something went wrong: ' + str(e)
+            print('something went wrong: ' + str(e))
        
-        print  request.content.getvalue()
+        print(request.content.getvalue())
         fname=self.headers['content-name']
-        print "filename is %s" % (fname,)
+        print("filename is %s" % (fname,))
         fp = open(path+"server_events/"+fname, "w")
         fp.write(request.content.getvalue())
         fp.close()

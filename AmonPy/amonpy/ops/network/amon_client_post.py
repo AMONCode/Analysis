@@ -2,9 +2,13 @@
 client that sends events to the server using HTTP
 protocol with method=POST
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys, os, shutil, logging
 import resource
 import fcntl
+import traceback
 
 from twisted.internet import reactor
 from twisted.python import log
@@ -21,10 +25,10 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
-        print 'Finished receiving body:', reason.getErrorMessage()
+        print('Finished receiving body:', reason.getErrorMessage())
         self.finished.callback(None)
 
 def printResource(response):
@@ -35,20 +39,20 @@ def printResource(response):
 def printError(failure):
     d=Deferred()
     d.addCallbacks(printNotSent)
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
 
 def moveFile(path,fname):
     shutil.move(os.path.join(path,fname), os.path.join(path,"archive",fname))
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printSent(fname):
-    print "File %s sent" % (fname,)
+    print("File %s sent" % (fname,))
 
 def printNotSent(filename):
-    print "File %s not sent" % (fname,)
+    print("File %s not sent" % (fname,))
 
 def check_open_fds():
     fds = []
@@ -98,18 +102,19 @@ def check_for_files(hostport, eventpath):
         if len(files_xml)>0:
             oldest = files_xml[0]
             try:
-                datafile=open(os.path.join(path,oldest))
+                datafile=open(os.path.join(path,oldest), "rb")
                 #data=datafile.read()
                 #lenght_data=str(len(data))
 
                 #body = StringProducer(data)
+
                 body=FileBodyProducer(datafile)
                 length_data=str(body.length)
                 headers = http_headers.Headers({'User-Agent': ['Twisted HTTP Client'],
                                             'Content-Type':['text/xml'],
                                             'Content-Length': [length_data],
                                             'Content-Name':[oldest]})
-                d = agent.request('POST', host, headers, bodyProducer=body)
+                d = agent.request(b'POST', host.encode(), headers, bodyProducer=body)
                 # on success it returns Deferred with a response object
                 d.addCallbacks(printResource, printError)
                 #shutil.move(path+oldest,path+"archive/"+oldest)
@@ -117,6 +122,7 @@ def check_for_files(hostport, eventpath):
                 #print "Event %s sent" % (oldest,)
             except:
                 log.msg("Error parsing file %s " % (path+oldest,))
+                print(traceback.print_exc())
 
             moveFile(path, oldest)
 
