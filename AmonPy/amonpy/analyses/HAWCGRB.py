@@ -172,8 +172,8 @@ def hawc_burst(new_event=None):
                 cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
-                if new_event.rev == 0:
-                    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+                #if new_event.rev == 0: I comment this as it is already sent from aws
+                #    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
                 #logger.error("send_voevent failed")
