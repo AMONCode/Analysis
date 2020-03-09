@@ -1,3 +1,7 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import range
+from builtins import object
 from datetime import datetime, timedelta
 import numpy as np
 import math as m
@@ -15,8 +19,8 @@ import logging
 from amonpy.tools.config import AMON_CONFIG
 from amonpy.analyses.amon_streams import streams, inv_streams
 
-from slackclient import SlackClient
-
+#from slackclient import SlackClient
+from slack import WebClient  
 class StreamToLogger(object):
     """
     Fake file-like stream object that redirects writes to a logger instance.
@@ -51,8 +55,8 @@ def get_event_Streams():
         for row in results:
             streamnums.append(row[0])
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return streamnums
 
@@ -67,8 +71,8 @@ def get_times(stream, low_time = datetime(2010,1,1,0,0,0), limit = 999999):
         for dates in results:
             dates_list.append(dates)
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return dates_list
 
@@ -90,8 +94,8 @@ def get_events(stream, time = datetime(2010,1,1,0,0,0),limit = 99999):
         for dates in results:
             events.append(dates)
     except Exception as inst:
-        print type(inst)
-        print inst.args
+        print(type(inst))
+        print(inst.args)
     db.close()
     return events
 
@@ -165,14 +169,15 @@ def pois_prob(mu,nev,dt):
 
 def slack_message(message,channel,prodMachine,attachment=None,token=None):
     try:
-        sc = SlackClient(token)
+        sc = WebClient(token)
     except Exception as e:
         print(e)
     if prodMachine:
-        user = "AMON-PROD"
+        user = "AWS-PROD"
     else:
-        user = "AMON-DEV"
-    sc.api_call('chat.postMessage',channel=channel,text=message,username=user,icon_emoji=":amon:")
+        user = "AWS-DEV"
+    #sc.api_call('chat.postMessage',channel=channel,text=message,username=user,icon_emoji=":amon:")
+    sc.chat_postMessage(channel=channel,text=message,username=user,icon_emoji=":amon:")
     if attachment is not None:
         try:
             with open(attachment,'rb') as f:

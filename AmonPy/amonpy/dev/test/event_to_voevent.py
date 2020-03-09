@@ -4,11 +4,12 @@ Builds a simple VOEvent packet from event
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from __future__ import print_function
+from builtins import str
 import sys
 from datetime import datetime
 
-sys.path.append('../dbase')
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
@@ -43,7 +44,7 @@ def event_to_voevent(alert):
     elif (stream==7):
         obsname="HAWK"
     else:
-        print "No stream valid stream number"
+        print("No stream valid stream number")
         sys.exit(0)    
         
     ############ VOEvent header ############################
@@ -133,7 +134,7 @@ def event_to_voevent(alert):
     obsloc=ObservatoryLocation()
     astro2=AstroCoordSystem("UTC-GEOD-TOPO")
     astro3=AstroCoords("UTC-GEOD-TOPO")
-    value3=Value3(long,lat,elev)
+    value3=Value3(int,lat,elev)
     pos1=Position3D("deg-deg-m","longitude", "latitude", "elevation",value3)
     astro3.set_Position3D(pos1)
     obsloc.set_AstroCoordSystem(astro2)
@@ -202,7 +203,7 @@ if __name__ == "__main__":
     alert[0].datetime = datetime.now()          
     xml1=event_to_voevent(alert)
    
-    print xml1
+    print(xml1)
     f1=open('./icecube_test.xml', 'w+')
     f1.write(xml1)
    

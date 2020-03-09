@@ -4,10 +4,15 @@
    identically, as the code is unaware of the state of the parent
    program.
 """
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import str
+from builtins import range
 import sys
 from datetime import datetime,timedelta
 from collections import deque
-import cluster
+from . import cluster
 import math
 import ast
 from operator import itemgetter, attrgetter
@@ -46,7 +51,7 @@ def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
     triggers = 0
     trg=[]
     #trg = list(set([ev1.stream,ev2.stream]))
-    for kk in xrange(evlenght):
+    for kk in range(evlenght):
         trg.append(evlist[kk].stream)
     for t in trg: triggers+= 2**t
     new_alert.trigger = triggers
@@ -54,11 +59,11 @@ def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
     # populate non-spatial part of alert
     mindatetime=evlist[0].datetime
     #new_alert.datetime = min(ev1.datetime,ev2.datetime)
-    for kk in xrange(evlenght-1):
+    for kk in range(evlenght-1):
         new_alert.datetime = min(mindatetime,min(evlist[kk].datetime,evlist[kk+1].datetime))
     maxtimedelta = abs(timedelta.total_seconds(evlist[0].datetime- \
                            evlist[1].datetime))
-    for kk in xrange(evlenght-1):
+    for kk in range(evlenght-1):
     #new_alert.deltaT = abs(timedelta.total_seconds(ev2.datetime-ev1.datetime))
         new_alert.deltaT = max(maxtimedelta,abs(timedelta.total_seconds(evlist[kk].datetime- \
                            evlist[kk+1].datetime)))
@@ -85,7 +90,7 @@ def build_alert(config,id,rev,fcluster,evlist, far, pvalue):
     #new_alert.psi3 = fcluster.psi2
     #new_alert.events = [ev1,ev2]
     new_alert.events = []
-    for kk in xrange(evlenght):
+    for kk in range(evlenght):
         new_alert.events.append(evlist[kk])
     # to be loaded from config in the future
     new_alert.anastream=new_alert.stream
@@ -153,7 +158,7 @@ def far_density(evlist, conf, fcluster):
     for k in sorted(event_dict.keys()):
         num_ev = len(event_dict[k])
         rate = 0.
-        for ll in xrange(num_ev):
+        for ll in range(num_ev):
             rate +=event_dict[k][ll].false_pos
         rate = rate/float(num_ev)
         poiss_prob *=(prob_poisson(rate*spaceTimeWind,num_ev))
@@ -176,7 +181,7 @@ def pvalue_calc(evlist, conf, fcluster):
     rate=0
     streams_dict = ast.literal_eval(conf.N_thresh)
     len_streams = len(streams_dict)
-    streams=streams_dict.keys()
+    streams=list(streams_dict.keys())
 
     # changed on 09/15/2014 in order to run Swift
 
@@ -184,7 +189,7 @@ def pvalue_calc(evlist, conf, fcluster):
         #kk=str(kk)
         #rate+=rates[kk]
     # method bellow is not correct because all rates should be included in poisson process
-    for ii in xrange(ev_len):
+    for ii in range(ev_len):
         rate+=evlist[ii].false_pos
 
     # time-space window used in analysis
@@ -198,7 +203,7 @@ def pvalue_calc(evlist, conf, fcluster):
     if pvalue > 0. and pvalue <=1.:
         return pvalue
     else:
-        print "WARNING: pvalue is wrong, returning 1"
+        print("WARNING: pvalue is wrong, returning 1")
         return 1
 
 def sum_poisson(expect,obs):
@@ -207,7 +212,7 @@ def sum_poisson(expect,obs):
     """
     sum=0.
 
-    for ii in xrange(obs):
+    for ii in range(obs):
         sum+=(expect**ii)*math.exp(-1.*expect)/math.factorial(ii)
     return sum
     #return 1.
@@ -250,9 +255,9 @@ def alerts_late(events_rec, eve, config_rec, max_id):
     #sort event
     events = sorted(events,key=attrgetter('datetime'), reverse=True)
     config=config_rec
-    print "Late arival event analysis (archival) started"
-    print
-    print "Config dT %d" % config.deltaT
+    print("Late arival event analysis (archival) started")
+    print()
+    print("Config dT %d" % config.deltaT)
 
     Nevents = len(events)
                #jj = 1
@@ -267,11 +272,11 @@ def alerts_late(events_rec, eve, config_rec, max_id):
         for eve in events:
             if ((ev.stream == eve.stream) and (ev.id == eve.id)):
                 if (ev.rev > eve.rev):
-                    print "Old event revision in the archival time slice, remove it."
+                    print("Old event revision in the archival time slice, remove it.")
                     events.pop(events.index(eve))
                 elif (ev.rev < eve.rev):
-                    print "Old event revision arrived later than a newer one."
-                    print "No analysis for this obsolete event"
+                    print("Old event revision arrived later than a newer one.")
+                    print("No analysis for this obsolete event")
                     inBuffer==True
                 else:
                     #ev = eve   # this is our real time event
@@ -373,7 +378,7 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                         # check space clustering for each multiplet from time cluster
                         #containing new event (ev) in it
                     list_space=[ev]
-                    for ll in xrange (len(list_time)-1):
+                    for ll in range (len(list_time)-1):
                         list_space.append(list_time[ll+1])
                             # check fisher for list space
                         # check if cluster distance is within threshold
@@ -389,8 +394,8 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                                     # higher multiplet found, remove lower multiplet
                                     # no need to increase id, since it will be
                                     # taken from obsolete old multiplet
-                                print "higher multiplet found"
-                                print "remove lower multiplet"
+                                print("higher multiplet found")
+                                print("remove lower multiplet")
                                 alerts.pop()
                                 Nalerts-=1
                             else:
@@ -410,11 +415,11 @@ def alerts_late(events_rec, eve, config_rec, max_id):
                 jj+=1
 
         else:
-            print "No analysis, event revision is older than previously arived event"
+            print("No analysis, event revision is older than previously arived event")
 
     else:
-        print "Not event"
-    print 'Found %s alerts' % Nalerts
+        print("Not event")
+    print('Found %s alerts' % Nalerts)
     #print 'Found %s triplets' % Nalerts_tp
     return alerts
 
@@ -445,8 +450,8 @@ def anal(pipe,config,max_id):
     eventAnalysed = False
     alertCluster = False
     eveout = Event(-1,-1,-1)
-    print "Config dT %d" % config.deltaT
-    print "Buffer dT %d" % config.bufferT
+    print("Config dT %d" % config.deltaT)
+    print("Buffer dT %d" % config.bufferT)
     while True:
 
         # look for incoming packet in the pipe
@@ -481,15 +486,15 @@ def anal(pipe,config,max_id):
             for eve in events:
                 if ((ev.stream == eve.stream) and (ev.id == eve.id)):
                     if (ev.rev == eve.rev):
-                        print "Event is already in the buffer. It will not be added to the buffer."
+                        print("Event is already in the buffer. It will not be added to the buffer.")
                         inBuffer = True
                     elif (ev.rev < eve.rev):
-                        print "Old event revision arrived later than a newer one."
-                        print "No analysis for this obsolete event"
+                        print("Old event revision arrived later than a newer one.")
+                        print("No analysis for this obsolete event")
 
                         inBuffer = True
                     else:
-                        print "Old event revision in the buffer, remove it."
+                        print("Old event revision in the buffer, remove it.")
                         events.pop(events.index(eve))
 
 
@@ -502,7 +507,7 @@ def anal(pipe,config,max_id):
                 #print 'lenght of buffer is %d' % len(events)
                 # ensure that the new event didn't mess up the order of the buffer
                 if (ev.datetime < latest):
-                    print '  reordering analysis buffer due to latent event'
+                    print('  reordering analysis buffer due to latent event')
                     events = sorted(events,key=attrgetter('datetime'),reverse=True)
                 else:
                 # the new event is the latest event
@@ -627,7 +632,7 @@ def anal(pipe,config,max_id):
                         # check space clustering for each multiplet from time cluster
                         #containing new event (ev) in it
                         list_space=[ev]
-                        for ll in xrange (len(list_time)-1):
+                        for ll in range (len(list_time)-1):
                             list_space.append(list_time[ll+1])
                             # check fisher for list space
                         # check if cluster distance is within threshold
@@ -643,8 +648,8 @@ def anal(pipe,config,max_id):
                                     # higher multiplet found, remove lower multiplet
                                     # no need to increase id, since it will be
                                     # taken from obsolete old multiplet
-                                    print "higher multiplet found"
-                                    print "remove lower multiplet"
+                                    print("higher multiplet found")
+                                    print("remove lower multiplet")
                                     alerts.pop()
                                     Nalerts-=1
                                 else:
@@ -666,7 +671,7 @@ def anal(pipe,config,max_id):
                     #print 'Found %s triplets' % Nalerts_tp
                     # check to see if client has requested alerts
         elif (ev=='get_alerts'):
-            print 'Found %s alerts' % Nalerts
+            print('Found %s alerts' % Nalerts)
             #print 'Found %s triplets' % Nalerts_tp
             if (len(alerts))==0:
                 if (eventLate==False):
@@ -695,7 +700,7 @@ def anal(pipe,config,max_id):
 
         # check for invalid request
         else:
-            print '   Event sent to analysis.anal() not recognized'
-            print ev
+            print('   Event sent to analysis.anal() not recognized')
+            print(ev)
 
     # shutdown

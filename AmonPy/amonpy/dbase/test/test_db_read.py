@@ -1,8 +1,8 @@
+from __future__ import print_function
 import sys
-# sys.path.append('../')
-# sys.path.append('../../tools')
 
-import amonpy.dbase.db_read
+from amonpy.dbase import db_read
+from amonpy.tools import *
 import unittest
 """@package test_db_read
 Unit tests for db_read module.
@@ -40,64 +40,64 @@ class TestDBRead(unittest.TestCase):
         pass
 
     def testReadSingle(self):
-        print 'Testing read_event_single module'
+        print('Testing read_event_single module')
         eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID, self.EventRev,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
-        print eventPrint.forprint()
+        print(eventPrint.forprint())
 
     def testReadTimeSlice(self):
-        print 'Testing read_event_timeslice module'
+        print('Testing read_event_timeslice module')
         eventPrintList=db_read.read_event_timeslice(self.TimeStart, self.TimeSlice,
                                  self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
         for eventPrint in eventPrintList:
-            print eventPrint.forprint()
+            print(eventPrint.forprint())
 
 
     def testReadEventConfig(self):
-        print 'Testing read_eventConfig module'
+        print('Testing read_eventConfig module')
         eventPrintList=db_read.read_eventConfig(self.TimeStart, self.TimeSlice,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
         for eventPrint in eventPrintList:
-            print eventPrint.forprint()
+            print(eventPrint.forprint())
 
 
     def testReadAlertConfig(self):
-        print 'Testing read_alertConfig module'
+        print('Testing read_alertConfig module')
         eventPrintList=db_read.read_alertConfig(self.AlertStream, self.AlertRev,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName2)
         #for eventPrint in eventPrintList
-        print eventPrintList.forprint()
+        print(eventPrintList.forprint())
 
 
     def testReadAlert(self):
-        print 'Testing read_alert_signle module'
+        print('Testing read_alert_signle module')
         eventPrintList=db_read.read_alert_single(self.AlertStream, self.AlertRev,
                                                  self.AlertID, self.HostFancyName,
                                                  self.UserFancyName, self.PasswordFancy,
                                                  self.DBFancyName2)
         #for eventPrint in eventPrintList:
-        print eventPrintList.forprint()
+        print(eventPrintList.forprint())
 
     def testReadAlertTimeSlice(self):
-        print 'Testing read_alert_time_slice module'
+        print('Testing read_alert_time_slice module')
         eventPrintList=db_read.read_alert_timeslice(self.TimeStart2, self.TimeSlice,
                                                  self.HostFancyName,
                                                  self.UserFancyName, self.PasswordFancy,
                                                  self.DBFancyName2)
         for eventPrint in eventPrintList:
-            print eventPrint.forprint()
+            print(eventPrint.forprint())
 
     def testReadParameterSingle(self):
-        print 'Testing read_event_single module'
+        print('Testing read_event_single module')
         eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName2,
                                   self.EventID2, self.EventRev2,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName2)
-        print eventPrint.forprint()
+        print(eventPrint.forprint())
 
 if __name__ == '__main__':
     unittest.main()

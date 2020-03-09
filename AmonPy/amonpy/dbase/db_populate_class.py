@@ -1,6 +1,7 @@
 """@package db_populate_class
 Module to populate python classes that will be written into DB. 
 """
+from builtins import range
 import sys
 
 # amonpy imports
@@ -27,10 +28,10 @@ def populate_alertline(alerts):
 
     # populate alertline class
     k=0
-    for i in xrange(num_alerts):
+    for i in range(num_alerts):
         #num_events=len(alerts[i].event_stream)
         num_events=len(alerts[i].events)
-        for j in xrange(num_events):
+        for j in range(num_events):
             new_alertline+=[AlertLine(stream_num,id,0,-1,-1,-1)]
             new_alertline[j].stream_alert = alerts[i].stream
             new_alertline[j].id_alert = alerts[i].id

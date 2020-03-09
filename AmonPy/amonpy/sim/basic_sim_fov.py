@@ -9,15 +9,18 @@
     6. Run simulation with injected signal if desired with function signal_inject 
     7. Calculates FOV overlap  
 """
+from __future__ import print_function
+from __future__ import absolute_import
 
+from builtins import str
+from builtins import range
 from sys import path
-path.append("../dbase/")
-from db_classes import *
+from amonpy.dbase.db_classes import *
 from time import time
 import random
 from datetime import datetime, timedelta
 from numpy import math
-import sidereal_m as sidereal
+from . import sidereal_m as sidereal
 import ast
 from operator import itemgetter, attrgetter
 
@@ -41,29 +44,29 @@ def basic_sim(conf,revisions):
         Nsim = int(round(random.gauss(Nex,math.sqrt(Nex))))
     
         # simulate the events
-        print
-        print 'Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...'
+        print()
+        print('Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...')
         t1 = time()
 
         Event = event_def(config,True)
-        sims = [Event(0,0,revisions[kk]) for jj in xrange(Nsim)]
+        sims = [Event(0,0,revisions[kk]) for jj in range(Nsim)]
         kk+=1
         #sims = [SimEvent(config) for jj in xrange(Nsim)]
         t2 = time()
-        print '....simulation took %.2f seconds' % float(t2-t1)
-        print 
+        print('....simulation took %.2f seconds' % float(t2-t1))
+        print() 
 
         # put events in temporal order
         sims = sorted(sims,key=attrgetter('datetime'))
 
     
-        print 'Here is some information on the first 5 events:'
+        print('Here is some information on the first 5 events:')
         Nshow = min(Nsim, 5)
-        for jj in xrange(Nshow):
-            print 'stream: ', sims[jj].stream,'id: ',sims[jj].id,\
+        for jj in range(Nshow):
+            print('stream: ', sims[jj].stream,'id: ',sims[jj].id,\
                   '  RA: ', sims[jj].RA,'  dec: ', sims[jj].dec,\
-                  '  datetime: ', sims[jj].datetime 
-        print ''
+                  '  datetime: ', sims[jj].datetime) 
+        print('')
     
         # combine the results together
         results.extend(sims)
@@ -89,8 +92,8 @@ def signal_inject(conf,revisions):
         Nsim = int(round(random.gauss(Nex,math.sqrt(Nex))))
     
         # simulate the events
-        print
-        print 'Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...'
+        print()
+        print('Simulating '+ str(Nsim) + ' events for ' + config.observ_name +'...')
         t1 = time()
 
         Event = event_def(config,True)
@@ -108,7 +111,7 @@ def signal_inject(conf,revisions):
         ov_ant_aug_hawc=0
         ov_allobs=0
 
-        for jj in xrange(Nsim):
+        for jj in range(Nsim):
             sims+=[Event(0,0,revisions[kk])]
             ov_all = overlap(sims[jj].RA, sims[jj].dec, sims[jj].datetime)
             ov_icecube+=float(ov_all[0])/Nsim
@@ -142,17 +145,17 @@ def signal_inject(conf,revisions):
             ov_ic_ant_hawc*=2.*math.pi
             ov_ic_aug_hawc*=2.*math.pi
             ov_allobs*=2.*math.pi
-            print 'Overlap with IceCube %s' % ov_icecube
-            print 'Overlap with ANATARES %s' % ov_antares
-            print 'Overlap with Auger %s' % ov_auger
-            print 'Overlap with HAWC %s' % ov_hawc 
-            print 'IceCube, ANTARES, Auger %s' % ov_ic_ant_aug
-            print 'IceCube, ANATRES, HAWC %s' % ov_ic_ant_hawc
-            print 'IceCube, Auger, HAWC %s' % ov_ic_aug_hawc
-            print 'All 4 %s' % ov_allobs
+            print('Overlap with IceCube %s' % ov_icecube)
+            print('Overlap with ANATARES %s' % ov_antares)
+            print('Overlap with Auger %s' % ov_auger)
+            print('Overlap with HAWC %s' % ov_hawc) 
+            print('IceCube, ANTARES, Auger %s' % ov_ic_ant_aug)
+            print('IceCube, ANATRES, HAWC %s' % ov_ic_ant_hawc)
+            print('IceCube, Auger, HAWC %s' % ov_ic_aug_hawc)
+            print('All 4 %s' % ov_allobs)
         elif (sims[0].stream==1): 
             ov_ant_aug_hawc*=2.*math.pi 
-            print 'ANTARES, Auger, HAWC %s' % ov_ant_aug_hawc
+            print('ANTARES, Auger, HAWC %s' % ov_ant_aug_hawc)
         else:
             pass    
         """
@@ -164,20 +167,20 @@ def signal_inject(conf,revisions):
         kk+=1
         #sims = [SimEvent(config) for jj in xrange(Nsim)]
         t2 = time()
-        print '....simulation took %.2f seconds' % float(t2-t1)
-        print 
+        print('....simulation took %.2f seconds' % float(t2-t1))
+        print() 
 
         # put events in temporal order
         sims = sorted(sims,key=attrgetter('datetime'))
 
     
-        print 'Here is some information on the first 5 events:'
+        print('Here is some information on the first 5 events:')
         Nshow = min(Nsim, 5)
-        for jj in xrange(Nshow):
-            print 'stream: ', sims[jj].stream,'id: ',sims[jj].id,\
+        for jj in range(Nshow):
+            print('stream: ', sims[jj].stream,'id: ',sims[jj].id,\
                   '  RA: ', sims[jj].RA,'  dec: ', sims[jj].dec,\
-                  '  datetime: ', sims[jj].datetime 
-        print ''
+                  '  datetime: ', sims[jj].datetime) 
+        print('')
     
         # combine the results together
         results.extend(sims)
@@ -190,7 +193,7 @@ def signal_inject(conf,revisions):
     # so that there is a triplet 
     
     result_len = len(results)
-    print "result lenght %s" % result_len
+    print("result lenght %s" % result_len)
     #num_of_triplets=2
     #event_number=[]
     triplets = []
@@ -217,7 +220,7 @@ def signal_inject(conf,revisions):
     atlist = [attr for attr in dir(results[event_number]) if not (attr.startswith('_'))]
     for attr in atlist:
         value = getattr(results[event_number],attr) 
-        print "atribute %s" % value            
+        print("atribute %s" % value)            
         try:
             value = getattr(results[event_number],attr)
             if attr == 'datetime':
@@ -233,11 +236,11 @@ def signal_inject(conf,revisions):
                 setattr(triplets[0], attr, value)
                 setattr(triplets[1], attr, value) 
         except:
-            print "Empty slot" 
+            print("Empty slot") 
     atlist2 = [attr for attr in dir(results[event_number2]) if not (attr.startswith('_'))]
     for attr in atlist2:
         value = getattr(results[event_number2],attr) 
-        print "atribute %s" % value            
+        print("atribute %s" % value)            
         try:
             value = getattr(results[event_number2],attr)
             if attr == 'datetime':
@@ -253,7 +256,7 @@ def signal_inject(conf,revisions):
                 setattr(triplets2[0], attr, value)
                 setattr(triplets2[1], attr, value) 
         except:
-            print "Empty slot"                  
+            print("Empty slot")                  
     results.extend(triplets)
     results.extend(triplets2)
     results = sorted(results,key=attrgetter('datetime')) 
@@ -275,7 +278,7 @@ def overlap(era, edec,evtime):
     evtime_lst=[]
     rarec = sidereal.RADec(math.radians(era),math.radians(edec))
     evtime_gst = sidereal.SiderealTime.fromDatetime(evtime)
-    for kk in xrange(len(conf)):
+    for kk in range(len(conf)):
         fov+=[ast.literal_eval(conf[kk].fov)]
         zen+= [fov[kk]['zencut']]
         lon+=[fov[kk]['lon']]
@@ -312,7 +315,7 @@ def overlap_tp(stream,era, edec,evtime):
     evtime_lst=[]
     rarec = sidereal.RADec(math.radians(era),math.radians(edec))
     evtime_gst = sidereal.SiderealTime.fromDatetime(evtime)
-    for kk in xrange(len(conf)):
+    for kk in range(len(conf)):
         fov+=[ast.literal_eval(conf[kk].fov)]
         zen+= [fov[kk]['zencut']]
         lon+=[fov[kk]['lon']]
@@ -362,7 +365,7 @@ def overlap_all(stream,era, edec,evtime):
     evtime_lst=[]
     rarec = sidereal.RADec(math.radians(era),math.radians(edec))
     evtime_gst = sidereal.SiderealTime.fromDatetime(evtime)
-    for kk in xrange(len(conf)):
+    for kk in range(len(conf)):
         fov+=[ast.literal_eval(conf[kk].fov)]
         zen+= [fov[kk]['zencut']]
         lon+=[fov[kk]['lon']]

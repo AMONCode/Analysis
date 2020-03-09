@@ -3,6 +3,7 @@
 calculates if the iterator ii exceeds a percentage interval of N
 # for the first time, where the percentage interval is d%
 """
+from builtins import str
 from math import trunc
 
 # calculates if the iterator ii exceeds a percentage interval of N

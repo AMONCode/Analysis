@@ -2,6 +2,9 @@
 client that sends events to the server using HTTP 
 protocol with method=POST
 """
+from __future__ import print_function
+from builtins import str
+from builtins import object
 import sys, getopt, os, shutil, logging, datetime
 
 from twisted.internet import reactor
@@ -20,18 +23,18 @@ path=log=host=False
 
 def usage():
 	"""Displays program usage menu"""
-	print """Usage:
+	print("""Usage:
 	        -s --host        Host server
 			-p --path        Path to check for new data files and archive e.g. /path/to/datafiles/
 			-l --log         Name and path to create log file. e.g. path/to/logfile/clientlog.log
 			-h --help        Show usage menu and quit.
-		  """
+		  """)
 	exit()
 	
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "s:p:l:h", ["host=","path=", "log="])
-except getopt.GetoptError, err:
-	print str(err)
+except getopt.GetoptError as err:
+	print(str(err))
 	usage()
 	
 for o, a in opts:
@@ -46,7 +49,7 @@ for o, a in opts:
 	elif o in ("-h", "--help"):
 		usage()
 	else:
-		print "Option",o,"not recognized."
+		print("Option",o,"not recognized.")
 		usage()
 
 # set up archive directory where the events are moved after sending them to server
@@ -62,7 +65,7 @@ if not (os.path.isdir(path+"archive/")):
 try:
 	logging.basicConfig(filename=log, level=logging.DEBUG)
 except:
-	print "Could not open or create log file:",log+". Please make sure the directory exists and has proper write permissions."
+	print("Could not open or create log file:",log+". Please make sure the directory exists and has proper write permissions.")
 	exit()
 
 # options for logging 
@@ -96,7 +99,7 @@ class ResourcePrinter(Protocol):
         self.finished = finished
 
     def dataReceived(self, data):
-        print data
+        print(data)
 
     def connectionLost(self, reason):
         self.finished.callback(None)
@@ -107,7 +110,7 @@ def printResource(response):
     return finished
 
 def printError(failure):
-    print >>sys.stderr, failure
+    print(failure, file=sys.stderr)
 
 def stop(result):
     reactor.stop()
@@ -143,7 +146,7 @@ def check_for_files(path):
             # on success it returns Deferred with a response object
             d.addCallbacks(printResource, printError)
             datafile.close()
-            print "Event %s sent" % (oldest,)
+            print("Event %s sent" % (oldest,))
         except:
             logging.error("Error parsing file "+filename+" at:"+datetime.datetime.now().isoformat())
     else:

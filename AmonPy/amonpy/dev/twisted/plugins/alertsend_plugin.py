@@ -4,6 +4,7 @@
 # Test it with "nc localhost 10000"
 # Kill it with kill `cat twistd.pid`
 
+from builtins import object
 from zope.interface import implements
 from twisted.application import internet, service
 

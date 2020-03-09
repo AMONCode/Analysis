@@ -22,10 +22,12 @@ Examples:
     python format_to_html.py -s -o outfile2.html input_event_file.xml
 
 """
+from __future__ import print_function
 
 # Copyright 2010 Roy D. Williams and Dave Kuhlmann
 # modified by g.t.
 
+from builtins import str
 import sys
 import os
 import getopt
@@ -36,10 +38,7 @@ from datetime import datetime
 
 from amonpy.dbase.db_classes import *
 
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from io import StringIO
 
 def usage():
     sys.stderr.write(__doc__)
@@ -53,10 +52,10 @@ def make_event(source, o=sys.stdout):
     
     v = Vutil.parse(source)
    
-    print>>o, 'VOEvent'
-    print
-    print>>o, 'IVORN %s' % v.get_ivorn()
-    print
+    print('VOEvent', file=o)
+    print()
+    print('IVORN %s' % v.get_ivorn(), file=o)
+    print()
     
     streamname=str(v.get_ivorn())
     len_sname=len(streamname)
@@ -71,27 +70,27 @@ def make_event(source, o=sys.stdout):
     event[0].stream = int(streamname[count+1:count1])
     event[0].id = int(streamname[count1+1:count2])
     event[0].rev = int(streamname[count2+1:])
-    print "STREAM NAME %s" % event[0].stream 
-    print
+    print("STREAM NAME %s" % event[0].stream) 
+    print()
     event[0].anarev=event[0].stream     
     
-    print>>o, '(ROLE IS %s)' % v.get_role()
-    print
+    print('(ROLE IS %s)' % v.get_role(), file=o)
+    print()
     event[0].type=v.get_role()
 
-    print>>o, 'EVENT DESCRIPTION: %s\n' % v.get_Description()
-    print
+    print('EVENT DESCRIPTION: %s\n' % v.get_Description(), file=o)
+    print()
     
     
 
     r = v.get_Reference()
     if r:
-        print>>o, 'Reference Name=%s, Type=%s, uri=%s' \
-                    % (r.get_name(), r.get_type(), r.get_uri())
-        print
+        print('Reference Name=%s, Type=%s, uri=%s' \
+                    % (r.get_name(), r.get_type(), r.get_uri()), file=o)
+        print()
         
-    print>>o, 'WHO'
-    print
+    print('WHO', file=o)
+    print()
     
        
     who = v.get_Who()
@@ -103,51 +102,51 @@ def make_event(source, o=sys.stdout):
     print>>o, 'Phone: %s'                        % Vutil.htmlList(a.get_contactPhone())
     print>>o, 'Contributor: %s' % Vutil.htmlList(a.get_contributor())
     '''
-    print>>o, 'WHAT'
-    print
-    print>>o, 'PARAMS'
-    print
+    print('WHAT', file=o)
+    print()
+    print('PARAMS', file=o)
+    print()
     
     g = None
     params = v.get_What().get_Param()
     for p in params:
         #print>>o,  Vutil.htmlParam(g, p)
-        print p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType() 
+        print(p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType()) 
         if p.get_name() in dir(event[0]):
                 #print "YES"
                 setattr(event[0],p.get_name(), p.get_value())
-        print        
-        print "DESCRIPTION:"        
-        for d in p.get_Description(): print str(d)
-        print
+        print()        
+        print("DESCRIPTION:")        
+        for d in p.get_Description(): print(str(d))
+        print()
     
     
-    print>>o, 'GROUP'
-    print
+    print('GROUP', file=o)
+    print()
     groups = v.get_What().get_Group()
-    print>>o, 'NAME    VALUE     UCD    UNIT    DATATYPE '
-    print
+    print('NAME    VALUE     UCD    UNIT    DATATYPE ', file=o)
+    print()
     for g in groups:
         for p in g.get_Param():
             #print>>o, Vutil.htmlParam(g, p) 
-            print p.get_name(), p.get_value(), " ", p.get_ucd(), " ", \
-                                p.get_unit(), " ", p.get_dataType()
-            print
+            print(p.get_name(), p.get_value(), " ", p.get_ucd(), " ", \
+                                p.get_unit(), " ", p.get_dataType())
+            print()
                         
-            for d in p.get_Description(): print "DESCRIPTION" , str(d)
+            for d in p.get_Description(): print("DESCRIPTION" , str(d))
             
 
-    print>>o, 'WHEREWHEN'
-    print
+    print('WHEREWHEN', file=o)
+    print()
     wwd = Vutil.whereWhenDict(v)
     if wwd:
-        print>>o, 'Observatory     %s' % wwd['observatory']
-        print>>o, 'Coord system %s' % wwd['coord_system']
-        print>>o, 'Time             %s' % wwd['time']
-        print>>o, 'Time error %s ' % wwd['timeError']
-        print>>o, 'RA                %s' % wwd['longitude']
-        print>>o, 'Dec %s' % wwd['latitude']
-        print>>o, 'Pos error %s ' % wwd['posError']
+        print('Observatory     %s' % wwd['observatory'], file=o)
+        print('Coord system %s' % wwd['coord_system'], file=o)
+        print('Time             %s' % wwd['time'], file=o)
+        print('Time error %s ' % wwd['timeError'], file=o)
+        print('RA                %s' % wwd['longitude'], file=o)
+        print('Dec %s' % wwd['latitude'], file=o)
+        print('Pos error %s ' % wwd['posError'], file=o)
         event[0].sigmaR=wwd['posError']
         timeevent=wwd['time']
         year=int(timeevent[0:4])
@@ -175,31 +174,31 @@ def make_event(source, o=sys.stdout):
         #event[0].latitude=values.get_C2()
         #event[0].elevation=values.get_C3()
      
-    print>>o, 'WHY'
-    print
+    print('WHY', file=o)
+    print()
     w = v.get_Why()
     if w:
         if w.get_Concept():
-            print>>o, "Concept: %s" % Vutil.htmlList(w.get_Concept())
+            print("Concept: %s" % Vutil.htmlList(w.get_Concept()), file=o)
         if w.get_Name():
-            print>>o, "Name: %s"        % Vutil.htmlList(w.get_Name())
+            print("Name: %s"        % Vutil.htmlList(w.get_Name()), file=o)
 
-        print>>o, 'Inferences'
+        print('Inferences', file=o)
         inferences = w.get_Inference()
         for i in inferences:
-            print>>o, 'probability %s' % i.get_probability()
-            print>>o, 'relation %s' % i.get_relation()
-            print>>o, 'Concept %s' % Vutil.htmlList(i.get_Concept())
-            print>>o, 'Description %s' % Vutil.htmlList(i.get_Description())
-            print>>o, 'Name %s ' % Vutil.htmlList(i.get_Name())
-            print>>o, 'Reference %s' % str(i.get_Reference())
+            print('probability %s' % i.get_probability(), file=o)
+            print('relation %s' % i.get_relation(), file=o)
+            print('Concept %s' % Vutil.htmlList(i.get_Concept()), file=o)
+            print('Description %s' % Vutil.htmlList(i.get_Description()), file=o)
+            print('Name %s ' % Vutil.htmlList(i.get_Name()), file=o)
+            print('Reference %s' % str(i.get_Reference()), file=o)
            
-    print>>o, 'Citations'
+    print('Citations', file=o)
     cc = v.get_Citations()
     if cc:
         for c in cc.get_EventIVORN():
     
-            print>>o, '%s with a %s' % (c.get_valueOf_(), c.get_cite())
+            print('%s with a %s' % (c.get_valueOf_(), c.get_cite()), file=o)
 
 
     return event
@@ -241,7 +240,7 @@ def main():
         format_to_file(infilename, outfilename, force)
     if text:
         content = format_to_string(infilename)
-        print content
+        print(content)
     if not stdout and outfilename is None and not text:
         usage()
     

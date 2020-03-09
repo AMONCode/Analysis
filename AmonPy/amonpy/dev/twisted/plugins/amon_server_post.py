@@ -2,6 +2,8 @@
 receives events from a client using HTTP protocols and saves them in 
 an archive directory called server_events
 """
+from __future__ import print_function
+from builtins import str
 from twisted.internet import reactor
 from twisted.web.resource import Resource
 from twisted.web.server import Site
@@ -13,7 +15,7 @@ class EventPage(Resource):
     
     def render_POST(self, request):
         self.headers = request.getAllHeaders()
-        print self.headers
+        print(self.headers)
         try:
             postfile = cgi.FieldStorage(
                 fp = request.content,
@@ -24,11 +26,11 @@ class EventPage(Resource):
                         }
                 )
         except Exception as e:
-            print 'something went wrong: ' + str(e)
+            print('something went wrong: ' + str(e))
        
-        print  request.content.getvalue()
+        print(request.content.getvalue())
         fname=self.headers['content-name']
-        print "filename is %s" % (fname,)
+        print("filename is %s" % (fname,))
         fp = open(path+"server_events/"+fname, "w")
         fp.write(request.content.getvalue())
         fp.close()

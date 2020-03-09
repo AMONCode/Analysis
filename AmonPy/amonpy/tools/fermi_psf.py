@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 """@package fermi_psf
     Module with Fermi specific function:
         -calculates angular resolution of Fermi data 

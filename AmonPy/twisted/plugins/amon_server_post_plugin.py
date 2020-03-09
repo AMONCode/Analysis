@@ -7,6 +7,7 @@ Run with twistd. Default is run as a daemon process.
  Kill it with kill `cat server.pid`
  Make a subdirectory server_tmp_events/ in twisted parent directory before running
 """
+from builtins import object
 import sys
 from zope.interface import implements
 from twisted.application import internet, service

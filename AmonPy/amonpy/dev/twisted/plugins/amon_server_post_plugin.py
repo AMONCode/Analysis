@@ -7,6 +7,7 @@ an archive directory called server_events
 # Kill it with kill `cat server.pid`
 """
 
+from builtins import object
 from zope.interface import implements
 from twisted.application import internet, service
 

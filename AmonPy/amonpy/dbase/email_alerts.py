@@ -1,18 +1,16 @@
+from builtins import str
+from builtins import range
 import sys, os
 
 from amonpy.dbase.db_classes import *
 from amonpy.tools.config import AMON_CONFIG
 from amonpy.analyses.amon_streams import streams, alert_streams
 
-import smtplib
+import smtplib, netrc
 from email.mime.text import MIMEText
-import netrc, ConfigParser
 #import yowsup_run as yowsup_run
 
 def alert_email(alert, params):
-    #config_fname = '../amon.ini'
-    #Config = ConfigParser.ConfigParser()
-    #Config.read(config_fname)
     emails = ['hgayala@psu.edu']
     ehe_hese_emails = eval(AMON_CONFIG.get('mailing_list','ehe_hese')) #eval(Config.get('mailing_list', 'ehe_hese'))
     sub_emails = eval(AMON_CONFIG.get('mailing_list','sub_ehe_hese'))

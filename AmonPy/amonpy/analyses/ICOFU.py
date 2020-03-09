@@ -1,3 +1,4 @@
+from __future__ import print_function
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write
 #from amonpy.dbase.alert_to_voevent import alert_to_voevent
@@ -74,9 +75,9 @@ def ic_ofu(new_event=None):
     else:
         idnum = max_id
 
-    print "Max Id Alert in DB: %d"%(idnum)
+    print("Max Id Alert in DB: %d"%(idnum))
 
-    new_event = jsonpickle.decode(new_event)
+    new_event = jsonpickle.decode(new_event, classes=Event)
 
     t1 = time()
     events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
@@ -85,8 +86,8 @@ def ic_ofu(new_event=None):
                                     UserFancyName,PasswordFancy,DBFancyName)
 
     t2 = time()
-    print '   Read time: %.2f seconds' % float(t2-t1)
-    print ' lenght of parameters %s' % len(params)
+    print('   Read time: %.2f seconds' % float(t2-t1))
+    print(' lenght of parameters %s' % len(params))
     if (events.type == "observation"):
         xmlForm=ofualert_to_voevent.ofualert_to_voevent([events],params)
         fname=AlertDir + 'amon_icecube_coinc_%s_%s_%s.xml' \
@@ -96,12 +97,12 @@ def ic_ofu(new_event=None):
         f1.close()
         if (prodMachine == True):
             try:
-                print "OFU created"
-                cmd = ['comet-sendvo']
+                print("OFU created")
+                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + fname)
                 subprocess.check_call(cmd)
             except subprocess.CalledProcessError as e:
-                print "Send IceCube OFU VOevent alert failed"
+                print("Send IceCube OFU VOevent alert failed")
                 #logger.error("send_voevent failed")
                 raise e
             else:

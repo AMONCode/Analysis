@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import object
 import sys
 import math
 import ast
@@ -63,14 +65,14 @@ class EventBuffer(object):
                 f.write(e)
                 if((event[0].stream == e[0].stream) and (event[0].id == e[0].id)):
                     if(event[0].rev == e[0].rev):
-                        print "Event is already in the buffer. It will not be added to the buffer."
+                        print("Event is already in the buffer. It will not be added to the buffer.")
                         inBuffer = True
                     elif (event[0].rev < e[0].rev):
-                        print "Old event revision arrived later than a newer one."
-                        print "No analysis for this obsolete event"
+                        print("Old event revision arrived later than a newer one.")
+                        print("No analysis for this obsolete event")
                         inBuffer = True
                     else:
-                        print "Old event revision in the buffer, remove it."
+                        print("Old event revision in the buffer, remove it.")
                         self.events.pop(self.events.index(e))
             #Add the event to the buffer
             if inBuffer is False:
