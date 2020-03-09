@@ -2,6 +2,9 @@
  Module to write into database event, parameter, eventStreamConfig, alert, alertConfig
  and alertline tables.
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import MySQLdb as mdb
 import sys
 import time
@@ -35,7 +38,7 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
 # write miliseconds in delta T column
 
             NEVENTS=len(a1)
-            print 'Number of events in the file: %d' % NEVENTS
+            print('Number of events in the file: %d' % NEVENTS)
             source_type='observation'
             count=0
             num=0
@@ -53,20 +56,20 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
                                    -89.99,-63.453056,-2000.,'fisher',0))
                         con.commit()
                         count+=cur.rowcount
-                    except mdb.Error, e:
-                        print 'Exception %s' %e
-                        print 'Something is wrong with this event %d, exception...' % num
-                        print 'This event is not written.'
+                    except mdb.Error as e:
+                        print('Exception %s' %e)
+                        print('Something is wrong with this event %d, exception...' % num)
+                        print('This event is not written.')
                         con.rollback()
                 else:
                     pass
-            print "Number of rows written: %d" % count
+            print("Number of rows written: %d" % count)
 
             con.close()
     elif real_archive==1: # MC event
         pass # create new function for both MC and real time
     else:
-        print "This is not archival event"
+        print("This is not archival event")
         sys.exit(0)
 
 # write Event and SimEvent : real-time, MC events
@@ -81,7 +84,7 @@ def write_event(real_archive, host_name, user_name, passw_name, db_name, eventli
 # real_archive==0 archival data, otherwise real-time
 
     NEVENTS=len(eventlist)
-    print 'Number of events to be written: %d' % NEVENTS
+    print('Number of events to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
@@ -102,19 +105,19 @@ def write_event(real_archive, host_name, user_name, passw_name, db_name, eventli
                             eventlist[i].elevation,eventlist[i].psf_type,0))
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Something is wrong with this event %d ' % eventlist[i].id
-                print 'Exception %s' %e
+            except mdb.Error as e:
+                print('Something is wrong with this event %d ' % eventlist[i].id)
+                print('Exception %s' %e)
                 con.rollback()
             pd = perc_done(i,NEVENTS,2)
-            if pd != -1: print pd
+            if pd != -1: print(pd)
         else:
-            print 'Invalide stream number'
+            print('Invalide stream number')
 
-    print "Number of rows written: %d" % count
+    print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
     """ Write parameter list to DB from MC and real-time data streams"""
@@ -125,7 +128,7 @@ def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
     cur = con.cursor()
 
     NEVENTS=len(paramlist)
-    print 'Number of events to be written: %d' % NEVENTS
+    print('Number of events to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
@@ -137,19 +140,19 @@ def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
                             paramlist[i].event_id,paramlist[i].event_rev))
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Something is wrong with this parameter %d ' % paramlist[i].event_id
-                print 'Exception %s' %e
+            except mdb.Error as e:
+                print('Something is wrong with this parameter %d ' % paramlist[i].event_id)
+                print('Exception %s' %e)
                 con.rollback()
             pd = perc_done(i,NEVENTS,2)
-            if pd != -1: print pd
+            if pd != -1: print(pd)
         else:
-            print 'Invalide stream number'
+            print('Invalide stream number')
 
-    print "Number of rows written: %d" % count
+    print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, db_name, filename):
     """
@@ -168,7 +171,7 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
             a1,a2,a3,a4,a5 =np.loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
 
             NEVENTS=len(a1)
-            print 'Number of events in the file: %d' % NEVENTS
+            print('Number of events in the file: %d' % NEVENTS)
             source_type='observation'
             count=0
             num=0
@@ -186,17 +189,17 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
 
                         con.commit()
                         count+=cur.rowcount
-                    except mdb.Error, e:
-                        print 'Exception %s' %e
-                        print "Something is wrong with this event %d, exception..." % num
+                    except mdb.Error as e:
+                        print('Exception %s' %e)
+                        print("Something is wrong with this event %d, exception..." % num)
                         con.rollback()
                 else:
                     pass
-            print "Number of rows written: %d" % count
+            print("Number of rows written: %d" % count)
             con.close()
 
     else:
-        print "Real time or MC, not ready yet"
+        print("Real time or MC, not ready yet")
         sys.exit(0)
 
 def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_name):
@@ -217,9 +220,9 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
+        except mdb.Error as e:
+            print('Exception %s' %e)
+            print('Something went wrong, no data are written.')
             con.rollback()
 
         con.close()
@@ -234,14 +237,14 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
+        except mdb.Error as e:
+            print('Exception %s' %e)
+            print('Something went wrong, no data are written.')
             con.rollback()
 
         con.close()
 
-    elif ((stream_num==24) or (stream_num==25)):
+    elif ((stream_num==24) or (stream_num==25) or (stream_num==26)):
         obs_name='IceCube'
         try:
             cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
@@ -250,9 +253,9 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
+        except mdb.Error as e:
+            print('Exception %s' %e)
+            print('Something went wrong, no data are written.')
             con.rollback()
 
         con.close()
@@ -266,49 +269,9 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
-            con.rollback()
-
+        except mdb.Error as e:
+          cur.close()
         con.close()
-
-    elif stream_num==5:
-        obs_name='FACT'
-        try:
-            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
-            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-            'tabulated','bckgr.dat','0'))
-            con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
-            con.rollback()
-
-        con.close()
-
-    elif ((stream_num==7) or (stream_num==8)):
-        obs_name='HAWC'
-        try:
-            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2015-01-01 00:00:00',
-            '2020-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
-            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
-            'tabulated','bckgr.dat','0'))
-            con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
-            con.rollback()
-
-        con.close()
-
-    else:
-        print "Not ready for other streams. Only IceCube, Swift, and FACT for now."
-        con.close()
-        cur.close()
 
 def write_event_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write event config list to DB table eventStreamConfig """
@@ -320,19 +283,19 @@ def write_event_config(stream_num, host_name, user_name, passw_name, db_name, ev
 # real_archive==0 archival data, otherwise real-time
 
     NEVENTS=len(eventlist)
-    print 'Number of event configurations to be written: %d' % NEVENTS
+    print('Number of event configurations to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
         if (stream_num[i]>-1):
-            print stream_num[i]
+            print(stream_num[i])
             try:
                 # microsec_start=int(float('.'+str(eventlist[i].config.validStart).split('.')[1])*1000000)
                 #microsec_end=int(float('.'+str(eventlist[i].config.validStop).split('.')[1])*1000000)
                 #print 'microseconds %d' % microsec
                 #print eventlist[i].validStart
                 #eventlist[i].forprint()
-                print (stream_num[i],eventlist[i].rev,
+                print((stream_num[i],eventlist[i].rev,
                             eventlist[i].validStart,eventlist[i].validStop, eventlist[i].observ_name,
                             eventlist[i].observ_coord_sys,eventlist[i].astro_coord_sys,
                             eventlist[i].point_type,eventlist[i].point,
@@ -343,7 +306,7 @@ def write_event_config(stream_num, host_name, user_name, passw_name, db_name, ev
                             eventlist[i].sensitivity_type, eventlist[i].sensitivity,
                             eventlist[i].fov_type, eventlist[i].fov,eventlist[i].ephemeris,
                             eventlist[i].bckgr_type,eventlist[i].bckgr,
-                            eventlist[i].mag_rigidity)
+                            eventlist[i].mag_rigidity))
                 cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
                             %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num[i],eventlist[i].rev,
                             eventlist[i].validStart,eventlist[i].validStop, eventlist[i].observ_name,
@@ -359,18 +322,18 @@ def write_event_config(stream_num, host_name, user_name, passw_name, db_name, ev
                             eventlist[i].mag_rigidity))
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Exception %s' %e
-                print 'Something is wrong with this event config %d, exception...' % eventlist[i].rev
-                print 'This eventconfig  is not written.'
+            except mdb.Error as e:
+                print('Exception %s' %e)
+                print('Something is wrong with this event config %d, exception...' % eventlist[i].rev)
+                print('This eventconfig  is not written.')
                 con.rollback()
         else:
-            print 'Not ready for these event config yet'
+            print('Not ready for these event config yet')
 
-    print "Number of rows written: %d" % count
+    print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert list to DB from MC and real-time data streams"""
@@ -380,7 +343,7 @@ def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist
     cur = con.cursor()
 
     NEVENTS=len(eventlist)
-    print '   Number of alerts to be written: %d' % NEVENTS
+    print('   Number of alerts to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
@@ -399,18 +362,18 @@ def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist
                             eventlist[i].pvalue,eventlist[i].skymap, eventlist[i].anarev))
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Something is wrong with this alert %d ' % eventlist[i].id
-                print 'Exception %s' %e
-                print '   This alert is not written.'
+            except mdb.Error as e:
+                print('Something is wrong with this alert %d ' % eventlist[i].id)
+                print('Exception %s' %e)
+                print('   This alert is not written.')
                 con.rollback()
         else:
-            print '   Invalid stream ID'
+            print('   Invalid stream ID')
 
-    print "   Number of rows written: %d" % count
+    print("   Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert config list to DB """
@@ -422,12 +385,12 @@ def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, ev
 # real_archive==0 archival data, otherwise real-time
 
     NEVENTS=len(eventlist)
-    print 'Number of event configurations to be written: %d' % NEVENTS
+    print('Number of event configurations to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
         if (stream_num[i]>-1):
-            print stream_num[i]
+            print(stream_num[i])
             try:
 
                 cur.execute("""INSERT INTO alertConfig VALUES (%s,%s,%s,%s,%s,%s,%s,
@@ -442,18 +405,18 @@ def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, ev
 
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Exception %s' %e
-                print 'Something is wrong with this event config %d, exception...' % eventlist[i].rev
-                print 'This eventconfig  is not written.'
+            except mdb.Error as e:
+                print('Exception %s' %e)
+                print('Something is wrong with this event config %d, exception...' % eventlist[i].rev)
+                print('This eventconfig  is not written.')
                 con.rollback()
         else:
-            print 'Not ready for these event config yet'
+            print('Not ready for these event config yet')
 
-    print "Number of rows written: %d" % count
+    print("Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()
 
 def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
     """ Write alertline list to DB from MC and real-time data streams"""
@@ -463,7 +426,7 @@ def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
     cur = con.cursor()
 
     NEVENTS=len(eventlist)
-    print '   Number of alert lines to be written: %d' % NEVENTS
+    print('   Number of alert lines to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
@@ -477,15 +440,15 @@ def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
                             eventlist[i].id_event,eventlist[i].rev_event))
                 con.commit()
                 count+=cur.rowcount
-            except mdb.Error, e:
-                print 'Exception %s' %e
-                print '   Something is wrong with this alert line %d, exception...' % eventlist[i].id_event
-                print '   This alert line is not written.'
+            except mdb.Error as e:
+                print('Exception %s' %e)
+                print('   Something is wrong with this alert line %d, exception...' % eventlist[i].id_event)
+                print('   This alert line is not written.')
                 con.rollback()
         else:
-            print '   Invalid stream ID'
+            print('   Invalid stream ID')
 
-    print "   Number of rows written: %d" % count
+    print("   Number of rows written: %d" % count)
 
-    con.close()
     cur.close()
+    con.close()

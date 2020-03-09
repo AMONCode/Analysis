@@ -4,11 +4,12 @@ Builds a simple VOEvent packet from alert
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from __future__ import print_function
+from builtins import str
 import sys
 
-sys.path.append('../db_classes')
 
-from db_classes import *
+from amonpy.dbase.db_classes import *
 
 from VOEventLib.VOEvent import *
 from VOEventLib.Vutil import *
@@ -149,7 +150,7 @@ def alert_to_voevent(alert):
 if __name__ == "__main__":
     alert=[Alert(1,0,0)]
     xml1=alert_to_voevent(alert)
-    print xml1
+    print(xml1)
     f1=open('./test_alert.xml', 'w+')
     f1.write(xml1)
    

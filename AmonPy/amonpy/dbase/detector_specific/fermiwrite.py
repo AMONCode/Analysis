@@ -1,5 +1,9 @@
 from __future__ import division
-import urllib2
+from __future__ import print_function
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+import urllib.request, urllib.error, urllib.parse
 import numpy as np
 import pyfits as pf
 import sys
@@ -22,7 +26,7 @@ dpath=configs.get('dirs','amonpydir')
 
 
 def downloader(url,name):
-    u=urllib2.urlopen(url)
+    u=urllib.request.urlopen(url)
     f=open(name,'wb')
     f.write(u.read())
     f.close()
@@ -60,7 +64,7 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
     rev=1
 '''
 
-    base=datetime(2015,04,06,7,59,57) #second 450000000 in fermi system
+    base=datetime(2015,0o4,0o6,7,59,57) #second 450000000 in fermi system
     n=0
     events=[]
     param=[]
@@ -120,7 +124,7 @@ def fermiwrite(user,password,host,time,flagid,ra,dec,energy,inc,con,start,stop,r
 
 
 #get current fermi week
-base=datetime(2016,01,28) #date/time of start of week 400
+base=datetime(2016,0o1,28) #date/time of start of week 400
 now=datetime.utcnow() #current time in utc
 weekfloat=((now-base).total_seconds())/(60*60*24*7)+400
 week=int(np.floor(weekfloat)) #the current fermi week
@@ -140,16 +144,16 @@ scname0='lat_spacecraft_weekly_w' + str(week-1) + '_p202_v001.fits'
 
 try:
     #safety just in case file one of the files has not been created
-    u0=urllib2.urlopen(phurl+phname0)
-    u1=urllib2.urlopen(phurl+phname1)
-except urllib2.URLError:
+    u0=urllib.request.urlopen(phurl+phname0)
+    u1=urllib.request.urlopen(phurl+phname1)
+except urllib.error.URLError:
     #self terminate if file is not there
-    print 'photon file does not exist'
+    print('photon file does not exist')
     sys.exit()
 
 
-i0=int(u0.info().values()[0]) #size of last week's photon file
-i1=int(u1.info().values()[0]) #size of this week's photon file
+i0=int(list(u0.info().values())[0]) #size of last week's photon file
+i1=int(list(u1.info().values())[0]) #size of this week's photon file
 
 #define file name for downloaded files
 
@@ -210,7 +214,7 @@ if os.path.isfile(sc1)==0: #nonexistance condition
 
 
 if cflag==False: #if no new files were downloaded, script should exit here
-    print "nothing new, we're done here"
+    print("nothing new, we're done here")
     sys.exit()
 
 #now we open the fermi data and filter it by energy, zenith, time, etc
@@ -262,7 +266,7 @@ decz=scdat['DEC_SCZ']
 
 
 #get datetime of first processed event
-base=datetime(2015,04,06,7,59,57) #datetime of fermi second
+base=datetime(2015,0o4,0o6,7,59,57) #datetime of fermi second
 early=time[0]-10 #10 seconds before first event
 earlydt=timedelta(seconds=(early-450000000))+base #converted to datetime
 
@@ -271,7 +275,7 @@ n=1
 while n<len(flagid):
     if flagid[n-1]==flagid[n]:
         flagid[n]+=1
-        print 'inc',n
+        print('inc',n)
     n+=1
 
 db=mdb.connect(user=user,host=host, passwd=password,db=dbname)
@@ -306,7 +310,7 @@ err=err[news]
 
 #check to make sure these are not empty
 if len(time)==0:
-    print "nothing new to write, we're done here"
+    print("nothing new to write, we're done here")
     sys.exit()
 
 
@@ -322,6 +326,6 @@ while n+dn<len(time):
     np=n+dn
     block=fermiwrite(user,password,host,time[n:np],flagid[n:np],ra[n:np],dec[n:np],energy[n:np],inc[n:np],con[n:np],start,stop,raz,decz,lat,lon,alt)
     n+=dn
-    print n
+    print(n)
 #now write the last chunk (or only chunk if fewer than 10000 events)
 block=fermiwrite(user,password,host,time[n:],flagid[n:],ra[n:],dec[n:],energy[n:],inc[n:],con[n:],start,stop,raz,decz,lat,lon,alt)

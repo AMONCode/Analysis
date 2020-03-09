@@ -4,6 +4,9 @@ Builds a simple VOEvent packet from event and parameter classes
 See the VOEvent specification for details
 http://www.ivoa.net/Documents/latest/VOEvent.html
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
 from datetime import datetime, timedelta
 
@@ -118,7 +121,7 @@ def event_to_voevent(alert, parameter):
 
     # A Group of Params
     g = Group(name="aux_params")
-    for ii in xrange(len(parameter)):
+    for ii in range(len(parameter)):
         p = Param(name="%s" % str(aux_name[ii]), ucd="phys.energy", unit="%s" % str(aux_unit[ii]),
                   dataType="float", value="%s" % str(aux_value[ii]))
         g.add_Param(p)
@@ -218,6 +221,6 @@ if __name__ == "__main__":
     alert[0].forprint()
 
     xml1=event_to_voevent(alert,parameter)
-    print xml1
+    print(xml1)
     f1=open('./icecube_test.xml', 'w+')
     f1.write(xml1)

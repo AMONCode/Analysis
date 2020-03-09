@@ -9,11 +9,11 @@ password = AMON_CONFIG.get('rabbitmq','password')
 vhost = AMON_CONFIG.get('rabbitmq','vhost')
 
 if (name is not "") and (password is not "") and (vhost is not ""):
-    Broker = 'amqp://%s:%s@localhost/%s'%(name,password,vhost)
-    Backend = 'amqp://%s:%s@localhost/%s'%(name,password,vhost)
+    Broker = 'pyamqp://%s:%s@localhost/%s'%(name,password,vhost)
+    Backend = 'rpc://%s:%s@localhost/%s'%(name,password,vhost)
 else:
-    Broker = 'amqp://'
-    Backend = 'amqp://'
+    Broker = 'pyamqp://'
+    Backend = 'rpc://'
 
 app = Celery('server',
              broker=Broker,

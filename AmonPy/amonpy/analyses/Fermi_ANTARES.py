@@ -1,4 +1,6 @@
 from __future__ import division
+from __future__ import print_function
+from builtins import str
 import numpy as np
 import healpy as hp
 import sys
@@ -48,7 +50,7 @@ db.close()
 
 #check to make sure neutrino event list contains data
 if len(icdat)==0:
-    print "no Antares events in range, we're done here"
+    print("no Antares events in range, we're done here")
     sys.exit()
 
 ictime=Time(icdat[:,1],scale='utc').mjd #convert to mjd
@@ -78,10 +80,10 @@ fermidat=np.array(c.fetchall())
 
 #check if photon list has events
 if len(fermidat)==0:
-    print "no Fermi events in range, we're done here"
+    print("no Fermi events in range, we're done here")
     sys.exit()
 
-ids=fermidat[:,0].astype(long)
+ids=fermidat[:,0].astype(int)
 
 start=np.min(ids)
 
@@ -134,12 +136,12 @@ temp=np.array(hp.read_map(fitsfile,field=(0,1,2)))
 
 phbkg[0,:,:]=temp*3.3026
 
-base=np.zeros((len(phtime)*2,2),dtype=long) #create empty array to fill with time pairs
+base=np.zeros((len(phtime)*2,2),dtype=int) #create empty array to fill with time pairs
 evil=tsep(ictime,phtime,base,1/86.4) #fill it with pairs
 #now check to make sure pairs actually exist
 
 if len(evil)==0:
-    print "no nu/ph coincidences in time, we're done here"
+    print("no nu/ph coincidences in time, we're done here")
     sys.exit()
 
 
@@ -150,7 +152,7 @@ dsts=distsph(phra[evil[:,0]],phdec[evil[:,0]],icra[evil[:,1]],icdec[evil[:,1]])
 good=evil[np.where(dsts<np.radians(5))] #array of nu/ph pairs within 100 secs and 5 degrees
 
 if len(good)==0:
-    print "no nu/ph coincidences in space, we're done here"
+    print("no nu/ph coincidences in space, we're done here")
     sys.exit()
 
 msep=dsts[np.where(dsts<np.radians(5))] #distances of pairs
@@ -231,7 +233,7 @@ while counter<len(unu):
         lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         #check if best position is near the edge of the grid
         if edge==1: #if so, remake grid over new center
-            print 'lets fix that'
+            print('lets fix that')
             xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],x,y,e,ac,c)
             #then recalculate lambda
             lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,nura,nudec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
@@ -284,7 +286,7 @@ while lcount<len(nulist):
 
 #now we can find photons (if any) associated with each neutrino
 
-base=np.zeros((len(phtime),2),dtype=long)
+base=np.zeros((len(phtime),2),dtype=int)
 pairs=np.array(tsep(ctime,phtime,base,1/86.4))
 
 dst=distsph(phra[pairs[:,0]],phdec[pairs[:,0]],cra[pairs[:,1]],cdec[pairs[:,1]])
@@ -361,7 +363,7 @@ while mcounter<len(unu):
         lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,centra,centdec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
         #check if best position is near the edge of the grid
         if edge==1: #if so, remake grid over new center
-            print 'lets fix that'
+            print('lets fix that')
             xg1,yg1,rholderph1,rholdernu1,zholderph1,zholdernu1=getgridtrack(cx,cy,np.radians(1),70,[0],[0],phx,phy,e,ac,c)
             #then recalculate lambda
             lam,vals,ra,dec,coincerr,tcenter,deltat,sigmat,edge,cx,cy=getlam(rholderph1,rholdernu1,centra,centdec,nutime,nuprob,time,xg1,yg1,e,ac,phbkg)
@@ -420,19 +422,19 @@ def writeevents(user,host,passwd,lam,tcenter,deltat,sigmat,ra,dec,coincerr,nnu,n
     c.execute("""SELECT id,false_pos,rev FROM alert WHERE alertConfig_stream=8 and id=%s""",(int(flagid),))
     previous=np.array(c.fetchall())
     if len(previous)==0: #if coincidence has not been previously written
-        print 'writing a new one'
+        print('writing a new one')
         event=[8,int(flagid),0,lessec,msec,dec,ra,coincerr,ntot,deltat,sigmat,fpos,0,0,'observation',1,0,0]
         c.execute("""INSERT INTO alert VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",event)
         db.commit()
         written=1 #turn to 1 if it gets written
 
     else:
-        print np.shape(previous)
+        print(np.shape(previous))
         oldprob=previous[-1,1]
         if fpos<(oldprob*0.99): #check to make sure we don't re-write due to round-off errors
             #only re-write if smaller by at least 1%
             oldrev=previous[-1,2]
-            print 'it got better'
+            print('it got better')
             event=[8,int(flagid),oldrev+1,lessec,msec,dec,ra,coincerr,ntot,deltat,sigmat,fpos,0,0,'observation',1,0,0]
             c.execute("""INSERT INTO alert VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",event)
             db.commit()
@@ -650,19 +652,19 @@ while n<len(lambdas):
     if lam>1.45 and b==1: #lambda of 1.45 is the 4/year threshold, b is a flag to see if the event was newly written
         lamlist.append(lam)
         xml=makevoevent(a)
-        print xml
+        print(xml)
         fname = 'fermi-antares_coinc'+str(int(flagid))+'.xml'
         filen=os.path.join(AlertDir,fname)
         xmlpathholder.append(filen) #put name into list
         f1=open(filen,'w+')
         f1.write(xml)
         f1.close()
-    print n,a
+    print(n,a)
     n+=1
 
 if len(lambdas)>5:
     #if we see too many lambdas generated in this stretch
-    print 'Too Many Events'
+    print('Too Many Events')
     subject='Too many Events'
     body='Detected %d events. That is too many. They will not be sent to GCN \n   Good Luck' % (n)
     send_email(subject,body,['cft114@psu.edu'])
@@ -672,12 +674,12 @@ if len(lambdas)>5:
 n=0
 while n<len(xmlpathholder):
     #if  we do not trigger an error, send all new events to GCN
-    print 'sending email %d' % (n,)
+    print('sending email %d' % (n,))
     subject='New Fermi-ANTARES Alert'
     body='New Fermi-ANTARES alert detected with a lambda of %f. XML sent to GCN is attached \n  Enjoy' % (lamlist[n])
     send_email_attach(subject,body,['cft114@psu.edu'],xmlpathholder[n])
     
-    cmd=['comet-sendvo']
+    cmd=['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
     cmd.append('--file=' + xmlpathholder[n])
     subprocess.check_call(cmd)
     

@@ -1,11 +1,10 @@
+from __future__ import print_function
 import sys, os
-# sys.path.append( os.path.abspath('..') )
-# sys.path.append( os.path.abspath('../..') )
-# sys.path.append( os.path.abspath('../../tools') )
 import unittest
 
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_write
+from amonpy.tools import *
 """@package test_db_write
 Unit tests for db_write module.
 """
@@ -88,27 +87,27 @@ class TestDBWrite(unittest.TestCase):
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
     """
     def testWriteConfigGFU1(self):
-        print 'Testing write_event_config module for GFU MAGIC'
+        print('Testing write_event_config module for GFU MAGIC')
         db_write.write_event_config_archive(self.StreamFancyName2[6],self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
 
     def testWriteConfigGFU2(self):
-        print 'Testing write_event_config module for GFU HAWC'
+        print('Testing write_event_config module for GFU HAWC')
         db_write.write_event_config_archive(self.StreamFancyName2[7],self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
 
     def testWriteConfigGFU3(self):
-        print 'Testing write_event_config module for GFU HESS'
+        print('Testing write_event_config module for GFU HESS')
         db_write.write_event_config_archive(self.StreamFancyName2[8],self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
 
     def testWriteConfigGFU4(self):
-        print 'Testing write_event_config module for GFU Fermi'
+        print('Testing write_event_config module for GFU Fermi')
         db_write.write_event_config_archive(self.StreamFancyName2[9],self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
 
     def testWriteConfigGFU5(self):
-        print 'Testing write_event_config module for GFU VERITAS'
+        print('Testing write_event_config module for GFU VERITAS')
         db_write.write_event_config_archive(self.StreamFancyName2[10],self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC)
     """

@@ -3,6 +3,9 @@ Create test VOEvents by reading events from DB
 use this VOEvents to test AMON server and real-time analysis
 """
 from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str
+from builtins import range
 import sys
 
 from datetime import datetime, timedelta
@@ -33,7 +36,7 @@ nevents=len(events)
 
 ##Make fname a variable
 
-for kk in xrange(nevents):
+for kk in range(nevents):
     parameters=[Parameter("energy",events[kk].stream, events[kk].id, events[kk].rev)]
 
     xml1=event_to_voevent.event_to_voevent([events[kk]], parameters)
@@ -48,9 +51,9 @@ for kk in xrange(nevents):
     elif (events[kk].stream == 7):
         fname='/Users/hugo/AMON/Test_DB/server_tmp_events/events_hawc/event_%s.xml' % (kk,)
     else:
-        print "unsupported stream for now"
+        print("unsupported stream for now")
         pass
-    print fname
+    print(fname)
     f1=open(fname, 'w+')
     f1.write(xml1)
     f1.close()

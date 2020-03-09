@@ -19,6 +19,11 @@
     DBFancyName  ='AMON_test2'
 
 """
+from __future__ import division
+from __future__ import print_function
+from builtins import str
+from builtins import input
+from builtins import range
 
 import sys
 from amonpy.dbase import db_read
@@ -37,8 +42,8 @@ try:
 except:
     key = 1
     EventStream = 0
-print key
-print EventStream
+print(key)
+print(EventStream)
 # Might get these from sys.argv on a future iteration of the code
 start = datetime(2012,1,1,0,0,0,0)
 stop  = datetime(2013,1,1,0,0,0,0)
@@ -57,10 +62,10 @@ t1 = time()
 events=db_read.read_event_timeslice(TimeStart,TimeSlice,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 t2 = time()
-print
-print len(events), 'events have been read from the database'
-print 'read time (s): ', t2-t1
-print
+print()
+print(len(events), 'events have been read from the database')
+print('read time (s): ', t2-t1)
+print()
 
 # put events in temporal order
 events = sorted(events,key=attrgetter('datetime'))
@@ -68,7 +73,7 @@ Nevents = len(events)
 NeventsStream=0
 kk=0
 if (key & 2**kk):
-    print 'Creating plot type: ', kk
+    print('Creating plot type: ', kk)
     #deltaT=[timedelta.total_seconds(events[ii+1].datetime \
     #        -events[ii].datetime) for ii in xrange(Nevents-1)]
     deltaT=[]
@@ -79,27 +84,27 @@ if (key & 2**kk):
             eventSelect+=[event]
     NeventsStream=len(eventSelect)
     deltaT=[timedelta.total_seconds(eventSelect[ii+1].datetime \
-            -eventSelect[ii].datetime) for ii in xrange(NeventsStream-1)]
+            -eventSelect[ii].datetime) for ii in range(NeventsStream-1)]
 
-    print 'Number of events selected:', NeventsStream
-    bins = [ii for ii in xrange(1001)]
+    print('Number of events selected:', NeventsStream)
+    bins = [ii for ii in range(1001)]
     plt.hist(deltaT,bins=bins)
     Rtot = NeventsStream/TimeSlice
-    print 'Overlaying prediction (red) for rate (Hz): ', Rtot
-    x = [ii for ii in xrange(1001)]
-    y = [NeventsStream*(exp(-Rtot*(ii))-exp(-Rtot*(ii+1))) for ii in xrange(1001)]
+    print('Overlaying prediction (red) for rate (Hz): ', Rtot)
+    x = [ii for ii in range(1001)]
+    y = [NeventsStream*(exp(-Rtot*(ii))-exp(-Rtot*(ii+1))) for ii in range(1001)]
     plt.plot(x,y,color='red',linewidth=2)
     plt.ylabel('Number')
     plt.xlabel('deltaT (sec)')
     plt.show()
     plt.show() # for some reason I needed to do this twice on isis
-    junk= raw_input('hit any key to continue')
-    print ''
+    junk= eval(input('hit any key to continue'))
+    print('')
 
 
 kk=1
 if (key & 2**kk):
-    print 'Creating plot type: ', kk
+    print('Creating plot type: ', kk)
     list_RA=[]
     list_Dec=[]
 
@@ -126,33 +131,33 @@ if (key & 2**kk):
     plt.show()
     # add code here
 
-    junk= raw_input('hit any key to continue')
-    print ''
+    junk= eval(input('hit any key to continue'))
+    print('')
 
 kk=2
 if (key & 2**kk):
-    print 'Creating plot type: ', kk
+    print('Creating plot type: ', kk)
 
     # add code here
 
-    junk= raw_input('hit any key to continue')
-    print ''
+    junk= eval(input('hit any key to continue'))
+    print('')
 
 kk=3
 if (key & 2**kk):
-    print 'Creating plot type: ', kk
+    print('Creating plot type: ', kk)
 
     # add code here
 
-    junk= raw_input('hit any key to continue')
-    print ''
+    junk= eval(input('hit any key to continue'))
+    print('')
 
 
 kk=4
 if (key & 2**kk):
-    print 'Creating plot type: ', kk
+    print('Creating plot type: ', kk)
 
     # add code here
 
-    junk= raw_input('hit any key to continue')
-    print ''
+    junk= eval(input('hit any key to continue'))
+    print('')
