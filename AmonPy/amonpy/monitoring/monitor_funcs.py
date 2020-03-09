@@ -11,6 +11,9 @@ from matplotlib.dates import date2num, DateFormatter
 import time
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 import logging
 
 from amonpy.tools.config import AMON_CONFIG
@@ -121,6 +124,30 @@ def send_email(to_list,sender,passwd,subject, body):
     msg['From'] = me
     msg['To'] = ", ".join(to)
     pas = passwd
+    s = smtplib.SMTP('smtp.gmail.com:587')
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    #s.login(usrnm,pas)
+    s.login(me, pas)
+    s.sendmail(me, to, msg.as_string())
+    s.quit()
+
+def send_email_attach(to_list,sender,passwd,subject, body, attachment):
+    to = to_list
+    me = sender
+    msg = MIMEMultipart(body)
+    msg['Subject'] = subject
+    msg['From'] = me
+    msg['To'] = ", ".join(to)
+    pas = passwd
+    
+    part = MIMEBase('application', "octet-stream")
+    part.set_payload(open(attachment, "rb").read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', 'attachment', filename=attachment)
+    msg.attach(part)
+    
     s = smtplib.SMTP('smtp.gmail.com:587')
     s.ehlo()
     s.starttls()

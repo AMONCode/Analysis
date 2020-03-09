@@ -99,6 +99,7 @@ def insideHAWCBrightSources(dec,ra):
             return True
     return False
 
+
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
 hwcBkg = np.load(hwcBkgfile, encoding = 'latin1',allow_pickle=True).item()
@@ -350,6 +351,7 @@ def coincAnalysisHWC(new_event):
         if spc<3.5:
 
             poserr2 = e.sigmaR/2.14 #If version is 0, this value will be used, 90%->1sigma
+
             param = db_read.read_parameters(e.stream,e.id,e.rev,HostFancyName,
                                             UserFancyName,PasswordFancy,DBFancyName)
             fprd = 0.0
@@ -531,11 +533,10 @@ def ic_hawc(new_event=None):
             f1=open(filen, 'w+')
 
             #Create Alert xml file
-            if far<=4.0 and far>0.01:
+            if far<=4.0 and far>0.1:
                 alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
             else:
                 alertname="IC-HAWC-{}".format(new_alert.id)
-
 
             VOAlert = Alert2VOEvent([new_alert],'nu_em_coinc','Nu-EM Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
@@ -547,6 +548,8 @@ def ic_hawc(new_event=None):
             apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='AMON id number')
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="run_id",ucd="meta.number",unit="",datatype="int",value="0",description='Run ID number. Zero for coincidences')
+            alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='Event id number. Same as AMON id in this case')
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='Event id number. Same as AMON id in this case')
             alertparams.append(apar)
@@ -563,7 +566,6 @@ def ic_hawc(new_event=None):
                 alertparams.append(apar)
             else:
                 apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
-
                 alertparams.append(apar)
             apar = VOAlert.MakeParam(name="pvalue", ucd="stat.probability",unit="", datatype="float", value=new_alert.pvalue, description="P-value of the alert")
             alertparams.append(apar)
