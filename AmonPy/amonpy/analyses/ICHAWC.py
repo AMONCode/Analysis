@@ -97,10 +97,7 @@ def insideHAWCBrightSources(dec,ra):
     elif lat<3.0 and lat>-3.0:
         if lon<90.0 and lon>0:
             return True
-        else:
-            return False
-    else:
-        return False
+    return False
 
 
 # HAWC PDF for spatial null and alternative hypotheses
@@ -150,7 +147,7 @@ def pNuCluster(events):
     if N==1:
         return val
     else:
-        lmb = 0.0066887 * events[0][4]*3600.*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
+        lmb = 0.0066887 * events[0][4]*2*np.pi*(1-np.cos(np.deg2rad(3.5)))/(4*np.pi) #Rate=0.0066887 = 22334./ 3339043.sec
         val = stats.poisson.sf(N-2,lmb)
     return val
 
@@ -353,7 +350,7 @@ def coincAnalysisHWC(new_event):
 
         if spc<3.5:
 
-            poserr2 = e.sigmaR #If version is 0, this value will be used.
+            poserr2 = e.sigmaR/2.14 #If version is 0, this value will be used, 90%->1sigma.
             param = db_read.read_parameters(e.stream,e.id,e.rev,HostFancyName,
                                             UserFancyName,PasswordFancy,DBFancyName)
             fprd = 0.0
@@ -501,6 +498,7 @@ def ic_hawc(new_event=None):
                         send=False
                     if pa.id<bestid:
                         bestid = pa.id
+                    if pa.rev>=bestrev:
                         bestrev =pa.rev + 1
                 alertid = bestid
                 rev = bestrev
@@ -531,12 +529,12 @@ def ic_hawc(new_event=None):
             f1=open(filen, 'w+')
 
             #Create Alert xml file
-            if far<=4.0 and far>0.01:
+            if far<=4.0 and far>0.1:
                 alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
             else:
-                alertname="HAWC-IC-{}".format(new_alert.id)
+                alertname="IC-HAWC-{}".format(new_alert.id)
 
-            VOAlert = Alert2VOEvent([new_alert],'gamma_nu_coinc','Gamma-Nu Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
+            VOAlert = Alert2VOEvent([new_alert],'nu_em_coinc','NuEM Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
             alertparams = []
             apar = VOAlert.MakeParam(name="gcn_stream",ucd="meta.number",unit="",datatype="int",value=gcn_streams["Gamma-Nu-Coinc"],description="GCN Socket Identification")
@@ -545,14 +543,22 @@ def ic_hawc(new_event=None):
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="amon_id",ucd="meta.number",unit="",datatype="string",value=new_alert.id,description='AMON id number')
             alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="event_id",ucd="meta.number",unit="",datatype="int",value=new_alert.id,description='Event id number. Same as AMON id in this case')
+            alertparams.append(apar)
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
+            alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="run_id",ucd="meta.number",unit="",datatype="int",value="0",description='Run ID number. Zero for coincidences')
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="nameID",ucd="meta.id",unit="",datatype="string",value="{}".format(alertname),description="Name of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
-            apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
-            alertparams.append(apar)
+            if far<0.1:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=0.1, description="False Alarm Rate (<0.1)")
+                alertparams.append(apar)
+            else:
+                apar = VOAlert.MakeParam(name="far", ucd="stat.probability",unit="yr^-1", datatype="float", value=new_alert.false_pos, description="False Alarm Rate")
+                alertparams.append(apar)
             apar = VOAlert.MakeParam(name="pvalue", ucd="stat.probability",unit="", datatype="float", value=new_alert.pvalue, description="P-value of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="src_error90", ucd="stat.error.sys",unit="deg", datatype="float", value=2.15*sigmaR, description="Angular error of the source (90% containment)")
@@ -567,6 +573,8 @@ def ic_hawc(new_event=None):
 
             f1.write(xmlForm)
             f1.close()
+            MOVEFILE=True
+
 
             content = 'Times: '
             print(content)
@@ -578,16 +586,19 @@ def ic_hawc(new_event=None):
             content = 'Alert ID: %d, Rev: %d\n Position RA: %0.2f Dec: %0.2f Ang.Err.: %0.3f\n P-value: %0.3f\n Chi2: %0.2f\n FAR: %0.2f yr^-1\n NNus: %d'%(alertid,rev,ra,dec,sigmaR*1.18,new_alert.pvalue,chi2,new_alert.false_pos,nev)
             print(content)
 
-            content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
-                    new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,new_alert.false_pos)
+            content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,new_alert.false_pos)
+            if far<0.1:
+                content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev, new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,"<0.1")
             emails=['hgayala@psu.edu']
-            emails2=['hgayala@psu.edu']
+            emails2=['hgayala@psu.edu']#,'dorner@astro.uni-wuerzburg.de','julie.e.mcenery@nasa.gov','fabian.schussler@cea.fr','tmorokuma@ioa.s.u-tokyo.ac.jp','hawc-followup@umdgrb.umd.edu','roc@icecube.wisc.edu','alberto@inaoep.mx','tboroson@lcogt.net','lipunov@sai.msu.ru','Thomas.A.Prince@jpl.nasa.gov','miguel@psu.edu','scott.d.barthelmy@nasa.gov','adf15@psu.edu','konstancja.satalecka@desy.de','brunner@cppm.in2p3.fr','dornic@cppm.in2p3.fr']
 
-            #if far<=4.0 and far >0.01:
-            if far<3650.:# and far>0.01:
-                title='AMON IC-HAWC alert'
-
-
+            # TEMPORAL UNTIL GCN IS ON.
+            title='AMON IC-HAWC alert'
+            if far<=4.0:
+                email_alerts.alert_email_content([new_alert],content,title)
+                email_alerts.alert_email_content_emails(content2,title,emails2)
+                slack_message(title+"\n"+content+"\n"+fname,channel,prodMachine,token=token)
+            if far<4.0 and far>0.1:
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
@@ -603,16 +614,19 @@ def ic_hawc(new_event=None):
                     except subprocess.CalledProcessError as e:
                         print("Send alert failed")
                         logger.error("send_voevent failed")
+                        logger.error("File: {}".format(fname))
+                        MOVEFILE=False
                         raise e
                     #else:
                         #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                 #else:
-                shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
-                email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails)
-                slack_message(title+"\n"+content,channel,prodMachine,token=token)
-            elif far<0.01:
-                email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails2)
+                slack_message(title+"\n"+content+"\n"+fname,"test-alerts",False,token=token)
+            elif far<0.1:
+                email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
+                slack_message(title+"\n"+content2+"\n"+fname,channel,prodMachine,token=token)
+            if MOVEFILE:
+                shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
 
             #alertLine for HAWC
             al = AlertLine(new_alert.stream,new_alert.id,new_alert.rev,streams['HAWC-DM'],phEvent[-2],phEvent[-1])
