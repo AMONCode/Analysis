@@ -6,13 +6,15 @@ an xml form (VOEvents),
 performs DB transactions in a separate threat, thus keeping the code asynchronous
 - send a message to AMON analysis code about new event (event stream, id and rev)
 """
+from __future__ import print_function
+from builtins import str
+from builtins import range
 from twisted.internet import reactor, defer
 from twisted.web.resource import Resource
 from twisted.web.server import Site, NOT_DONE_YET
 from twisted.enterprise import adbapi
 
 import cgi, os, getopt, sys, shutil
-import ConfigParser, netrc
 from datetime import datetime, timedelta
 from time import time
 
@@ -35,7 +37,7 @@ class EventPage(Resource):
     microsec = 0.
     counter = 1
 
-    print "Event page is %d" % counter
+    print("Event page is %d" % counter)
     dbpool = adbapi.ConnectionPool("MySQLdb", db = DBFancyName,
                                             user = UserFancyName,
                                             passwd = PasswordFancy,
@@ -85,7 +87,7 @@ class EventPage(Resource):
                             event[0].psf_type,
                             0))
             plenght=len(evparam)
-            for i in xrange(plenght):
+            for i in range(plenght):
                 transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
                            (evparam[i].name,
                             evparam[i].value,
@@ -100,8 +102,8 @@ class EventPage(Resource):
             #return dd
 
         def printResult(result):
-            print "This event is written"
-            print result[0].stream, result[0].id, result[0].rev
+            print("This event is written")
+            print(result[0].stream, result[0].id, result[0].rev)
 
             #after Event and Parameter are written in DB, it is safe to send
             # a message to the analyser about new event to be read from DB and added to
@@ -111,7 +113,7 @@ class EventPage(Resource):
                                 link_error=error_handler.s())
 
         def printError(error):
-            print "Got Error: %r" % error
+            print("Got Error: %r" % error)
             error.printTraceback()
 
         def Finish():
@@ -119,7 +121,7 @@ class EventPage(Resource):
             EventPage.dbpool.close()
 
         self.headers = request.getAllHeaders()
-        print self.headers
+        print(self.headers)
         try:
             postfile = cgi.FieldStorage(
                 fp = request.content,
@@ -130,9 +132,9 @@ class EventPage(Resource):
                         }
                 )
         except Exception as e:
-            print 'something went wrong: ' + str(e)
+            print('something went wrong: ' + str(e))
 
-        print  request.content.getvalue()
+        print(request.content.getvalue())
         fname=self.headers['content-name']
 
         fp = open(path+"server_tmp_events/"+fname, "w")

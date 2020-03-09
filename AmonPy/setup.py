@@ -7,10 +7,12 @@ See:
 https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
+from __future__ import print_function
+from builtins import input
 from setuptools import setup, find_packages
 from setuptools.command.install import install
 from os import path
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 import uuid
 import socket
 import subprocess
@@ -22,7 +24,7 @@ with open(path.join(here, 'README.md')) as f:
 
 class AMONInstall(install):
       def run(self):
-            cp = ConfigParser()
+            cp = ConfigParser(allow_no_value=True)
             cp.add_section("database")
             cp.add_section("dirs")
             cp.add_section("machine")
@@ -50,18 +52,18 @@ class AMONInstall(install):
 
             cp.set("alerts","slack_token","a_token")
 
-            if raw_input("Do you wish to setup the amon server configuration? (Y/N): ").upper() == "Y":
+            if input("Do you wish to setup the amon server configuration? (Y/N): ").upper() == "Y":
                   for section in cp.sections():
                         for k,v in cp.items(section):
-                              answer = raw_input("%s : %s = [%s]" % (section, k, v)).strip()
+                              answer = input("%s : %s = [%s]" % (section, k, v)).strip()
                               if answer != "":
                                     cp.set(section, k, answer)
                   with open("amonpy/amon.ini", "w") as f:
                         cp.write(f)
 
 
-            if raw_input("Do you wish to setup the database? (Y/N): ").upper() == "Y":
-                  print "root login for the mysql server..."
+            if input("Do you wish to setup the database? (Y/N): ").upper() == "Y":
+                  print("root login for the mysql server...")
                   u,h,p = cp.get("database", "username"), cp.get("database", "host_name"), cp.get("database", "password")
                   d1, d2 = cp.get("database", "archive_dbname"), cp.get("database", "realtime_dbname")
                   # Create the dbs

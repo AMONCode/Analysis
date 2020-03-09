@@ -2,6 +2,7 @@
     Makes two coincident events for fake signal injection.
     Also serves as a placeholder for adding various modele signal injections.
 """
+from __future__ import print_function
 from sys import path
 from time import time
 import random
@@ -48,7 +49,7 @@ def make_triplets(Event1, Event2, id_max, id_max2):
                 setattr(triplets[1], attr, value)
         except:
             #print "Empty slot"
-            print
+            print()
     atlist2 = [attr for attr in dir(Event2) if not (attr.startswith('_'))]
     for attr in atlist2:
         value = getattr(Event2,attr)
@@ -71,6 +72,6 @@ def make_triplets(Event1, Event2, id_max, id_max2):
                 setattr(triplets2[0], attr, value)
                 setattr(triplets2[1], attr, value)
         except:
-             print
+             print()
 
     return triplets, triplets2

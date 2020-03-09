@@ -1,3 +1,7 @@
+from __future__ import division
+from __future__ import print_function
+from builtins import object
+
 import numpy as np
 
 class FPRD(object):
@@ -19,16 +23,15 @@ class FPRD(object):
 
     def __init__(self, fname='FPRD_stuff.npz'):
 
-        npz_file = np.load(fname)
+        npz_file = np.load(fname,encoding = 'latin1',allow_pickle=True)
 
         try:
             up_intp = npz_file['up_log10fprd_intp'].item()
             a = up_intp(-.5, 2.5)
-
         except Exception as E:
-            print E
-            print "Probably wrong scipy version"
-            print "Trying to make remake interpolator with grid points"
+            print("Exception error: {0}".format(E))
+            print("Probably wrong scipy version")
+            print("Trying to make remake interpolator with grid points")
 
             from scipy import interpolate
 
@@ -44,9 +47,9 @@ class FPRD(object):
             a = down_intp(.5, .05)
 
         except Exception as E:
-            print E
-            print "Probably wrong scipy version"
-            print "Trying to make remake interpolator with grid points"
+            print("Exception error: {0}".format(E))
+            print("Probably wrong scipy version")
+            print("Trying to make remake interpolator with grid points")
 
             from scipy import interpolate
 

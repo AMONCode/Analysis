@@ -3,6 +3,7 @@
 Module to test dbaccess files with
 user privileges.
 """
+from __future__ import print_function
 import sys
 # sys.path.append("./")
 import unittest
@@ -25,7 +26,7 @@ class TestDBaccess(unittest.TestCase):
         line = file.readline()
         # convert to a dictionary
         db = ast.literal_eval(line)
-        print db
+        print(db)
         file.close()
 
 # Run the unittests

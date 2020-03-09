@@ -1,3 +1,4 @@
+from __future__ import print_function
 import MySQLdb as mdb
 import sys
 """@package db_delete
@@ -13,11 +14,11 @@ def delete_alert_stream(stream_number,host_name, user_name, passw_name, db_name)
     try:
         cur.execute("""DELETE FROM alert WHERE alertConfig_stream=%s""" %(stream_number,))
         con.commit()
-        print '   This alert stream is deleted.'
+        print('   This alert stream is deleted.')
         # count+=cur.rowcount
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print '   This alert stream is not deleted.'
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('   This alert stream is not deleted.')
         con.rollback()
         
     cur.close()
@@ -30,14 +31,14 @@ def delete_event_stream(stream_number, host_name, user_name, passw_name, db_name
     cur = con.cursor()
     
     try:
-        print 'stream num %d' % stream_number 
+        print('stream num %d' % stream_number) 
         cur.execute("""DELETE FROM event WHERE eventStreamConfig_stream=%s""" %(stream_number,))
         con.commit()
         # count+=cur.rowcount
-        print 'Event stream is deleted'
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print 'This event stream is not deleted.'
+        print('Event stream is deleted')
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('This event stream is not deleted.')
         con.rollback()
         
     cur.close()
@@ -52,11 +53,11 @@ def delete_alertline_stream_by_event(stream_number,host_name, user_name, passw_n
     try:
         cur.execute("""DELETE FROM alertLine WHERE event_eventStreamConfig_stream=%s""" %(stream_number,))
         con.commit()
-        print '   This alertline stream is deleted.'
+        print('   This alertline stream is deleted.')
        
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print '   This alertline stream is not deleted.'
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('   This alertline stream is not deleted.')
         con.rollback()
         
     cur.close()
@@ -71,11 +72,11 @@ def delete_alertline_stream_by_alert(stream_number,host_name, user_name, passw_n
     try:
         cur.execute("""DELETE FROM alertLine WHERE alert_alertConfig_stream=%s""" %(stream_number,))
         con.commit()
-        print '   This alertline stream is deleted.'
+        print('   This alertline stream is deleted.')
        
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print '   This alertline stream is not deleted.'
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('   This alertline stream is not deleted.')
         con.rollback()
         
     cur.close()
@@ -90,11 +91,11 @@ def delete_alertConfig(stream_number,host_name, user_name, passw_name, db_name):
     try:
         cur.execute("""DELETE FROM alertConfig WHERE stream=%s""" %(stream_number,))
         con.commit()
-        print '   This alertConfig stream is deleted.'
+        print('   This alertConfig stream is deleted.')
        
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print '   This alertConfig stream is not deleted.'
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('   This alertConfig stream is not deleted.')
         con.rollback()
         
     cur.close()
@@ -109,11 +110,11 @@ def delete_alertConfig_rev(stream_number,rev, host_name, user_name, passw_name, 
     try:
         cur.execute("""DELETE FROM alertConfig WHERE stream=%s and rev=%s""" %(stream_number, rev,))
         con.commit()
-        print '   This alertConfig stream and rev is deleted.'
+        print('   This alertConfig stream and rev is deleted.')
        
-    except mdb.Error, e:
-        print 'Exception %s' %e
-        print '   This alertConfig stream and rev is not deleted.'
+    except mdb.Error as e:
+        print('Exception %s' %e)
+        print('   This alertConfig stream and rev is not deleted.')
         con.rollback()
         
     cur.close()

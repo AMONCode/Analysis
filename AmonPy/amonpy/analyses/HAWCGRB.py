@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import str
 from amonpy.dbase.db_classes import *
 from amonpy.dbase import db_read, db_write, post_on_websites
 from amonpy.dbase.alert_to_voevent import *
@@ -81,7 +83,7 @@ def hawc_burst(new_event=None):
 
     # print "Max Id Alert in DB: %d"%(idnum)
 
-    new_event = jsonpickle.decode(new_event)
+    new_event = jsonpickle.decode(new_event, classes=Event)
 
     t1 = time()
     # events=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
@@ -90,8 +92,8 @@ def hawc_burst(new_event=None):
                                     UserFancyName,PasswordFancy,DBFancyName)
 
     t2 = time()
-    print '   Read time: %.2f seconds' % float(t2-t1)
-    print ' lenght of parameters %s' % len(params)
+    print('   Read time: %.2f seconds' % float(t2-t1))
+    print(' lenght of parameters %s' % len(params))
 
     #Event description
 
@@ -106,7 +108,7 @@ def hawc_burst(new_event=None):
     false_pos = new_event.false_pos
 
     content = 'Position RA: %0.3f Dec: %0.3f\n Ang.Err.: %0.3f,\n FAR: %0.3e yr^-1,\n Time: %s'%(ra,dec,poserr,false_pos,str(tevent))
-    print content
+    print(content)
     if prodMachine is True:
         title='AMON HAWC-GRBlike alert'
     else:
@@ -166,14 +168,14 @@ def hawc_burst(new_event=None):
         if (prodMachine == True) and (false_pos<=12.0):
             title='AMON HAWC-GRBlike alert: URGENT!'
             try:
-                print "HAWC Burst created, sending to GCN"
-                cmd = ['comet-sendvo']
+                print("HAWC Burst created, sending to GCN")
+                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
                 cmd.append('--file=' + os.path.join(AlertDir,fname))
                 subprocess.check_call(cmd)
                 #if new_event.rev == 0: I comment this as it is already sent from aws
                 #    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
-                print "Send HAWC Burst VOevent alert failed"
+                print("Send HAWC Burst VOevent alert failed")
                 #logger.error("send_voevent failed")
                 raise e
             else:
