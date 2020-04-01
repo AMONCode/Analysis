@@ -31,6 +31,35 @@ from amonpy.dbase.db_classes import event_def
 # build the simplest version of the Event class
 #Event = event_def()
 
+def get_EventStreams(streams):
+
+    selecStream = ""
+    for s in streams:
+        if s == streams[-1]:
+            selecStream += "eventStreamConfig_stream = %d"%(s)
+        else:
+            selecStream += "eventStreamConfig_stream = %d OR "%(s)
+    return selecStream
+
+def get_AlertStreams(streams):
+
+    selecStream = ""
+    for s in streams:
+        if s == streams[-1]:
+            selecStream += "alertConfig_stream = %d"%(s)
+        else:
+            selecStream += "alertConfig_stream = %d OR "%(s)
+    return selecStream
+
+def get_ParamStreams(streams):
+
+    selecStream = ""
+    for s in streams:
+        if s == streams[-1]:
+            selecStream += "alertConfig_stream = %d"%(s)
+        else:
+            selecStream += "alertConfig_stream = %d OR "%(s)
+    return selecStream
 
 def read_event_single(event_stream, event_num, event_rev, host_name, user_name, passw_name, db_name):
     """ Read a given event from the DB. Input event stream name (char), event ID (int)
@@ -205,12 +234,7 @@ def read_events_angle_separation(streams,angle,RA,Dec,host_name,user_name,passw_
 
     num_streams=len(streams)
 
-    selecStream = ""
-    for s in streams:
-        if s == streams[-1]:
-            selecStream += "eventStreamConfig_stream = %d"%(s)
-        else:
-            selecStream += "eventStreamConfig_stream = %d OR "%(s)
+    selecStream = get_EventStreams(streams)
 
     try:
         print()
@@ -294,12 +318,7 @@ def read_event_timeslice_streams(streams,time_start,time_interval,host_name,user
     #if (eventSingle._Event__lock == False):
     num_streams=len(streams)
 
-    selecStream = ""
-    for s in streams:
-        if s == streams[-1]:
-            selecStream += "eventStreamConfig_stream = %d"%(s)
-        else:
-            selecStream += "eventStreamConfig_stream = %d OR "%(s)
+    selecStream = get_EventStreams(streams)
 
     try:
         print()
@@ -384,12 +403,7 @@ def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_na
     #if (eventSingle._Event__lock == False):
     num_streams=len(streams)
 
-    selecStream = ""
-    for s in streams:
-        if s == streams[-1]:
-            selecStream += "eventStreamConfig_stream = %d"%(s)
-        else:
-            selecStream += "eventStreamConfig_stream = %d OR "%(s)
+    selecStream = get_EventStreams(streams)
 
     try:
         print()
@@ -398,13 +412,7 @@ def read_event_timeslice_streams_latest(streams,time_start,time_interval,host_na
         r=mydb.table_describe('event', cur)
         num_columns=len(r[1])
         print("  ...CONNECTED")
-        #print '    Number of columns in the table %d' %  num_columns
-        #print
-        #print '    Column names:'
-        #print
-        #for ii in xrange(num_columns):
-        #    print '    ', r[1][ii][0]
-        #print
+
         if num_streams == 1:
             stmt=("""SELECT * FROM event WHERE rev = (select max(rev) from event as e where e.eventStreamConfig_Stream=event.eventStreamConfig_Stream and e.id=event.id) AND time>= '{}' AND time <= '{}' AND eventStreamConfig_stream = {}""".format(timeStart, timeStop, streams[0]))
         else:
@@ -623,12 +631,7 @@ def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user
 
     num_streams=len(streams)
 
-    selecStream = ""
-    for s in streams:
-        if s == streams[-1]:
-            selecStream += "alertConfig_stream = %d"%(s)
-        else:
-            selecStream += "alertConfig_stream = %d OR "%(s)
+    selecStream = get_AlertStreams(streams)
 
     try:
         print("Try to connect to DB")
@@ -637,14 +640,6 @@ def read_alert_timeslice_streams(streams,time_start,time_interval,host_name,user
         print(r[1][0][0])
 
         num_columns=len(r[1])
-        #print('    Number of columns in the table %d' %  num_columns)
-        #print()
-        #print('    Column names:')
-        #print()
-
-        #for ii in range(num_columns):
-            #print('    ', r[1][ii][0])
-        #print()
 
         if num_streams == 1:
             stmt = ("""SELECT * FROM alert WHERE time>= '{}' AND time <= '{}' AND alertConfig_stream = {} ORDER BY time ASC""".format(timeStart, timeStop, streams[0]))
@@ -700,8 +695,6 @@ def read_alertConfig(stream, rev, host_name, user_name, passw_name, db_name):
 
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
-
-
 
     if (stream > -1):
 
@@ -873,15 +866,6 @@ def read_parameters(event_stream, event_num, event_rev, host_name, user_name, pa
         mydb = db_metadata.DBMetadata()
         r=mydb.table_describe('parameter', cur)
         num_columns=len(r[1])
-        #print "Connected"
-        #print 'Number of columns in the table %d' %  num_columns
-        #print
-        #print 'Column names:'
-        #print
-
-        #for ii in xrange(num_columns):
-            #print r[1][ii][0]
-        #print
 
         cur.execute("""SELECT * FROM parameter WHERE event_eventStreamConfig_stream = %s AND
                     event_id = %s AND event_rev = %s""", (event_stream, event_num, event_rev))
@@ -973,7 +957,7 @@ def read_parameter_interval(stream_name,id_start,id_stop,host_name,user_name,
     print("   %d rows read from the database" % len(eventList))
     return eventList
 
-def read_parameter_interval_streams(streams_name,id_start,id_stop,host_name,user_name,
+def read_parameter_interval_streams(streams,id_start,id_stop,host_name,user_name,
                          passw_name, db_name):
     """ Read a list of parameters from the DB from a list of streams,
         within id intervals given in the lists id_start, id_stops for each of
@@ -990,7 +974,6 @@ def read_parameter_interval_streams(streams_name,id_start,id_stop,host_name,user
 
     idStart=id_start
     idStop  = id_stop
-    streams = streams_name
 
     # **** Code to read the database column names is bellow****
     # **** Just print them out for now ****
@@ -1419,6 +1402,6 @@ def get_latest_alert_info_from_event(alert_stream,event_id,host_name,user_name,p
         alert_id = df['alert_id'][0]
     except ValueError:
         max_rev = -1
-        alert_id = -1 
+        alert_id = -1
 
     return alert_id, max_rev
