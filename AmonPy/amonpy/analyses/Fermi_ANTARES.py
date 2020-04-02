@@ -6,7 +6,7 @@ import healpy as hp
 import sys
 from datetime import datetime,timedelta
 from astropy.time import Time
-import os
+import os, netrc
 import subprocess
 import MySQLdb as mdb
 import smtplib
@@ -27,6 +27,8 @@ dbname=configs.get('database','realtime_dbname')
 dpath=configs.get('dirs','amonpydir')
 AlertDir = configs.get('dirs','alertdir')
 
+nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
+nrc = netrc.netrc(nrc_fname)
 
 #now we run the fermi analysis against icecube/antares
 
@@ -594,12 +596,12 @@ def makevoevent(event):
     return xml
 
 def send_email(subject, body, to):
-    me = 'amon.psu@gmail.com'
+    me = nrc.hosts['gmail'][0] + '@gmail.com'
     msg = MIMEText(body)
     msg['Subject'] = subject
     msg['From'] = me
     msg['To'] = ", ".join(to)
-    pas = '***REMOVED***'
+    pas = nrc.hosts['gmail'][2]
     s = smtplib.SMTP('smtp.gmail.com:587')
     s.ehlo()
     s.starttls()
@@ -609,13 +611,13 @@ def send_email(subject, body, to):
     s.quit()
 
 def send_email_attach(subject, body, to, attachment):
-    me = 'amon.psu@gmail.com'
+    me = nrc.hosts['gmail'][0] + '@gmail.com'
     msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = me
     msg['To'] = ", ".join(to)
     msg.attach(MIMEText(body))
-    pas = '***REMOVED***'
+    pas = nrc.hosts['gmail'][2]
     
     part = MIMEBase('application', "octet-stream")
     part.set_payload(open(attachment, "rb").read())
