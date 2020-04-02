@@ -599,7 +599,7 @@ def send_email(subject, body, to):
     msg['Subject'] = subject
     msg['From'] = me
     msg['To'] = ", ".join(to)
-    pas = 'amonpassword'
+    pas = '***REMOVED***'
     s = smtplib.SMTP('smtp.gmail.com:587')
     s.ehlo()
     s.starttls()
@@ -615,7 +615,7 @@ def send_email_attach(subject, body, to, attachment):
     msg['From'] = me
     msg['To'] = ", ".join(to)
     msg.attach(MIMEText(body))
-    pas = 'amonpassword'
+    pas = '***REMOVED***'
     
     part = MIMEBase('application', "octet-stream")
     part.set_payload(open(attachment, "rb").read())

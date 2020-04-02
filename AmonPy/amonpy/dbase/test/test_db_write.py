@@ -17,7 +17,7 @@ class TestDBWrite(unittest.TestCase):
         self.realArchive=0  # read archival data
         self.HostFancyName='dfc13-amon-test-01.hs.int.aci.ics.psu.edu' #localhost or db.hpc.rcc.psu.edu
         self.UserFancyName='amon'
-        self.PasswordFancy='AmOnDeC2015'
+        self.PasswordFancy='***REMOVED***'
         self.DBFancyName='AMON_test1'
         self.DBFancyNameMC='AMON_test2'
         self.StreamFancyName=0

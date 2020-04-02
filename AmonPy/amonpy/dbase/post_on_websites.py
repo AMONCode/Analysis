@@ -16,7 +16,7 @@ def post_on_OpenAMON(post, particle):
     site_email = ["kaya338hene@post.wordpress.com"] # email linked to the psu wordpress website OpenAMON
     notif_email = ["tmg5746.33gmv3@zapiermail.com"] # email used to trigger app notifications
     me = "amon.psu@gmail.com"
-    pwd = "amonpassword"
+    pwd = "***REMOVED***"
     object_post = "%s alert!"  % (particle)
     object_notif_trig = "%s alert!" % (particle)# ! Do not change that without changing the Zapier settings
     
