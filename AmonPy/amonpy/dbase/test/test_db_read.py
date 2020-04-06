@@ -41,11 +41,11 @@ class TestDBRead(unittest.TestCase):
         pass
 
     def testReadSingle(self):
-        print('Testing read_event_single module')
-        eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID, self.EventRev,
+        print('\nTesting read_event_single module')
+        eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID2, self.EventRev,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
-        print(type(eventPrint))
+        print(eventPrint.forprint())
 
     def testReadTimeSliceStreams(self):
         print('Testing read_event_timeslice module')
