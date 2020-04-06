@@ -447,7 +447,7 @@ class AlertConfig(object):
         self.cluster_thresh     = 0.0
         AlertConfig.num_configs +=1
     def __del__(self):
-        AlCertConfig.num_configs -=1
+        AlertConfig.num_configs -=1
 
     def forprint(self):
         for attr, value in self.__dict__.items():
