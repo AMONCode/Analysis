@@ -30,7 +30,7 @@ class TestDBRead(unittest.TestCase):
         self.AlertRev=0
         self.AlertID=0
         self.ParameterName="energy"
-        self.StreamFancyName2=1
+        self.StreamFancyName2=0
         self.EventID2=13390853588700
         self.EventRev2=0
         self.TimeStart2='2020-03-01 00:00:00'
