@@ -13,6 +13,7 @@ class TestAngularSep(unittest.TestCase):
     pass
 
   def test_spcang(self):
+    print("Test angular separation formula")
     s = spcang(self.pos1[0],self.pos2[0],self.pos1[1],self.pos2[1])
     self.assertAlmostEqual(s,4.0,places=4)
 

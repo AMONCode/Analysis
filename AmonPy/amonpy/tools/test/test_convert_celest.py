@@ -22,6 +22,7 @@ class TestConvertCelest(unittest.TestCase):
 
 
     def test_poles(self):
+        print("Check poles")
         ra_list=[0.,90.,180.,270.,0.,90.,180.,270.,0.,90.,180.,270.]
         dec_list=[90.,90.,90.,90.,0.,0.,0.,0.,-90.,-90.,-90.,-90.]
         for i in range(len(ra_list)):
@@ -36,6 +37,7 @@ class TestConvertCelest(unittest.TestCase):
 
 
     def test_quadrants(self):
+        print("Check quadrants")
         ra_list0=[jj*30. for jj in range(12)]
         dec_list0=[45. for jj in range(12)]
         dec_list1=[-45. for jj in range(12)]
