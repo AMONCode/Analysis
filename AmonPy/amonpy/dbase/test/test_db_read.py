@@ -31,7 +31,7 @@ class TestDBRead(unittest.TestCase):
         self.AlertID=0
         self.ParameterName="energy"
         self.StreamFancyName2=1
-        self.EventID2=0
+        self.EventID2=13390853588700
         self.EventRev2=0
         self.TimeStart2='2020-03-01 00:00:00'
 
@@ -93,7 +93,7 @@ class TestDBRead(unittest.TestCase):
             print(eventPrint.forprint())
 
     def testReadParameterSingle(self):
-        print('Testing read_event_single module')
+        print('Testing read_parameter_single module')
         eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName2,
                                   self.EventID2, self.EventRev2,
                                   self.HostFancyName,self.UserFancyName,
