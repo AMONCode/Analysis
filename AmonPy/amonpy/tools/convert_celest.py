@@ -9,8 +9,9 @@ from numpy import math, array
 def radec2vec(ra,dec):
     phi = math.radians(ra)
     theta = math.radians(90.-dec)
-    return array([math.sin(theta)*math.cos(phi),
-                  math.sin(theta)*math.sin(phi),
+    sintheta = math.sin(theta)
+    return array([sintheta*math.cos(phi),
+                  sintheta*math.sin(phi),
                   math.cos(theta)])
 
 def vec2radec(v):
