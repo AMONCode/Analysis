@@ -14,9 +14,9 @@ class TestDBWrite(unittest.TestCase):
     def setUp(self):
 # insert your host, user name and password here!
         self.realArchive=0  # read archival data
-        self.HostFancyName='localhost'#'dfc13-amon-test-01.hs.int.aci.ics.psu.edu' #localhost or db.hpc.rcc.psu.edu
+        self.HostFancyName='localhost'
         self.UserFancyName='root'#'amon'
-        self.PasswordFancy='hawcfis05h'#'AmOnDeC2015'
+        self.PasswordFancy=''
         self.DBFancyName='AMON_test1'
         self.DBFancyNameMC='AMON_test2'
         self.StreamFancyName=0

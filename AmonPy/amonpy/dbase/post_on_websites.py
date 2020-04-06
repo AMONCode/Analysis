@@ -8,15 +8,18 @@ from past.utils import old_div
 from math import cos, pi, degrees, radians
 from amonpy.monitoring.monitor_funcs import send_email
 from amonpy.analyses.amon_streams import streams
+from amonpy.tools.config import AMON_CONFIG
 import pandas as pd
 from datetime import datetime
+import netrc, os
 
 def post_on_OpenAMON(post, particle):
-
+    nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
+    nrc = netrc.netrc(nrc_fname)
     site_email = ["kaya338hene@post.wordpress.com"] # email linked to the psu wordpress website OpenAMON
     notif_email = ["tmg5746.33gmv3@zapiermail.com"] # email used to trigger app notifications
-    me = "amon.psu@gmail.com"
-    pwd = "amonpassword"
+    me = nrc.hosts['gmail'][0] + '@gmail.com'
+    pwd = nrc.hosts['gmail'][2]
     object_post = "%s alert!"  % (particle)
     object_notif_trig = "%s alert!" % (particle)# ! Do not change that without changing the Zapier settings
     
