@@ -61,7 +61,7 @@ def get_ParamStreams(streams):
             selecStream += "alertConfig_stream = %d OR "%(s)
     return selecStream
 
-def str_to_datetime(time) 
+def str_to_datetime(time): 
     try:
         time=datetime.datetime.strptime(time,"%Y-%m-%d %H:%M:%S.%f")
     except:
