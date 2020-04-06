@@ -45,7 +45,7 @@ class TestDBRead(unittest.TestCase):
         eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID, self.EventRev,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
-        print(eventPrint.forprint())
+        print(type(eventPrint))
 
     def testReadTimeSliceStreams(self):
         print('Testing read_event_timeslice module')
@@ -85,7 +85,7 @@ class TestDBRead(unittest.TestCase):
 
     def testReadAlertTimeSliceStreams(self):
         print('Testing read_alert_time_slice module')
-        eventPrintList=db_read.read_alert_timeslicei_streams([self.AlertStream],self.TimeStart2, self.TimeSlice,
+        eventPrintList=db_read.read_alert_timeslice_streams([self.AlertStream],self.TimeStart2, self.TimeSlice,
                                                  self.HostFancyName,
                                                  self.UserFancyName, self.PasswordFancy,
                                                  self.DBFancyName2)
@@ -97,7 +97,7 @@ class TestDBRead(unittest.TestCase):
         eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName2,
                                   self.EventID2, self.EventRev2,
                                   self.HostFancyName,self.UserFancyName,
-                                  self.PasswordFancy, self.DBFancyName2)
+                                  self.PasswordFancy, self.DBFancyName)
         print(eventPrint.forprint())
 
 if __name__ == '__main__':
