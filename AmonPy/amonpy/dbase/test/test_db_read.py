@@ -30,7 +30,7 @@ class TestDBRead(unittest.TestCase):
         self.AlertRev=0
         self.AlertID=0
         self.ParameterName="energy"
-        self.StreamFancyName2=0
+        self.StreamFancyName2=7
         self.EventID2=13390853588700
         self.EventRev2=0
         self.TimeStart2='2020-03-01 00:00:00'
@@ -48,7 +48,7 @@ class TestDBRead(unittest.TestCase):
         print(eventPrint.forprint())
 
     def testReadTimeSliceStreams(self):
-        print('\nTesting read_event_timeslice module')
+        print('\nTesting read_event_timeslice_streams module')
         eventPrintList=db_read.read_event_timeslice_streams([self.StreamFancyName,self.StreamFancyName2],self.TimeStart, self.TimeSlice,
                                  self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
@@ -94,7 +94,7 @@ class TestDBRead(unittest.TestCase):
 
     def testReadParameterSingle(self):
         print('\nTesting read_parameter_single module')
-        eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName2,
+        eventPrint=db_read.read_parameter_single(self.ParameterName, self.StreamFancyName,
                                   self.EventID2, self.EventRev2,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
