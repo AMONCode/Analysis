@@ -95,7 +95,7 @@ def ic_cascade(new_event=None):
     params = db_read.read_parameters(new_event.stream, new_event.id, new_event.rev, HostFancyName,
                                      UserFancyName, PasswordFancy, DBFancyName)
 
-    skymaps = db_read.read_skymaps(new_event.stream, new_event.id, new_event.rev, HostFancyName,
+    skymaps = db_read.read_skyMapEvent(new_event.stream, new_event.id, new_event.rev, HostFancyName,
                                      UserFancyName, PasswordFancy, DBFancyName)
 
     t2 = time()
