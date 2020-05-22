@@ -32,7 +32,12 @@ class TestConvertCelest(unittest.TestCase):
             radec = vec2radec(v)
             ra1 = radec['ra']
             dec1= radec['dec']
-            #self.assertEqual(ra,ra1)
+            print()
+            print('Test of (ra,dec): ', ra, dec)
+            print('Unit vector: ', v)
+            print('Convert back (ra,dec): ', ra1, dec1)
+            print() 
+            self.assertEqual(ra,ra1)
             self.assertEqual(dec,dec1)
 
 
