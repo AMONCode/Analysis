@@ -114,8 +114,7 @@ setup(name = "AmonPy",
                  'bin/amon_create_db'
                 ],
       package_data = {'twisted': ['plugins/amon_server_plugin.py',
-                                  'plugins/amon_client_post_plugin.py',
-                                  'plugins/amon_client_post_ssl_plugin.py'
+                                  'plugins/amon_client_post_plugin.py'
                                   ]},
       include_package_data = True,
       )
