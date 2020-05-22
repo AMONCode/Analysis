@@ -533,10 +533,8 @@ def ic_hawc(new_event=None):
             f1=open(filen, 'w+')
 
             #Create Alert xml file
-            if far<=4.0 and far>0.1:
-                alertname="IceCube-HAWC-{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
-            else:
-                alertname="IC-HAWC-{}".format(new_alert.id)
+            eventdate="{}{}{}{}".format(timest[2:4],timest[5:7],timest[8:10],"A")
+            alertname="IC-HAWC-{}".format(new_alert.id)
 
             VOAlert = Alert2VOEvent([new_alert],'nu_em_coinc','Nu-EM Coincidence Alert from Daily Monitoring HAWC and IceCube',gcn_streams["Gamma-Nu-Coinc"],new_alert.id)
 
@@ -552,6 +550,8 @@ def ic_hawc(new_event=None):
             apar = VOAlert.MakeParam(name="rev",ucd="meta.number",unit="",datatype="int",value=new_alert.rev,description="Revision of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="nameID",ucd="meta.id",unit="",datatype="string",value="{}".format(alertname),description="Name of the alert")
+            alertparams.append(apar)
+            apar = VOAlert.MakeParam(name="event_date",ucd="meta.id",unit="",datatype="string",value="{}".format(eventdate),description="Date of the alert")
             alertparams.append(apar)
             apar = VOAlert.MakeParam(name="deltaT",ucd="time.timeduration",unit="s",datatype="float",value=new_alert.deltaT,description="Transit time of the HAWC hotspot")
             alertparams.append(apar)
