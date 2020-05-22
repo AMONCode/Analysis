@@ -37,6 +37,7 @@ class TestConvertCelest(unittest.TestCase):
             print('Unit vector: ', v)
             print('Convert back (ra,dec): ', ra1, dec1)
             print() 
+            self.assertEqual(ra,ra1)
 
 
     def test_quadrants(self):
