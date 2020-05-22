@@ -273,6 +273,21 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
           cur.close()
         con.close()
 
+    elif stream_num==5:
+        obs_name='FACT'
+        try:
+            cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
+            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,0, '2008-01-01 00:00:00',
+            '2009-12-31 00:00:00',obs_name, 'UTC-GEOD-TOPO','UTC-ICRS-TOPO','ground-based','point.dat','0','0','0'
+            ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
+            'tabulated','bckgr.dat','0'))
+            con.commit()
+        except mdb.Error as e:
+            print('Exception %s' %e)
+            print('Something went wrong, no data are written.')
+            con.rollback()
+        con.close()
+
 def write_event_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write event config list to DB table eventStreamConfig """
 # connect to database
