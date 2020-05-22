@@ -19,13 +19,13 @@ class TestDBRead(unittest.TestCase):
         self.UserFancyName=AMON_CONFIG.get('database','username')
         self.PasswordFancy=AMON_CONFIG.get('database','password')
         self.DBFancyName=AMON_CONFIG.get('database','realtime_dbname')
-        self.DBFancyName2='AMON_test2'
+        self.DBFancyName2=AMON_CONFIG.get('database','archive_dbname')
         self.StreamFancyName=0
         self.EventID=1
         self.EventRev=0
-        self.TimeStart='2020-04-01 00:00:00'
+        self.TimeStart='2021-04-19 00:00:00'
         self.TimeSlice=10000 # seconds
-        self.TimeStop='2020-04-02 00:00:00'  # not used for now
+        self.TimeStop='2021-04-02 00:00:00'  # not used for now
         self.AlertStream=1
         self.AlertRev=0
         self.AlertID=0
@@ -33,7 +33,7 @@ class TestDBRead(unittest.TestCase):
         self.StreamFancyName2=7
         self.EventID2=13390853588700
         self.EventRev2=0
-        self.TimeStart2='2020-03-01 00:00:00'
+        self.TimeStart2='2021-04-21 00:00:00'
 
     def tearDown(self):
         # no tear down actions yet
@@ -45,7 +45,10 @@ class TestDBRead(unittest.TestCase):
         eventPrint=db_read.read_event_single(self.StreamFancyName, self.EventID2, self.EventRev,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
-        print(eventPrint.forprint())
+        if eventPrint is None:
+            print("No event read")
+        else:
+            print(eventPrint.forprint())
 
     def testReadTimeSliceStreams(self):
         print('\nTesting read_event_timeslice_streams module')
@@ -71,17 +74,23 @@ class TestDBRead(unittest.TestCase):
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName2)
         #for eventPrint in eventPrintList
-        print(eventPrintList.forprint())
+        if eventPrintList is None:
+            print("AlertConfig is None")
+        else:
+            print(eventPrintList.forprint())
 
 
     def testReadAlert(self):
-        print('\nTesting read_alert_signle module')
+        print('\nTesting read_alert_single module')
         eventPrintList=db_read.read_alert_single(self.AlertStream, self.AlertRev,
                                                  self.AlertID, self.HostFancyName,
                                                  self.UserFancyName, self.PasswordFancy,
                                                  self.DBFancyName2)
         #for eventPrint in eventPrintList:
-        print(eventPrintList.forprint())
+        if eventPrintList is None:
+            print("Alert is None")
+        else:
+            print(eventPrintList.forprint())
 
     def testReadAlertTimeSliceStreams(self):
         print('\nTesting read_alert_time_slice module')
@@ -98,7 +107,10 @@ class TestDBRead(unittest.TestCase):
                                   self.EventID2, self.EventRev2,
                                   self.HostFancyName,self.UserFancyName,
                                   self.PasswordFancy, self.DBFancyName)
-        print(eventPrint.forprint())
+        if eventPrint is None:
+            print("No parameter exists")
+        else:
+            print(eventPrint.forprint())
 
 if __name__ == '__main__':
     unittest.main()
