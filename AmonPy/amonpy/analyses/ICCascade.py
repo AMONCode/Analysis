@@ -155,7 +155,7 @@ def ic_cascade(new_event=None):
     f1.write(xmlForm)
     f1.close()
 
-    if (new_event.type == "observation") and (prodMachine is True):
+    if (new_event.type == "observation") and (prodMachine is True) and (signalness != -1):
         try:
             cmd = ['comet-sendvo']
             cmd.append('--file=' + fname)
