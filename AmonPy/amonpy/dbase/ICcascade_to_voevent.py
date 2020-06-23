@@ -92,6 +92,10 @@ def ICcascade_to_voevent(alert, params, skymaps):
     p.set_Description(["Run id"])
     w.add_Param(p)
 
+    p = Param(name="retraction", ucd="meta.number",dataType="int", value=str(int(retraction)))
+    p.set_Description(["Indicates alert is retracted if 1, no retracted if 0"])
+    w.add_Param(p)
+
     p = Param(name="signalness", ucd="stat.probability", unit="", dataType="float",  value=str(signalness))
     p.set_Description(["Probability of a neutrino event being astrophysical in origin."])
     w.add_Param(p)
