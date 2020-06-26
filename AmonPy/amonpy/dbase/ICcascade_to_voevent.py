@@ -35,6 +35,8 @@ def ICcascade_to_voevent(alert, params, skymaps):
             src_error_90=params[i].value # GeV
         if (params[i].name== 'far'):
             far=params[i].value
+        if (params[i].name[0:14] == 'IceCubeCascade'):
+            event_name = params[i].name
         # if (params[i].name == 'fits_url'):
         #     fits_url = params[i].value
 
@@ -94,6 +96,10 @@ def ICcascade_to_voevent(alert, params, skymaps):
 
     p = Param(name="retraction", ucd="meta.number",dataType="int", value=str(int(retraction)))
     p.set_Description(["Indicates alert is retracted if 1, no retracted if 0"])
+    w.add_Param(p)
+
+    p = Param(name="event_name", ucd="meta.id",dataType="string", value=str(event_name))
+    p.set_Description(["Event name IceCubeCascade-YYMMDDa"])
     w.add_Param(p)
 
     p = Param(name="signalness", ucd="stat.probability", unit="", dataType="float",  value=str(signalness))
