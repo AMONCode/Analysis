@@ -88,6 +88,7 @@ def ic_cascade(new_event=None):
     # src_error_50 = 0.
     # src_error_90 = 0.
     far = 0.
+    event_name = ""
 
     t1 = time()
     # new_event=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
@@ -121,6 +122,8 @@ def ic_cascade(new_event=None):
                 energy = params[i].value
             if (params[i].name == 'far'):
                 far = params[i].value
+            if (params[i].name[0:14] == 'IceCubeCascade'):
+                event_name = params[i].name
             # if (params[i].name == 'fits_url'):
             #     fits_url = params[i].value
     """
@@ -137,7 +140,8 @@ def ic_cascade(new_event=None):
         title = 'IC Cascade Alert'
     else:
         title = 'Test from Dev machine: IC Cascade'
-    content = 'FAR = ' + str(far) + '\n'\
+    content = 'Event name = ' + str(event_name) + '\n'\
+            + 'FAR = ' + str(far) + '\n'\
             + 'Energy = ' + str(energy) + '\n'\
             + 'Signalness = ' + str(signalness) + '\n'\
             + 'RA = ' + str(new_event.RA) + '\n'\
