@@ -180,6 +180,7 @@ def ic_cascade(new_event=None):
         else:
             shutil.move(fname, os.path.join(AlertDir, "archive/"))
     else:
+        channel="test-alerts"
         shutil.move(fname, os.path.join(AlertDir, "archive/"))
 
     slack_message(title+"\n"+content, channel, prodMachine, token=token)

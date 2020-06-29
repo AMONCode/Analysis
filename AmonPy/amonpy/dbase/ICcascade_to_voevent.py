@@ -35,6 +35,8 @@ def ICcascade_to_voevent(alert, params, skymaps):
             src_error_90=params[i].value # GeV
         if (params[i].name== 'far'):
             far=params[i].value
+        if (params[i].name== 'retraction'):
+            retraction=params[i].value
         if (params[i].name[0:14] == 'IceCubeCascade'):
             event_name = params[i].name
         # if (params[i].name == 'fits_url'):
