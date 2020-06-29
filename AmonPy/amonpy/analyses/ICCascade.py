@@ -35,6 +35,10 @@ HostFancyName = AMON_CONFIG.get('database', 'host_name')  # Config.get('database
 AlertDir = AMON_CONFIG.get('dirs', 'alertdir')
 AmonPyDir = AMON_CONFIG.get('dirs', 'amonpydir')
 prodMachine = eval(AMON_CONFIG.get('machine', 'prod'))
+if prodMachine:
+    channel = 'alerts'
+else:
+    channel = 'test-alerts'
 
 UserFancyName = AMON_CONFIG.get('database', 'username')  # nrc.hosts[HostFancyName][0]
 PasswordFancy = AMON_CONFIG.get('database', 'password')  # nrc.hosts[HostFancyName][2]
@@ -139,16 +143,16 @@ def ic_cascade(new_event=None):
     if prodMachine is True:
         title = 'IC Cascade Alert'
     else:
-        title = 'Test from Dev machine: IC Cascade'
+        title = 'Dev machine: IC Cascade'
     content = 'Event name = ' + str(event_name) + '\n'\
             + 'FAR = ' + str(far) + '\n'\
-            + 'Energy = ' + str(energy) + '\n'\
+            + 'Energy = ' + str(energy/1000.) + ' TeV\n'\
             + 'Signalness = ' + str(signalness) + '\n'\
             + 'RA = ' + str(new_event.RA) + '\n'\
             + 'Dec = ' + str(new_event.dec) + '\n'\
             + 'Event_time = ' + str(pd.to_datetime(new_event.datetime)) + '\n'\
-            + 'Run_id = ' + str(run_id) + '\n'\
-            + 'Event_id = ' + str(event_id) + '\n'\
+            + 'Run_id = ' + str(int(run_id)) + '\n'\
+            + 'Event_id = ' + str(int(event_id)) + '\n'\
             + 'Skymap_fits = ' + skymaps['skymap_fits'] + '\n'\
             + 'Skymap_png = ' + skymaps['skymap_png'] + '\n'
 
@@ -166,7 +170,6 @@ def ic_cascade(new_event=None):
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
-            slack_message(title + "\n" + content, "alerts", prodMachine, token=token)
             # if new_event.rev == 0: TODO later: add it to OpenAMON
             #     post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
@@ -178,5 +181,6 @@ def ic_cascade(new_event=None):
     else:
         shutil.move(fname, os.path.join(AlertDir, "archive/"))
 
+    slack_message(title+"\n"+content, channel, prodMachine, token=token)
     email_alerts.alert_email_content([new_event], content, title)
     # email_alerts.alert_email([new_event],params)
