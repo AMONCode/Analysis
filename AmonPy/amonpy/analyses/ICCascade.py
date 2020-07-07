@@ -170,8 +170,8 @@ def ic_cascade(new_event=None):
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
-            # if new_event.rev == 0: TODO later: add it to OpenAMON
-            #     post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
+            if new_event.rev == 0:
+                post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
         except subprocess.CalledProcessError as e:
             print("Send Cascade VOevent alert failed")
             logger.error("send_voevent failed")
@@ -179,6 +179,7 @@ def ic_cascade(new_event=None):
         else:
             shutil.move(fname, os.path.join(AlertDir, "archive/"))
     else:
+        #post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
         channel="test-alerts"
         shutil.move(fname, os.path.join(AlertDir, "archive/"))
 
