@@ -35,10 +35,11 @@ HostFancyName = AMON_CONFIG.get('database', 'host_name')  # Config.get('database
 AlertDir = AMON_CONFIG.get('dirs', 'alertdir')
 AmonPyDir = AMON_CONFIG.get('dirs', 'amonpydir')
 prodMachine = eval(AMON_CONFIG.get('machine', 'prod'))
-if prodMachine:
-    channel = 'alerts'
-else:
-    channel = 'test-alerts'
+#if prodMachine:
+#    channel = 'alerts'
+#else:
+#    channel = 'test-alerts'
+
 
 UserFancyName = AMON_CONFIG.get('database', 'username')  # nrc.hosts[HostFancyName][0]
 PasswordFancy = AMON_CONFIG.get('database', 'password')  # nrc.hosts[HostFancyName][2]
@@ -164,8 +165,9 @@ def ic_cascade(new_event=None):
     f1.close()
 
     if (new_event.type == "observation") and (prodMachine is True) and (signalness != -1):
+        channel="alerts"
         try:
-            cmd = ['comet-sendvo']
+            cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
             cmd.append('--file=' + fname)
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
