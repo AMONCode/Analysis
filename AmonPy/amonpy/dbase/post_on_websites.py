@@ -20,6 +20,7 @@ from email.mime.application import MIMEApplication
 from os.path import basename
 import imaplib
 import smtplib
+from urllib.error import URLError, HTTPError
 
 
 def send_email_attachement(send_to, send_from, passwd, subject, text='', files=None):
@@ -171,14 +172,15 @@ src_error_50*60., E_sci_notat, far, signalness*100.)
  
     figure_path = '/home/ubuntu/scripts/OpenAMON_app/'
     skymap_url = skymaps['skymap_png']
-    urlopen_code = urllib.request.urlopen(skymap_url).getcode()
-    if urlopen_code == 200:
-        post += "\n\nThe figure below is the estimated localisation of this event's source we have from the signal. The yellow area corresponds to the most probable zone."
-        urllib.request.urlretrieve(skymap_url, figure_path+'skymap_casc.png')
-        attachement_path = [figure_path+'skymap_casc.png']
-    else:
+    try:
+        urlopen_code = urllib.request.urlopen(skymap_url).getcode()
+        if urlopen_code == 200:
+            post += "\n\nThe figure below is the estimated localisation of this event's source we have from the signal. The yellow area corresponds to the most probable zone."
+            urllib.request.urlretrieve(skymap_url, figure_path+'skymap_casc.png')
+            attachement_path = [figure_path+'skymap_casc.png']
+    except URLError as e:
         attachement_path = None
-        print('url not reachable, HTTP status code:', urlopen_code)
+        print('url not reachable, sending the openAMON post without skymap.')
 
     print(post, '\n')
     post_on_OpenAMON(post, "Neutrino", attachement_path)
