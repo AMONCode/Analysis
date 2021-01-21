@@ -239,7 +239,7 @@ class EventManager(Resource):
                                 transaction.execute("""SELECT event_id FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='signalness' AND (%s) AND value!=-1;"""%(today_ids))
                                 today_overThresh_events = [item[0] for item in transaction.fetchall()]
                                 today_overThresh_events = list(dict.fromkeys(today_overThresh_events)) # Remove duplicates (revisions)
-                                N_events_today = len(today_overThresh_events)
+                                N_events_today = max(0, len(today_overThresh_events)-1)
 
                             # Make name
                             alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
