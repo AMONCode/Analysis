@@ -19,6 +19,7 @@ def ICgoldbronze_to_voevent(alert, params):
     amon_id = alert[0].id
     rev=alert[0].rev
 
+    retraction = False
     for i in range(len(params)):
         #if (params[i].name== 'qtot'):
         if (params[i].name== 'event_id'):
@@ -35,6 +36,9 @@ def ICgoldbronze_to_voevent(alert, params):
             src_error_90=params[i].value # GeV
         if (params[i].name== 'far'):
             far=params[i].value
+        if (params[i].name=='retraction'):
+            retraction_rev = int(params[i].value)
+            retraction = True
 
     datenow=datetime.utcnow()
     ############ VOEvent header ############################
@@ -43,9 +47,13 @@ def ICgoldbronze_to_voevent(alert, params):
     if stream==streams['IC-Gold']:
         v.set_ivorn("ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Gold neutrino event.")
+        if retraction:
+            v.set_Citations(VOEvent.EventIVORN('retraction', "ivo://amon/icecube_gold#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(retraction_rev)))
     elif stream==streams['IC-Bronze']:
         v.set_ivorn("ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(rev))
         v.set_Description("Report of IceCube Bronze neutrino event.")
+        if retraction:
+            v.set_Citations(VOEvent.EventIVORN('retraction', "ivo://amon/icecube_bronze#%s" % str(stream)+'_'+str(run_id)+'_'+str(event_id)+'_'+ str(retraction_rev)))
     v.set_role("%s" % alert[0].type)
 
     w = Who()

@@ -83,7 +83,7 @@ def ic_gold_bronze(new_event=None):
     src_error_50=0.
     src_error_90=0.
     far=0.
-    
+
     t1 = time()
     # new_event=db_read.read_event_single(new_event.stream,new_event.id,new_event.rev,HostFancyName,
     #                                 UserFancyName,PasswordFancy,DBFancyName)
@@ -94,6 +94,7 @@ def ic_gold_bronze(new_event=None):
     print('   Read time: %.2f seconds' % float(t2-t1))
     print(' lenght of parameters %s' % len(params))
 
+    retraction = False
     #Get some parameters of the event
     if (len(params)>0):
         for i in range(len(params)):
@@ -113,6 +114,9 @@ def ic_gold_bronze(new_event=None):
                 energy=params[i].value
             if (params[i].name== 'far'):
                 far=params[i].value
+            if (params[i].name=='retraction'):
+                retraction_rev = params[i].value
+                retraction = True
     """
                 modified from
                 https://github.com/timstaley/fourpiskytools/blob/master/fourpiskytools/comet.py
@@ -134,6 +138,8 @@ def ic_gold_bronze(new_event=None):
         elif new_event.stream == streams['IC-Bronze']:
             title = 'Test from Dev machine: IC Bronze'
     content = 'FAR = '+str(far)+'\n'+'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(new_event.RA)+'\n'+'Dec = '+str(new_event.dec)+'\n'+'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
+    if retraction:
+        content = 'Retraction of alert:\nRun_id = '+str(run_id)+'\nEvent_id = '+str(event_id)+'\nRev = '+str(retraction_rev)
 
     #Create Alert xml file
     xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([new_event],params)
@@ -147,14 +153,13 @@ def ic_gold_bronze(new_event=None):
 
     if (new_event.type=="observation") and (prodMachine is True):
         try:
-            cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
+            cmd = ['comet-sendvo']
             cmd.append('--file=' + fname)
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
             subprocess.check_call(cmd)
             slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
-            if new_event.rev == 0:
-                post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
+            post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print("Send Gold/Bronze VOevent alert failed")
             logger.error("send_voevent failed")
