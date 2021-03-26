@@ -232,6 +232,16 @@ def make_event(source, o=sys.stdout):
     #event[0].forprint()
     print "Number of events: %s " % Event._num_events
     """
+    cc = v.get_Citations()
+    if cc:
+        for c in cc.get_EventIVORN():
+            if c.get_cite() == 'retraction':
+                print('Retraction of %s' % (c.get_valueOf_()))
+                evPar = Parameter('retraction',event[0].stream, event[0].id, event[0].rev)
+                evPar.value = int(c.get_valueOf_()[-1]) # last character should be the revision number of the notice to retract
+                evPar.units = 'rev'
+                evParam.append(evPar)
+
     return (event, evParam)
 
 def main():
