@@ -44,6 +44,7 @@ alert_streams = {
             "Antares-Fermi":8,
             "IC-Gold-Bronze":9,
             "IC-Cascade":10,
+            "ANTARES-HAWC":11,
 }
 
 inv_alert_streams = dict(list(map(reversed,list(alert_streams.items()))))
