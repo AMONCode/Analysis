@@ -480,4 +480,4 @@ def antares_hawc(new_event=None):
     else:
         print('Event should not be part of this analysis')
 
-     print("###########")
+    print("###########")
