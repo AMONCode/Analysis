@@ -228,7 +228,7 @@ def coincAnalysisHWC(new_event):
             pvalANT = e.pvalue
 
             print("ANTARES event: ")
-            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} p-value: {:0.3e}".format(ra2,dec2,poserr2,pval)
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} p-value: {:0.3e}".format(ra2,dec2,poserr2,pval))
 
             bkgANT = probBkgANTARES(dec2)
             datalist.append([streams['Antares'], dec2, ra2, poserr2, pd.to_datetime(e.datetime), bkgANT, pvalANT, e.id, e.rev])
