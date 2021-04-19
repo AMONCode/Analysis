@@ -1,6 +1,9 @@
 import numpy as np
 import os
 
+from amonpy.tools.config import AMON_CONFIG
+
+AmonPyDir = AMON_CONFIG.get('dirs','amonpydir')
 
 antBkgfile = os.path.join(AmonPyDir,'data/antares/antares_bkg1_intp.npy')
 antBkg = np.load(antBkgfile, encoding = 'latin1',allow_pickle=True).item()

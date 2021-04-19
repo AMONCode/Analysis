@@ -8,8 +8,11 @@ from scipy.interpolate import interp1d
 from astropy.coordinates import SkyCoord
 from astropy import units as u
 
+from amonpy.tools.config import AMON_CONFIG
+
 import os
 
+AmonPyDir = AMON_CONFIG.get('dirs','amonpydir')
 # HAWC PDF for spatial null and alternative hypotheses
 hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
 hwcBkg = np.load(hwcBkgfile, encoding = 'latin1',allow_pickle=True).item()
