@@ -99,7 +99,7 @@ def spaceloglh(dec,ra,events):
     return val
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz
-filename = os.path.join(AmonPyDir,'data/antares_hawc/CDF_LLH_scramblei_RT_new.npz')
+filename = os.path.join(AmonPyDir,'data/antares_hawc/CDF_LLH_scramble_RT_new.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
 for item in cdfLLH.items():
