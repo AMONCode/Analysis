@@ -117,7 +117,7 @@ def ic_gold_bronze(new_event=None):
                 energy=params[i].value
             if (params[i].name== 'far'):
                 far=params[i].value
-            if (params[i].name== 'retraction'):
+            if (params[i].name=='retraction'):
                 retraction_rev = params[i].value
                 retraction = True
     """

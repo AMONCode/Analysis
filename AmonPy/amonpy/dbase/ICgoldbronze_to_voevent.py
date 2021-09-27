@@ -36,7 +36,7 @@ def ICgoldbronze_to_voevent(alert, params, skymaps):
             src_error_90=params[i].value # GeV
         if (params[i].name== 'far'):
             far=params[i].value
-        if (params[i].name== 'retraction'):
+        if (params[i].name=='retraction'):
             retraction_rev = int(params[i].value)
             retraction = True
 

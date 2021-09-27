@@ -295,7 +295,7 @@ def maximizeLLH(all_events):
             newchi2 = -np.log10(pvalChi2)
             pvalue = pChi2(newchi2) #
             #far = np.power(10,-0.74*newchi2 + 5.40) #parameters from linear fit from archival data.
-            far = np.power(10,-0.77*newchi2 + 5.70) #parameters from linear fit from archival data. after ~ 2020/09/08 00:00 UTC
+            far = np.power(10,-0.77*newchi2 + 5.70) #parameters from linear fit from archival data. after ~2020/09/08 00:00 UTC
 
             coincs.append([solution.x[0],solution.x[1],stderr,newchi2,nnus,far,pvalue,ev])
     return coincs
@@ -600,9 +600,10 @@ def ic_hawc(new_event=None):
             # TEMPORAL UNITL GCN IS ON
             if far<=4.0:
                 email_alerts.alert_email_content([new_alert],content,title)
-                #email_alerts.alert_email_content_emails(content2,title,emails2)
+                email_alerts.alert_email_content_emails(content2,title,emails2)
                 slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
-            if far<=365.0 and far>0.01:
+
+            if far<=4.0 and far>0.01:
                 print("ID: %d"%new_alert.id)
                 print("Alert Stream: %s"%inv_alert_streams[new_alert.stream])
                 #fname.write(alert_to_voevent(new_alert))
