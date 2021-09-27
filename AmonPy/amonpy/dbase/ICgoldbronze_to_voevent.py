@@ -14,7 +14,7 @@ from amonpy.analyses.amon_streams import streams
 
 
 
-def ICgoldbronze_to_voevent(alert, params):
+def ICgoldbronze_to_voevent(alert, params, skymaps):
     stream=alert[0].stream #Need to check if GCN will be the same
     amon_id = alert[0].id
     rev=alert[0].rev
@@ -104,6 +104,15 @@ def ICgoldbronze_to_voevent(alert, params):
     p = Param(name="energy", ucd="phys.energy", unit="TeV", dataType="float",  value=str(energy/1000.))
     p.set_Description(["Likely neutrino energy (in TeV)."])
     w.add_Param(p)
+
+# TODO put that back when we got answer from Scott
+#    p = Param(name="skymap_fits", ucd="meta.code.multip", dataType="string",  value=skymaps['skymap_fits'])
+#    p.set_Description(["Skymap FITS"])
+#    w.add_Param(p)
+#
+#    p = Param(name="skymap_png", ucd="meta.code.multip", dataType="string",  value=skymaps['skymap_png'])
+#    p.set_Description(["Skymap PNG"])
+#    w.add_Param(p)
 
     p = Param(name="src_error_90", ucd="stat.error.sys", unit="deg", dataType="float",  value=str(src_error_90))
     p.set_Description(["Angular error of the source (90% containment)"])

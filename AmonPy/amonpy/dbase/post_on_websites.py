@@ -43,6 +43,7 @@ def send_email_attachement(send_to, send_from, passwd, subject, text='', files=N
         # After the file is closed
         part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
         msg.attach(part)
+
     smtp = smtplib.SMTP('smtp.gmail.com:587')
     smtp.ehlo()
     smtp.starttls()
@@ -153,6 +154,7 @@ def ICCascade_to_OpenAMON(event, params, skymaps):
     E_sci_notat = ("%.5e" % (energy/1000.)).replace("e+0", "*10^") # Write energy [TeV] in e+ format and replace e+0 by *10^
 
     post="""## An intriguing event has just been detected by the IceCube neutrino telescope!
+
 This event has a %.1f%% chance to be a neutrino of astrophysical origin. An event as significant or more should be produced by the background noise every %d days in average.
 
 Its energy is estimated to be around %d TeV [1. %d times the average energy released in nuclear fission of one Uranium-235 atom] and its source is located with a 90%% probability to be within a zone of %.2f square deg [2. %d times smaller than the moon angular coverage].
@@ -169,7 +171,7 @@ The background noise should produce an event at least as significant %.2f times 
 old_div(src_error_90_solid_angle,moon_solid_angle), str(event.datetime), float(event.RA), float(event.dec), src_error_90*60.,
 src_error_50*60., E_sci_notat, far, signalness*100.)
 # TODO adapt moon thing for larger error
- 
+
     figure_path = '/home/ubuntu/scripts/OpenAMON_app/'
     skymap_url = skymaps['skymap_png']
     try:
@@ -185,7 +187,6 @@ src_error_50*60., E_sci_notat, far, signalness*100.)
     print(post, '\n')
     post_on_OpenAMON(post, "Neutrino", attachement_path)
     return
-
 
 def HAWCGRB_to_OpenAMON(event):
 

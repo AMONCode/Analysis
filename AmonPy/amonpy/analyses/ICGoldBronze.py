@@ -90,6 +90,9 @@ def ic_gold_bronze(new_event=None):
     params=db_read.read_parameters(new_event.stream,new_event.id,new_event.rev,HostFancyName,
                                     UserFancyName,PasswordFancy,DBFancyName)
 
+    skymaps = db_read.read_skyMapEvent(new_event.stream, new_event.id, new_event.rev, HostFancyName,
+                                   UserFancyName, PasswordFancy, DBFancyName)
+
     t2 = time()
     print('   Read time: %.2f seconds' % float(t2-t1))
     print(' lenght of parameters %s' % len(params))
@@ -137,12 +140,21 @@ def ic_gold_bronze(new_event=None):
             title = 'Test from Dev machine: IC Gold'
         elif new_event.stream == streams['IC-Bronze']:
             title = 'Test from Dev machine: IC Bronze'
-    content = 'FAR = '+str(far)+'\n'+'Energy = '+str(energy)+'\n'+'Signalness = '+str(signalness)+'\n'+'RA = '+str(new_event.RA)+'\n'+'Dec = '+str(new_event.dec)+'\n'+'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'+'Run_id = '+str(run_id)+'\n'+'Event_id = '+str(event_id)+'\n'
+    content = 'FAR = '+str(far)+'\n'\
+             +'Energy = '+str(energy)+'\n'\
+             +'Signalness = '+str(signalness)+'\n'\
+             +'RA = '+str(new_event.RA)+'\n'\
+             +'Dec = '+str(new_event.dec)+'\n'\
+             +'Event_time = '+str(pd.to_datetime(new_event.datetime))+'\n'\
+             +'Run_id = '+str(run_id)+'\n'\
+             +'Event_id = '+str(event_id)+'\n'#\
+             #+'Skymap_fits = '+skymaps['skymap_fits']+'\n'\
+             #+'Skymap_png = '+skymaps['skymap_png']+'\n'
     if retraction:
         content = 'Retraction of alert:\nRun_id = '+str(run_id)+'\nEvent_id = '+str(event_id)+'\nRev = '+str(retraction_rev)
 
     #Create Alert xml file
-    xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([new_event],params)
+    xmlForm=ICgoldbronze_to_voevent.ICgoldbronze_to_voevent([new_event], params, skymaps)
     if new_event.stream == streams['IC-Gold']:
         fname=os.path.join(AlertDir,'amon_ic-gold_%s_%s_%s.xml'%(new_event.stream, new_event.id, new_event.rev))
     elif new_event.stream == streams['IC-Bronze']:
@@ -153,7 +165,7 @@ def ic_gold_bronze(new_event=None):
 
     if (new_event.type=="observation") and (prodMachine is True):
         try:
-            cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
+            cmd = ['comet-sendvo']
             cmd.append('--file=' + fname)
             # just for dev to prevent sending hese both from dev and pro machine
             # print "uncoment this if used on production"
