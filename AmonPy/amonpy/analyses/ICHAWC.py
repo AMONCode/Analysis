@@ -26,6 +26,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 import netrc, jsonpickle, os
 
+from hop import stream as hop_publisher
+from hop.models import VOEvent
 
 import scipy as sc
 from scipy import optimize, stats, special
@@ -598,10 +600,13 @@ def ic_hawc(new_event=None):
 
             title='AMON IC-HAWC alert'
             # TEMPORAL UNITL GCN IS ON
-            if far<=4.0:
+            if far<=365.0:
                 email_alerts.alert_email_content([new_alert],content,title)
                 email_alerts.alert_email_content_emails(content2,title,emails2)
                 slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
+                voevent = VOEvent.load_file(filen)
+                with hop_publisher.open("kafka://kafka.scimma.org/amon.test","w") as s:
+                    s.write(voevent)
 
             if far<=4.0 and far>0.01:
                 print("ID: %d"%new_alert.id)
