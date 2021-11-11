@@ -594,7 +594,7 @@ def ic_hawc(new_event=None):
                 content2 = 'IceCube-HAWC alert\nName:{}\nAlert ID: {}\nRev: {}\nSearch Time {} - {}\nRA: {:0.2f} deg J2000\nDec: {:0.2f} deg J2000\nAng Err (50%) {:0.2f} deg\nAng. Err (90%) {:0.2f} deg\nFAR: {} yr^-1'.format(alertname,alertid,rev,
                         new_alert.datetime-timedelta(seconds=new_alert.deltaT),new_alert.datetime,ra,dec,1.18*sigmaR,2.15*sigmaR,"<0.1")
             emails=['hgayala@psu.edu']
-            emails2=['hgayala@psu.edu','dorner@astro.uni-wuerzburg.de','julie.e.mcenery@nasa.gov','fabian.schussler@cea.fr','tmorokuma@ioa.s.u-tokyo.ac.jp','hawc-followup@umdgrb.umd.edu','roc@icecube.wisc.edu','alberto@inaoep.mx','tboroson@lcogt.net','lipunov@sai.msu.ru','Thomas.A.Prince@jpl.nasa.gov','miguel@psu.edu','scott.d.barthelmy@nasa.gov','adf15@psu.edu','konstancja.satalecka@desy.de','brunner@cppm.in2p3.fr','dornic@cppm.in2p3.fr']
+            emails2=['hgayala@psu.edu','dorner@astro.uni-wuerzburg.de','julie.e.mcenery@nasa.gov','fabian.schussler@cea.fr','tmorokuma@ioa.s.u-tokyo.ac.jp','hawc-followup@umdgrb.umd.edu','roc@icecube.wisc.edu','alberto@inaoep.mx','tboroson@lcogt.net','lipunov@sai.msu.ru','Thomas.A.Prince@jpl.nasa.gov','miguel@psu.edu','scott.d.barthelmy@nasa.gov','adf15@psu.edu','Salvatore.Mangano@ciemat.es','brunner@cppm.in2p3.fr','dornic@cppm.in2p3.fr']
 
             title='AMON IC-HAWC alert'
             # TEMPORAL UNITL GCN IS ON
