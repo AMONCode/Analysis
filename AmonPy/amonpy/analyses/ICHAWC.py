@@ -602,7 +602,7 @@ def ic_hawc(new_event=None):
             # TEMPORAL UNITL GCN IS ON
             if far<=365.0:
                 email_alerts.alert_email_content([new_alert],content,title)
-                email_alerts.alert_email_content_emails(content2,title,emails2)
+                #email_alerts.alert_email_content_emails(content2,title,emails2)
                 slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
                 voevent = VOEvent.load_file(filen)
                 with hop_publisher.open("kafka://kafka.scimma.org/amon.test","w") as s:
