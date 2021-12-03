@@ -21,6 +21,7 @@ from datetime import datetime, timedelta
 import netrc, jsonpickle
 from amonpy.tools.config import AMON_CONFIG
 from amonpy.tools.J2000 import J2000
+from amonpy.tools.postAlerts import postAlertGCN, postAlertHop
 
 import sys, shutil, os, subprocess
 
@@ -165,22 +166,21 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        if (prodMachine == True) and (false_pos<=12.0):
+        if (prodMachine == True):
             title='AMON HAWC-GRBlike alert: URGENT!'
+            if new_event.rev == 0:
+                post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             try:
                 print("HAWC Burst created, sending to GCN")
-                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
-                cmd.append('--file=' + os.path.join(AlertDir,fname))
-                subprocess.check_call(cmd)
-                if new_event.rev == 0:
-                    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
+                postAlertGCN(os.path.join(AlertDir,fname))
+                #postAlertHop(os.path.join(AlertDir,fname),'amon.hawcGRB')
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
-                #logger.error("send_voevent failed")
                 raise e
             else:
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
         else:
+            postAlertHop(os.path.join(AlertDir,fname),'amon.test')
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
 
 
