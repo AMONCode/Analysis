@@ -185,6 +185,6 @@ def hawc_burst(new_event=None):
 
 
         # send slack message for alerts with FAR<12 per year
-        slack_message(title+"\n"+content,channel,prodMachine,token=token)
+        slack_message(title+" <!channel>\n"+content,channel,prodMachine,token=token)
     #Send email after everything has been accomplished, all the events
     email_alerts.alert_email_content([new_event],content,title)

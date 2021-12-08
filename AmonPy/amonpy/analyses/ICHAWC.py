@@ -620,10 +620,10 @@ def ic_hawc(new_event=None):
                         shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                     email_alerts.alert_email_content_emails(content2,title,emails2)
                     #email_alerts.alert_email_content_emails(content2,title,emails)
-                    slack_message(title+"\n"+content+"\n"+filen,channel,prodMachine,token=token)
+                    slack_message(title+" <!channel>\n"+content+"\n"+filen,channel,prodMachine,token=token)
             elif far<0.1:
                 email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
-                slack_message(title+"\n"+content2+"\n"+fname,channel,prodMachine,token=token)
+                slack_message(title+" <!channel>\n"+content2+"\n"+fname,channel,prodMachine,token=token)
                 #shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
             else:
                 shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
