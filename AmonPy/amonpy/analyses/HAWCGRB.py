@@ -168,12 +168,12 @@ def hawc_burst(new_event=None):
 
         if (prodMachine == True):
             title='AMON HAWC-GRBlike alert: URGENT!'
-            if new_event.rev == 0:
-                post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             try:
                 print("HAWC Burst created, sending to GCN")
                 postAlertGCN(os.path.join(AlertDir,fname))
                 #postAlertHop(os.path.join(AlertDir,fname),'amon.hawcGRB')
+                if new_event.rev == 0:
+                    post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
                 raise e

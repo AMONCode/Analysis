@@ -165,10 +165,10 @@ def ic_gold_bronze(new_event=None):
     f1.close()
 
     if (new_event.type=="observation") and (prodMachine is True):
-        if new_event.rev == 0:
-            post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         try:
             postAlertGCN(fname)
+            if new_event.rev == 0:
+                post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print("Send Gold/Bronze VOevent alert failed")
             #logger.error("send_voevent failed")
