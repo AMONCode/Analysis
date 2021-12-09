@@ -599,7 +599,7 @@ def ic_hawc(new_event=None):
             title='AMON IC-HAWC alert'
             if far<=365.0 and prodMachine == False:
                 email_alerts.alert_email_content([new_alert],content,title)
-                slack_message(title+"\n"+content+"\n"+filen,"test-alerts",False,token=token)
+                slack_message(title+"\n"+content+"\n"+filen,channel,False,token=token)
                 postAlertHop(filen,channel='amon.test')
 
             if far<=4.0 and far>0.1:
@@ -619,7 +619,6 @@ def ic_hawc(new_event=None):
                     else:
                         shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
                     email_alerts.alert_email_content_emails(content2,title,emails2)
-                    #email_alerts.alert_email_content_emails(content2,title,emails)
                     slack_message(title+" <!channel>\n"+content+"\n"+filen,channel,prodMachine,token=token)
             elif far<0.1:
                 email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)

@@ -175,8 +175,9 @@ def ic_gold_bronze(new_event=None):
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
-        slack_message(title+" <!channel>\n"+content,"alerts",prodMachine,token=token)
+            slack_message(title+" <!channel>\n"+content,"alerts",prodMachine,token=token)
     else:
+        slack_message(title+"\n"+content,"test-alerts",prodMachine,token=token)
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
 

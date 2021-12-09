@@ -177,11 +177,12 @@ def ic_cascade(new_event=None):
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir, "archive/"))
+            slack_message(title+" <!channel>\n"+content, channel, prodMachine, token=token)
     else:
         channel="test-alerts"
         shutil.move(fname, os.path.join(AlertDir, "archive/"))
+        slack_message(title+"\n"+content, channel, prodMachine, token=token)
 
     #post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
-    slack_message(title+" <!channel>\n"+content, channel, prodMachine, token=token)
     email_alerts.alert_email_content([new_event], content, title)
     # email_alerts.alert_email([new_event],params)

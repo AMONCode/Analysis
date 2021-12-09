@@ -171,7 +171,7 @@ def hawc_burst(new_event=None):
             try:
                 print("HAWC Burst created, sending to GCN")
                 postAlertGCN(os.path.join(AlertDir,fname))
-                #postAlertHop(os.path.join(AlertDir,fname),'amon.hawcGRB')
+                #postAlertHop(os.path.join(AlertDir,fname),'hawc.simpleGRB')
                 if new_event.rev == 0:
                     post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
@@ -179,12 +179,11 @@ def hawc_burst(new_event=None):
                 raise e
             else:
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
+                slack_message(title+" <!channel>\n"+content,channel,prodMachine,token=token)
         else:
-            postAlertHop(os.path.join(AlertDir,fname),'amon.test')
+            #postAlertHop(os.path.join(AlertDir,fname),'hawc.test')
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
-
-
-        # send slack message for alerts with FAR<12 per year
-        slack_message(title+" <!channel>\n"+content,channel,prodMachine,token=token)
+            # send slack message for alerts with FAR<12 per year
+            slack_message(title+"\n"+content,channel,prodMachine,token=token)
     #Send email after everything has been accomplished, all the events
     email_alerts.alert_email_content([new_event],content,title)
