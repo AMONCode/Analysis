@@ -176,6 +176,7 @@ def hawc_burst(new_event=None):
                     post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
+                slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(os.path.join(AlertDir,fname))+content,channel,prodMachine,token=token)
                 raise e
             else:
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))

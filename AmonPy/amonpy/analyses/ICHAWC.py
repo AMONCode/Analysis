@@ -613,13 +613,12 @@ def ic_hawc(new_event=None):
 
                     except subprocess.CalledProcessError as e:
                         print("Send alert failed")
-                        #logger.error("send_voevent failed")
-                        #logger.error("File: {}".format(fname))
+                        slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(filen)+content,channel,prodMachine,token=token)
                         raise e
                     else:
                         shutil.move(filen, os.path.join(AlertDir,"archive/",fname))
+                        slack_message(title+" <!channel>\n"+content+"\n"+filen,channel,prodMachine,token=token)
                     email_alerts.alert_email_content_emails(content2,title,emails2)
-                    slack_message(title+" <!channel>\n"+content+"\n"+filen,channel,prodMachine,token=token)
             elif far<0.1:
                 email_alerts.alert_email_content_emails(content2,title+" LOWFAR",emails)
                 slack_message(title+" <!channel>\n"+content2+"\n"+fname,channel,prodMachine,token=token)

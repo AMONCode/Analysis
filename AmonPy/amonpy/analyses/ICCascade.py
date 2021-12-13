@@ -173,7 +173,7 @@ def ic_cascade(new_event=None):
                 post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
         except subprocess.CalledProcessError as e:
             print("Send Cascade VOevent alert failed")
-            #logger.error("send_voevent failed")
+            slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(fname)+content,channel,prodMachine,token=token)
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir, "archive/"))

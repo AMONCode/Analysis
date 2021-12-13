@@ -171,7 +171,7 @@ def ic_gold_bronze(new_event=None):
                 post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print("Send Gold/Bronze VOevent alert failed")
-            #logger.error("send_voevent failed")
+            slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(fname)+content,"alerts",prodMachine,token=token)
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
