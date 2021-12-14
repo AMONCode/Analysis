@@ -7,6 +7,7 @@ from amonpy.dbase import ICcascade_to_voevent, post_on_websites
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams
 from amonpy.tools.config import AMON_CONFIG
+from amonpy.tools.postAlerts import postAlertGCN
 from amonpy.monitoring.monitor_funcs import slack_message
 
 from amonpy.ops.server.celery import app
@@ -167,24 +168,21 @@ def ic_cascade(new_event=None):
     if (new_event.type == "observation") and (prodMachine is True) and (signalness != -1):
         channel="alerts"
         try:
-            cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
-            cmd.append('--file=' + fname)
-            # just for dev to prevent sending hese both from dev and pro machine
-            # print "uncoment this if used on production"
-            subprocess.check_call(cmd)
+            postAlertGCN(fname)
             if new_event.rev == 0:
                 post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
         except subprocess.CalledProcessError as e:
             print("Send Cascade VOevent alert failed")
-            logger.error("send_voevent failed")
+            slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(fname)+content,channel,prodMachine,token=token)
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir, "archive/"))
+            slack_message(title+" <!channel>\n"+content, channel, prodMachine, token=token)
     else:
         channel="test-alerts"
         shutil.move(fname, os.path.join(AlertDir, "archive/"))
+        slack_message(title+"\n"+content, channel, prodMachine, token=token)
 
     #post_on_websites.ICCascade_to_OpenAMON(new_event,params,skymaps)
-    slack_message(title+"\n"+content, channel, prodMachine, token=token)
     email_alerts.alert_email_content([new_event], content, title)
     # email_alerts.alert_email([new_event],params)

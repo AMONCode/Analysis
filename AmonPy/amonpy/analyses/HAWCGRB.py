@@ -21,6 +21,7 @@ from datetime import datetime, timedelta
 import netrc, jsonpickle
 from amonpy.tools.config import AMON_CONFIG
 from amonpy.tools.J2000 import J2000
+from amonpy.tools.postAlerts import postAlertGCN, postAlertHop
 
 import sys, shutil, os, subprocess
 
@@ -165,26 +166,25 @@ def hawc_burst(new_event=None):
         f1.write(xmlForm)
         f1.close()
 
-        if (prodMachine == True) and (false_pos<=12.0):
+        if (prodMachine == True):
             title='AMON HAWC-GRBlike alert: URGENT!'
             try:
                 print("HAWC Burst created, sending to GCN")
-                cmd = ['/home/ubuntu/Software/miniconda3/bin/comet-sendvo']
-                cmd.append('--file=' + os.path.join(AlertDir,fname))
-                subprocess.check_call(cmd)
+                postAlertGCN(os.path.join(AlertDir,fname))
+                #postAlertHop(os.path.join(AlertDir,fname),'hawc.simpleGRB')
                 if new_event.rev == 0:
                     post_on_websites.HAWCGRB_to_OpenAMON(new_event)
             except subprocess.CalledProcessError as e:
                 print("Send HAWC Burst VOevent alert failed")
-                #logger.error("send_voevent failed")
+                slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(os.path.join(AlertDir,fname))+content,channel,prodMachine,token=token)
                 raise e
             else:
                 shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
+                slack_message(title+" <!channel>\n"+content,channel,prodMachine,token=token)
         else:
+            #postAlertHop(os.path.join(AlertDir,fname),'hawc.test')
             shutil.move(os.path.join(AlertDir,fname), os.path.join(AlertDir,"archive/"))
-
-
-        # send slack message for alerts with FAR<12 per year
-        slack_message(title+"\n"+content,channel,prodMachine,token=token)
+            # send slack message for alerts with FAR<12 per year
+            slack_message(title+"\n"+content,channel,prodMachine,token=token)
     #Send email after everything has been accomplished, all the events
     email_alerts.alert_email_content([new_event],content,title)

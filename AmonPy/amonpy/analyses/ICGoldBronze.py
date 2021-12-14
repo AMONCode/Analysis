@@ -7,6 +7,7 @@ from amonpy.dbase import ICgoldbronze_to_voevent, post_on_websites
 import amonpy.dbase.email_alerts as email_alerts
 from amonpy.analyses.amon_streams import streams, alert_streams
 from amonpy.tools.config import AMON_CONFIG
+from amonpy.tools.postAlerts import postAlertGCN
 from amonpy.monitoring.monitor_funcs import slack_message
 
 from amonpy.ops.server.celery import app
@@ -165,21 +166,18 @@ def ic_gold_bronze(new_event=None):
 
     if (new_event.type=="observation") and (prodMachine is True):
         try:
-            cmd = ['comet-sendvo']
-            cmd.append('--file=' + fname)
-            # just for dev to prevent sending hese both from dev and pro machine
-            # print "uncoment this if used on production"
-            subprocess.check_call(cmd)
-            slack_message(title+"\n"+content,"alerts",prodMachine,token=token)
+            postAlertGCN(fname)
             if new_event.rev == 0:
                 post_on_websites.ICgoldbronze_to_OpenAMON(new_event,params)
         except subprocess.CalledProcessError as e:
             print("Send Gold/Bronze VOevent alert failed")
-            logger.error("send_voevent failed")
+            slack_message(title+" FAILED TO SEND <!channel>\n"+"File: {}\n".format(fname)+content,"alerts",prodMachine,token=token)
             raise e
         else:
             shutil.move(fname, os.path.join(AlertDir,"archive/"))
+            slack_message(title+" <!channel>\n"+content,"alerts",prodMachine,token=token)
     else:
+        slack_message(title+"\n"+content,"test-alerts",prodMachine,token=token)
         shutil.move(fname, os.path.join(AlertDir,"archive/"))
 
 
