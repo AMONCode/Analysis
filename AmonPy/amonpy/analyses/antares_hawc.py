@@ -112,7 +112,7 @@ def pSpace(llh):
         return 1.
     elif llh > b[-1]:
         print("This event has an even smaller p_value than the current interpolation range!!")
-        return 1.-f(bin_centers[-1])
+        return 1.-f(b[-1])
     else:
         return 1.-f(llh)
 
