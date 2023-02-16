@@ -111,8 +111,8 @@ def pSpace(llh):
     if llh < b[0]:
         return 1.
     elif llh > b[-1]:
-        print("This event has an even smaller p_value than the current interpolation range!!")
-        return 1.-f(bin_centers[-1])
+        print("pSpace: This event has an even smaller p_value than the current interpolation range!!")
+        return 1.-f(b[-2])
     else:
         return 1.-f(llh)
 
@@ -129,7 +129,7 @@ def pChi2(chi2):
     if chi2 < b2[0]:
         return 1.
     elif chi2 > b2[-1]:
-        print("This event has an even smaller p_value than the current interpolation range!!")
+        print("pChi2: This event has an even smaller p_value than the current interpolation range!!")
         return 1.-f2(b2[-1])
     else:
         return 1.-f2(chi2)
@@ -141,10 +141,10 @@ def maximizeLLH(all_events):
     coincs=[]
     for ev in all_events:
         try:
-            solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'SLSQP')
+            solution = optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'SLSQP')
         except ValueError:
             try:
-                solution = sc.optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
+                solution = optimize.minimize(lambda x: -spaceloglh(x[0],x[1],ev),np.array([ev[0][1]+0.1,ev[0][2]+0.1]), method = 'BFGS')
             except ValueError:
                 print("Error in minimization")
                 return coincs
@@ -164,6 +164,8 @@ def maximizeLLH(all_events):
             logspace = -1*(solution.fun)
             pspace = pSpace(logspace)
             antpvalue = totalpHEN(ev)
+            print("loglikelihood: {}".format(logspace))
+            print("P-values: {}, {}, {}, {}".format(pspace, phwc, pcluster, antpvalue))
             chi2 = -2 * np.log(pspace * phwc * pcluster * antpvalue) #The main quantity
             nnus = len(ev)-1
 
@@ -173,7 +175,7 @@ def maximizeLLH(all_events):
             pvalue = pChi2(newchi2) #
             far = np.power(10,-0.78*newchi2 + 2.33) #parameters from linear fit from archival data.
 
-            coincs.append([solution.x[0],solution.x[1],stderr,newch2,nnus,far,pvalue,ev])
+            coincs.append([solution.x[0],solution.x[1],stderr,newchi2,nnus,far,pvalue,ev])
     return coincs
 
 def coincAnalysisHWC(new_event):
@@ -228,7 +230,7 @@ def coincAnalysisHWC(new_event):
             pvalANT = e.pvalue
 
             print("ANTARES event: ")
-            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} p-value: {:0.3e}".format(ra2,dec2,poserr2,pval))
+            print("RA: {:0.1f} Dec: {:0.1f} Uncert: {:0.1f} p-value: {:0.3e}".format(ra2,dec2,poserr2,pvalANT))
 
             bkgANT = probBkgANTARES(dec2)
             datalist.append([streams['Antares'], dec2, ra2, poserr2, pd.to_datetime(e.datetime), bkgANT, pvalANT, e.id, e.rev])
@@ -305,7 +307,7 @@ def antares_hawc(new_event=None):
             alertTime = []
 
             for j in nuEvents:
-                alertTime.append(j[5])
+                alertTime.append(j[4])
 
             rev = 0
             alertid = idnum+1
