@@ -102,12 +102,14 @@ def insideHAWCBrightSources(dec,ra):
 
 
 # HAWC PDF for spatial null and alternative hypotheses
-hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp.npy')
+hwcBkgfile = os.path.join(AmonPyDir,'data/hawc/hawc_bkg_intp_pass5.npy')
 hwcBkg = np.load(hwcBkgfile, encoding = 'latin1',allow_pickle=True).item()
 def probBkgHAWC(dec):
     """Spatial Bkg PDF for a HAWC hotspot. Based on data """
-    if dec<-25.: return 0.00619
-    if dec>64: return 0.00619
+    #if dec<-25.: return 0.00619
+    #if dec>64: return 0.00619
+    if dec<-26.: return 00.00419
+    if dec<64.: return 00.00419
     return hwcBkg(dec)*180./(np.pi*2*np.pi)
 
 def probSigHAWC(spc,sigma):
@@ -153,14 +155,13 @@ def pNuCluster(events):
     return val
 
 # Calculation of the p_value of the spatial llh. Trying to avoid several calls to CDF_LLH.npz
-filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_LLH_scramble.npz')
+filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_LLH_RT_20230216.npz')
 cdfLLH =  np.load(filename)
 CDF = [] #dummy variable
 for item in cdfLLH.items():
     CDF.append(item[1])
-n = CDF[0]
-b = CDF[1]
-bin_centers = b[:-1] + 0.5*(b[1:] - b[:-1])
+bin_centers = CDF[0]
+n = CDF[1]
 f = interp1d(bin_centers, n)
 def pSpace(llh):
     if llh < bin_centers[0]:
@@ -196,14 +197,13 @@ def totalpHEN(events):
         return val
 
 #Calculating the p_value of the analysis. Trying to avoid several calls to CDF_CHI2.npz
-filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_newChi2_scramble.npz')
+filename = os.path.join(AmonPyDir,'data/hawc_icecube/CDF_RS_RT_20230216.npz')
 cdfChi2 = np.load(filename)
 CDF = [] #dummy variable
 for item in cdfChi2.items():
     CDF.append(item[1])
-n = CDF[0]
-b = CDF[1]
-xo = b[:-1] + 0.5*(b[1:] - b[:-1])
+xo = CDF[0]
+n = CDF[1]
 f2 = interp1d(xo, n)
 def pChi2(chi2):
     if chi2 < xo[0]:
