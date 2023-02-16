@@ -173,7 +173,7 @@ def maximizeLLH(all_events):
             pvalChi2 = stats.chi2.sf(chi2,ddof)
             newchi2 = -np.log10(pvalChi2)
             pvalue = pChi2(newchi2) #
-            far = np.power(10,-0.78*newchi2 + 2.33) #parameters from linear fit from archival data.
+            far = np.power(10,-0.81*newchi2 + 2.31) #parameters from linear fit from archival data.
 
             coincs.append([solution.x[0],solution.x[1],stderr,newchi2,nnus,far,pvalue,ev])
     return coincs
