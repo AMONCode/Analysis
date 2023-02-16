@@ -296,7 +296,8 @@ def maximizeLLH(all_events):
             newchi2 = -np.log10(pvalChi2)
             pvalue = pChi2(newchi2) #
             #far = np.power(10,-0.74*newchi2 + 5.40) #parameters from linear fit from archival data.
-            far = np.power(10,-0.77*newchi2 + 5.70) #parameters from linear fit from archival data. after ~2020/09/08 00:00 UTC
+            #far = np.power(10,-0.77*newchi2 + 5.70) #parameters from linear fit from archival data. after ~2020/09/08 00:00 UTC
+            far = np.power(10,-0.70*newchi2 + 5.27) #parameters from linear fit from archival data. after ~2023/02/16 00:00 UTC
 
             coincs.append([solution.x[0],solution.x[1],stderr,newchi2,nnus,far,pvalue,ev])
     return coincs
