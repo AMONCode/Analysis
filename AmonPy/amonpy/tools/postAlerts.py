@@ -1,7 +1,7 @@
 import subprocess
 import shutil
 
-from hop import Stream 
+from hop import Stream
 from hop.auth import load_auth
 from hop.models import VOEvent
 
