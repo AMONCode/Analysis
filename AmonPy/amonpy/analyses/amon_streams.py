@@ -26,6 +26,7 @@ streams = {
             "IC-Gold":24,
             "IC-Bronze":25,
             "IC-Cascade":26,
+            "LVK-GW":27,
           }
 
 inv_streams = dict(list(map(reversed,list(streams.items()))))
