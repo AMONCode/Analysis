@@ -304,7 +304,7 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
 
         con.close()
 
-def write_event_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
+def write_event_config(host_name, user_name, passw_name, db_name, eventStreams):
     """ Write event config list to DB table eventStreamConfig """
 # connect to database
 
@@ -313,50 +313,46 @@ def write_event_config(stream_num, host_name, user_name, passw_name, db_name, ev
 
 # real_archive==0 archival data, otherwise real-time
 
-    NEVENTS=len(eventlist)
+    NEVENTS=len(eventStreams)
     print('Number of event configurations to be written: %d' % NEVENTS)
     count=0
 
     for i in range(NEVENTS):
-        if (stream_num[i]>-1):
-            print(stream_num[i])
+        if (eventStreams[i].stream>-1):
+            print(eventStreams[i].stream)
             try:
-                # microsec_start=int(float('.'+str(eventlist[i].config.validStart).split('.')[1])*1000000)
-                #microsec_end=int(float('.'+str(eventlist[i].config.validStop).split('.')[1])*1000000)
-                #print 'microseconds %d' % microsec
-                #print eventlist[i].validStart
-                #eventlist[i].forprint()
-                print((stream_num[i],eventlist[i].rev,
-                            eventlist[i].validStart,eventlist[i].validStop, eventlist[i].observ_name,
-                            eventlist[i].observ_coord_sys,eventlist[i].astro_coord_sys,
-                            eventlist[i].point_type,eventlist[i].point,
-                            eventlist[i].param1Desc,eventlist[i].param2Desc,
-                            eventlist[i].param3Desc,eventlist[i].psf_type,
-                            eventlist[i].psf,eventlist[i].skymap_val1Desc,
-                            eventlist[i].skymap_val2Desc,eventlist[i].skymap_val3Desc,
-                            eventlist[i].sensitivity_type, eventlist[i].sensitivity,
-                            eventlist[i].fov_type, eventlist[i].fov,eventlist[i].ephemeris,
-                            eventlist[i].bckgr_type,eventlist[i].bckgr,
-                            eventlist[i].mag_rigidity))
+                print((eventStreams[i].stream,eventStreams[i].rev,
+                       eventStreams[i].validStart,eventStreams[i].validStop, 
+                       eventStreams[i].observ_name,
+                       eventStreams[i].observ_coord_sys,eventStreams[i].astro_coord_sys,
+                       eventStreams[i].point_type,eventStreams[i].point,
+                       eventStreams[i].param1Desc,eventStreams[i].param2Desc,
+                       eventStreams[i].param3Desc,eventStreams[i].psf_type,
+                       eventStreams[i].psf,eventStreams[i].skymap_val1Desc,
+                       eventStreams[i].skymap_val2Desc,eventStreams[i].skymap_val3Desc,
+                       eventStreams[i].sensitivity_type, eventStreams[i].sensitivity,
+                       eventStreams[i].fov_type, eventStreams[i].fov,eventStreams[i].ephemeris,
+                       eventStreams[i].bckgr_type,eventStreams[i].bckgr,
+                       eventStreams[i].mag_rigidity))
                 cur.execute("""INSERT INTO eventStreamConfig VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num[i],eventlist[i].rev,
-                            eventlist[i].validStart,eventlist[i].validStop, eventlist[i].observ_name,
-                            eventlist[i].observ_coord_sys,eventlist[i].astro_coord_sys,
-                            eventlist[i].point_type,eventlist[i].point,
-                            eventlist[i].param1Desc,eventlist[i].param2Desc,
-                            eventlist[i].param3Desc,eventlist[i].psf_type,
-                            eventlist[i].psf,eventlist[i].skymap_val1Desc,
-                            eventlist[i].skymap_val2Desc,eventlist[i].skymap_val3Desc,
-                            eventlist[i].sensitivity_type, eventlist[i].sensitivity,
-                            eventlist[i].fov_type, eventlist[i].fov,eventlist[i].ephemeris,
-                            eventlist[i].bckgr_type,eventlist[i].bckgr,
-                            eventlist[i].mag_rigidity))
+                            %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",(eventStreams[i].stream,eventStreams[i].rev,
+                            eventStreams[i].validStart,eventStreams[i].validStop, eventStreams[i].observ_name,
+                            eventStreams[i].observ_coord_sys,eventStreams[i].astro_coord_sys,
+                            eventStreams[i].point_type,eventStreams[i].point,
+                            eventStreams[i].param1Desc,eventStreams[i].param2Desc,
+                            eventStreams[i].param3Desc,eventStreams[i].psf_type,
+                            eventStreams[i].psf,eventStreams[i].skymap_val1Desc,
+                            eventStreams[i].skymap_val2Desc,eventStreams[i].skymap_val3Desc,
+                            eventStreams[i].sensitivity_type, eventStreams[i].sensitivity,
+                            eventStreams[i].fov_type, eventStreams[i].fov,eventStreams[i].ephemeris,
+                            eventStreams[i].bckgr_type,eventStreams[i].bckgr,
+                            eventStreams[i].mag_rigidity))
                 con.commit()
                 count+=cur.rowcount
             except mdb.Error as e:
                 print('Exception %s' %e)
-                print('Something is wrong with this event config %d, exception...' % eventlist[i].rev)
-                print('This eventconfig  is not written.')
+                print('Something is wrong with this event stream config {}-{}, exception...'.format(eventStream[i].stream, eventStream[i].rev))
+                print('This event stream config  could not be written.')
                 con.rollback()
         else:
             print('Not ready for these event config yet')

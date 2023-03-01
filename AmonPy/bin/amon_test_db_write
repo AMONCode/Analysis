@@ -53,7 +53,7 @@ class TestDBWrite(unittest.TestCase):
 
     def testWriteConfig(self):
         print('Testing write_event_config module MC')
-        db_write.write_event_config(self.StreamFancyNameMC,self.HostFancyName,
+        db_write.write_event_config(self.HostFancyName,
         self.UserFancyName, self.PasswordFancy, self.DBFancyNameMC,self.SimConfig)
 
     def testWriteConfigHESE(self):
