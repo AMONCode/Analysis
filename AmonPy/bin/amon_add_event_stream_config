@@ -11,21 +11,22 @@ DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')
 DBFancyName2 = AMON_CONFIG.get('database', 'archive_dbname')
 
 parser = argparse.ArgumentParser(description="Add new event streams to the DB. Use their integer values")
-parser.add_argument('-s','--streams', nargs='+', type=int, help='number(s) of the streams')
+#parser.add_argument('-s','--streams', nargs='+', type=int, help='number(s) of the streams')
 parser.add_argument('-d','--detectors', nargs='+', type=str,help='configuration files of detectors')
 
 args = parser.parse_args()
 
-streams = args.streams
+#streams = args.streams
 detectors = args.detectors
 
 eventlist = []
 for d in detectors:
     eventlist.append(file_parser(d))
     
-print("Adding: ",streams)
-db_write.write_event_config(streams,HostFancyName,
+print("Adding ",[s.stream for s in eventlist])
+
+db_write.write_event_config(HostFancyName,
    UserFancyName, PasswordFancy, DBFancyName,eventlist)
-db_write.write_event_config(streams,HostFancyName,
+db_write.write_event_config(HostFancyName,
    UserFancyName, PasswordFancy, DBFancyName2,eventlist)
 
