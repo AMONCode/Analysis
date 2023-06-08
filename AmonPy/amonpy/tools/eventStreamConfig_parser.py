@@ -6,7 +6,8 @@ def file_parser(filename):
     detconfig = CP(allow_no_value=True)
     with open(filename) as f:
         detconfig.read_file(f)
-
+        
+        stream=detconfig.get('StreamConfig','stream')
         rev=detconfig.get('StreamConfig','revision')
         obs=detconfig.get('StreamConfig','obs_name')
         starttime=detconfig.get('StreamConfig','validStart')
@@ -32,7 +33,7 @@ def file_parser(filename):
         bkg = detconfig.get('StreamConfig','bkg')
         b_rigidity = detconfig.get('StreamConfig','b_rigidity')
     
-        esc = db_classes.EventStreamConfig(0,int(rev))
+        esc = db_classes.EventStreamConfig(int(stream),int(rev))
         esc.observ_name = obs
         esc.validStart = starttime
         esc.validStop = stoptime
