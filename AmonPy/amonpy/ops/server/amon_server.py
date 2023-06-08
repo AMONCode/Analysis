@@ -171,32 +171,15 @@ class EventManager(Resource):
                     microsec=int(float('.'+str(event[0].datetime).split('.')[1])*1000000)
                         #print 'microseconds %d' % microsec
                 else:
-                    microsec=0.0
+                    microsec=0
                 #Save in DB
                 event_timefull=event[0].datetime
                 event_time = event_timefull.replace(microsecond=0)
-                transaction.execute("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
-                                %s,%s,%s,%s,%s,%s,%s,%s,%s)""",(event[0].stream,
-                                event[0].id,
-                                event[0].rev,
-                                event_time,
-                                microsec,
-                                event[0].dec,
-                                event[0].RA,
-                                event[0].sigmaR,
-                                event[0].nevents,
-                                event[0].deltaT,
-                                event[0].sigmaT,
-                                event[0].false_pos,
-                                event[0].pvalue,
-                                event[0].type,
-                                event[0].point_RA,
-                                event[0].point_dec,
-                                event[0].longitude,
-                                event[0].latitude,
-                                event[0].elevation,
-                                event[0].psf_type,
-                                0))
+                sql = "INSERT INTO event VALUES ({},{},{},'{}',{},{},{},{},{},{},{},{},{},'{}',{},{},{},{},{},'{}',{})".format(event[0].stream,event[0].id,event[0].rev,event_time,microsec,event[0].dec,event[0].RA,event[0].sigmaR,int(event[0].nevents),event[0].deltaT,event[0].sigmaT,event[0].false_pos,event[0].pvalue,event[0].type,event[0].point_RA,event[0].point_dec,event[0].longitude,event[0].latitude,event[0].elevation,event[0].psf_type,0)
+                try: 
+                   transaction.execute(sql)
+                except MySQLdb.DataError as e:
+                    print(e)
                 plenght=len(evparam)
 
                 for i in range(plenght):

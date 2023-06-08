@@ -103,7 +103,7 @@ def make_event(source, o=sys.stdout):
         #print p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType()
         if p.get_name() in dir(event[0]):
                 if (p.get_name()=="stream" or p.get_name()=="id" or p.get_name()=="rev" or p.get_name()=="nevents"):
-                    setattr(event[0],p.get_name(), int(p.get_value()))
+                    setattr(event[0],p.get_name(), int(float(p.get_value())))
                 elif  (p.get_name()=="deltaT" or p.get_name()=="sigmaT" or p.get_name()=="false_pos" or \
                 p.get_name()=="pvalue" or p.get_name()=="point_RA" or p.get_name()=="point_dec" ):
                    setattr(event[0],p.get_name(), float(p.get_value()))
