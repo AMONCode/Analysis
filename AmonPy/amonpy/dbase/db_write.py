@@ -297,9 +297,9 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
             ,'fisher','psf.dat','0','0','0','','sens.dat','circle','75','0',
             'tabulated','bckgr.dat','0'))
             con.commit()
-        except mdb.Error, e:
-            print 'Exception %s' %e
-            print 'Something went wrong, no data are written.'
+        except mdb.Error as e:
+            print( 'Exception %s' %e)
+            print( 'Something went wrong, no data are written.')
             con.rollback()
 
         con.close()

@@ -176,13 +176,14 @@ class EventManager(Resource):
                 event_timefull=event[0].datetime
                 event_time = event_timefull.replace(microsecond=0)
                 sql = "INSERT INTO event VALUES ({},{},{},'{}',{},{},{},{},{},{},{},{},{},'{}',{},{},{},{},{},'{}',{})".format(event[0].stream,event[0].id,event[0].rev,event_time,microsec,event[0].dec,event[0].RA,event[0].sigmaR,int(event[0].nevents),event[0].deltaT,event[0].sigmaT,event[0].false_pos,event[0].pvalue,event[0].type,event[0].point_RA,event[0].point_dec,event[0].longitude,event[0].latitude,event[0].elevation,event[0].psf_type,0)
+                
+                plength=len(evparam)
                 try: 
                    transaction.execute(sql)
                 except MySQLdb.DataError as e:
                     print(e)
-                plenght=len(evparam)
 
-                for i in range(plenght):
+                for i in range(plength):
                     if 'skymap_' in evparam[i].name:
                         transaction.execute("""INSERT INTO skyMapEvent VALUES (%s,%s,%s,%s)""",
                                (evparam[i].value,
@@ -201,7 +202,7 @@ class EventManager(Resource):
                 if event[0].stream == 26:
                     if event[0].rev == 0:
                         subthreshold = False
-                        for i in range(plenght):
+                        for i in range(plength):
                             if evparam[i].name == "signalness" and evparam[i].value == "-1": # if subthreshold
                                 extension = "sub"
                                 subthreshold = True
