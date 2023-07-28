@@ -13,25 +13,6 @@ column names, column types, column comments etc.).
 Under development. 
 """
 
-
-#host = sys.argv[1] 
-#user = sys.argv[2] 
-#passwd = sys.argv[3]
-#db = sys.argv[4]
-
-#try:
-#    con = mdb.connect(host, user, passwd)
-#    cur = con.cursor()
-#    statement = "USE %s" %(db)
-#    cur.execute(statement)
-   
-#except mdb.Error, e:
-#    print """There was a problem in accessing the database %s. The error is
-#     below.\n\n%s""" %(db, e)
-
-#con = mdb.connect(host_name, user_name, passw_name, db_name)    
-#cur = con.cursor()
-
 class DBMetadata(object):
     def __init__(self):
         """A class for DB metadata"""
