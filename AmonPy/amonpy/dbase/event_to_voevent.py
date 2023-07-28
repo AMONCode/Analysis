@@ -10,7 +10,6 @@ from builtins import range
 import sys
 from datetime import datetime, timedelta
 
-#sys.path.append('../dbase')
 from amonpy.dbase.db_classes import *
 from amonpy.analyses import amon_streams
 
@@ -33,22 +32,6 @@ def event_to_voevent(alert, parameter):
     datenow=datetime.utcnow()
 
     obsname = amon_streams.inv_streams[stream]
-    # if (stream==0):
-    #     obsname="IceCube"
-    #     #long=0.0000
-    #     #lat=-90.00
-    #     #elev=2835
-    # elif (stream==1):
-    #     obsname="ANTARES"
-    # elif (stream==3):
-    #     obsname="Auger"
-    # elif (stream==5):
-    #     obsname="FACT"
-    # elif (stream==7):
-    #     obsname="HAWC"
-    # else:
-    #     print "No stream valid stream number"
-    #     sys.exit(0)
 
     ############ VOEvent header ############################
 
@@ -58,14 +41,10 @@ def event_to_voevent(alert, parameter):
     v.set_Description("Report of some test event information")
 
     w = Who()
-    #a = Author()
     w.set_AuthorIVORN("ivo://%s" % obsname)
     datenow1=str(datenow)
     datenow2=datenow1[0:10]+"T"+datenow1[11:]
     w.set_Date(str(datenow2))
-    #   a.add_contactName("Gordana Tesic, Miles Smith")
-    #   a.add_contactEmail('gut10@psu.edu, mus44@psu.edu')
-    #w.set_Author(a)
     v.set_Who(w)
 
     ############ What ############################
@@ -145,8 +124,6 @@ def event_to_voevent(alert, parameter):
 
 
     if ww: v.set_WhereWhen(ww)
-    #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
-   # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
     obs=ObsDataLocation()
     obsloc=ObservatoryLocation()
     astro2=AstroCoordSystem("UTC-GEOD-TOPO")
@@ -163,8 +140,6 @@ def event_to_voevent(alert, parameter):
     value2=Value2(alert[0].RA,alert[0].dec)
     pos2=Position2D("deg-deg", "RA","Dec",value2,alert[0].sigmaR)
     astro5.set_Position2D(pos2)
-    #error2=Error2Radius(alert[0].sigmaR)
-    #astro5.set_Error2Radius(error2)
     time_1=Time("s")
     time2=str(alert[0].datetime)
     time2_2=time2[0:10]+"T"+time2[11:]
@@ -177,28 +152,9 @@ def event_to_voevent(alert, parameter):
     obs.set_ObservationLocation(observation)
     ww.set_ObsDataLocation(obs)
     v.set_WhereWhen(ww)
-    #vv=getWhereWhen(v)
-    #vvv=vv.get_Observatory()
-    #print vvv
-    '''
-    what = What()
-    what.add_Param(Param(name='apple', value='123'))
-    what.add_Param(Param(name='orange', value='124'))
-    v.set_What(what)
-    '''
-    # print the XML
-    #sys.stdout.write('<?xml version="1.0" ?>\n')
-    #v.export(sys.stdout, 0, namespace_='voe:')
-    #sys.stdout.write('\n')
-
-    #schemaURL = "http://www.amon/VOEvent/VOEvent2-111111.xsd"
-
-    #s = stringVOEvent(v, schemaURL)
-    #print s
     ############ output the event ############################
     xml = stringVOEvent(v,
     schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
-    #print xml
     return xml
 
 
