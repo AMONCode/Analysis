@@ -5,7 +5,6 @@ made to enable use of python features
 """
 from __future__ import print_function
 
-#from numpy import *
 from builtins import object
 from operator import itemgetter, attrgetter
 from datetime import datetime, timedelta
@@ -171,8 +170,6 @@ def event_def(*args):
                 self.nevents   =  1
                 self.deltaT    =  0.0
                 self.false_pos =  false_pos
-                #self.point_RA  =  0.0
-                #self.point_dec  =  0.0
                 self.pvalue    =  1.0
                 if sim:
                     self.type  = 'sim'
@@ -247,7 +244,6 @@ class Alert(object):
 
     def forprint(self):
         for attr, value in self.__dict__.items():
-            #print attr, value
             print(attr.ljust(20,' ')+': ', value)
 
 
@@ -313,7 +309,6 @@ def simstream(stream):
         config.observ_name      = 'IceCube'
         config.validStart       = datetime(2012,1,1,0,0,0,0)
         config.validStop        = datetime(2013,1,1,0,0,0,0)
-        #config.validStop        = datetime(2013,1,1,0,0,0,0)
         config.observ_coord_sys = 'UTC-GEOD-TOPO'
         config.astro_coord_sys  = 'UTC-ICRS-TOPO'
         config.point_type       = 'GEO-UPGOING'
@@ -488,7 +483,6 @@ class AlertConfig2(object):
 
     def forprint(self):
         for attr, value in self.__dict__.items():
-            #print attr, value
             print(attr.ljust(20,' ')+': ', value)
 
 
@@ -564,7 +558,6 @@ class AlertLine(object):
 
     def forprint(self):
         for attr, value in self.__dict__.items():
-            #print attr, value
             print(attr.ljust(20,' ')+': ', value)
 
 # ******************* BEGIN parameter class definition **********************
@@ -595,5 +588,4 @@ class Parameter(object):
 
     def forprint(self):
         for attr, value in self.__dict__.items():
-            #print attr, value
             print(attr.ljust(20,' ')+': ', value)
