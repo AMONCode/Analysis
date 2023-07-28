@@ -26,13 +26,9 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
-# real_archive==0 archival data, otherwise real-time
-# stream_num=0 is IceCube
 
     if real_archive==0:
         if stream_num==0:
-#            a1,a2,a3,a4,a5,a6 =loadtxt('../../../data/icecube/IC40/IceCube-40',
-#                                       unpack=True, usecols=[0,1,2,3,4,8])
             a1,a2,a3,a4,a5 =np.loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
 
 # write miliseconds in delta T column
@@ -46,9 +42,7 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
 # read in upward going muons only
                 if a1[i]>-0.0001:
                     st, milisec=convert_time.gettimestamp(a5[i])
-#                    print st
                     num=num+1
-#                    print num
                     try:
                         cur.execute("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
                                    %s,%s,%s,%s,%s,%s,%s,%s,%s)""",(stream_num,num,0,st, milisec,
@@ -76,13 +70,11 @@ def write_event_archive(real_archive, stream_num, host_name, user_name, passw_na
 
 def write_event(real_archive, host_name, user_name, passw_name, db_name, eventlist):
     """ Write event list to DB from MC and real-time data streams"""
-# connect to database
-
+    # connect to database
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
-# real_archive==0 archival data, otherwise real-time
-
+    # real_archive==0 archival data, otherwise real-time
     NEVENTS=len(eventlist)
     print('Number of events to be written: %d' % NEVENTS)
     count=0
@@ -92,7 +84,6 @@ def write_event(real_archive, host_name, user_name, passw_name, db_name, eventli
             try:
                 if '.' in str(eventlist[i].datetime):
                     microsec=int(float('.'+str(eventlist[i].datetime).split('.')[1])*1000000)
-                #print 'microseconds %d' % microsec
                 else:
                     microsec=0
                 cur.execute("""INSERT INTO event VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,
@@ -123,7 +114,6 @@ def write_parameter_list(host_name, user_name, passw_name, db_name, paramlist):
     """ Write parameter list to DB from MC and real-time data streams"""
 
     # connect to database
-
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
@@ -161,12 +151,9 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
-# real_archive==0 archival data, otherwise real-time
-
+    # real_archive==0 archival data, otherwise real-time
     if real_archive==0:
         if stream_num==0:
-#           a1,a2,a3,a4,a5,a6 =loadtxt('../../data/icecube/IC-40/IC40_finalPS_Public_NoPoles.txt',
-#                                       unpack=True, usecols=[0,1,2,3,4,8])
 
             a1,a2,a3,a4,a5 =np.loadtxt(filename, unpack=True, usecols=[0,1,2,4,5])
 
@@ -176,14 +163,11 @@ def write_parameter(real_archive, stream_num, host_name, user_name, passw_name, 
             count=0
             num=0
             for i in range(NEVENTS):
-# read in upward going muons only
+                # read in upward going muons only
                 if a1[i]>-0.0001:
                     num=num+1
                     st, milisec=convert_time.gettimestamp(a5[i])
-#                    print st
                     try:
-#                   cur.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",('ene_loss',
-#                              stream_name,num,0, a3[i],'GeVm^{-1}'))
                         cur.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",('ene',
                                     a3[i],'GeV',stream_num,num,0))
 
@@ -227,7 +211,6 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
 
         con.close()
 
-    #elif ((stream_num>=10) and (stream_num<=20)):
     elif ((stream_num==10) or (stream_num==11) or (stream_num==12) or (stream_num==13) or (stream_num==14) or (stream_num==15) or (stream_num==16) or (stream_num==17) or (stream_num==18) or (stream_num==19) or (stream_num==20)):
         obs_name='IceCube'
         try:
@@ -306,13 +289,11 @@ def write_event_config_archive(stream_num, host_name, user_name, passw_name, db_
 
 def write_event_config(host_name, user_name, passw_name, db_name, eventStreams):
     """ Write event config list to DB table eventStreamConfig """
-# connect to database
-
+    # connect to database
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
-# real_archive==0 archival data, otherwise real-time
-
+    # real_archive==0 archival data, otherwise real-time
     NEVENTS=len(eventStreams)
     print('Number of event configurations to be written: %d' % NEVENTS)
     count=0
@@ -364,8 +345,7 @@ def write_event_config(host_name, user_name, passw_name, db_name, eventStreams):
 
 def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert list to DB from MC and real-time data streams"""
-# connect to database
-
+    # connect to database
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
@@ -404,12 +384,9 @@ def write_alert(stream_name,host_name, user_name, passw_name, db_name, eventlist
 
 def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, eventlist):
     """ Write alert config list to DB """
-# connect to database
-
+    # connect to database
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
-
-# real_archive==0 archival data, otherwise real-time
 
     NEVENTS=len(eventlist)
     print('Number of event configurations to be written: %d' % NEVENTS)
@@ -447,8 +424,7 @@ def write_alert_config(stream_num, host_name, user_name, passw_name, db_name, ev
 
 def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
     """ Write alertline list to DB from MC and real-time data streams"""
-# connect to database
-
+    # connect to database
     con = mdb.connect(host_name, user_name, passw_name, db_name)
     cur = con.cursor()
 
@@ -459,8 +435,6 @@ def write_alertline(host_name, user_name, passw_name, db_name, eventlist):
     for i in range(NEVENTS):
         if (eventlist[i].stream_alert >-1):
             try:
-                #microsec=int(float('.'+str(eventlist[i].datetime).split('.')[1])*1000000)
- #               print 'microseconds %d' % microsec
                 cur.execute("""INSERT INTO alertLine VALUES (%s,%s,%s,%s,%s,%s)""",
                            (eventlist[i].stream_alert,eventlist[i].id_alert,
                             eventlist[i].rev_alert,eventlist[i].stream_event,
