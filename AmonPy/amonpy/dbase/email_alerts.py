@@ -8,11 +8,10 @@ from amonpy.analyses.amon_streams import streams, alert_streams
 
 import smtplib, netrc
 from email.mime.text import MIMEText
-#import yowsup_run as yowsup_run
 
 def alert_email(alert, params):
     emails = ['hgayala@psu.edu']
-    ehe_hese_emails = eval(AMON_CONFIG.get('mailing_list','ehe_hese')) #eval(Config.get('mailing_list', 'ehe_hese'))
+    ehe_hese_emails = eval(AMON_CONFIG.get('mailing_list','ehe_hese'))
     sub_emails = eval(AMON_CONFIG.get('mailing_list','sub_ehe_hese'))
     sub_cut_emails = eval(AMON_CONFIG.get('mailing_list','sub_cut_ehe_hese'))
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
@@ -109,15 +108,11 @@ def alert_email(alert, params):
     server.sendmail(FROM, TO, message)
     server.quit()
 
-    #content_whatsapp = 'HESE_event_time = '+str(dateutc)+'; HESE_event_id = '+str(event_id)+'; HESE_charge = '+str(charge)+'; HESE_ra = '+str(ra)+'; HESE_dec = '+str(dec)+'; HESE_signal_trackness = '+str(signal_trackness)+'; HESE_angular_error_50 = 1.6 deg (50% containment)'+'; HESE_angular_error_90 = 8.9 deg (90% containment)'
-    #yowsup_run.send_message("18143804192",content)
-    #yowsup_run.send_message("18147699477",content)
-
 def alert_email_content(alert,content,title_msg):
     nrc_fname = os.path.join(AMON_CONFIG.get('dirs','amonpydir'), '.netrc')
     nrc = netrc.netrc(nrc_fname)
     ehe_hese_emails = eval(AMON_CONFIG.get('mailing_list','ehe_hese'))
-    emails = ehe_hese_emails#['hgayala@psu.edu','delauj2@gmail.com']
+    emails = ehe_hese_emails
 
     if alert[0].type == "observation":
         FROM = nrc.hosts['gmail'][0] + '@gmail.com'
@@ -126,7 +121,7 @@ def alert_email_content(alert,content,title_msg):
     else:
         FROM = nrc.hosts['gmail'][0] + '@gmail.com'
         PASS = nrc.hosts['gmail'][2]
-        TO = ['hgayala@psu.edu','delauj2@gmail.com']
+        TO = ['hgayala@psu.edu']
 
     SERVER = 'smtp.gmail.com'
     PORT = 587
