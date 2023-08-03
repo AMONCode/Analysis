@@ -23,7 +23,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import netrc
 import jsonpickle
-
+import MySQLdb as mdb
 
 import sys
 import shutil
@@ -109,6 +109,54 @@ def ic_cascade(new_event=None):
     print('   Read time: %.2f seconds' % float(t2 - t1))
     print(' lenght of parameters %s' % len(params))
 
+    # Add name IceCube-Cascade-YYMMDDa to parameters
+    con = mdb.connect(HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
+    cur = con.cursor()
+
+    if new_event.rev == 0:
+        subthreshold = False
+        for i in range(len(params)):
+            if params[i].name == "signalness" and params[i].value == "-1":
+                extension = "sub"
+                subthreshold = True
+
+        today = str(new_event.datetime.replace(microsecond=0))
+        if not subthreshold:
+            #Get number of overthreshold cascade events in the same UTC day
+            cur.execute("SELECT id FROM event WHERE eventStreamConfig_stream=26 AND type='observation' AND time>'%s' AND rev=0;"%(today))
+            today_events = [item[0] for item in cur.fetchall()]
+            N_event_today = 0
+            if len(today_events)>0:
+                today_ids = ""
+                for id_ in today_events:
+                    if len(today_ids) > 0:
+                        today_ids += " OR "
+                    today_ids += "event_id="+str(id_)
+                
+                cur.execute("""SELECT event_id FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='signalness' AND (%s) AND value!=-1;"""%(today_ids))
+                today_overThresh_events = [item[0] for item in transaction.fetchall()]
+                today_overThresh_events = list(dict.fromkeys(today_overThresh_events)) # Remove duplicates (revisions)
+                N_events_today = max(0, len(today_overThresh_events)-1)
+            #Make name
+            alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            extension = alphabet[N_events_today]
+        event_name = "IceCubeCascade-"+today[2:4]+today[5:7]+today[8:10]+extension
+        print(event_name)
+    else:
+        cur.execute("""SELECT value FROM parameter WHERE event_eventStreamConfig_stream = 26 AND name='event_name' AND event_id=%s AND event_rev=0""",(new_event.id))
+        event_name = cur.fetchone()[0]
+    #Write it as parameter
+    cur.execute("""INSERT INTO parameter VALUES(%s,%s,%s,%s,%s,%s)""",
+        (event_name,
+        0,
+        'NA',
+        new_event.stream,
+        new_event.id,
+        new_event.rev))             
+
+    # Read parameters again, now including the event_name
+    params = db_read.read_parameters(new_event.stream, new_event.id, new_event.rev, HostFancyName,
+                                     UserFancyName, PasswordFancy, DBFancyName)
     # Get some parameters of the event
     if (len(params) > 0):
         for i in range(len(params)):

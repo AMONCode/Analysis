@@ -199,50 +199,50 @@ class EventManager(Resource):
                                 evparam[i].event_id,evparam[i].event_rev))
 
                 # Add name IceCube-Cascade-YYMMDDa to parameters
-                if event[0].stream == 26:
-                    if event[0].rev == 0:
-                        subthreshold = False
-                        for i in range(plength):
-                            if evparam[i].name == "signalness" and evparam[i].value == "-1": # if subthreshold
-                                extension = "sub"
-                                subthreshold = True
+                #if event[0].stream == 26:
+                #    if event[0].rev == 0:
+                #        subthreshold = False
+                #        for i in range(plength):
+                #            if evparam[i].name == "signalness" and evparam[i].value == "-1": # if subthreshold
+                #                extension = "sub"
+                #                subthreshold = True
 
-                        today = str(event_time.date())
-                        if not subthreshold:
-                            # Get number of overthreshold cascade events in the same UTC day
-                            transaction.execute("SELECT id FROM event WHERE eventStreamConfig_stream=26 AND type='observation' AND time>'%s' AND rev=0;"%(today))
+                #        today = str(event_time.date())
+                #        if not subthreshold:
+                #            # Get number of overthreshold cascade events in the same UTC day
+                #            transaction.execute("SELECT id FROM event WHERE eventStreamConfig_stream=26 AND type='observation' AND time>'%s' AND rev=0;"%(today))
 
-                            today_events = [item[0] for item in transaction.fetchall()]
-                            N_events_today = 0
-                            if len(today_events) > 0:
-                                today_ids = ""
-                                for id_ in today_events:
-                                    if len(today_ids) > 0:
-                                        today_ids += " OR "
-                                    today_ids += "event_id="+str(id_)
+                #            today_events = [item[0] for item in transaction.fetchall()]
+                #            N_events_today = 0
+                #            if len(today_events) > 0:
+                #                today_ids = ""
+                #                for id_ in today_events:
+                #                    if len(today_ids) > 0:
+                #                        today_ids += " OR "
+                #                    today_ids += "event_id="+str(id_)
 
-                                transaction.execute("""SELECT event_id FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='signalness' AND (%s) AND value!=-1;"""%(today_ids))
-                                today_overThresh_events = [item[0] for item in transaction.fetchall()]
-                                today_overThresh_events = list(dict.fromkeys(today_overThresh_events)) # Remove duplicates (revisions)
-                                N_events_today = max(0, len(today_overThresh_events)-1)
+                #                transaction.execute("""SELECT event_id FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='signalness' AND (%s) AND value!=-1;"""%(today_ids))
+                #                today_overThresh_events = [item[0] for item in transaction.fetchall()]
+                #                today_overThresh_events = list(dict.fromkeys(today_overThresh_events)) # Remove duplicates (revisions)
+                #                N_events_today = max(0, len(today_overThresh_events)-1)
 
-                            # Make name
-                            alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-                            extension = alphabet[N_events_today]
-                        event_name = "IceCubeCascade-"+today[2:4]+today[5:7]+today[8:10]+extension
-                        print(event_name)
-                    else:
-                        transaction.execute("""SELECT value FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='event_name' AND event_id=%s AND event_rev=0""",
-                                (event[0].id))
-                        event_name = transaction.fetchone()[0]
-                    # Write it as parameter
-                    transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
-                               (event_name,
-                                0,
-                                'NA',
-                                event[0].stream,
-                                event[0].id,
-                                event[0].rev))
+                #            # Make name
+                #            alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                #            extension = alphabet[N_events_today]
+                #        event_name = "IceCubeCascade-"+today[2:4]+today[5:7]+today[8:10]+extension
+                #        print(event_name)
+                #    else:
+                #        transaction.execute("""SELECT value FROM parameter WHERE event_eventStreamConfig_stream=26 AND name='event_name' AND event_id=%s AND event_rev=0""",
+                #                (event[0].id))
+                #        event_name = transaction.fetchone()[0]
+                #    # Write it as parameter
+                #    transaction.execute("""INSERT INTO parameter VALUES (%s,%s,%s,%s,%s,%s)""",
+                #               (event_name,
+                #                0,
+                #                'NA',
+                #                event[0].stream,
+                #                event[0].id,
+                #                event[0].rev))
 
                 return event#, buffers
 
