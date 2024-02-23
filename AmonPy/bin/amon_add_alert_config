@@ -1,5 +1,33 @@
 #!/usr/bin/python
-from amonpy.dbase import db_modify
+from amonpy.dbase import db_write
+from amonpy.tools.config import AMON_CONFIG
+from amonpy.tools.alertConfig_parser import file_parser
+import argparse
 
-cur = db_modify.connect()
-db_modify.add_row(cur, "alertConfig")
+HostFancyName=AMON_CONFIG.get('database', 'host_name')
+UserFancyName = AMON_CONFIG.get('database', 'username')
+PasswordFancy = AMON_CONFIG.get('database', 'password')
+DBFancyName = AMON_CONFIG.get('database', 'realtime_dbname')
+DBFancyName2 = AMON_CONFIG.get('database', 'archive_dbname')
+
+parser = argparse.ArgumentParser(description="Add new alert configuration to the DB")
+parser.add_argument('-s','--streams', nargs='+', type=int, help='number(s) of the streams')
+parser.add_argument('-a','--alertsConfigs', nargs='+', type=str,help='configuration files of detectors')
+
+args = parser.parse_args()
+
+
+streams = args.streams
+alertconfigs = args.alertConfigs
+
+eventlist = []
+for a in alertconfigs:
+    eventlist.append(file_parser(a))
+    
+print("Adding alert configurations",[s.stream for s in eventlist])
+
+db_write.write_event_config(streams,HostFancyName,
+   UserFancyName, PasswordFancy, DBFancyName, eventlist)
+db_write.write_event_config(streams,HostFancyName,
+   UserFancyName, PasswordFancy, DBFancyName2, eventlist)
+

@@ -33,7 +33,6 @@ import os
 import getopt
 import VOEventLib.Vutil as Vutil
 
-
 from datetime import datetime
 
 from amonpy.dbase.db_classes import *
@@ -66,7 +65,6 @@ def make_event(source, o=sys.stdout):
     count1=1+count+streamname2.index('_')
     streamname3=streamname[count1+1:]
     count2=1+count1+streamname3.index('_')
-    #number_st=f
     event[0].stream = int(streamname[count+1:count1])
     event[0].id = int(streamname[count1+1:count2])
     event[0].rev = int(streamname[count2+1:])
@@ -94,26 +92,15 @@ def make_event(source, o=sys.stdout):
     
        
     who = v.get_Who()
-    '''
-    a = who.get_Author()
-    print>>o, 'Title: %s'                        % Vutil.htmlList(a.get_title())
-    print>>o, 'Name: %s'                         % Vutil.htmlList(a.get_contactName())
-    print>>o, 'Email: %s'                        % Vutil.htmlList(a.get_contactEmail())
-    print>>o, 'Phone: %s'                        % Vutil.htmlList(a.get_contactPhone())
-    print>>o, 'Contributor: %s' % Vutil.htmlList(a.get_contributor())
-    '''
     print('WHAT', file=o)
     print()
     print('PARAMS', file=o)
     print()
     
-    g = None
     params = v.get_What().get_Param()
     for p in params:
-        #print>>o,  Vutil.htmlParam(g, p)
         print(p.get_name(), p.get_value(), p.get_ucd(), p.get_unit(), p.get_dataType()) 
         if p.get_name() in dir(event[0]):
-                #print "YES"
                 setattr(event[0],p.get_name(), p.get_value())
         print()        
         print("DESCRIPTION:")        
@@ -128,7 +115,6 @@ def make_event(source, o=sys.stdout):
     print()
     for g in groups:
         for p in g.get_Param():
-            #print>>o, Vutil.htmlParam(g, p) 
             print(p.get_name(), p.get_value(), " ", p.get_ucd(), " ", \
                                 p.get_unit(), " ", p.get_dataType())
             print()
@@ -166,13 +152,6 @@ def make_event(source, o=sys.stdout):
         observ=obloc.get_ObservatoryLocation()
         coord=observ.get_AstroCoords()
         values3D=coord.get_Position3D()
-        #values=values3D.get_Value3()
-        #print "3D values: ", values.get_C1(), values.get_C2(), values.get_C3()
-        
-       
-        #event[0].longitude=values.get_C1()
-        #event[0].latitude=values.get_C2()
-        #event[0].elevation=values.get_C3()
      
     print('WHY', file=o)
     print()
@@ -233,7 +212,6 @@ def main():
         usage()
     infilename = args[0]
     if stdout:
-        #format_to_stdout(infilename)
         event2=make_event(infilename)
         event2[0].forprint()
     if outfilename is not None:
@@ -248,6 +226,5 @@ def main():
 if __name__ == '__main__':
     #import pdb; pdb.set_trace()
     main()
-    #alert=
 
 

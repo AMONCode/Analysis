@@ -15,7 +15,6 @@ def delete_alert_stream(stream_number,host_name, user_name, passw_name, db_name)
         cur.execute("""DELETE FROM alert WHERE alertConfig_stream=%s""" %(stream_number,))
         con.commit()
         print('   This alert stream is deleted.')
-        # count+=cur.rowcount
     except mdb.Error as e:
         print('Exception %s' %e)
         print('   This alert stream is not deleted.')
@@ -34,7 +33,6 @@ def delete_event_stream(stream_number, host_name, user_name, passw_name, db_name
         print('stream num %d' % stream_number) 
         cur.execute("""DELETE FROM event WHERE eventStreamConfig_stream=%s""" %(stream_number,))
         con.commit()
-        # count+=cur.rowcount
         print('Event stream is deleted')
     except mdb.Error as e:
         print('Exception %s' %e)

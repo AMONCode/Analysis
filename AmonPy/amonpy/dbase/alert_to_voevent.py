@@ -246,16 +246,10 @@ def alert_to_voevent(alert):
     ww = makeWhereWhen(wwd)
     if ww: v.set_WhereWhen(ww)
 
-    #if ww: v.set_WhereWhen(ww)
-    #obsloc=v.ObsDataLocation().get_ObservatoryLocation()
-   # v.get_WhereWhen().get_ObsDataLocation().get_ObservatoryLocation().set_ObservatoryLocation("UTC-GEOD-TOPO")
     obs=ObsDataLocation()
     obsloc=ObservatoryLocation()
     astro2=AstroCoordSystem("UTC-GEOD-TOPO")
     astro3=AstroCoords("UTC-GEOD-TOPO")
-    #value3=Value3(0.0000,-90.00,2835)
-    #pos1=Position3D("deg-deg-m","longitude", "latitude", "elevation",value3)
-    #astro3.set_Position3D(pos1)
     obsloc.set_AstroCoordSystem(astro2)
     obsloc.set_AstroCoords(astro3)
     obs.set_ObservatoryLocation(obsloc)
@@ -266,15 +260,11 @@ def alert_to_voevent(alert):
     value2=Value2(alert[0].RA,alert[0].dec)
     pos2=Position2D("deg-deg", "RA","Dec",value2, alert[0].sigmaR)
     astro5.set_Position2D(pos2)
-    #error2=Error2Radius(alert[0].sigmaR)
-    #astro5.set_Error2Radius()
 
 
     time_1=Time("s")
     time2=str(alert[0].datetime)
     time2_2=time2[0:10]+"T"+time2[11:]
-
-    #time2_2=time2[0:10]+"T"+time2[11:]
     time3=TimeInstant(time2_2)
     time_1.set_TimeInstant(time3)
     astro5.set_Time(time_1)
@@ -283,7 +273,6 @@ def alert_to_voevent(alert):
     observation.set_AstroCoords(astro5)
     obs.set_ObservationLocation(observation)
     ww.set_ObsDataLocation(obs)
-    #ww.add_TimeInstant(time3)
     v.set_WhereWhen(ww)
 
 
@@ -291,7 +280,6 @@ def alert_to_voevent(alert):
 
     xml = stringVOEvent(v,
     schemaURL = "http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd")
-    #print xml
     return xml
 
 if __name__ == "__main__":
