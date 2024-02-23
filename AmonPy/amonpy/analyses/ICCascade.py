@@ -117,7 +117,6 @@ def ic_cascade(new_event=None):
         subthreshold = False
         for i in range(len(params)):
             if params[i].name == "signalness" and params[i].value == -1:
-                print('Signalness %.2f' % params[i].value)
                 extension = "sub"
                 subthreshold = True
 
