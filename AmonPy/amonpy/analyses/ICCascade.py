@@ -107,7 +107,7 @@ def ic_cascade(new_event=None):
 
     t2 = time()
     print('   Read time: %.2f seconds' % float(t2 - t1))
-    print(' lenght of parameters %s' % len(params))
+    print(' Length of parameters %s' % len(params))
 
     # Add name IceCube-Cascade-YYMMDDa to parameters
     con = mdb.connect(HostFancyName,UserFancyName,PasswordFancy,DBFancyName)
@@ -116,16 +116,17 @@ def ic_cascade(new_event=None):
     if new_event.rev == 0:
         subthreshold = False
         for i in range(len(params)):
-            if params[i].name == "signalness" and params[i].value == "-1":
+            if params[i].name == "signalness" and params[i].value == -1:
+                print('Signalness %.2f' % paramas[i].value)
                 extension = "sub"
                 subthreshold = True
 
-        today = str(new_event.datetime.replace(microsecond=0))
+        today = str(pd.to_datetime(new_event.datetime))
         if not subthreshold:
             #Get number of overthreshold cascade events in the same UTC day
             cur.execute("SELECT id FROM event WHERE eventStreamConfig_stream=26 AND type='observation' AND time>'%s' AND rev=0;"%(today))
             today_events = [item[0] for item in cur.fetchall()]
-            N_event_today = 0
+            N_events_today = 0
             if len(today_events)>0:
                 today_ids = ""
                 for id_ in today_events:
@@ -153,6 +154,7 @@ def ic_cascade(new_event=None):
         new_event.stream,
         new_event.id,
         new_event.rev))             
+    con.commit()
 
     # Read parameters again, now including the event_name
     params = db_read.read_parameters(new_event.stream, new_event.id, new_event.rev, HostFancyName,
