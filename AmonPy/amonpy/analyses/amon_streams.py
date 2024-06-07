@@ -20,6 +20,7 @@ streams = {
             "FACT":5,
             "HAWC-DM":7,
             "HAWC-Burst":8,
+            "HAWC-HE":9,
             "Antares":1,
             "Auger":3,
             "Fermi":23,
@@ -46,6 +47,7 @@ alert_streams = {
             "IC-Gold-Bronze":9,
             "IC-Cascade":10,
             "ANTARES-HAWC":11,
+            "HWC-HE-Alerts":27,
 }
 
 inv_alert_streams = dict(list(map(reversed,list(alert_streams.items()))))
@@ -71,6 +73,7 @@ gcn_streams = {
             "IC-Bronze":25,#174 in GCN socket info
             "Gamma-Nu-Coinc":172,
             "IC-Cascade":26,
+            "HWC-HE-Alerts":27,
 }
 
 inv_gcn_streams = dict(list(map(reversed,list(gcn_streams.items()))))
