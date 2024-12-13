@@ -68,12 +68,15 @@ def make_event(source, o=sys.stdout):
         evPar.event_id = event[0].id
         evPar.event_rev = event[0].rev
         evPar.value= p['value']
-        evPar.units=p['unit']
+        try:
+            evPar.units=p['unit']
+        except:
+            evPar.units='NA'
         evParam.append(evPar)
 
     wwd = v.WhereWhen['ObsDataLocation']['ObservationLocation']['AstroCoords']
     if wwd:
-        event[0].sigmaR=wwd['Error2Radius']
+        event[0].sigmaR=wwd['Position2D']['Error2Radius']
         timeevent=wwd['Time']['TimeInstant']['ISOTime']
         year=int(timeevent[0:4])
         month=int(timeevent[5:7])
@@ -135,10 +138,11 @@ def main():
     if len(args) != 1:
         usage()
     infilename = args[0]
+    print(infilename)
     if stdout:
         #format_to_stdout(infilename)
         event2=make_event(infilename)
-        event2[0].forprint()
+        #event2[0].forprint()
     if outfilename is not None:
         format_to_file(infilename, outfilename, force)
     if text:
