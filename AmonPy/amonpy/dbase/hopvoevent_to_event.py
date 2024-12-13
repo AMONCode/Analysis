@@ -68,7 +68,7 @@ def make_event(source, o=sys.stdout):
         evPar.event_id = event[0].id
         evPar.event_rev = event[0].rev
         evPar.value= p['value']
-        evPar.units=p.['unit']
+        evPar.units=p['unit']
         evParam.append(evPar)
 
     wwd = v.WhereWhen['ObsDataLocation']['ObservationLocation']['AstroCoords']
