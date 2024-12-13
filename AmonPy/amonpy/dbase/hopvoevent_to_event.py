@@ -38,7 +38,7 @@ def make_event(source, o=sys.stdout):
     '''
     # initialize Event class to be populated from this VOEvent
     event=[Event(1,1,0)]
-    if isinstance(source,VOevent):
+    if isinstance(source,VOEvent):
         v = source
     else:
         v = VOEvent.load_file(source)
