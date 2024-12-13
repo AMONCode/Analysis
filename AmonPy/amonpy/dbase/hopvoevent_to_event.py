@@ -38,8 +38,10 @@ def make_event(source, o=sys.stdout):
     '''
     # initialize Event class to be populated from this VOEvent
     event=[Event(1,1,0)]
-
-    v = VOEvent.load_file(source)
+    if isinstance(source,VOevent):
+        v = source
+    else:
+        v = VOEvent.load_file(source)
     event[0].configstream= 0 # change later to get revision from eventConfigTable event[0].stream
     event[0].type=v.role
 
