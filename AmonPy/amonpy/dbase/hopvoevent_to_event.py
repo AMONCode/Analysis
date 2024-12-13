@@ -110,7 +110,7 @@ def make_event(source, o=sys.stdout):
     #            evPar.value = int(c.get_valueOf_()[-1]) # last character should be the revision number of the notice to retract
     #            evPar.units = 'rev'
     #            evParam.append(evPar)
-    #return (event, evParam)
+    return (event, evParam)
 
 def main():
     args = sys.argv[1:]
@@ -142,7 +142,7 @@ def main():
     if stdout:
         #format_to_stdout(infilename)
         event2=make_event(infilename)
-        #event2[0].forprint()
+        event2[0][0].forprint()
     if outfilename is not None:
         format_to_file(infilename, outfilename, force)
     if text:
