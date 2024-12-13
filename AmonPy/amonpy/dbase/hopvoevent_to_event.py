@@ -50,7 +50,7 @@ def make_event(source, o=sys.stdout):
     # Get main parameters
     params = v.What['Param']
     for p in params:
-        if p.['name'] in dir(event[0]):
+        if p['name'] in dir(event[0]):
                 if (p['name']=="stream" or p['name']=="id" or p['name']=="rev" or p['name']=="nevents"):
                     setattr(event[0],p['name'], int(float(p['value'])))
                 elif  (p['name']=="deltaT" or p['name']=="sigmaT" or p['name']=="false_pos" or \
